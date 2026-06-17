@@ -1,0 +1,2308 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#0a0a0f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>EVGENII — Music</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body { height: 100%; overflow: hidden; }
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background: #000;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+/* ===== PHONE FRAME ===== */
+.phone-frame {
+    position: relative;
+    width: 100%;
+    max-width: 430px;
+    height: 100vh;
+    max-height: 932px;
+    background: #0a0a0f;
+    overflow: hidden;
+    box-shadow: 0 0 80px rgba(0, 240, 255, 0.15), 0 0 0 1px rgba(255,255,255,0.05);
+    border-radius: 0;
+}
+
+@media (min-width: 500px) {
+    body { padding: 20px; background: radial-gradient(ellipse at center, #1a1a2e 0%, #000 70%); }
+    .phone-frame {
+        border-radius: 48px;
+        border: 10px solid #1a1a1a;
+        box-shadow: 0 0 0 2px #2a2a2a, 0 30px 80px rgba(0,0,0,0.8), 0 0 100px rgba(0, 240, 255, 0.2);
+        height: min(932px, calc(100vh - 40px));
+    }
+}
+
+/* ===== STATUS BAR ===== */
+.status-bar {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 44px;
+    padding: 14px 28px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 600;
+    z-index: 50;
+    pointer-events: none;
+}
+
+.status-bar .right { display: flex; gap: 6px; align-items: center; }
+.status-icons { display: flex; gap: 4px; align-items: center; }
+.status-icons svg { width: 16px; height: 11px; fill: #fff; }
+.battery {
+    width: 24px; height: 11px;
+    border: 1px solid rgba(255,255,255,0.5);
+    border-radius: 3px;
+    position: relative;
+    padding: 1px;
+}
+.battery::after {
+    content: '';
+    position: absolute;
+    right: -3px; top: 3px;
+    width: 2px; height: 5px;
+    background: rgba(255,255,255,0.5);
+    border-radius: 0 2px 2px 0;
+}
+.battery-fill {
+    width: 80%; height: 100%;
+    background: #fff;
+    border-radius: 1px;
+}
+
+/* Dynamic Island */
+.dynamic-island {
+    position: absolute;
+    top: 10px; left: 50%;
+    transform: translateX(-50%);
+    width: 120px; height: 32px;
+    background: #000;
+    border-radius: 20px;
+    z-index: 60;
+}
+
+/* ===== BACKGROUNDS ===== */
+.bg-base {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 30%, #12121a 0%, #0a0a0f 50%, #050508 100%);
+    z-index: 0;
+}
+
+#soundCanvas {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    z-index: 1; pointer-events: none;
+}
+
+.bokeh {
+    position: absolute; border-radius: 50%; filter: blur(60px); opacity: 0.2;
+    pointer-events: none; z-index: 2; animation: bokehFloat 20s ease-in-out infinite;
+}
+.bokeh-1 { width: 280px; height: 280px; background: #00f0ff; top: -10%; left: -10%; }
+.bokeh-2 { width: 220px; height: 220px; background: #ff6b6b; bottom: 10%; right: -10%; animation-delay: -7s; }
+.bokeh-3 { width: 180px; height: 180px; background: #e056fd; top: 40%; left: 60%; animation-delay: -14s; }
+
+@keyframes bokehFloat {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(20px, -30px) scale(1.1); }
+    66% { transform: translate(-15px, 20px) scale(0.95); }
+}
+
+/* ===== WELCOME SCREEN ===== */
+.welcome-screen {
+    position: absolute;
+    inset: 0;
+    z-index: 100;
+    background: linear-gradient(180deg, #0a0a1a 0%, #12121f 50%, #0a0a15 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 30px;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+}
+
+.welcome-screen.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.welcome-logo {
+    font-size: 2.5rem;
+    font-weight: 100;
+    letter-spacing: 0.3em;
+    margin-bottom: 20px;
+    background: linear-gradient(135deg, #00f0ff, #e056fd);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.welcome-title {
+    font-size: 1.8rem;
+    font-weight: 300;
+    text-align: center;
+    margin-bottom: 10px;
+    color: rgba(255,255,255,0.9);
+}
+
+.welcome-subtitle {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.5);
+    text-align: center;
+    margin-bottom: 40px;
+    line-height: 1.5;
+}
+
+.welcome-input-wrap {
+    width: 100%;
+    max-width: 320px;
+    margin-bottom: 30px;
+}
+
+.welcome-input {
+    width: 100%;
+    padding: 16px 20px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(0, 240, 255, 0.3);
+    border-radius: 14px;
+    color: #fff;
+    font-size: 1rem;
+    font-family: 'Montserrat', sans-serif;
+    text-align: center;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.welcome-input:focus {
+    border-color: rgba(0, 240, 255, 0.8);
+    background: rgba(0, 240, 255, 0.05);
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
+}
+
+.welcome-input::placeholder {
+    color: rgba(255,255,255,0.3);
+}
+
+.welcome-btn {
+    width: 100%;
+    max-width: 320px;
+    padding: 16px;
+    background: linear-gradient(135deg, #00f0ff, #e056fd);
+    border: none;
+    border-radius: 14px;
+    color: #000;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(0, 240, 255, 0.3);
+}
+
+.welcome-btn:active {
+    transform: scale(0.98);
+    box-shadow: 0 5px 15px rgba(0, 240, 255, 0.3);
+}
+
+.welcome-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ===== SCREENS ===== */
+.screen-container {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 10;
+    overflow: hidden;
+}
+
+.screen {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    padding-top: 60px;
+    padding-bottom: 160px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: opacity 0.35s ease, transform 0.35s ease, visibility 0.35s;
+    -webkit-overflow-scrolling: touch;
+}
+
+.screen.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.screen::-webkit-scrollbar { display: none; }
+.screen { scrollbar-width: none; }
+
+/* ===== HOME SCREEN ===== */
+.home-header {
+    padding: 20px 24px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.greeting {
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.user-name {
+    font-size: 1.1rem;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    background: linear-gradient(135deg, #00f0ff, #e056fd);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-card {
+    margin: 20px 20px 0;
+    padding: 32px 24px;
+    background: rgba(20, 20, 30, 0.5);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border: 1px solid rgba(0, 240, 255, 0.2);
+    border-radius: 28px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-card::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(circle, rgba(0,240,255,0.1) 0%, transparent 50%);
+    animation: heroGlow 6s ease-in-out infinite;
+}
+
+@keyframes heroGlow {
+    0%, 100% { transform: translate(0,0); }
+    50% { transform: translate(10%, 10%); }
+}
+
+.hero-title {
+    position: relative;
+    font-size: 2.2rem;
+    font-weight: 100;
+    letter-spacing: 0.3em;
+    margin-bottom: 8px;
+    text-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+}
+
+.hero-subtitle {
+    position: relative;
+    font-size: 0.8rem;
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 28px;
+}
+
+.hero-play-btn {
+    position: relative;
+    width: 72px; height: 72px;
+    margin: 0 auto;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 240, 255, 0.5);
+    background: rgba(0, 240, 255, 0.08);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.hero-play-btn:active { transform: scale(0.92); }
+
+.hero-play-btn.playing {
+    border-color: rgba(0, 240, 255, 0.9);
+    box-shadow: 0 0 40px rgba(0, 240, 255, 0.5);
+    animation: pulsePlay 2s ease-in-out infinite;
+}
+
+@keyframes pulsePlay {
+    0%, 100% { box-shadow: 0 0 40px rgba(0, 240, 255, 0.5); }
+    50% { box-shadow: 0 0 60px rgba(0, 240, 255, 0.8); }
+}
+
+.play-icon-hero {
+    width: 0; height: 0;
+    border-top: 11px solid transparent;
+    border-bottom: 11px solid transparent;
+    border-left: 18px solid rgba(0, 240, 255, 0.9);
+    margin-left: 4px;
+}
+
+.hero-track-info {
+    position: relative;
+    margin-top: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #fff;
+    letter-spacing: 0.05em;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+.hero-track-info.visible { opacity: 1; }
+.hero-track-info .artist {
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.5);
+    margin-top: 2px;
+    letter-spacing: 0.1em;
+}
+
+/* Section titles */
+.section-title {
+    padding: 24px 24px 12px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+}
+
+/* New Release Card */
+.new-release-card {
+    margin: 0 20px 20px;
+    padding: 16px;
+    background: rgba(20, 20, 30, 0.5);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(0, 240, 255, 0.2);
+    border-radius: 20px;
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.new-release-card:active { transform: scale(0.98); }
+
+.new-release-cover {
+    width: 80px; height: 80px;
+    border-radius: 14px;
+    overflow: hidden;
+    flex-shrink: 0;
+    background: linear-gradient(135deg, rgba(0, 240, 255, 0.2), rgba(224, 86, 253, 0.2));
+    position: relative;
+}
+
+.new-release-cover img { width: 100%; height: 100%; object-fit: cover; }
+
+.new-release-badge {
+    position: absolute;
+    top: 6px; left: 6px;
+    padding: 3px 8px;
+    background: rgba(0, 240, 255, 0.9);
+    color: #000;
+    font-size: 0.55rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    border-radius: 6px;
+}
+
+.new-release-info { flex: 1; min-width: 0; }
+.new-release-label {
+    font-size: 0.65rem;
+    color: #00f0ff;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+}
+.new-release-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.new-release-meta {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.5);
+}
+
+/* Quick Actions Grid */
+.quick-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    padding: 0 20px 20px;
+}
+
+.quick-card {
+    padding: 16px;
+    background: rgba(20, 20, 30, 0.4);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-height: 90px;
+}
+
+.quick-card:active { transform: scale(0.96); }
+
+.quick-icon {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+}
+
+.quick-icon.cyan { background: rgba(0, 240, 255, 0.15); border: 1px solid rgba(0, 240, 255, 0.3); }
+.quick-icon.pink { background: rgba(224, 86, 253, 0.15); border: 1px solid rgba(224, 86, 253, 0.3); }
+.quick-icon.red { background: rgba(255, 107, 107, 0.15); border: 1px solid rgba(255, 107, 107, 0.3); }
+.quick-icon.green { background: rgba(0, 255, 136, 0.15); border: 1px solid rgba(0, 255, 136, 0.3); }
+
+.quick-title {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #fff;
+}
+
+.quick-desc {
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.3;
+}
+
+/* ===== MUSIC SCREEN ===== */
+.music-header {
+    padding: 20px 24px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.music-title {
+    font-size: 1.8rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+}
+
+.featured-release {
+    margin: 0 20px 24px;
+    padding: 20px;
+    background: linear-gradient(135deg, rgba(0, 240, 255, 0.1), rgba(224, 86, 253, 0.05));
+    border: 1px solid rgba(0, 240, 255, 0.25);
+    border-radius: 24px;
+    text-align: center;
+}
+
+.featured-cover {
+    width: 180px; height: 180px;
+    margin: 0 auto 16px;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    background: linear-gradient(135deg, rgba(0, 240, 255, 0.2), rgba(224, 86, 253, 0.2));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.featured-cover img { width: 100%; height: 100%; object-fit: cover; }
+
+.featured-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: #00f0ff;
+    margin-bottom: 6px;
+}
+
+.featured-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.featured-artist {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+}
+
+.featured-controls {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    align-items: center;
+}
+
+.featured-play {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #00f0ff, #e056fd);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(0, 240, 255, 0.4);
+    transition: transform 0.2s ease;
+}
+
+.featured-play:active { transform: scale(0.9); }
+
+.featured-play svg { fill: #000; width: 22px; height: 22px; margin-left: 3px; }
+
+.icon-btn-round {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.icon-btn-round:active { transform: scale(0.9); }
+.icon-btn-round svg { fill: #fff; width: 18px; height: 18px; }
+
+/* Track List */
+.track-list {
+    padding: 0 20px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.track-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px;
+    background: rgba(20, 20, 30, 0.4);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.track-item:active { transform: scale(0.98); background: rgba(0, 240, 255, 0.08); }
+
+.track-item.active {
+    background: rgba(0, 240, 255, 0.1);
+    border-color: rgba(0, 240, 255, 0.4);
+}
+
+.track-thumb {
+    width: 50px; height: 50px;
+    border-radius: 10px;
+    overflow: hidden;
+    flex-shrink: 0;
+    background: linear-gradient(135deg, rgba(0, 240, 255, 0.2), rgba(224, 86, 253, 0.2));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    position: relative;
+}
+
+.track-thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+.track-item.active .track-thumb::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.track-info { flex: 1; min-width: 0; }
+
+.track-name {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #fff;
+    margin-bottom: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.track-sub {
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.05em;
+}
+
+.track-duration {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.4);
+    font-variant-numeric: tabular-nums;
+    margin-right: 4px;
+}
+
+/* Download Button in List */
+.track-download-btn {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.track-download-btn:active { transform: scale(0.9); background: rgba(0, 240, 255, 0.15); border-color: rgba(0, 240, 255, 0.4); }
+.track-download-btn svg { fill: rgba(255,255,255,0.7); width: 16px; height: 16px; transition: fill 0.2s; }
+.track-download-btn:active svg { fill: #00f0ff; }
+
+.track-menu-btn {
+    width: 32px; height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255,255,255,0.4);
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+/* ===== COMMUNITY SCREEN ===== */
+.community-header {
+    padding: 20px 24px 16px;
+}
+
+.community-title {
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin-bottom: 4px;
+}
+
+.community-sub {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.5);
+}
+
+.community-list {
+    padding: 0 20px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.community-card {
+    padding: 18px;
+    background: rgba(20, 20, 30, 0.5);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px;
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.community-card:active { transform: scale(0.98); }
+
+.community-icon {
+    width: 52px; height: 52px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.community-icon.bip {
+    background: linear-gradient(135deg, rgba(138, 43, 226, 0.3), rgba(224, 86, 253, 0.3));
+    border: 1px solid rgba(224, 86, 253, 0.4);
+}
+
+.community-icon.telegram {
+    background: linear-gradient(135deg, rgba(0, 136, 204, 0.3), rgba(0, 240, 255, 0.3));
+    border: 1px solid rgba(0, 240, 255, 0.4);
+}
+
+.community-icon.instagram {
+    background: linear-gradient(135deg, rgba(225, 48, 108, 0.3), rgba(252, 175, 69, 0.3));
+    border: 1px solid rgba(225, 48, 108, 0.4);
+}
+
+.community-info { flex: 1; min-width: 0; }
+
+.community-name {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 2px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.status-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #00ff88;
+    box-shadow: 0 0 8px #00ff88;
+}
+
+.community-desc {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.4;
+}
+
+.community-arrow {
+    color: rgba(255,255,255,0.3);
+    font-size: 1.2rem;
+}
+
+/* ===== ABOUT SCREEN ===== */
+.about-header {
+    padding: 20px 24px 16px;
+}
+
+.about-title {
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin-bottom: 4px;
+}
+
+.about-content {
+    padding: 0 24px 20px;
+}
+
+.about-card {
+    padding: 20px;
+    background: rgba(20, 20, 30, 0.5);
+    border: 1px solid rgba(0, 240, 255, 0.15);
+    border-radius: 20px;
+    margin-bottom: 12px;
+}
+
+.about-quote {
+    font-size: 1rem;
+    font-style: italic;
+    color: #00f0ff;
+    line-height: 1.5;
+    padding: 12px 0;
+    border-left: 2px solid #00f0ff;
+    padding-left: 16px;
+    margin: 16px 0;
+}
+
+.about-text {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.8);
+    margin-bottom: 12px;
+}
+
+.about-text .hl { color: #00f0ff; font-weight: 500; }
+
+/* ===== MINI PLAYER ===== */
+.mini-player {
+    position: absolute;
+    left: 8px; right: 8px;
+    bottom: 84px;
+    padding: 10px 12px;
+    background: rgba(25, 25, 35, 0.85);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border: 1px solid rgba(0, 240, 255, 0.2);
+    border-radius: 16px;
+    z-index: 30;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    opacity: 0;
+    transform: translateY(20px);
+    pointer-events: none;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.mini-player.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.mini-cover {
+    width: 42px; height: 42px;
+    border-radius: 8px;
+    overflow: hidden;
+    flex-shrink: 0;
+    background: linear-gradient(135deg, rgba(0, 240, 255, 0.3), rgba(224, 86, 253, 0.3));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mini-cover img { width: 100%; height: 100%; object-fit: cover; }
+
+.mini-info {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.mini-title {
+    font-size: 0.8rem;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.mini-artist {
+    font-size: 0.65rem;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.1em;
+}
+
+.mini-progress {
+    position: absolute;
+    left: 12px; right: 12px;
+    bottom: 4px;
+    height: 2px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 1px;
+    overflow: hidden;
+}
+
+.mini-progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #00f0ff, #e056fd);
+    transition: width 0.1s linear;
+}
+
+.mini-controls {
+    display: flex;
+    gap: 2px;
+    align-items: center;
+}
+
+.mini-btn {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background: transparent;
+    transition: transform 0.15s ease;
+}
+
+.mini-btn:active { transform: scale(0.85); }
+.mini-btn svg { fill: #fff; width: 18px; height: 18px; }
+.mini-btn.play svg { margin-left: 2px; }
+
+/* ===== TAB BAR ===== */
+.tab-bar {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 84px;
+    padding: 8px 16px 24px;
+    background: rgba(10, 10, 15, 0.85);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 40;
+}
+
+.tab {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 4px;
+    cursor: pointer;
+    color: rgba(255,255,255,0.4);
+    transition: color 0.2s ease;
+    position: relative;
+}
+
+.tab.active { color: #00f0ff; }
+
+.tab svg { width: 22px; height: 22px; fill: currentColor; }
+
+.tab-label {
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.tab.active::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 20px; height: 2px;
+    background: #00f0ff;
+    border-radius: 0 0 2px 2px;
+    box-shadow: 0 0 8px #00f0ff;
+}
+
+/* Home indicator */
+.home-indicator {
+    position: absolute;
+    bottom: 6px; left: 50%;
+    transform: translateX(-50%);
+    width: 120px; height: 4px;
+    background: rgba(255,255,255,0.3);
+    border-radius: 2px;
+    z-index: 45;
+}
+
+/* ===== FULLSCREEN PLAYER ===== */
+.full-player {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, #0a0a1a 0%, #12121f 50%, #0a0a15 100%);
+    z-index: 70;
+    padding: 60px 24px 40px;
+    display: flex;
+    flex-direction: column;
+    transform: translateY(100%);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow-y: auto;
+}
+
+.full-player.open { transform: translateY(0); }
+
+.full-player-close {
+    position: absolute;
+    top: 50px; right: 20px;
+    width: 32px; height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255,255,255,0.6);
+    cursor: pointer;
+    font-size: 1.5rem;
+}
+
+.full-player-handle {
+    position: absolute;
+    top: 16px; left: 50%;
+    transform: translateX(-50%);
+    width: 40px; height: 4px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 2px;
+}
+
+.full-cover {
+    width: 100%;
+    max-width: 320px;
+    aspect-ratio: 1;
+    margin: 20px auto 30px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 60px rgba(0, 240, 255, 0.15);
+    background: linear-gradient(135deg, rgba(0, 240, 255, 0.2), rgba(224, 86, 253, 0.2));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+}
+
+.full-cover img { width: 100%; height: 100%; object-fit: cover; }
+
+.full-info { text-align: center; margin-bottom: 24px; }
+
+.full-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.full-artist {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+}
+
+.full-progress {
+    margin-bottom: 20px;
+}
+
+.full-progress-bar {
+    width: 100%;
+    height: 4px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 2px;
+    cursor: pointer;
+    position: relative;
+}
+
+.full-progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #00f0ff, #e056fd);
+    border-radius: 2px;
+}
+
+.full-times {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 6px;
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.4);
+    font-variant-numeric: tabular-nums;
+}
+
+.full-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-bottom: 24px;
+}
+
+.full-ctrl-btn {
+    width: 44px; height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: rgba(255,255,255,0.7);
+    transition: transform 0.15s ease;
+}
+
+.full-ctrl-btn:active { transform: scale(0.85); }
+.full-ctrl-btn svg { fill: currentColor; width: 24px; height: 24px; }
+
+.full-play-btn {
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.15s ease;
+}
+
+.full-play-btn:active { transform: scale(0.9); }
+.full-play-btn svg { fill: #000; width: 28px; height: 28px; margin-left: 3px; }
+.full-play-btn.playing svg { margin-left: 0; }
+
+.full-actions {
+    display: flex;
+    justify-content: space-around;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.full-action {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    color: rgba(255,255,255,0.6);
+    cursor: pointer;
+    font-size: 0.65rem;
+    letter-spacing: 0.05em;
+}
+
+.full-action svg { fill: currentColor; width: 20px; height: 20px; }
+
+/* ===== MODALS ===== */
+.modal-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(8px);
+    z-index: 80;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.modal-overlay.active { opacity: 1; visibility: visible; }
+
+.modal-sheet {
+    width: 100%;
+    max-height: 80%;
+    background: linear-gradient(180deg, #1a1a28 0%, #0f0f18 100%);
+    border-radius: 24px 24px 0 0;
+    padding: 8px 24px 32px;
+    transform: translateY(100%);
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow-y: auto;
+}
+
+.modal-overlay.active .modal-sheet { transform: translateY(0); }
+
+.modal-handle {
+    width: 40px; height: 4px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 2px;
+    margin: 8px auto 20px;
+}
+
+.modal-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.download-modal-content {
+    padding: 10px 0;
+}
+
+.download-track-info {
+    background: rgba(0, 240, 255, 0.05);
+    border: 1px solid rgba(0, 240, 255, 0.2);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.download-track-cover {
+    width: 120px;
+    height: 120px;
+    border-radius: 16px;
+    margin: 0 auto 16px;
+    background: linear-gradient(135deg, rgba(0, 240, 255, 0.2), rgba(224, 86, 253, 0.2));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    overflow: hidden;
+}
+
+.download-track-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.download-track-name {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: #fff;
+}
+
+.download-track-artist {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+}
+
+.download-track-duration {
+    font-size: 0.85rem;
+    color: #00f0ff;
+    font-weight: 500;
+}
+
+.download-info-text {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.5;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.download-warning {
+    background: rgba(255, 107, 107, 0.1);
+    border: 1px solid rgba(255, 107, 107, 0.3);
+    border-radius: 12px;
+    padding: 12px;
+    margin-bottom: 20px;
+    font-size: 0.8rem;
+    color: #ff6b6b;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.download-warning svg {
+    width: 18px;
+    height: 18px;
+    fill: #ff6b6b;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.modal-option {
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    margin-bottom: 4px;
+}
+
+.modal-option:active { background: rgba(255,255,255,0.05); }
+
+.modal-option-icon {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    background: rgba(0, 240, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-option-icon svg { fill: #00f0ff; width: 18px; height: 18px; }
+.modal-option-icon.danger { background: rgba(255, 107, 107, 0.1); }
+.modal-option-icon.danger svg { fill: #ff6b6b; }
+
+.modal-option-text {
+    flex: 1;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.download-action-btn {
+    width: 100%;
+    padding: 16px;
+    margin-top: 12px;
+    background: linear-gradient(135deg, rgba(0, 240, 255, 0.2), rgba(224, 86, 253, 0.2));
+    border: 1px solid rgba(0, 240, 255, 0.4);
+    border-radius: 14px;
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+}
+
+.download-action-btn:active {
+    transform: scale(0.98);
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+}
+
+.download-action-btn.ready {
+    background: linear-gradient(135deg, #00f0ff, #e056fd);
+    border-color: transparent;
+    box-shadow: 0 10px 30px rgba(0, 240, 255, 0.3);
+}
+
+.modal-cancel {
+    margin-top: 12px;
+    padding: 14px;
+    text-align: center;
+    background: rgba(255,255,255,0.05);
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    color: rgba(255,255,255,0.6);
+}
+
+.modal-cancel:active { background: rgba(255,255,255,0.1); }
+
+/* ===== TOAST ===== */
+.toast {
+    position: absolute;
+    top: 60px; left: 50%;
+    transform: translateX(-50%) translateY(-20px);
+    padding: 10px 20px;
+    background: rgba(0, 240, 255, 0.15);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(0, 240, 255, 0.4);
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #fff;
+    z-index: 90;
+    opacity: 0;
+    transition: all 0.3s ease;
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* Equalizer animation for active track */
+.eq-bars {
+    display: inline-flex;
+    gap: 2px;
+    align-items: flex-end;
+    height: 12px;
+    margin-right: 4px;
+}
+
+.eq-bars span {
+    width: 2px;
+    background: #00f0ff;
+    border-radius: 1px;
+    animation: eq 0.8s ease-in-out infinite;
+}
+
+.eq-bars span:nth-child(1) { height: 40%; animation-delay: 0s; }
+.eq-bars span:nth-child(2) { height: 80%; animation-delay: 0.2s; }
+.eq-bars span:nth-child(3) { height: 60%; animation-delay: 0.4s; }
+.eq-bars span:nth-child(4) { height: 100%; animation-delay: 0.1s; }
+
+@keyframes eq {
+    0%, 100% { transform: scaleY(0.3); }
+    50% { transform: scaleY(1); }
+}
+
+.track-item:not(.playing) .eq-bars { display: none; }
+</style>
+</head>
+<body>
+
+<div class="phone-frame">
+    <!-- Dynamic Island -->
+    <div class="dynamic-island"></div>
+    
+    <!-- Status Bar -->
+    <div class="status-bar">
+        <div class="time" id="statusTime">9:41</div>
+        <div class="right">
+            <div class="status-icons">
+                <svg viewBox="0 0 18 12"><path d="M1 7h2v4H1zm4-2h2v6H5zm4-2h2v8H9zm4-2h2v10h-2z"/></svg>
+                <svg viewBox="0 0 16 12"><path d="M8 2C5.5 2 3.2 2.9 1.5 4.5L0 3C2.1 1 4.9 0 8 0s5.9 1 8 3l-1.5 1.5C12.8 2.9 10.5 2 8 2zm0 4c-1.5 0-2.9.5-4 1.5L2.5 6C4 4.8 5.9 4 8 4s4 .8 5.5 2L12 7.5C10.9 6.5 9.5 6 8 6zm0 4c-.7 0-1.3.2-1.8.6L8 13l1.8-2.4C9.3 10.2 8.7 10 8 10z"/></svg>
+            </div>
+            <div class="battery"><div class="battery-fill"></div></div>
+        </div>
+    </div>
+
+    <!-- Backgrounds -->
+    <div class="bg-base"></div>
+    <canvas id="soundCanvas"></canvas>
+    <div class="bokeh bokeh-1"></div>
+    <div class="bokeh bokeh-2"></div>
+    <div class="bokeh bokeh-3"></div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">Готово</div>
+
+    <!-- WELCOME SCREEN -->
+    <div class="welcome-screen" id="welcomeScreen">
+        <div class="welcome-logo">EVGENII</div>
+        <div class="welcome-title">Добро пожаловать</div>
+        <div class="welcome-subtitle">Как к тебе обращаться?</div>
+        
+        <div class="welcome-input-wrap">
+            <input type="text" class="welcome-input" id="userNameInput" placeholder="Введи своё имя" maxlength="20" autocomplete="off">
+        </div>
+        
+        <button class="welcome-btn" id="welcomeBtn" onclick="enterApp()">Войти</button>
+    </div>
+
+    <!-- Screens -->
+    <div class="screen-container">
+        
+        <!-- HOME SCREEN -->
+        <div class="screen active" id="screen-home">
+            <div class="home-header">
+                <div class="greeting" id="greeting">Добрый вечер</div>
+                <div class="user-name" id="userName">EVGENII</div>
+            </div>
+            
+            <div class="hero-card">
+                <div class="hero-title">EVGENII</div>
+                <div class="hero-subtitle">Где заканчиваюсь я — и начинается ИИ</div>
+                <div class="hero-play-btn" id="heroPlayBtn">
+                    <div class="play-icon-hero" id="heroPlayIcon"></div>
+                </div>
+                <div class="hero-track-info" id="heroTrackInfo">
+                    <div id="heroTrackName">Нажми, чтобы слушать</div>
+                    <div class="artist">EVGENII</div>
+                </div>
+            </div>
+
+            <div class="section-title">Новый релиз</div>
+            <div class="new-release-card" id="newReleaseCard">
+                <div class="new-release-cover" id="newReleaseCover">
+                    <div class="new-release-badge">NEW</div>
+                </div>
+                <div class="new-release-info">
+                    <div class="new-release-label">Премьера</div>
+                    <div class="new-release-title" id="newReleaseTitle">—</div>
+                    <div class="new-release-meta" id="newReleaseMeta">EVGENII • 0:00</div>
+                </div>
+            </div>
+
+            <div class="section-title">Быстрый доступ</div>
+            <div class="quick-grid">
+                <div class="quick-card" onclick="switchTab('music')">
+                    <div class="quick-icon cyan">🎵</div>
+                    <div class="quick-title">Все треки</div>
+                    <div class="quick-desc">Полная дискография</div>
+                </div>
+                <div class="quick-card" onclick="switchTab('community')">
+                    <div class="quick-icon pink">💬</div>
+                    <div class="quick-title">Сообщество</div>
+                    <div class="quick-desc">Bip & Telegram</div>
+                </div>
+                <div class="quick-card" onclick="switchTab('about')">
+                    <div class="quick-icon red">✨</div>
+                    <div class="quick-title">О проекте</div>
+                    <div class="quick-desc">Концепция ИИ</div>
+                </div>
+                <div class="quick-card" onclick="shufflePlay()">
+                    <div class="quick-icon green">🔀</div>
+                    <div class="quick-title">Перемешать</div>
+                    <div class="quick-desc">Случайный трек</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MUSIC SCREEN -->
+        <div class="screen" id="screen-music">
+            <div class="music-header">
+                <div class="music-title">Музыка</div>
+            </div>
+
+            <div class="featured-release" id="featuredRelease">
+                <!-- Filled by JS -->
+            </div>
+
+            <div class="section-title">Все треки</div>
+            <div class="track-list" id="trackList">
+                <!-- Filled by JS -->
+            </div>
+        </div>
+
+        <!-- COMMUNITY SCREEN -->
+        <div class="screen" id="screen-community">
+            <div class="community-header">
+                <div class="community-title">Сообщество</div>
+                <div class="community-sub">Присоединяйся к нам</div>
+            </div>
+
+            <div class="community-list">
+                <div class="community-card" onclick="openLink('bip')">
+                    <div class="community-icon bip">🔮</div>
+                    <div class="community-info">
+                        <div class="community-name">
+                            Bip
+                            <span class="status-dot"></span>
+                        </div>
+                        <div class="community-desc">Основная группа проекта. Обсуждение треков, закулисье.</div>
+                    </div>
+                    <div class="community-arrow">›</div>
+                </div>
+                <div class="community-card" onclick="openLink('telegram')">
+                    <div class="community-icon telegram">✈️</div>
+                    <div class="community-info">
+                        <div class="community-name">
+                            Telegram
+                            <span class="status-dot"></span>
+                        </div>
+                        <div class="community-desc">Новости, анонсы и эксклюзивные материалы.</div>
+                    </div>
+                    <div class="community-arrow">›</div>
+                </div>
+                <div class="community-card" onclick="openLink('instagram')">
+                    <div class="community-icon instagram">📸</div>
+                    <div class="community-info">
+                        <div class="community-name">
+                            Instagram
+                            <span class="status-dot"></span>
+                        </div>
+                        <div class="community-desc">Reels, визуал и закулисье создания треков.</div>
+                    </div>
+                    <div class="community-arrow">›</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ABOUT SCREEN -->
+        <div class="screen" id="screen-about">
+            <div class="about-header">
+                <div class="about-title">О проекте</div>
+            </div>
+
+            <div class="about-content">
+                <div class="about-card">
+                    <div class="about-text">
+                        <strong style="color:#00f0ff;">EVGENII</strong> — это эксперимент на стыке человеческих эмоций и искусственного интеллекта.
+                    </div>
+                    <div class="about-quote">
+                        «Я придумываю текст и стиль исполнения. А выучить и воплотить в песню доверяю ИИ.»
+                    </div>
+                </div>
+
+                <div class="about-card">
+                    <div class="about-text">
+                        Искусственный интеллект становится моим <span class="hl">голосом</span>. Он заучивает мои слова, учится чувствовать ритм, подбирать интонации.
+                    </div>
+                    <div class="about-text">
+                        Это не замена человеку — это <span class="hl">новый инструмент выражения</span>.
+                    </div>
+                </div>
+
+                <div class="about-card">
+                    <div class="about-text">
+                        Вместе мы создаём что-то третье. Не совсем человеческое, не совсем машинное. Что-то среднее, где технологии усиливают эмоции, а не заменяют их.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MINI PLAYER -->
+    <div class="mini-player" id="miniPlayer" onclick="openFullPlayer()">
+        <div class="mini-cover" id="miniCover">🎵</div>
+        <div class="mini-info">
+            <div class="mini-title" id="miniTitle">—</div>
+            <div class="mini-artist">EVGENII</div>
+        </div>
+        <div class="mini-controls">
+            <div class="mini-btn" onclick="event.stopPropagation(); skipTrack(-1)">
+                <svg viewBox="0 0 24 24"><path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z"/></svg>
+            </div>
+            <div class="mini-btn play" id="miniPlayBtn" onclick="event.stopPropagation(); togglePlay()">
+                <svg id="miniPlayIcon" viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+            </div>
+            <div class="mini-btn" onclick="event.stopPropagation(); skipTrack(1)">
+                <svg viewBox="0 0 24 24"><path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z"/></svg>
+            </div>
+        </div>
+        <div class="mini-progress">
+            <div class="mini-progress-fill" id="miniProgressFill"></div>
+        </div>
+    </div>
+
+    <!-- FULLSCREEN PLAYER -->
+    <div class="full-player" id="fullPlayer">
+        <div class="full-player-handle"></div>
+        <div class="full-player-close" onclick="closeFullPlayer()">✕</div>
+        
+        <div class="full-cover" id="fullCover">🎵</div>
+        
+        <div class="full-info">
+            <div class="full-title" id="fullTitle">—</div>
+            <div class="full-artist">EVGENII</div>
+        </div>
+
+        <div class="full-progress">
+            <div class="full-progress-bar" id="fullProgressBar">
+                <div class="full-progress-fill" id="fullProgressFill"></div>
+            </div>
+            <div class="full-times">
+                <span id="fullCurrentTime">0:00</span>
+                <span id="fullTotalTime">0:00</span>
+            </div>
+        </div>
+
+        <div class="full-controls">
+            <div class="full-ctrl-btn" onclick="skipTrack(-1)">
+                <svg viewBox="0 0 24 24"><path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z"/></svg>
+            </div>
+            <div class="full-play-btn" id="fullPlayBtn" onclick="togglePlay()">
+                <svg id="fullPlayIcon" viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+            </div>
+            <div class="full-ctrl-btn" onclick="skipTrack(1)">
+                <svg viewBox="0 0 24 24"><path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z"/></svg>
+            </div>
+        </div>
+
+        <div class="full-actions">
+            <div class="full-action" onclick="openDownloadModal(currentTrackId)">
+                <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+                <span>Скачать</span>
+            </div>
+            <div class="full-action" onclick="showToast('Скоро')">
+                <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                <span>Нравится</span>
+            </div>
+            <div class="full-action" onclick="shareTrack()">
+                <svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
+                <span>Поделиться</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB BAR -->
+    <div class="tab-bar">
+        <div class="tab active" data-tab="home" onclick="switchTab('home')">
+            <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+            <div class="tab-label">Главная</div>
+        </div>
+        <div class="tab" data-tab="music" onclick="switchTab('music')">
+            <svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+            <div class="tab-label">Музыка</div>
+        </div>
+        <div class="tab" data-tab="community" onclick="switchTab('community')">
+            <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+            <div class="tab-label">Сообщество</div>
+        </div>
+        <div class="tab" data-tab="about" onclick="switchTab('about')">
+            <svg viewBox="0 0 24 24"><path d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"/></svg>
+            <div class="tab-label">О проекте</div>
+        </div>
+    </div>
+
+    <div class="home-indicator"></div>
+
+    <!-- DOWNLOAD MODAL -->
+    <div class="modal-overlay" id="downloadModal" onclick="closeModal('downloadModal')">
+        <div class="modal-sheet" onclick="event.stopPropagation()">
+            <div class="modal-handle"></div>
+            <div class="modal-title">СКАЧИВАНИЕ ТРЕКА</div>
+            
+            <div class="download-modal-content">
+                <div class="download-track-info">
+                    <div class="download-track-cover" id="downloadCover">🎵</div>
+                    <div class="download-track-name" id="downloadTrackName">—</div>
+                    <div class="download-track-artist">EVGENII</div>
+                    <div class="download-track-duration" id="downloadTrackDuration">0:00</div>
+                </div>
+                
+                <div class="download-info-text">
+                    Трек будет загружен на ваше устройство в высоком качестве
+                </div>
+                
+                <div class="download-warning">
+                    <svg viewBox="0 0 24 24"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
+                    <div>
+                        <strong>Внимание!</strong><br>
+                        Скачивание происходит не сразу.<br>
+                        Пожалуйста, подождите несколько секунд.
+                    </div>
+                </div>
+                
+                <button class="download-action-btn" id="downloadActionBtn" onclick="startDownload()">
+                    ПОДОЖДИТЕ...
+                </button>
+            </div>
+            
+            <div class="modal-cancel" onclick="closeModal('downloadModal')">Отмена</div>
+        </div>
+    </div>
+
+    <!-- TRACK MENU MODAL -->
+    <div class="modal-overlay" id="trackMenuModal" onclick="closeModal('trackMenuModal')">
+        <div class="modal-sheet" onclick="event.stopPropagation()">
+            <div class="modal-handle"></div>
+            <div class="modal-title" id="menuTrackTitle">Трек</div>
+            
+            <div class="modal-option" onclick="shareTrack()">
+                <div class="modal-option-icon">
+                    <svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
+                </div>
+                <div class="modal-option-text">Поделиться треком</div>
+            </div>
+            
+            <div class="modal-cancel" onclick="closeModal('trackMenuModal')">Отмена</div>
+        </div>
+    </div>
+</div>
+
+<audio id="audioPlayer" preload="auto"></audio>
+
+<script>
+// ===== DATA =====
+const newRelease = {
+    id: 'new-release',
+    title: "Бункер",
+    subtitle: "New Release",
+    file: "tracks/song.mp3",
+    duration: "3:24",
+    cover: "cover/cover8.jpg",
+    isNew: true,
+    isPlaceholder: false
+};
+
+const allTracks = [
+    { id: 2, title: "Тест", subtitle: "", file: "tracks/song1.mp3", duration: "4:03", cover: "cover/cover6.jpg", isNew: true, isPlaceholder: false },
+    { id: 3, title: "А мне похуй", subtitle: "Когда похуй", file: "tracks/song.mp3", duration: "3:11", cover: "cover/cover1.jpg", isNew: false, isPlaceholder: false },
+    { id: 4, title: "Сгоревший экран", subtitle: "", file: "tracks/song2.mp3", duration: "3:48", cover: "cover/cover88.jpg", isNew: false, isPlaceholder: false },
+    { id: 5, title: "Тишина", subtitle: "", file: "tracks/song4.mp3", duration: "4:48", cover: "cover/cover88.jpg", isNew: false, isPlaceholder: false },
+    { id: 6, title: "Воздух Густеет", subtitle: "", file: "tracks/song1.mp3", duration: "3:23", cover: "cover/cover88.jpg", isNew: false, isPlaceholder: false },
+    { id: 7, title: "Нейронный Дождь", subtitle: "О чём думает нейросеть?", file: "tracks/song1.mp3", duration: "4:03", cover: "cover/cover2.jpg", isNew: false, isPlaceholder: false },
+    { id: 8, title: "Поезд на юг", subtitle: "", file: "tracks/song7.mp3", duration: "3:23", cover: "cover/cover7.jpg", isNew: false, isPlaceholder: false }
+];
+
+const playlist = [newRelease, ...allTracks.filter(t => !t.isPlaceholder)];
+
+// ===== STATE =====
+let isPlaying = false;
+let currentTrackId = null;
+let currentTab = 'home';
+let downloadTimer = null;
+let currentDownloadFile = null;
+
+// ===== DOM =====
+const audioPlayer = document.getElementById('audioPlayer');
+const miniPlayer = document.getElementById('miniPlayer');
+const miniTitle = document.getElementById('miniTitle');
+const miniCover = document.getElementById('miniCover');
+const miniPlayIcon = document.getElementById('miniPlayIcon');
+const miniProgressFill = document.getElementById('miniProgressFill');
+const fullPlayer = document.getElementById('fullPlayer');
+const fullTitle = document.getElementById('fullTitle');
+const fullCover = document.getElementById('fullCover');
+const fullPlayIcon = document.getElementById('fullPlayIcon');
+const fullPlayBtn = document.getElementById('fullPlayBtn');
+const fullProgressFill = document.getElementById('fullProgressFill');
+const fullProgressBar = document.getElementById('fullProgressBar');
+const fullCurrentTime = document.getElementById('fullCurrentTime');
+const fullTotalTime = document.getElementById('fullTotalTime');
+const heroPlayBtn = document.getElementById('heroPlayBtn');
+const heroPlayIcon = document.getElementById('heroPlayIcon');
+const heroTrackInfo = document.getElementById('heroTrackInfo');
+const heroTrackName = document.getElementById('heroTrackName');
+const downloadModal = document.getElementById('downloadModal');
+const downloadActionBtn = document.getElementById('downloadActionBtn');
+const welcomeScreen = document.getElementById('welcomeScreen');
+const userNameInput = document.getElementById('userNameInput');
+const userNameDisplay = document.getElementById('userName');
+
+// ===== HELPERS =====
+function getTrackById(id) {
+    if (id === newRelease.id) return newRelease;
+    return allTracks.find(t => t.id === id);
+}
+
+function getTrackIndex(id) {
+    return playlist.findIndex(t => t.id === id);
+}
+
+function formatTime(sec) {
+    if (!sec || isNaN(sec)) return '0:00';
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return m + ':' + String(s).padStart(2, '0');
+}
+
+function showToast(msg) {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2000);
+}
+
+// ===== STATUS BAR TIME =====
+function updateStatusTime() {
+    const now = new Date();
+    const h = now.getHours();
+    const m = String(now.getMinutes()).padStart(2, '0');
+    document.getElementById('statusTime').textContent = `${h}:${m}`;
+}
+updateStatusTime();
+setInterval(updateStatusTime, 30000);
+
+// ===== GREETING =====
+function updateGreeting() {
+    const h = new Date().getHours();
+    let greeting = 'Доброй ночи';
+    if (h >= 5 && h < 12) greeting = 'Доброе утро';
+    else if (h >= 12 && h < 18) greeting = 'Добрый день';
+    else if (h >= 18 && h < 23) greeting = 'Добрый вечер';
+    document.getElementById('greeting').textContent = greeting;
+}
+updateGreeting();
+
+// ===== WELCOME SCREEN =====
+function enterApp() {
+    const name = userNameInput.value.trim();
+    if (name) {
+        localStorage.setItem('evgenii_userName', name);
+        userNameDisplay.textContent = name.toUpperCase();
+        welcomeScreen.classList.add('hidden');
+        setTimeout(() => {
+            welcomeScreen.style.display = 'none';
+        }, 500);
+    }
+}
+
+// Check if user already entered name
+const savedName = localStorage.getItem('evgenii_userName');
+if (savedName) {
+    userNameDisplay.textContent = savedName.toUpperCase();
+    welcomeScreen.style.display = 'none';
+}
+
+// Allow Enter key to submit
+userNameInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+        enterApp();
+    }
+});
+
+// ===== TAB SWITCHING =====
+function switchTab(tab) {
+    currentTab = tab;
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(`screen-${tab}`).classList.add('active');
+    document.querySelectorAll('.tab').forEach(t => {
+        t.classList.toggle('active', t.dataset.tab === tab);
+    });
+    document.getElementById(`screen-${tab}`).scrollTop = 0;
+}
+
+// ===== RENDER NEW RELEASE =====
+function renderNewRelease() {
+    const r = newRelease;
+    const coverEl = document.getElementById('newReleaseCover');
+    if (r.cover) {
+        const img = document.createElement('img');
+        img.src = r.cover;
+        img.alt = r.title;
+        img.onerror = function() { this.style.display = 'none'; };
+        coverEl.appendChild(img);
+    }
+    document.getElementById('newReleaseTitle').textContent = r.title;
+    document.getElementById('newReleaseMeta').textContent = `EVGENII • ${r.duration}`;
+    
+    document.getElementById('newReleaseCard').onclick = () => playTrack(r.id);
+    
+    const featured = document.getElementById('featuredRelease');
+    featured.innerHTML = `
+        <div class="featured-cover">
+            ${r.cover ? `<img src="${r.cover}" alt="${r.title}" onerror="this.style.display='none'">` : '🎵'}
+        </div>
+        <div class="featured-label">★ Новый релиз</div>
+        <div class="featured-title">${r.title}</div>
+        <div class="featured-artist">EVGENII</div>
+        <div class="featured-controls">
+            <div class="icon-btn-round" onclick="openDownloadModal('${r.id}')">
+                <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+            </div>
+            <div class="featured-play" onclick="playTrack('${r.id}')">
+                <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+            </div>
+            <div class="icon-btn-round" onclick="shareTrack()">
+                <svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
+            </div>
+        </div>
+    `;
+}
+
+// ===== RENDER TRACK LIST =====
+function renderTrackList() {
+    const list = document.getElementById('trackList');
+    list.innerHTML = allTracks.map(track => `
+        <div class="track-item" data-id="${track.id}" onclick="playTrack(${track.id})">
+            <div class="track-thumb">
+                ${track.cover ? `<img src="${track.cover}" alt="${track.title}" onerror="this.style.display='none'">` : ''}
+            </div>
+            <div class="track-info">
+                <div class="track-name">
+                    <span class="eq-bars"><span></span><span></span><span></span><span></span></span>
+                    ${track.title}
+                </div>
+                <div class="track-sub">${track.subtitle || 'EVGENII'}</div>
+            </div>
+            <div class="track-duration">${track.duration}</div>
+            
+            <div class="track-download-btn" onclick="event.stopPropagation(); openDownloadModal(${track.id})">
+                <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+            </div>
+            
+            <div class="track-menu-btn" onclick="event.stopPropagation(); showTrackMenuFor(${track.id})">⋮</div>
+        </div>
+    `).join('');
+}
+
+// ===== PLAYER =====
+function playTrack(trackId) {
+    const track = getTrackById(trackId);
+    if (!track || track.isPlaceholder) return;
+    
+    if (currentTrackId === trackId && isPlaying) {
+        togglePlay();
+        return;
+    }
+    
+    currentTrackId = trackId;
+    audioPlayer.src = track.file;
+    audioPlayer.load();
+    
+    miniTitle.textContent = track.title;
+    fullTitle.textContent = track.title;
+    heroTrackName.textContent = track.title;
+    
+    updateCover(miniCover, track.cover);
+    updateCover(fullCover, track.cover);
+    
+    miniPlayer.classList.add('visible');
+    heroTrackInfo.classList.add('visible');
+    
+    document.querySelectorAll('.track-item').forEach(item => {
+        const isActive = item.dataset.id == trackId;
+        item.classList.toggle('active', isActive);
+        item.classList.toggle('playing', isActive && isPlaying);
+    });
+    
+    audioPlayer.play().then(() => {
+        isPlaying = true;
+        updatePlayIcons();
+    }).catch(e => console.log('Audio error:', e));
+}
+
+function updateCover(el, coverUrl) {
+    if (coverUrl) {
+        el.innerHTML = `<img src="${coverUrl}" onerror="this.parentElement.innerHTML=''">`;
+    } else {
+        el.innerHTML = '';
+    }
+}
+
+function togglePlay() {
+    if (!currentTrackId) {
+        playTrack(newRelease.id);
+        return;
+    }
+    
+    if (isPlaying) {
+        audioPlayer.pause();
+        isPlaying = false;
+    } else {
+        audioPlayer.play().catch(e => console.log(e));
+        isPlaying = true;
+    }
+    updatePlayIcons();
+    updateActiveTrackPlaying();
+}
+
+function updatePlayIcons() {
+    const pauseIcon = '<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>';
+    const playIcon = '<polygon points="5,3 19,12 5,21"/>';
+    
+    if (isPlaying) {
+        miniPlayIcon.innerHTML = pauseIcon;
+        miniPlayIcon.style.marginLeft = '0';
+        fullPlayIcon.innerHTML = pauseIcon;
+        fullPlayBtn.classList.add('playing');
+        heroPlayIcon.style.cssText = 'width:14px;height:18px;background:linear-gradient(to right,rgba(0,240,255,0.9) 40%,transparent 40%,transparent 60%,rgba(0,240,255,0.9) 60%);border:none;margin:0;';
+        heroPlayBtn.classList.add('playing');
+    } else {
+        miniPlayIcon.innerHTML = playIcon;
+        miniPlayIcon.style.marginLeft = '2px';
+        fullPlayIcon.innerHTML = playIcon;
+        fullPlayBtn.classList.remove('playing');
+        heroPlayIcon.style.cssText = '';
+        heroPlayBtn.classList.remove('playing');
+    }
+}
+
+function updateActiveTrackPlaying() {
+    document.querySelectorAll('.track-item').forEach(item => {
+        const isActive = item.dataset.id == currentTrackId;
+        item.classList.toggle('playing', isActive && isPlaying);
+    });
+}
+
+function skipTrack(direction) {
+    if (!currentTrackId) {
+        playTrack(newRelease.id);
+        return;
+    }
+    const idx = getTrackIndex(currentTrackId);
+    let newIdx = idx + direction;
+    if (newIdx < 0) newIdx = playlist.length - 1;
+    if (newIdx >= playlist.length) newIdx = 0;
+    playTrack(playlist[newIdx].id);
+}
+
+function shufflePlay() {
+    const randomIdx = Math.floor(Math.random() * playlist.length);
+    playTrack(playlist[randomIdx].id);
+    showToast('🔀 Случайный трек');
+}
+
+// ===== PROGRESS =====
+audioPlayer.addEventListener('timeupdate', () => {
+    if (!audioPlayer.duration) return;
+    const pct = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+    miniProgressFill.style.width = pct + '%';
+    fullProgressFill.style.width = pct + '%';
+    fullCurrentTime.textContent = formatTime(audioPlayer.currentTime);
+});
+
+audioPlayer.addEventListener('loadedmetadata', () => {
+    fullTotalTime.textContent = formatTime(audioPlayer.duration);
+});
+
+audioPlayer.addEventListener('ended', () => {
+    skipTrack(1);
+});
+
+audioPlayer.addEventListener('pause', () => {
+    isPlaying = false;
+    updatePlayIcons();
+    updateActiveTrackPlaying();
+});
+
+audioPlayer.addEventListener('play', () => {
+    isPlaying = true;
+    updatePlayIcons();
+    updateActiveTrackPlaying();
+});
+
+fullProgressBar.addEventListener('click', (e) => {
+    if (!audioPlayer.duration) return;
+    const rect = fullProgressBar.getBoundingClientRect();
+    const pct = (e.clientX - rect.left) / rect.width;
+    audioPlayer.currentTime = pct * audioPlayer.duration;
+});
+
+// ===== FULL PLAYER =====
+function openFullPlayer() {
+    if (!currentTrackId) return;
+    fullPlayer.classList.add('open');
+}
+
+function closeFullPlayer() {
+    fullPlayer.classList.remove('open');
+}
+
+let touchStartY = 0;
+fullPlayer.addEventListener('touchstart', (e) => {
+    touchStartY = e.touches[0].clientY;
+});
+fullPlayer.addEventListener('touchend', (e) => {
+    const touchEndY = e.changedTouches[0].clientY;
+    if (touchEndY - touchStartY > 80) {
+        closeFullPlayer();
+    }
+});
+
+heroPlayBtn.addEventListener('click', () => {
+    if (!currentTrackId) {
+        playTrack(newRelease.id);
+    } else {
+        togglePlay();
+    }
+});
+
+// ===== DOWNLOAD MODAL =====
+function openDownloadModal(trackId) {
+    const track = getTrackById(trackId);
+    if (!track) return;
+    
+    currentDownloadFile = track.file;
+    
+    document.getElementById('downloadTrackName').textContent = track.title;
+    document.getElementById('downloadTrackDuration').textContent = track.duration;
+    
+    const downloadCover = document.getElementById('downloadCover');
+    if (track.cover) {
+        downloadCover.innerHTML = `<img src="${track.cover}" onerror="this.parentElement.innerHTML=''">`;
+    } else {
+        downloadCover.innerHTML = '';
+    }
+    
+    downloadActionBtn.textContent = 'ПОДОЖДИТЕ...';
+    downloadActionBtn.className = 'download-action-btn';
+    downloadActionBtn.disabled = true;
+    
+    downloadModal.classList.add('active');
+    
+    if (downloadTimer) clearInterval(downloadTimer);
+    
+    let seconds = 3;
+    downloadTimer = setInterval(() => {
+        seconds--;
+        if (seconds > 0) {
+            downloadActionBtn.textContent = `ПОДОЖДИТЕ... ${seconds}`;
+        } else {
+            clearInterval(downloadTimer);
+            downloadActionBtn.textContent = 'СКАЧАТЬ ТРЕК';
+            downloadActionBtn.className = 'download-action-btn ready';
+            downloadActionBtn.disabled = false;
+        }
+    }, 1000);
+}
+
+function startDownload() {
+    if (!currentDownloadFile || downloadActionBtn.disabled) return;
+    
+    showToast('⬇ Начинаем загрузку...');
+    
+    setTimeout(() => {
+        const link = document.createElement('a');
+        link.href = currentDownloadFile;
+        link.download = currentDownloadFile.split('/').pop();
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        closeModal('downloadModal');
+        showToast('✓ Трек скачан');
+    }, 500);
+}
+
+// ===== MODALS =====
+function showTrackMenu() {
+    if (!currentTrackId) return;
+    showTrackMenuFor(currentTrackId);
+}
+
+function showTrackMenuFor(trackId) {
+    const track = getTrackById(trackId);
+    if (!track) return;
+    document.getElementById('menuTrackTitle').textContent = track.title;
+    document.getElementById('trackMenuModal').dataset.trackId = trackId;
+    document.getElementById('trackMenuModal').classList.add('active');
+}
+
+function closeModal(id) {
+    document.getElementById(id).classList.remove('active');
+    if (downloadTimer) {
+        clearInterval(downloadTimer);
+        downloadTimer = null;
+    }
+}
+
+// ===== SHARE =====
+function shareTrack() {
+    if (navigator.share && currentTrackId) {
+        const track = getTrackById(currentTrackId);
+        navigator.share({
+            title: track.title + ' — EVGENII',
+            text: 'Слушай трек ' + track.title,
+            url: window.location.href
+        }).catch(() => {});
+    } else {
+        showToast('🔗 Ссылка скопирована');
+    }
+    closeModal('trackMenuModal');
+}
+
+// ===== LINKS =====
+function openLink(platform) {
+    const links = {
+        'bip': 'https://groups.bip.ai/share/SAMt6grNDNo2wxJZ3usB9rhEJtup4YFE',
+        'telegram': 'https://t.me/+RfGunOGHiUA0OTRi',
+        'instagram': 'https://www.instagram.com/zhenyaa0?igsh=ZHV4ZHE1MGQwd3N5&utm_source=qr'
+    };
+    if (links[platform]) {
+        window.open(links[platform], '_blank');
+    }
+}
+
+// ===== CANVAS ANIMATION =====
+const canvas = document.getElementById('soundCanvas');
+const ctx = canvas.getContext('2d');
+let width, height, time = 0;
+
+function resize() {
+    const frame = document.querySelector('.phone-frame');
+    width = canvas.width = frame.clientWidth;
+    height = canvas.height = frame.clientHeight;
+}
+window.addEventListener('resize', resize);
+setTimeout(resize, 100);
+
+const waves = [
+    { color: 'rgba(0, 240, 255, 0.15)', speed: 0.008, amplitude: 40, frequency: 0.004, yOffset: 0.5 },
+    { color: 'rgba(255, 107, 107, 0.1)', speed: 0.012, amplitude: 50, frequency: 0.003, yOffset: 0.5 },
+    { color: 'rgba(224, 86, 253, 0.08)', speed: 0.006, amplitude: 60, frequency: 0.002, yOffset: 0.5 }
+];
+
+function drawWave(wave, t) {
+    ctx.beginPath();
+    ctx.strokeStyle = wave.color;
+    ctx.lineWidth = 1.5;
+    const baseY = height * wave.yOffset;
+    const amp = isPlaying ? wave.amplitude * 1.5 : wave.amplitude * 0.5;
+    for (let x = 0; x <= width; x += 3) {
+        const y = baseY + Math.sin(x * wave.frequency + t * wave.speed) * amp;
+        if (x === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+}
+
+function drawParticles() {
+    const count = isPlaying ? 40 : 15;
+    for (let i = 0; i < count; i++) {
+        const x = (Math.sin(time * 0.001 + i * 1.5) * 0.5 + 0.5) * width;
+        const y = (Math.cos(time * 0.0015 + i * 2.3) * 0.5 + 0.5) * height;
+        const size = isPlaying ? Math.random() * 2 + 1 : Math.random() * 1 + 0.5;
+        const colors = ['#00f0ff', '#ff6b6b', '#e056fd'];
+        ctx.fillStyle = colors[i % 3] + '40';
+        ctx.beginPath();
+        ctx.arc(x, y, size, 0, Math.PI * 2);
+        ctx.fill();
+    }
+}
+
+function animate() {
+    ctx.clearRect(0, 0, width, height);
+    time += 16;
+    waves.forEach(wave => drawWave(wave, time));
+    drawParticles();
+    requestAnimationFrame(animate);
+}
+animate();
+
+// ===== INIT =====
+renderNewRelease();
+renderTrackList();
+
+document.body.addEventListener('touchmove', (e) => {
+    if (e.target.closest('.screen')) return;
+    e.preventDefault();
+}, { passive: false });
+</script>
+</body>
+</html>
