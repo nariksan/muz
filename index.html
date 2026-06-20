@@ -33,7 +33,7 @@
             padding-bottom: 100px;
         }
 
-        /* ===== ФОНОВЫЕ ЭФФЕКТЫ ===== */
+        /* ===== ФОНОВЫЕ ЭФФЕКТТЫ ===== */
         .bg-effects {
             position: fixed;
             top: 0;
@@ -289,29 +289,12 @@
         .play-btn-large:active { transform: scale(0.95); }
         .play-btn-large svg { width: 28px; height: 28px; fill: #fff; margin-left: 3px; }
 
-        /* Кнопка скачивания в большом релизе */
         .featured-download-btn {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
-            border: 1px solid var(--card-border);
-            background: rgba(20, 20, 40, 0.8);
-            color: var(--text-secondary);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 2;
-            transition: all 0.3s ease;
+            position: absolute; top: 20px; right: 20px; width: 44px; height: 44px; border-radius: 12px;
+            border: 1px solid var(--card-border); background: rgba(20, 20, 40, 0.8); color: var(--text-secondary);
+            cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 2; transition: all 0.3s ease;
         }
-        .featured-download-btn:hover {
-            border-color: var(--cyan);
-            color: var(--cyan);
-            background: rgba(0, 229, 255, 0.1);
-        }
+        .featured-download-btn:hover { border-color: var(--cyan); color: var(--cyan); background: rgba(0, 229, 255, 0.1); }
         .featured-download-btn svg { width: 20px; height: 20px; fill: currentColor; }
 
         /* Список треков */
@@ -321,8 +304,7 @@
         .track-item {
             display: flex; align-items: center; gap: 14px; padding: 14px;
             background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 18px;
-            transition: transform 0.2s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.3s ease, border-color 0.3s ease; cursor: pointer;
         }
         .track-item:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0, 229, 255, 0.08); border-color: rgba(0, 229, 255, 0.25); }
         .track-item:active { transform: translateY(0); }
@@ -339,29 +321,60 @@
         .track-artist { font-size: 0.8rem; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .track-duration { font-size: 0.85rem; color: var(--text-secondary); font-weight: 500; flex-shrink: 0; font-family: 'Orbitron', monospace; margin-right: 8px; }
 
-        /* Кнопка скачивания в треке */
         .track-download-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
-            border: 1px solid var(--card-border);
-            background: rgba(20, 20, 40, 0.6);
-            color: var(--text-secondary);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            transition: all 0.3s ease;
+            width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--card-border);
+            background: rgba(20, 20, 40, 0.6); color: var(--text-secondary); cursor: pointer;
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.3s ease;
         }
-        .track-download-btn:hover {
-            border-color: var(--cyan);
-            color: var(--cyan);
-            background: rgba(0, 229, 255, 0.1);
-            transform: scale(1.05);
-        }
+        .track-download-btn:hover { border-color: var(--cyan); color: var(--cyan); background: rgba(0, 229, 255, 0.1); transform: scale(1.05); }
         .track-download-btn:active { transform: scale(0.95); }
         .track-download-btn svg { width: 18px; height: 18px; fill: currentColor; }
+
+        /* ===== СТРАНИЦА О ПРОЕКТЕ ===== */
+        .about-header { display: flex; align-items: center; gap: 16px; margin-bottom: 30px; padding-top: 10px; }
+        .about-page-title { font-size: 2.5rem; font-weight: 900; letter-spacing: 1px; }
+
+        .about-content { display: flex; flex-direction: column; gap: 20px; }
+
+        .about-card {
+            background: rgba(20, 25, 40, 0.6);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 24px 20px;
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+
+        .about-card .highlight {
+            color: var(--cyan);
+            font-weight: 600;
+        }
+
+        .about-card .evgenii-title {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--cyan);
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .about-quote {
+            border-left: 3px solid var(--cyan);
+            padding-left: 20px;
+            margin: 20px 0;
+            font-style: italic;
+            color: var(--cyan);
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        .about-card p {
+            margin-bottom: 12px;
+            color: var(--text-secondary);
+        }
+
+        .about-card p:last-child {
+            margin-bottom: 0;
+        }
 
         /* ===== ФИКСИРОВАННЫЙ ПЛЕЕР ===== */
         .sticky-player {
@@ -405,166 +418,72 @@
 
         /* ===== МОДАЛЬНОЕ ОКНО СКАЧИВАНИЯ ===== */
         .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(5, 5, 15, 0.85);
-            backdrop-filter: blur(8px);
-            z-index: 2000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(5, 5, 15, 0.85); backdrop-filter: blur(8px); z-index: 2000;
+            display: flex; align-items: center; justify-content: center; padding: 20px;
+            opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
         }
 
-        .modal-overlay.active {
-            opacity: 1;
-            pointer-events: all;
-        }
+        .modal-overlay.active { opacity: 1; pointer-events: all; }
 
         .modal-content {
-            width: 100%;
-            max-width: 440px;
-            background: linear-gradient(180deg, #0f1525 0%, #0a0e1a 100%);
-            border: 1px solid var(--card-border);
-            border-radius: 28px;
-            padding: 30px 24px 24px;
-            transform: translateY(30px) scale(0.95);
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            max-height: 90vh;
-            overflow-y: auto;
+            width: 100%; max-width: 440px; background: linear-gradient(180deg, #0f1525 0%, #0a0e1a 100%);
+            border: 1px solid var(--card-border); border-radius: 28px; padding: 30px 24px 24px;
+            transform: translateY(30px) scale(0.95); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            max-height: 90vh; overflow-y: auto;
         }
 
-        .modal-overlay.active .modal-content {
-            transform: translateY(0) scale(1);
-        }
+        .modal-overlay.active .modal-content { transform: translateY(0) scale(1); }
 
         .modal-header {
-            text-align: center;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.1rem;
-            font-weight: 700;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            margin-bottom: 24px;
-            color: var(--text-primary);
+            text-align: center; font-family: 'Orbitron', sans-serif; font-size: 1.1rem;
+            font-weight: 700; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 24px; color: var(--text-primary);
         }
 
         .modal-track-card {
-            background: rgba(20, 25, 40, 0.8);
-            border: 1px solid var(--card-border);
-            border-radius: 20px;
-            padding: 24px 20px;
-            text-align: center;
-            margin-bottom: 20px;
+            background: rgba(20, 25, 40, 0.8); border: 1px solid var(--card-border);
+            border-radius: 20px; padding: 24px 20px; text-align: center; margin-bottom: 20px;
         }
 
         .modal-cover {
-            width: 140px;
-            height: 140px;
-            border-radius: 20px;
-            margin: 0 auto 16px;
-            background: linear-gradient(135deg, #2a3a4a, #3a2a4a);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-            overflow: hidden;
+            width: 140px; height: 140px; border-radius: 20px; margin: 0 auto 16px;
+            background: linear-gradient(135deg, #2a3a4a, #3a2a4a); display: flex;
+            align-items: center; justify-content: center; font-size: 3rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4); overflow: hidden;
         }
 
-        .modal-track-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 6px;
-        }
-
-        .modal-track-artist {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            letter-spacing: 3px;
-            margin-bottom: 12px;
-        }
-
-        .modal-track-duration {
-            font-family: 'Orbitron', monospace;
-            font-size: 1rem;
-            color: var(--cyan);
-        }
+        .modal-track-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 6px; }
+        .modal-track-artist { font-family: 'Orbitron', sans-serif; font-size: 0.85rem; color: var(--text-secondary); letter-spacing: 3px; margin-bottom: 12px; }
+        .modal-track-duration { font-family: 'Orbitron', monospace; font-size: 1rem; color: var(--cyan); }
 
         .modal-info-text {
-            text-align: center;
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-            line-height: 1.5;
-            margin-bottom: 20px;
-            padding: 0 10px;
+            text-align: center; font-size: 0.95rem; color: var(--text-secondary);
+            line-height: 1.5; margin-bottom: 20px; padding: 0 10px;
         }
 
         .modal-warning {
-            background: rgba(255, 80, 80, 0.08);
-            border: 1px solid rgba(255, 80, 80, 0.3);
-            border-radius: 16px;
-            padding: 16px 18px;
-            display: flex;
-            gap: 14px;
-            align-items: flex-start;
-            margin-bottom: 24px;
+            background: rgba(255, 80, 80, 0.08); border: 1px solid rgba(255, 80, 80, 0.3);
+            border-radius: 16px; padding: 16px 18px; display: flex; gap: 14px;
+            align-items: flex-start; margin-bottom: 24px;
         }
 
         .modal-warning-icon {
-            width: 24px;
-            height: 24px;
-            flex-shrink: 0;
-            color: #ff5050;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            margin-top: 2px;
+            width: 24px; height: 24px; flex-shrink: 0; color: #ff5050;
+            display: flex; align-items: center; justify-content: center; font-size: 1.2rem; margin-top: 2px;
         }
 
-        .modal-warning-content {
-            flex: 1;
-        }
-
-        .modal-warning-title {
-            color: #ff6b6b;
-            font-weight: 700;
-            font-size: 0.95rem;
-            margin-bottom: 4px;
-        }
-
-        .modal-warning-text {
-            color: rgba(255, 150, 150, 0.8);
-            font-size: 0.85rem;
-            line-height: 1.5;
-        }
+        .modal-warning-content { flex: 1; }
+        .modal-warning-title { color: #ff6b6b; font-weight: 700; font-size: 0.95rem; margin-bottom: 4px; }
+        .modal-warning-text { color: rgba(255, 150, 150, 0.8); font-size: 0.85rem; line-height: 1.5; }
 
         .modal-download-btn {
-            width: 100%;
-            padding: 18px;
-            border: none;
-            border-radius: 16px;
+            width: 100%; padding: 18px; border: none; border-radius: 16px;
             background: linear-gradient(135deg, #00e5ff, #b000ff, #ff00e5);
-            background-size: 200% 200%;
-            animation: gradientShift 3s ease infinite;
-            color: #fff;
-            font-size: 1rem;
-            font-weight: 700;
-            font-family: 'Inter', sans-serif;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            cursor: pointer;
+            background-size: 200% 200%; animation: gradientShift 3s ease infinite;
+            color: #fff; font-size: 1rem; font-weight: 700; font-family: 'Inter', sans-serif;
+            letter-spacing: 2px; text-transform: uppercase; cursor: pointer;
             transition: transform 0.2s ease, box-shadow 0.3s ease;
-            box-shadow: 0 8px 30px rgba(0, 229, 255, 0.3);
-            margin-bottom: 12px;
+            box-shadow: 0 8px 30px rgba(0, 229, 255, 0.3); margin-bottom: 12px;
         }
 
         @keyframes gradientShift {
@@ -573,40 +492,18 @@
             100% { background-position: 0% 50%; }
         }
 
-        .modal-download-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 40px rgba(0, 229, 255, 0.4);
-        }
-
-        .modal-download-btn:active {
-            transform: translateY(0);
-        }
-
-        .modal-download-btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
+        .modal-download-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(0, 229, 255, 0.4); }
+        .modal-download-btn:active { transform: translateY(0); }
+        .modal-download-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 
         .modal-cancel-btn {
-            width: 100%;
-            padding: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            background: rgba(20, 20, 40, 0.6);
-            color: var(--text-secondary);
-            font-size: 1rem;
-            font-weight: 500;
-            font-family: 'Inter', sans-serif;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            width: 100%; padding: 16px; border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px; background: rgba(20, 20, 40, 0.6); color: var(--text-secondary);
+            font-size: 1rem; font-weight: 500; font-family: 'Inter', sans-serif;
+            cursor: pointer; transition: all 0.3s ease;
         }
 
-        .modal-cancel-btn:hover {
-            border-color: rgba(255, 255, 255, 0.2);
-            color: var(--text-primary);
-            background: rgba(30, 30, 50, 0.8);
-        }
+        .modal-cancel-btn:hover { border-color: rgba(255, 255, 255, 0.2); color: var(--text-primary); background: rgba(30, 30, 50, 0.8); }
 
         /* Анимации появления */
         .fade-in-up { opacity: 0; transform: translateY(20px); animation: fadeInUp 0.6s ease forwards; }
@@ -624,13 +521,13 @@
             .featured-title { font-size: 1.4rem; }
             .featured-cover { width: 160px; height: 160px; }
             .tracks-page-title { font-size: 1.8rem; }
+            .about-page-title { font-size: 2rem; }
             .modal-cover { width: 120px; height: 120px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Фоновые эффекты -->
     <div class="bg-effects">
         <div class="bg-orb bg-orb-1"></div>
         <div class="bg-orb bg-orb-2"></div>
@@ -665,10 +562,7 @@
         <div class="banner fade-in-up">
             <div class="banner-content">
                 <div class="banner-geometric">
-                    <div class="geo-shape"></div>
-                    <div class="geo-shape"></div>
-                    <div class="geo-shape"></div>
-                    <div class="geo-shape"></div>
+                    <div class="geo-shape"></div><div class="geo-shape"></div><div class="geo-shape"></div><div class="geo-shape"></div>
                 </div>
                 <div class="banner-title">EVGENII</div>
                 <div class="banner-slogan">Где заканчиваюсь я — и начинается ИИ</div>
@@ -678,10 +572,7 @@
         <div class="release-section fade-in-up">
             <div class="section-title">НОВЫЙ РЕЛИЗ</div>
             <div class="release-card" onclick="playNewRelease()">
-                <div class="release-cover">
-                    <span class="release-badge">NEW</span>
-                    
-                </div>
+                <div class="release-cover"><span class="release-badge">NEW</span>🚗</div>
                 <div class="release-info">
                     <div class="release-label">ПРЕМЬЕРА</div>
                     <div class="release-title">Помятая дверь</div>
@@ -698,12 +589,12 @@
                     <div class="tile-title">Все треки</div>
                     <div class="tile-desc">Полная дискография</div>
                 </div>
-                <div class="quick-tile" onclick="handleTileClick('community')">
-                    <div class="tile-icon community"></div>
+                <div class="quick-tile" onclick="navigateTo('aboutPage')">
+                    <div class="tile-icon community">💬</div>
                     <div class="tile-title">Сообщество</div>
                     <div class="tile-desc">Bip & Telegram</div>
                 </div>
-                <div class="quick-tile" onclick="handleTileClick('about')">
+                <div class="quick-tile" onclick="navigateTo('aboutPage')">
                     <div class="tile-icon about">ℹ️</div>
                     <div class="tile-title">О проекте</div>
                     <div class="tile-desc">Узнать больше</div>
@@ -721,35 +612,52 @@
 
     <!-- ===== СТРАНИЦА ТРЕКОВ ===== -->
     <div class="page" id="tracksPage">
-        
         <div class="tracks-header fade-in-up">
             <button class="back-btn" onclick="goBack()">←</button>
             <div class="tracks-page-title">Музыка</div>
         </div>
 
-        <!-- Большой релиз -->
         <div class="featured-release fade-in-up" onclick="playNewRelease()">
             <button class="featured-download-btn" onclick="event.stopPropagation(); openDownloadModal(newRelease)" title="Скачать трек">
                 <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
             </button>
             <div class="featured-cover">🚗</div>
-            <div class="featured-badge">
-                <span class="featured-badge-star">★</span>
-                <span class="featured-badge-text">Новый релиз</span>
-            </div>
+            <div class="featured-badge"><span class="featured-badge-star">★</span><span class="featured-badge-text">Новый релиз</span></div>
             <div class="featured-title">Помятая дверь</div>
             <div class="featured-artist">EVGENII</div>
-            <button class="play-btn-large">
-                <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
-            </button>
+            <button class="play-btn-large"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></button>
         </div>
 
-        <!-- Все треки -->
         <div class="tracks-list-section fade-in-up">
             <div class="section-title">ВСЕ ТРЕКИ</div>
             <div class="tracks-list" id="tracksList"></div>
         </div>
+    </div>
 
+    <!-- ===== СТРАНИЦА О ПРОЕКТЕ ===== -->
+    <div class="page" id="aboutPage">
+        <div class="about-header fade-in-up">
+            <button class="back-btn" onclick="goBack()">←</button>
+            <div class="about-page-title">О проекте</div>
+        </div>
+
+        <div class="about-content fade-in-up">
+            <div class="about-card">
+                <p><span class="evgenii-title">EVGENII</span> — это эксперимент на стыке человеческих эмоций и искусственного интеллекта.</p>
+                <div class="about-quote">
+                    «Я придумываю текст и стиль исполнения. А выучить и воплотить в песню доверяю ИИ.»
+                </div>
+            </div>
+
+            <div class="about-card">
+                <p>Искусственный интеллект становится моим <span class="highlight">голосом</span>. Он заучивает мои слова, учится чувствовать ритм, подбирать интонации.</p>
+                <p>Это не замена человеку — это <span class="highlight">новый инструмент выражения</span>.</p>
+            </div>
+
+            <div class="about-card">
+                <p>Вместе мы создаём что-то третье. Не совсем человеческое, не совсем машинное. Что-то среднее, где технологии усиливают эмоции, а не заменяют их.</p>
+            </div>
+        </div>
     </div>
 
     <!-- ===== ФИКСИРОВАННЫЙ ПЛЕЕР ===== -->
@@ -761,22 +669,14 @@
                 <div class="player-mini-artist" id="playerArtist">Исполнитель</div>
             </div>
             <div class="player-mini-controls">
-                <button class="mini-skip-btn" onclick="skipBackward()">
-                    <svg viewBox="0 0 24 24"><path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z"/></svg>
-                </button>
-                <button class="mini-play-btn" id="miniPlayBtn" onclick="togglePlay()">
-                    <svg viewBox="0 0 24 24" id="miniPlayIcon"><polygon points="5,3 19,12 5,21"/></svg>
-                </button>
-                <button class="mini-skip-btn" onclick="skipForward()">
-                    <svg viewBox="0 0 24 24"><path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z"/></svg>
-                </button>
+                <button class="mini-skip-btn" onclick="skipBackward()"><svg viewBox="0 0 24 24"><path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z"/></svg></button>
+                <button class="mini-play-btn" id="miniPlayBtn" onclick="togglePlay()"><svg viewBox="0 0 24 24" id="miniPlayIcon"><polygon points="5,3 19,12 5,21"/></svg></button>
+                <button class="mini-skip-btn" onclick="skipForward()"><svg viewBox="0 0 24 24"><path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z"/></svg></button>
             </div>
         </div>
         <div class="player-progress-wrapper">
             <span class="player-time-mini" id="playerCurrentTime">0:00</span>
-            <div class="player-bar-container" onclick="seek(event)">
-                <div class="player-bar-fill" id="playerBarFill"></div>
-            </div>
+            <div class="player-bar-container" onclick="seek(event)"><div class="player-bar-fill" id="playerBarFill"></div></div>
             <span class="player-time-mini end" id="playerTotalTime">0:00</span>
         </div>
     </div>
@@ -785,52 +685,30 @@
     <div class="modal-overlay" id="downloadModal">
         <div class="modal-content">
             <div class="modal-header">СКАЧИВАНИЕ ТРЕКА</div>
-            
             <div class="modal-track-card">
                 <div class="modal-cover" id="modalCover">🎵</div>
                 <div class="modal-track-title" id="modalTitle">Название</div>
                 <div class="modal-track-artist">EVGENII</div>
                 <div class="modal-track-duration" id="modalDuration">0:00</div>
             </div>
-
-            <div class="modal-info-text">
-                Трек будет загружен на ваше устройство в высоком качестве
-            </div>
-
+            <div class="modal-info-text">Трек будет загружен на ваше устройство в высоком качестве</div>
             <div class="modal-warning">
                 <div class="modal-warning-icon">⚠</div>
                 <div class="modal-warning-content">
                     <div class="modal-warning-title">Внимание!</div>
-                    <div class="modal-warning-text">
-                        Скачивание происходит не сразу.<br>
-                        Пожалуйста, подождите несколько секунд.
-                    </div>
+                    <div class="modal-warning-text">Скачивание происходит не сразу.<br>Пожалуйста, подождите несколько секунд.</div>
                 </div>
             </div>
-
-            <button class="modal-download-btn" id="modalDownloadBtn" onclick="startDownload()">
-                СКАЧАТЬ ТРЕК
-            </button>
-            <button class="modal-cancel-btn" onclick="closeDownloadModal()">
-                Отмена
-            </button>
+            <button class="modal-download-btn" id="modalDownloadBtn" onclick="startDownload()">СКАЧАТЬ ТРЕК</button>
+            <button class="modal-cancel-btn" onclick="closeDownloadModal()">Отмена</button>
         </div>
     </div>
 
-    <!-- Аудио элемент -->
     <audio id="audioPlayer" preload="metadata"></audio>
 
     <script>
 // ===== DATA =====
-const newRelease = {
-    id: 'new-release',
-    title: "Помятая дверь",
-    subtitle: "New Release",
-    file: "tracks/song9.mp3",
-    duration: "2:56",
-    cover: "🚗"
-};
-
+const newRelease = { id: 'new-release', title: "Помятая дверь", subtitle: "New Release", file: "tracks/song9.mp3", duration: "2:56", cover: "🚗" };
 const allTracks = [
     { id: 2, title: "Братья", subtitle: "", file: "tracks/song1.mp3", duration: "4:03", cover: "БРА" },
     { id: 3, title: "А мне похуй", subtitle: "Когда похуй", file: "tracks/song.mp3", duration: "3:11", cover: "АМП" },
@@ -843,72 +721,44 @@ const allTracks = [
 
 // ===== AUDIO PLAYER =====
 const audio = document.getElementById('audioPlayer');
-let currentTrack = null;
-let isPlaying = false;
-let simulationInterval = null;
-let currentTrackIndex = -1;
-
+let currentTrack = null, isPlaying = false, simulationInterval = null, currentTrackIndex = -1;
 const playlist = [newRelease, ...allTracks];
 
 function playTrack(track, index = -1) {
     currentTrack = track;
     currentTrackIndex = index >= 0 ? index : playlist.findIndex(t => t.id === track.id);
-    
     document.getElementById('playerTitle').textContent = track.title;
     document.getElementById('playerArtist').textContent = track.subtitle || 'EVGENII';
     document.getElementById('playerCover').textContent = track.cover || '🎵';
     document.getElementById('playerTotalTime').textContent = track.duration;
     document.getElementById('stickyPlayer').classList.add('visible');
-    
     document.querySelectorAll('.track-item').forEach(el => el.classList.remove('active'));
     const activeEl = document.querySelector(`.track-item[data-id="${track.id}"]`);
     if (activeEl) activeEl.classList.add('active');
-
     audio.src = track.file;
-    const playPromise = audio.play();
-    
-    if (playPromise !== undefined) {
-        playPromise.then(() => setPlayingState(true))
-            .catch(() => startSimulation());
-    }
+    audio.play().then(() => setPlayingState(true)).catch(() => startSimulation());
 }
 
 function playNewRelease() { playTrack(newRelease, 0); }
 
 function togglePlay() {
     if (!currentTrack) return;
-    if (isPlaying) {
-        audio.pause();
-        clearInterval(simulationInterval);
-        setPlayingState(false);
-    } else {
-        audio.play().catch(() => startSimulation());
-        setPlayingState(true);
-    }
+    if (isPlaying) { audio.pause(); clearInterval(simulationInterval); setPlayingState(false); }
+    else { audio.play().catch(() => startSimulation()); setPlayingState(true); }
 }
 
 function setPlayingState(state) {
     isPlaying = state;
-    const icon = document.getElementById('miniPlayIcon');
-    icon.innerHTML = state 
+    document.getElementById('miniPlayIcon').innerHTML = state 
         ? '<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>'
         : '<polygon points="5,3 19,12 5,21"/>';
 }
 
-function skipForward() {
-    if (!currentTrack) return;
-    audio.currentTime = Math.min(audio.duration || parseDuration(currentTrack.duration), audio.currentTime + 10);
-}
-
-function skipBackward() {
-    if (!currentTrack) return;
-    audio.currentTime = Math.max(0, audio.currentTime - 10);
-}
-
+function skipForward() { if (currentTrack) audio.currentTime = Math.min(audio.duration || parseDuration(currentTrack.duration), audio.currentTime + 10); }
+function skipBackward() { if (currentTrack) audio.currentTime = Math.max(0, audio.currentTime - 10); }
 function seek(event) {
     if (!currentTrack) return;
-    const bar = event.currentTarget;
-    const percent = event.offsetX / bar.offsetWidth;
+    const percent = event.offsetX / event.currentTarget.offsetWidth;
     audio.currentTime = percent * (audio.duration || parseDuration(currentTrack.duration));
 }
 
@@ -937,17 +787,8 @@ function startSimulation() {
     }, 1000);
 }
 
-function parseDuration(str) {
-    const parts = str.split(':');
-    return parseInt(parts[0]) * 60 + parseInt(parts[1]);
-}
-
-function formatTime(seconds) {
-    if (isNaN(seconds)) return '0:00';
-    const mins = Math.floor(seconds / 60);
-    const secs = Math.floor(seconds % 60);
-    return `${mins}:${secs.toString().padStart(2, '0')}`;
-}
+function parseDuration(str) { const parts = str.split(':'); return parseInt(parts[0]) * 60 + parseInt(parts[1]); }
+function formatTime(seconds) { if (isNaN(seconds)) return '0:00'; return `${Math.floor(seconds / 60)}:${Math.floor(seconds % 60).toString().padStart(2, '0')}`; }
 
 audio.addEventListener('timeupdate', () => {
     if (!currentTrack) return;
@@ -956,31 +797,20 @@ audio.addEventListener('timeupdate', () => {
     document.getElementById('playerCurrentTime').textContent = formatTime(audio.currentTime);
 });
 
-audio.addEventListener('loadedmetadata', () => {
-    document.getElementById('playerTotalTime').textContent = formatTime(audio.duration);
-});
+audio.addEventListener('loadedmetadata', () => { document.getElementById('playerTotalTime').textContent = formatTime(audio.duration); });
+audio.addEventListener('ended', () => { setPlayingState(false); document.getElementById('playerBarFill').style.width = '0%'; document.getElementById('playerCurrentTime').textContent = '0:00'; playNextTrack(); });
 
-audio.addEventListener('ended', () => {
-    setPlayingState(false);
-    document.getElementById('playerBarFill').style.width = '0%';
-    document.getElementById('playerCurrentTime').textContent = '0:00';
-    playNextTrack();
-});
-
-// ===== СКАЧИВАНИЕ ТРЕКОВ =====
+// ===== СКАЧИВАНИЕ =====
 let downloadTrack = null;
 
 function openDownloadModal(track) {
     downloadTrack = track;
-    
     document.getElementById('modalCover').textContent = track.cover || '🎵';
     document.getElementById('modalTitle').textContent = track.title;
     document.getElementById('modalDuration').textContent = track.duration;
-    
     const btn = document.getElementById('modalDownloadBtn');
     btn.textContent = 'СКАЧАТЬ ТРЕК';
     btn.disabled = false;
-    
     document.getElementById('downloadModal').classList.add('active');
     document.body.style.overflow = 'hidden';
 }
@@ -993,49 +823,33 @@ function closeDownloadModal() {
 
 function startDownload() {
     if (!downloadTrack) return;
-    
     const btn = document.getElementById('modalDownloadBtn');
     btn.textContent = 'ЗАГРУЗКА...';
     btn.disabled = true;
-    
-    const fileName = `${downloadTrack.title}.mp3`;
-    
-    // Создаём невидимую ссылку для скачивания
     const link = document.createElement('a');
     link.href = downloadTrack.file;
-    link.download = fileName;
+    link.download = `${downloadTrack.title}.mp3`;
     link.style.display = 'none';
     document.body.appendChild(link);
-    
-    // Имитация задержки (как в образце — "скачивание происходит не сразу")
     setTimeout(() => {
         link.click();
         document.body.removeChild(link);
-        
         btn.textContent = '✓ ТРЕК ЗАГРУЖЕН';
-        
-        setTimeout(() => {
-            closeDownloadModal();
-        }, 1500);
+        setTimeout(() => closeDownloadModal(), 1500);
     }, 1500);
 }
 
-// Закрытие модалки по клику на оверлей
-document.getElementById('downloadModal').addEventListener('click', function(e) {
-    if (e.target === this) closeDownloadModal();
-});
+document.getElementById('downloadModal').addEventListener('click', function(e) { if (e.target === this) closeDownloadModal(); });
 
 // ===== RENDER TRACKS =====
 function renderTracks() {
     const container = document.getElementById('tracksList');
     container.innerHTML = '';
-
     allTracks.forEach((track, index) => {
         const trackEl = document.createElement('div');
         trackEl.className = 'track-item';
         trackEl.dataset.id = track.id;
         trackEl.onclick = () => playTrack(track, index + 1);
-        
         trackEl.innerHTML = `
             <div class="track-cover">${track.cover}</div>
             <div class="track-info">
@@ -1045,8 +859,7 @@ function renderTracks() {
             <div class="track-duration">${track.duration}</div>
             <button class="track-download-btn" onclick="event.stopPropagation(); openDownloadModal(allTracks[${index}])" title="Скачать трек">
                 <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
-            </button>
-        `;
+            </button>`;
         container.appendChild(trackEl);
     });
 }
@@ -1068,9 +881,7 @@ function getLoginGreeting(hour) {
 
 function updateTime() {
     const now = new Date();
-    const hours = String(now.getHours()).padStart(2, '0');
-    const minutes = String(now.getMinutes()).padStart(2, '0');
-    document.getElementById('headerTime').textContent = `${hours}:${minutes}`;
+    document.getElementById('headerTime').textContent = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
     document.getElementById('headerGreeting').textContent = getGreeting(now.getHours());
 }
 
@@ -1083,19 +894,15 @@ function navigateTo(pageId) {
     const currentEl = document.getElementById(currentPage);
     const nextEl = document.getElementById(pageId);
     pageHistory.push(pageId);
-
     currentEl.classList.remove('active');
     setTimeout(() => currentEl.classList.add('slide-out-left'), 50);
-
     nextEl.classList.remove('slide-out-left', 'slide-in-right');
     nextEl.classList.add('slide-in-right');
-    
     setTimeout(() => {
         nextEl.classList.add('active');
         nextEl.classList.remove('slide-in-right');
         nextEl.scrollTop = 0;
     }, 50);
-
     currentPage = pageId;
 }
 
@@ -1105,16 +912,13 @@ function goBack() {
         const previousPage = pageHistory[pageHistory.length - 1];
         const currentEl = document.getElementById(currentPage);
         const prevEl = document.getElementById(previousPage);
-
         currentEl.classList.remove('active');
         currentEl.classList.add('slide-in-right');
-
         setTimeout(() => {
             currentEl.classList.remove('slide-in-right');
             prevEl.classList.remove('slide-out-left');
             prevEl.classList.add('active');
         }, 50);
-
         currentPage = previousPage;
     }
 }
@@ -1128,7 +932,6 @@ const headerName = document.getElementById('headerName');
 const logoutBtn = document.getElementById('logoutBtn');
 
 loginGreeting.textContent = getLoginGreeting(new Date().getHours());
-
 const savedName = localStorage.getItem('evgenii_user');
 if (savedName) showMainScreen(savedName);
 
@@ -1157,6 +960,7 @@ logoutBtn.addEventListener('click', function() {
     localStorage.removeItem('evgenii_user');
     document.getElementById('homePage').classList.remove('active');
     document.getElementById('tracksPage').classList.remove('active');
+    document.getElementById('aboutPage').classList.remove('active');
     currentPage = 'homePage';
     pageHistory = ['homePage'];
     loginScreen.classList.remove('hidden');
@@ -1169,10 +973,6 @@ logoutBtn.addEventListener('click', function() {
 
 setInterval(updateTime, 1000);
 updateTime();
-
-function handleTileClick(section) {
-    alert(`💬 Раздел «${section === 'community' ? 'Сообщество' : 'О проекте'}» — в разработке`);
-}
     </script>
 </body>
 </html>
