@@ -1026,7 +1026,7 @@
 
         <div class="release-section fade-in-up">
             <div class="section-title">НОВЫЙ РЕЛИЗ</div>
-            <div class="release-card" onclick="navigateTo('tracksPage')">
+            <div class="release-card" onclick="playNewRelease()">
                 <div class="release-cover">
                     <span class="release-badge">NEW</span>
                     🚗
@@ -1072,14 +1072,14 @@
     <div class="page" id="tracksPage">
         
         <div class="tracks-header fade-in-up">
-            <button class="back-btn" onclick="navigateTo('homePage')">
+            <button class="back-btn" onclick="goBack()">
                 ←
             </button>
             <div class="tracks-page-title">Музыка</div>
         </div>
 
         <!-- Большой релиз -->
-        <div class="featured-release fade-in-up" onclick="playTrack(newRelease)">
+        <div class="featured-release fade-in-up" onclick="playNewRelease()">
             <div class="featured-cover">🚗</div>
             <div class="featured-badge">
                 <span class="featured-badge-star">★</span>
@@ -1160,9 +1160,14 @@ const audio = document.getElementById('audioPlayer');
 let currentTrack = null;
 let isPlaying = false;
 let simulationInterval = null;
+let currentTrackIndex = -1;
 
-function playTrack(track) {
+// Объединяем newRelease и allTracks в один плейлист
+const playlist = [newRelease, ...allTracks];
+
+function playTrack(track, index = -1) {
     currentTrack = track;
+    currentTrackIndex = index >= 0 ? index : playlist.findIndex(t => t.id === track.id);
     
     // Обновляем UI плеера
     document.getElementById('playerTitle').textContent = track.title;
@@ -1188,6 +1193,10 @@ function playTrack(track) {
             startSimulation();
         });
     }
+}
+
+function playNewRelease() {
+    playTrack(newRelease, 0);
 }
 
 function togglePlay() {
@@ -1233,6 +1242,16 @@ function seek(event) {
     audio.currentTime = percent * duration;
 }
 
+function playNextTrack() {
+    if (currentTrackIndex < playlist.length - 1) {
+        const nextIndex = currentTrackIndex + 1;
+        playTrack(playlist[nextIndex], nextIndex);
+    } else {
+        // Если это последний трек, начинаем сначала
+        playTrack(playlist[0], 0);
+    }
+}
+
 function startSimulation() {
     setPlayingState(true);
     let currentTime = 0;
@@ -1246,6 +1265,8 @@ function startSimulation() {
             setPlayingState(false);
             document.getElementById('playerBarFill').style.width = '0%';
             document.getElementById('playerCurrentTime').textContent = '0:00';
+            // Автопереход к следующему треку
+            playNextTrack();
         } else {
             const percent = (currentTime / duration) * 100;
             document.getElementById('playerBarFill').style.width = `${percent}%`;
@@ -1283,6 +1304,8 @@ audio.addEventListener('ended', () => {
     setPlayingState(false);
     document.getElementById('playerBarFill').style.width = '0%';
     document.getElementById('playerCurrentTime').textContent = '0:00';
+    // Автопереход к следующему треку
+    playNextTrack();
 });
 
 // ===== RENDER TRACKS =====
@@ -1290,11 +1313,11 @@ function renderTracks() {
     const container = document.getElementById('tracksList');
     container.innerHTML = '';
 
-    allTracks.forEach(track => {
+    allTracks.forEach((track, index) => {
         const trackEl = document.createElement('div');
         trackEl.className = 'track-item';
         trackEl.dataset.id = track.id;
-        trackEl.onclick = () => playTrack(track);
+        trackEl.onclick = () => playTrack(track, index + 1); // +1 потому что newRelease первый
         
         trackEl.innerHTML = `
             <div class="track-cover">${track.cover}</div>
@@ -1338,33 +1361,55 @@ function updateTime() {
 
 // ===== НАВИГАЦИЯ =====
 let currentPage = 'homePage';
+let pageHistory = ['homePage'];
 
 function navigateTo(pageId) {
+    if (currentPage === pageId) return;
+
     const currentEl = document.getElementById(currentPage);
     const nextEl = document.getElementById(pageId);
 
-    if (currentPage === pageId) return;
+    // Добавляем в историю
+    pageHistory.push(pageId);
 
-    const pages = ['homePage', 'tracksPage'];
-    const currentIndex = pages.indexOf(currentPage);
-    const nextIndex = pages.indexOf(pageId);
-    const goingForward = nextIndex > currentIndex;
-
+    // Анимация ухода текущей страницы
     currentEl.classList.remove('active');
-    currentEl.classList.add(goingForward ? 'slide-out-left' : '');
-
-    nextEl.classList.remove('slide-out-left', 'slide-in-right');
-    if (!goingForward) {
-        nextEl.classList.add('slide-in-right');
-    }
-
     setTimeout(() => {
-        currentEl.classList.remove('slide-out-left', 'slide-in-right');
+        currentEl.classList.add('slide-out-left');
+    }, 50);
+
+    // Анимация прихода новой страницы
+    nextEl.classList.remove('slide-out-left', 'slide-in-right');
+    nextEl.classList.add('slide-in-right');
+    
+    setTimeout(() => {
         nextEl.classList.add('active');
+        nextEl.classList.remove('slide-in-right');
         nextEl.scrollTop = 0;
     }, 50);
 
     currentPage = pageId;
+}
+
+function goBack() {
+    if (pageHistory.length > 1) {
+        pageHistory.pop(); // Убираем текущую
+        const previousPage = pageHistory[pageHistory.length - 1];
+        
+        const currentEl = document.getElementById(currentPage);
+        const prevEl = document.getElementById(previousPage);
+
+        currentEl.classList.remove('active');
+        currentEl.classList.add('slide-in-right');
+
+        setTimeout(() => {
+            currentEl.classList.remove('slide-in-right');
+            prevEl.classList.remove('slide-out-left');
+            prevEl.classList.add('active');
+        }, 50);
+
+        currentPage = previousPage;
+    }
 }
 
 // ===== ЛОГИКА ВХОДА =====
@@ -1412,6 +1457,7 @@ logoutBtn.addEventListener('click', function() {
     document.getElementById('homePage').classList.remove('active');
     document.getElementById('tracksPage').classList.remove('active');
     currentPage = 'homePage';
+    pageHistory = ['homePage'];
     loginScreen.classList.remove('hidden');
     nameInput.value = '';
     loginGreeting.textContent = getLoginGreeting(new Date().getHours());
