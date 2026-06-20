@@ -718,16 +718,8 @@
 
         <div class="release-section fade-in-up">
             <div class="section-title">НОВЫЙ РЕЛИЗ</div>
-            <div class="release-card" onclick="playNewRelease()">
-                <div class="release-cover">
-                    <span class="release-badge">NEW</span>
-                    <img src="cover/cover.jpg" alt="Обложка" onerror="this.style.display='none'; this.parentElement.innerHTML='<span class=\'release-badge\'>NEW</span>🚗'">
-                </div>
-                <div class="release-info">
-                    <div class="release-label">ПРЕМЬЕРА</div>
-                    <div class="release-title">Пусто</div>
-                    <div class="release-meta">EVGENII · 0:00</div>
-                </div>
+            <div class="release-card" id="homeReleaseCard" onclick="playNewRelease()">
+                <!-- Генерируется через JavaScript -->
             </div>
         </div>
 
@@ -767,17 +759,8 @@
             <div class="tracks-page-title">Музыка</div>
         </div>
 
-        <div class="featured-release fade-in-up" onclick="playNewRelease()">
-            <button class="featured-download-btn" onclick="event.stopPropagation(); openDownloadModal(newRelease)" title="Скачать трек">
-                <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
-            </button>
-            <div class="featured-cover" id="featuredCover">
-                <img src="cover/cover.jpg" alt="Обложка" onerror="this.style.display='none'; this.parentElement.innerHTML='🚗'">
-            </div>
-            <div class="featured-badge"><span class="featured-badge-star">★</span><span class="featured-badge-text">Новый релиз</span></div>
-            <div class="featured-title">пусто</div>
-            <div class="featured-artist">EVGENII</div>
-            <button class="play-btn-large"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></button>
+        <div class="featured-release fade-in-up" id="featuredRelease" onclick="playNewRelease()">
+            <!-- Генерируется через JavaScript -->
         </div>
 
         <div class="tracks-list-section fade-in-up">
@@ -903,17 +886,65 @@
     <audio id="audioPlayer" preload="metadata"></audio>
 
     <script>
-// ===== DATA =====
-const newRelease = { id: 'new-release', title: "пусто", subtitle: "New Release", file: "tracks/song9.mp3", duration: "0:00", cover: "cover/cover.jpg" };
+// ===== DATA - НОВЫЙ РЕЛИЗ (ОДИН ИСТОЧНИК) =====
+const newRelease = {
+    id: 'new-release',
+    title: "Помятая дверь",
+    subtitle: "New Release",
+    file: "tracks/song9.mp3",
+    duration: "2:56",
+    cover: "cover/cover.jpg"
+};
+
 const allTracks = [
-    { id: 2, title: "Бункер", subtitle: "", file: "tracks/song1.mp3", duration: "3:01", cover: "cover/cover.jpg" },
-    { id: 3, title: "пусто", subtitle: "", file: "tracks/song1.mp3", duration: "3:11", cover: "cover/cover.jpg" },
-    { id: 4, title: "пусто", subtitle: "", file: "tracks/song.mp3", duration: "3:48", cover: "cover/cover.jpg" },
-    { id: 5, title: "пусто", subtitle: "", file: "tracks/song.mp3", duration: "4:48", cover: "cover/cover.jpg" },
-    { id: 6, title: "пусто", subtitle: "", file: "tracks/song.mp3", duration: "3:23", cover: "cover/cover.jpg" },
-    { id: 7, title: "пусто", subtitle: "", file: "tracks/song.mp3", duration: "4:03", cover: "cover/cover.jpg" },
-    { id: 9, title: "пусто", subtitle: "", file: "tracks/song.mp3", duration: "3:23", cover: "cover/cover.jpg" }
+    { id: 2, title: "Братья", subtitle: "", file: "tracks/song1.mp3", duration: "4:03", cover: "cover/cover.jpg" },
+    { id: 3, title: "А мне похуй", subtitle: "Когда похуй", file: "tracks/song.mp3", duration: "3:11", cover: "cover/cover.jpg" },
+    { id: 4, title: "Сгоревший экран", subtitle: "", file: "tracks/song2.mp3", duration: "3:48", cover: "cover/cover.jpg" },
+    { id: 5, title: "Тишина", subtitle: "", file: "tracks/song4.mp3", duration: "4:48", cover: "cover/cover.jpg" },
+    { id: 6, title: "Воздух Густеет", subtitle: "", file: "tracks/song1.mp3", duration: "3:23", cover: "cover/cover.jpg" },
+    { id: 7, title: "Нейронный Дождь", subtitle: "О чём думает нейросеть?", file: "tracks/song1.mp3", duration: "4:03", cover: "cover/cover.jpg" },
+    { id: 9, title: "Поезд на юг", subtitle: "", file: "tracks/song7.mp3", duration: "3:23", cover: "cover/cover.jpg" }
 ];
+
+// ===== ФУНКЦИЯ ОТРИСОВКИ НОВОГО РЕЛИЗА (ДЛЯ ОБЕИХ СТРАНИЦ) =====
+function renderNewRelease() {
+    const coverHtml = newRelease.cover 
+        ? `<img src="${newRelease.cover}" alt="${newRelease.title}" onerror="this.style.display='none'; this.parentElement.innerHTML='<span class=\\'release-badge\\'>NEW</span>🚗'">`
+        : '🚗';
+    
+    // Главная страница (маленькая карточка)
+    const homeCard = document.getElementById('homeReleaseCard');
+    if (homeCard) {
+        homeCard.innerHTML = `
+            <div class="release-cover">
+                <span class="release-badge">NEW</span>
+                ${newRelease.cover ? `<img src="${newRelease.cover}" alt="${newRelease.title}" onerror="this.style.display='none'; this.parentElement.innerHTML='🚗'">` : '🚗'}
+            </div>
+            <div class="release-info">
+                <div class="release-label">ПРЕМЬЕРА</div>
+                <div class="release-title">${newRelease.title}</div>
+                <div class="release-meta">${newRelease.subtitle.toUpperCase()} · ${newRelease.duration}</div>
+            </div>
+        `;
+    }
+    
+    // Страница треков (большая карточка)
+    const featuredRelease = document.getElementById('featuredRelease');
+    if (featuredRelease) {
+        featuredRelease.innerHTML = `
+            <button class="featured-download-btn" onclick="event.stopPropagation(); openDownloadModal(newRelease)" title="Скачать трек">
+                <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+            </button>
+            <div class="featured-cover">
+                ${newRelease.cover ? `<img src="${newRelease.cover}" alt="${newRelease.title}" onerror="this.style.display='none'; this.parentElement.innerHTML='🚗'">` : '🚗'}
+            </div>
+            <div class="featured-badge"><span class="featured-badge-star">★</span><span class="featured-badge-text">Новый релиз</span></div>
+            <div class="featured-title">${newRelease.title}</div>
+            <div class="featured-artist">EVGENII</div>
+            <button class="play-btn-large"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></button>
+        `;
+    }
+}
 
 // ===== AUDIO PLAYER =====
 const audio = document.getElementById('audioPlayer');
@@ -1171,6 +1202,7 @@ function showMainScreen(name) {
     document.getElementById('homePage').classList.add('active');
     headerName.textContent = name.toUpperCase();
     updateTime();
+    renderNewRelease(); // Отрисовываем новый релиз на обеих страницах
     renderTracks();
 }
 
