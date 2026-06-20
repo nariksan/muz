@@ -3,1206 +3,836 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>EVGENII — Тексты песен × AI Voice</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>EVGENII</title>
     <style>
-        :root {
-            --bg-primary: #0a0a0f;
-            --bg-secondary: #12121a;
-            --bg-card: #1a1a24;
-            --bg-card-hover: #222230;
-            --bg-lyrics: #0d0d14;
-            --accent: #7c3aed;
-            --accent-light: #a78bfa;
-            --accent-glow: rgba(124, 58, 237, 0.3);
-            --accent-secondary: #c026d3;
-            --text-primary: #ffffff;
-            --text-secondary: #a0a0b0;
-            --text-muted: #6b6b7b;
-            --text-lyrics: #d0d0e0;
-            --success: #22c55e;
-            --danger: #ef4444;
-            --gradient-start: #7c3aed;
-            --gradient-end: #c026d3;
-            --tab-active: #7c3aed;
-            --tab-inactive: #6b6b7b;
-            --shadow-card: 0 4px 20px rgba(0,0,0,0.4);
-            --shadow-glow: 0 0 30px rgba(124, 58, 237, 0.2);
-            --border-subtle: rgba(255,255,255,0.05);
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap');
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
+        }
+
+        :root {
+            --cyan: #00e5ff;
+            --magenta: #ff00e5;
+            --purple: #b000ff;
+            --dark-bg: #0a0a1a;
+            --card-bg: rgba(20, 20, 40, 0.8);
+            --card-border: rgba(0, 229, 255, 0.15);
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.6);
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg-primary);
+            font-family: 'Inter', sans-serif;
+            background: var(--dark-bg);
             color: var(--text-primary);
             min-height: 100vh;
             overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
         }
 
-        .app-container {
-            max-width: 430px;
-            margin: 0 auto;
-            min-height: 100vh;
-            background: var(--bg-primary);
-            position: relative;
+        /* ===== ФОНОВЫЕ ЭФФЕКТЫ ===== */
+        .bg-effects {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
             overflow: hidden;
         }
 
-        /* ===== TOP BAR ===== */
-        .top-bar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 16px 20px;
-            position: sticky;
-            top: 0;
-            background: rgba(10, 10, 15, 0.95);
-            backdrop-filter: blur(20px);
-            z-index: 100;
-            border-bottom: 1px solid var(--border-subtle);
+        .bg-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.3;
+            animation: orbFloat 8s ease-in-out infinite;
         }
 
-        .top-bar .logo {
-            font-size: 22px;
-            font-weight: 800;
-            letter-spacing: 3px;
-            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+        .bg-orb-1 {
+            width: 300px;
+            height: 300px;
+            background: var(--cyan);
+            top: -100px;
+            left: -100px;
+            animation-delay: 0s;
+        }
+
+        .bg-orb-2 {
+            width: 250px;
+            height: 250px;
+            background: var(--magenta);
+            bottom: -80px;
+            right: -80px;
+            animation-delay: -3s;
+        }
+
+        .bg-orb-3 {
+            width: 200px;
+            height: 200px;
+            background: var(--purple);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: -5s;
+        }
+
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -30px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+        }
+
+        /* ===== ЭКРАН ВХОДА ===== */
+        .login-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            background: var(--dark-bg);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .login-screen.hidden {
+            opacity: 0;
+            transform: scale(1.05);
+            pointer-events: none;
+        }
+
+        .login-logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            font-weight: 900;
+            letter-spacing: 8px;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, var(--cyan), var(--magenta));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: none;
+            animation: logoGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes logoGlow {
+            0% { filter: drop-shadow(0 0 10px rgba(0, 229, 255, 0.3)); }
+            100% { filter: drop-shadow(0 0 20px rgba(255, 0, 229, 0.3)); }
+        }
+
+        .login-subtitle {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            letter-spacing: 2px;
+        }
+
+        .login-greeting {
+            font-size: 1.3rem;
+            color: var(--text-primary);
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            width: 80%;
+            max-width: 320px;
+        }
+
+        .login-input {
+            width: 100%;
+            padding: 16px 20px;
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            background: var(--card-bg);
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
+        }
+
+        .login-input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .login-input:focus {
+            border-color: var(--cyan);
+            box-shadow: 0 0 20px rgba(0, 229, 255, 0.15);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 16px;
+            background: linear-gradient(135deg, var(--cyan), var(--purple));
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            letter-spacing: 1px;
+            transition: transform 0.2s ease, box-shadow 0.3s ease;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 229, 255, 0.3);
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
+        }
+
+        /* ===== ГЛАВНЫЙ ЭКРАН ===== */
+        .main-screen {
+            position: relative;
+            z-index: 1;
+            max-width: 480px;
+            margin: 0 auto;
+            min-height: 100vh;
+            padding: 20px 16px 40px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease 0.3s, transform 0.6s ease 0.3s;
+        }
+
+        .main-screen.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===== ШАПКА ===== */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 30px;
+            padding-top: 10px;
+        }
+
+        .header-left {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .header-time {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--cyan), #fff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
-        .top-bar .actions {
-            display: flex;
-            gap: 16px;
-            align-items: center;
-        }
-
-        .top-bar .actions i {
-            font-size: 20px;
+        .header-greeting {
+            font-size: 0.85rem;
             color: var(--text-secondary);
-            cursor: pointer;
-            transition: color 0.2s;
-        }
-
-        .top-bar .actions i:hover {
-            color: var(--text-primary);
-        }
-
-        .top-bar .ai-badge {
-            font-size: 10px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            padding: 4px 10px;
-            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
-            border-radius: 20px;
-            color: white;
             text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
-        /* ===== HERO ===== */
-        .hero {
-            padding: 24px 20px 20px;
-            text-align: center;
+        .header-right {
+            text-align: right;
         }
 
-        .hero .avatar-ring {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            margin: 0 auto 16px;
-            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
-            padding: 3px;
-            position: relative;
-        }
-
-        .hero .avatar-ring::before {
-            content: '';
-            position: absolute;
-            inset: -4px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
-            opacity: 0.3;
-            filter: blur(8px);
-            animation: pulse-glow 2s ease-in-out infinite;
-        }
-
-        @keyframes pulse-glow {
-            0%, 100% { opacity: 0.3; transform: scale(1); }
-            50% { opacity: 0.6; transform: scale(1.05); }
-        }
-
-        .hero .avatar {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            background: var(--bg-primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 40px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero h1 {
-            font-size: 26px;
+        .header-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
             font-weight: 700;
-            margin-bottom: 4px;
-        }
-
-        .hero .subtitle {
-            font-size: 14px;
-            color: var(--text-secondary);
-            margin-bottom: 16px;
-        }
-
-        .hero .tagline {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 16px;
-            background: var(--bg-card);
-            border-radius: 20px;
-            font-size: 13px;
-            color: var(--text-secondary);
-            border: 1px solid var(--border-subtle);
-        }
-
-        .hero .tagline i {
-            color: var(--accent-light);
-        }
-
-        /* ===== STATS ===== */
-        .stats-row {
-            display: flex;
-            justify-content: center;
-            gap: 32px;
-            padding: 0 20px 24px;
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-item .stat-num {
-            font-size: 24px;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            letter-spacing: 3px;
+            background: linear-gradient(135deg, var(--magenta), var(--purple));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        .stat-item .stat-label {
-            font-size: 12px;
-            color: var(--text-muted);
-            margin-top: 2px;
-        }
-
-        /* ===== CREATE BUTTON ===== */
-        .create-section {
-            padding: 0 20px 24px;
-        }
-
-        .create-btn {
-            width: 100%;
-            padding: 16px;
-            border-radius: 16px;
-            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
-            border: none;
-            color: white;
-            font-family: inherit;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            box-shadow: 0 8px 25px rgba(124, 58, 237, 0.3);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .create-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 35px rgba(124, 58, 237, 0.4);
-        }
-
-        .create-btn i {
-            font-size: 18px;
-        }
-
-        /* ===== SECTION TITLE ===== */
-        .section-title {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 20px 14px;
-        }
-
-        .section-title h2 {
-            font-size: 18px;
-            font-weight: 700;
-        }
-
-        .section-title .see-all {
-            font-size: 13px;
-            color: var(--accent-light);
-            cursor: pointer;
-            font-weight: 500;
-        }
-
-        /* ===== SONG CARDS ===== */
-        .songs-list {
-            padding: 0 20px 20px;
-        }
-
-        .song-card {
-            background: var(--bg-card);
-            border-radius: 16px;
-            margin-bottom: 12px;
-            overflow: hidden;
-            border: 1px solid var(--border-subtle);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .song-card:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-glow);
-        }
-
-        .song-card .song-header {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            padding: 14px 16px;
-            cursor: pointer;
-        }
-
-        .song-card .song-cover {
-            width: 56px;
-            height: 56px;
-            border-radius: 12px;
-            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .song-card .song-cover i {
-            font-size: 22px;
-            color: rgba(255,255,255,0.5);
-        }
-
-        .song-card .song-cover .play-icon {
-            position: absolute;
-            inset: 0;
-            background: rgba(0,0,0,0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity 0.2s;
-        }
-
-        .song-card:hover .song-cover .play-icon {
-            opacity: 1;
-        }
-
-        .song-card .song-cover .play-icon i {
-            color: white;
-            font-size: 20px;
-        }
-
-        .song-card .song-meta {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .song-card .song-title {
-            font-size: 15px;
-            font-weight: 600;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .song-card .song-artist {
-            font-size: 13px;
-            color: var(--text-muted);
-            margin-top: 2px;
-        }
-
-        .song-card .song-badges {
-            display: flex;
-            gap: 6px;
-            margin-top: 6px;
-        }
-
-        .song-card .badge {
-            font-size: 10px;
-            font-weight: 600;
-            padding: 3px 8px;
-            border-radius: 6px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .song-card .badge.ai {
-            background: rgba(124, 58, 237, 0.15);
-            color: var(--accent-light);
-            border: 1px solid rgba(124, 58, 237, 0.2);
-        }
-
-        .song-card .badge.new {
-            background: rgba(34, 197, 94, 0.15);
-            color: var(--success);
-            border: 1px solid rgba(34, 197, 94, 0.2);
-        }
-
-        .song-card .song-menu {
-            color: var(--text-muted);
-            font-size: 16px;
-            padding: 8px;
-            cursor: pointer;
-        }
-
-        /* Lyrics preview */
-        .song-card .lyrics-preview {
-            padding: 0 16px 14px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 13px;
-            color: var(--text-lyrics);
-            line-height: 1.6;
-            white-space: pre-line;
-            border-top: 1px solid var(--border-subtle);
-            padding-top: 12px;
-            margin: 0 16px 14px;
-            display: none;
-        }
-
-        .song-card.expanded .lyrics-preview {
-            display: block;
-        }
-
-        .song-card.expanded .song-header {
-            border-bottom: 1px solid var(--border-subtle);
-        }
-
-        .song-card .lyrics-preview .highlight {
-            color: var(--accent-light);
-        }
-
-        /* AI Tools section */
-        .ai-tools {
-            padding: 0 20px 24px;
-        }
-
-        .ai-tool-card {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            padding: 14px 16px;
-            background: var(--bg-card);
-            border-radius: 14px;
-            margin-bottom: 10px;
-            border: 1px solid var(--border-subtle);
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .ai-tool-card:hover {
-            background: var(--bg-card-hover);
-            border-color: rgba(124, 58, 237, 0.3);
-        }
-
-        .ai-tool-card .tool-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
-            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            flex-shrink: 0;
-        }
-
-        .ai-tool-card .tool-info {
-            flex: 1;
-        }
-
-        .ai-tool-card .tool-name {
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        .ai-tool-card .tool-desc {
-            font-size: 12px;
-            color: var(--text-muted);
-            margin-top: 2px;
-        }
-
-        .ai-tool-card .tool-arrow {
-            color: var(--text-muted);
-        }
-
-        /* ===== NOW PLAYING BAR ===== */
-        .now-playing-bar {
-            position: fixed;
-            bottom: 80px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: calc(100% - 40px);
-            max-width: 390px;
-            background: rgba(26, 26, 36, 0.95);
-            backdrop-filter: blur(20px);
-            border-radius: 16px;
-            padding: 12px 16px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            border: 1px solid var(--border-subtle);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
-            z-index: 90;
-            cursor: pointer;
-        }
-
-        .now-playing-bar .np-cover {
-            width: 44px;
-            height: 44px;
-            border-radius: 10px;
-            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(124, 58, 237, 0.4); }
-            50% { box-shadow: 0 0 0 8px rgba(124, 58, 237, 0); }
-        }
-
-        .now-playing-bar .np-cover i {
-            font-size: 18px;
-            color: white;
-        }
-
-        .now-playing-bar .np-info {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .now-playing-bar .np-info .np-title {
-            font-size: 14px;
-            font-weight: 600;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .now-playing-bar .np-info .np-artist {
-            font-size: 12px;
-            color: var(--text-muted);
-        }
-
-        .now-playing-bar .np-controls {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .now-playing-bar .np-controls i {
-            font-size: 18px;
+        .header-name-label {
+            font-size: 0.7rem;
             color: var(--text-secondary);
-            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        .now-playing-bar .np-controls .play-pause {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white !important;
-        }
-
-        .np-progress {
-            position: absolute;
-            bottom: 0;
-            left: 16px;
-            right: 16px;
-            height: 2px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 1px;
-            overflow: hidden;
-        }
-
-        .np-progress .np-progress-bar {
-            height: 100%;
-            width: 45%;
-            background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
-        }
-
-        /* ===== BOTTOM NAV ===== */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
+        /* ===== БАННЕР ===== */
+        .banner {
+            position: relative;
             width: 100%;
-            max-width: 430px;
-            background: rgba(10, 10, 15, 0.95);
-            backdrop-filter: blur(20px);
-            border-top: 1px solid var(--border-subtle);
-            display: flex;
-            justify-content: space-around;
-            padding: 8px 0 20px;
-            z-index: 100;
+            aspect-ratio: 16/10;
+            border-radius: 24px;
+            overflow: hidden;
+            margin-bottom: 30px;
+            border: 1px solid var(--card-border);
+            background: linear-gradient(135deg, #0d1b2a, #1a0a2e, #0d1b2a);
         }
 
-        .bottom-nav .nav-item {
+        .banner-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 4px;
-            cursor: pointer;
-            padding: 4px 16px;
-            transition: all 0.2s;
-        }
-
-        .bottom-nav .nav-item i {
-            font-size: 22px;
-            color: var(--tab-inactive);
-            transition: color 0.2s;
-        }
-
-        .bottom-nav .nav-item span {
-            font-size: 11px;
-            color: var(--tab-inactive);
-            font-weight: 500;
-        }
-
-        .bottom-nav .nav-item.active i,
-        .bottom-nav .nav-item.active span {
-            color: var(--tab-active);
-        }
-
-        .bottom-nav .nav-item.active i {
-            text-shadow: 0 0 10px var(--accent-glow);
-        }
-
-        /* ===== MODAL: ADD SONG ===== */
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.7);
-            backdrop-filter: blur(5px);
-            z-index: 200;
-            display: none;
-            align-items: flex-end;
             justify-content: center;
+            padding: 20px;
+            background: 
+                radial-gradient(ellipse at 30% 50%, rgba(0, 229, 255, 0.15) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 50%, rgba(255, 0, 229, 0.15) 0%, transparent 60%);
         }
 
-        .modal-overlay.active {
-            display: flex;
-        }
-
-        .modal {
+        .banner-geometric {
+            position: absolute;
             width: 100%;
-            max-width: 430px;
-            background: var(--bg-secondary);
-            border-radius: 24px 24px 0 0;
-            padding: 24px 20px 32px;
-            transform: translateY(100%);
-            transition: transform 0.3s ease;
-            max-height: 85vh;
-            overflow-y: auto;
+            height: 100%;
+            top: 0;
+            left: 0;
         }
 
-        .modal-overlay.active .modal {
+        .geo-shape {
+            position: absolute;
+            border: 1px solid;
+            opacity: 0.4;
+            animation: geoFloat 6s ease-in-out infinite;
+        }
+
+        .geo-shape:nth-child(1) {
+            width: 60px;
+            height: 60px;
+            border-color: var(--cyan);
+            top: 15%;
+            left: 20%;
+            transform: rotate(45deg);
+            animation-delay: 0s;
+        }
+
+        .geo-shape:nth-child(2) {
+            width: 40px;
+            height: 40px;
+            border-color: var(--magenta);
+            top: 20%;
+            right: 25%;
+            border-radius: 50%;
+            animation-delay: -2s;
+        }
+
+        .geo-shape:nth-child(3) {
+            width: 50px;
+            height: 50px;
+            border-color: var(--purple);
+            bottom: 20%;
+            left: 30%;
+            transform: rotate(30deg);
+            animation-delay: -4s;
+        }
+
+        .geo-shape:nth-child(4) {
+            width: 35px;
+            height: 35px;
+            border-color: var(--cyan);
+            bottom: 25%;
+            right: 20%;
+            border-radius: 4px;
+            animation-delay: -1s;
+        }
+
+        .geo-wave {
+            position: absolute;
+            bottom: 30%;
+            left: 0;
+            width: 100%;
+            height: 40px;
+            opacity: 0.2;
+        }
+
+        .geo-wave svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        @keyframes geoFloat {
+            0%, 100% { transform: translateY(0) rotate(45deg); opacity: 0.4; }
+            50% { transform: translateY(-10px) rotate(50deg); opacity: 0.7; }
+        }
+
+        .banner-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 900;
+            letter-spacing: 6px;
+            background: linear-gradient(135deg, var(--cyan), var(--magenta));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+            z-index: 2;
+            text-shadow: none;
+            filter: drop-shadow(0 0 15px rgba(0, 229, 255, 0.3));
+        }
+
+        .banner-slogan {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 12px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            letter-spacing: 0.5px;
+        }
+
+        /* ===== СЕКЦИИ ===== */
+        .section-title {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+
+        /* ===== НОВЫЙ РЕЛИЗ ===== */
+        .release-section {
+            margin-bottom: 30px;
+        }
+
+        .release-card {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            transition: transform 0.2s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .release-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 229, 255, 0.1);
+        }
+
+        .release-cover {
+            position: relative;
+            width: 70px;
+            height: 70px;
+            border-radius: 14px;
+            overflow: hidden;
+            flex-shrink: 0;
+            background: linear-gradient(135deg, #1a2a3a, #2a1a3a);
+        }
+
+        .release-cover-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .release-badge {
+            position: absolute;
+            top: 6px;
+            left: 6px;
+            background: var(--cyan);
+            color: #000;
+            font-size: 0.55rem;
+            font-weight: 700;
+            padding: 3px 6px;
+            border-radius: 6px;
+            letter-spacing: 0.5px;
+        }
+
+        .release-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .release-label {
+            font-size: 0.7rem;
+            color: var(--cyan);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .release-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .release-meta {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* ===== БЫСТРЫЙ ДОСТУП ===== */
+        .quick-access-section {
+            margin-bottom: 30px;
+        }
+
+        .quick-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .quick-tile {
+            padding: 20px 16px;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quick-tile:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0, 229, 255, 0.1);
+            border-color: rgba(0, 229, 255, 0.3);
+        }
+
+        .quick-tile:active {
             transform: translateY(0);
         }
 
-        .modal .modal-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 20px;
+        .quick-tile.disabled {
+            opacity: 0.4;
+            cursor: default;
         }
 
-        .modal .modal-header h3 {
-            font-size: 20px;
-            font-weight: 700;
+        .quick-tile.disabled:hover {
+            transform: none;
+            box-shadow: none;
+            border-color: var(--card-border);
         }
 
-        .modal .modal-header .close-btn {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: var(--bg-card);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            border: none;
-            color: var(--text-secondary);
-            font-size: 16px;
-        }
-
-        .modal .form-group {
-            margin-bottom: 16px;
-        }
-
-        .modal .form-group label {
-            display: block;
-            font-size: 13px;
-            font-weight: 500;
-            color: var(--text-secondary);
-            margin-bottom: 6px;
-        }
-
-        .modal .form-group input,
-        .modal .form-group textarea {
-            width: 100%;
-            padding: 14px 16px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-subtle);
-            border-radius: 12px;
-            color: var(--text-primary);
-            font-family: inherit;
-            font-size: 15px;
-            outline: none;
-            transition: border-color 0.2s, box-shadow 0.2s;
-        }
-
-        .modal .form-group input:focus,
-        .modal .form-group textarea:focus {
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px var(--accent-glow);
-        }
-
-        .modal .form-group textarea {
-            min-height: 200px;
-            resize: vertical;
-            line-height: 1.6;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 14px;
-        }
-
-        .modal .form-group .char-count {
-            text-align: right;
-            font-size: 12px;
-            color: var(--text-muted);
-            margin-top: 4px;
-        }
-
-        .modal .ai-select {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            overflow-x: auto;
-            padding-bottom: 4px;
-        }
-
-        .modal .ai-select::-webkit-scrollbar {
-            display: none;
-        }
-
-        .modal .ai-option {
-            flex-shrink: 0;
-            padding: 10px 16px;
-            background: var(--bg-card);
-            border: 2px solid transparent;
-            border-radius: 12px;
-            cursor: pointer;
-            text-align: center;
-            min-width: 90px;
-            transition: all 0.2s;
-        }
-
-        .modal .ai-option.active {
-            border-color: var(--accent);
-            background: rgba(124, 58, 237, 0.1);
-        }
-
-        .modal .ai-option .ai-name {
-            font-size: 13px;
-            font-weight: 600;
-        }
-
-        .modal .ai-option .ai-type {
-            font-size: 11px;
-            color: var(--text-muted);
-            margin-top: 2px;
-        }
-
-        .modal .submit-btn {
-            width: 100%;
-            padding: 16px;
+        .tile-icon {
+            width: 48px;
+            height: 48px;
             border-radius: 14px;
-            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
-            border: none;
-            color: white;
-            font-family: inherit;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            font-size: 1.4rem;
+            margin-bottom: 14px;
         }
 
-        /* ===== EQUALIZER ===== */
-        .equalizer {
-            display: flex;
-            align-items: flex-end;
-            gap: 2px;
-            height: 16px;
+        .tile-icon.tracks {
+            background: rgba(0, 229, 255, 0.15);
+            color: var(--cyan);
         }
 
-        .equalizer span {
-            width: 3px;
-            background: var(--accent-light);
-            border-radius: 1px;
-            animation: eq 0.8s ease-in-out infinite alternate;
+        .tile-icon.community {
+            background: rgba(176, 0, 255, 0.15);
+            color: var(--purple);
         }
 
-        .equalizer span:nth-child(1) { height: 30%; animation-delay: 0s; }
-        .equalizer span:nth-child(2) { height: 60%; animation-delay: 0.1s; }
-        .equalizer span:nth-child(3) { height: 40%; animation-delay: 0.2s; }
-        .equalizer span:nth-child(4) { height: 80%; animation-delay: 0.15s; }
-
-        @keyframes eq {
-            0% { height: 20%; }
-            100% { height: 100%; }
+        .tile-icon.about {
+            background: rgba(255, 0, 229, 0.15);
+            color: var(--magenta);
         }
 
-        /* ===== ANIMATIONS ===== */
+        .tile-icon.placeholder {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-secondary);
+        }
+
+        .tile-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .tile-desc {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        /* ===== КНОПКА ВЫХОДА ===== */
+        .logout-btn {
+            display: block;
+            margin: 20px auto 0;
+            padding: 12px 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            background: transparent;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+        }
+
+        .logout-btn:hover {
+            border-color: rgba(255, 0, 0, 0.3);
+            color: #ff6b6b;
+        }
+
+        /* ===== АДАПТИВНОСТЬ ===== */
+        @media (max-width: 380px) {
+            .banner-title {
+                font-size: 1.6rem;
+                letter-spacing: 4px;
+            }
+            .banner-slogan {
+                font-size: 0.75rem;
+            }
+            .header-time {
+                font-size: 1.3rem;
+            }
+        }
+
+        /* ===== АНИМАЦИИ ПОЯВЛЕНИЯ ===== */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .fade-in-up:nth-child(1) { animation-delay: 0.1s; }
+        .fade-in-up:nth-child(2) { animation-delay: 0.2s; }
+        .fade-in-up:nth-child(3) { animation-delay: 0.3s; }
+        .fade-in-up:nth-child(4) { animation-delay: 0.4s; }
+
         @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        .animate-in {
-            animation: fadeInUp 0.5s ease forwards;
+        /* Пульсация для незадействованной плитки */
+        .quick-tile.disabled .tile-icon {
+            animation: pulse 3s ease-in-out infinite;
         }
 
-        .delay-1 { animation-delay: 0.1s; }
-        .delay-2 { animation-delay: 0.2s; }
-        .delay-3 { animation-delay: 0.3s; }
-
-        ::-webkit-scrollbar { width: 0; height: 0; }
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
     </style>
 </head>
 <body>
-    <div class="app-container">
-        <!-- Top Bar -->
-        <div class="top-bar">
-            <div class="logo">EVGENII</div>
-            <div class="actions">
-                <span class="ai-badge">AI Voice</span>
-                <i class="fas fa-cog"></i>
-            </div>
-        </div>
 
-        <!-- Hero Profile -->
-        <div class="hero animate-in">
-            <div class="avatar-ring">
-                <div class="avatar">🎤</div>
-            </div>
-            <h1>EVGENII</h1>
-            <p class="subtitle">Автор текстов песен</p>
-            <div class="tagline">
-                <i class="fas fa-wand-magic-sparkles"></i>
-                <span>Текст + AI = Песня</span>
-            </div>
-        </div>
-
-        <!-- Stats -->
-        <div class="stats-row animate-in delay-1">
-            <div class="stat-item">
-                <div class="stat-num">12</div>
-                <div class="stat-label">Текстов</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-num">8</div>
-                <div class="stat-label">Вокалов AI</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-num">1.2K</div>
-                <div class="stat-label">Прослушиваний</div>
-            </div>
-        </div>
-
-        <!-- Create Button -->
-        <div class="create-section animate-in delay-1">
-            <button class="create-btn" onclick="openModal()">
-                <i class="fas fa-plus"></i>
-                Добавить новый текст
-            </button>
-        </div>
-
-        <!-- My Songs -->
-        <div class="section-title animate-in delay-2">
-            <h2>📝 Мои тексты</h2>
-            <span class="see-all">Все</span>
-        </div>
-        <div class="songs-list animate-in delay-2">
-            <!-- Song 1 -->
-            <div class="song-card" onclick="toggleLyrics(this)">
-                <div class="song-header">
-                    <div class="song-cover">
-                        <i class="fas fa-music"></i>
-                        <div class="play-icon"><i class="fas fa-play"></i></div>
-                    </div>
-                    <div class="song-meta">
-                        <div class="song-title">Мы летим в небеса</div>
-                        <div class="song-artist">EVGENII</div>
-                        <div class="song-badges">
-                            <span class="badge ai">AI Vocal</span>
-                            <span class="badge new">NEW</span>
-                        </div>
-                    </div>
-                    <div class="song-menu"><i class="fas fa-ellipsis-v"></i></div>
-                </div>
-                <div class="lyrics-preview">
-<span class="highlight">[Куплет 1]</span>
-Мы летим в небеса, сквозь облака и дождь,
-Там, где звёзды горят, и никто не скажет «стоп».
-Руки к солнцу — вверх, сердце бьётся чаще,
-Этот мир наш, мы не боимся падать.
-
-<span class="highlight">[Припев]</span>
-Мы летим в небеса, выше облаков,
-Там, где сны сбываются, где нет оков.
-Мы летим в небеса — только ты и я,
-Вечность наша, ночь горит, как заря.
-
-<span class="highlight">[Куплет 2]</span>
-Под ногами город спит, мы над ним парим,
-Ветер шепчет имена тех, кто нас любил.
-Ничего не жалко, ничего не жаль —
-Только вперёд, только ввысь, только даль.
-                </div>
-            </div>
-
-            <!-- Song 2 -->
-            <div class="song-card" onclick="toggleLyrics(this)">
-                <div class="song-header">
-                    <div class="song-cover">
-                        <i class="fas fa-music"></i>
-                        <div class="play-icon"><i class="fas fa-play"></i></div>
-                    </div>
-                    <div class="song-meta">
-                        <div class="song-title">Звёздная пыль</div>
-                        <div class="song-artist">EVGENII</div>
-                        <div class="song-badges">
-                            <span class="badge ai">AI Vocal</span>
-                        </div>
-                    </div>
-                    <div class="song-menu"><i class="fas fa-ellipsis-v"></i></div>
-                </div>
-                <div class="lyrics-preview">
-<span class="highlight">[Куплет 1]</span>
-В тишине ночной, где планеты кружатся,
-Я ищу тебя среди тысячи лиц.
-Звёздная пыль на ладонях — следы,
-Ты ушла в космос, но я помню: ты — мой свет.
-
-<span class="highlight">[Припев]</span>
-Звёздная пыль, звёздная пыль —
-Мы из одной вселенной, мы из одной земли.
-Звёздная пыль, звёздная пыль —
-Даже световые годы нас с тобой не разделить.
-                </div>
-            </div>
-
-            <!-- Song 3 -->
-            <div class="song-card" onclick="toggleLyrics(this)">
-                <div class="song-header">
-                    <div class="song-cover">
-                        <i class="fas fa-music"></i>
-                        <div class="play-icon"><i class="fas fa-play"></i></div>
-                    </div>
-                    <div class="song-meta">
-                        <div class="song-title">Городские огни</div>
-                        <div class="song-artist">EVGENII</div>
-                        <div class="song-badges">
-                            <span class="badge ai">AI Vocal</span>
-                        </div>
-                    </div>
-                    <div class="song-menu"><i class="fas fa-ellipsis-v"></i></div>
-                </div>
-                <div class="lyrics-preview">
-<span class="highlight">[Куплет 1]</span>
-Фонари горят, как корабли в ночи,
-Мокрый асфальт отражает тишину.
-Я иду один, но не чувствую печаль —
-Город дышит, город живёт, город мой.
-
-<span class="highlight">[Припев]</span>
-Городские огни, вы мои друзья,
-Вы светите мне, когда темнота внутри.
-Городские огни, я ваш навсегда,
-Пока сердце бьётся — я с вами, ребята.
-                </div>
-            </div>
-
-            <!-- Song 4 (Draft) -->
-            <div class="song-card" onclick="toggleLyrics(this)">
-                <div class="song-header">
-                    <div class="song-cover">
-                        <i class="fas fa-pen"></i>
-                        <div class="play-icon"><i class="fas fa-play"></i></div>
-                    </div>
-                    <div class="song-meta">
-                        <div class="song-title">Бесконечность (черновик)</div>
-                        <div class="song-artist">EVGENII</div>
-                        <div class="song-badges">
-                            <span class="badge" style="background:rgba(239,68,68,0.15);color:var(--danger);border:1px solid rgba(239,68,68,0.2);">ЧЕРНОВИК</span>
-                        </div>
-                    </div>
-                    <div class="song-menu"><i class="fas fa-ellipsis-v"></i></div>
-                </div>
-                <div class="lyrics-preview">
-<span class="highlight">[Куплет 1 — в разработке]</span>
-Время течёт, но я стою на месте...
-(текст в процессе написания)
-
-<span class="highlight">[Идеи для припева]</span>
-— Бесконечность — это мы
-— Бесконечность — это сейчас
-— Бесконечность зовёт меня
-                </div>
-            </div>
-        </div>
-
-        <!-- AI Tools -->
-        <div class="section-title animate-in delay-3">
-            <h2>🤖 AI-инструменты</h2>
-            <span class="see-all">Все</span>
-        </div>
-        <div class="ai-tools animate-in delay-3">
-            <div class="ai-tool-card" onclick="window.open('https://suno.com','_blank')">
-                <div class="tool-icon">🎵</div>
-                <div class="tool-info">
-                    <div class="tool-name">Suno AI</div>
-                    <div class="tool-desc">Генерация песен из текста + стиль</div>
-                </div>
-                <div class="tool-arrow"><i class="fas fa-chevron-right"></i></div>
-            </div>
-            <div class="ai-tool-card" onclick="window.open('https://www.aisinging.net','_blank')">
-                <div class="tool-icon">🎤</div>
-                <div class="tool-info">
-                    <div class="tool-name">AISinging</div>
-                    <div class="tool-desc">Текст → поющий голос онлайн</div>
-                </div>
-                <div class="tool-arrow"><i class="fas fa-chevron-right"></i></div>
-            </div>
-            <div class="ai-tool-card" onclick="window.open('https://www.msong.ai','_blank')">
-                <div class="tool-icon">🎧</div>
-                <div class="tool-info">
-                    <div class="tool-name">MSong.ai</div>
-                    <div class="tool-desc">Генератор вокала по тексту</div>
-                </div>
-                <div class="tool-arrow"><i class="fas fa-chevron-right"></i></div>
-            </div>
-            <div class="ai-tool-card" onclick="window.open('https://www.textsong.ai','_blank')">
-                <div class="tool-icon">✨</div>
-                <div class="tool-info">
-                    <div class="tool-name">TextSong AI</div>
-                    <div class="tool-desc">Быстрое преобразование текста в песню</div>
-                </div>
-                <div class="tool-arrow"><i class="fas fa-chevron-right"></i></div>
-            </div>
-        </div>
-
-        <!-- Spacer for bottom nav -->
-        <div style="height: 140px;"></div>
-
-        <!-- Now Playing Bar -->
-        <div class="now-playing-bar">
-            <div class="np-cover"><i class="fas fa-music"></i></div>
-            <div class="np-info">
-                <div class="np-title">Мы летим в небеса</div>
-                <div class="np-artist">EVGENII × AI Vocal</div>
-            </div>
-            <div class="np-controls">
-                <i class="fas fa-step-backward"></i>
-                <div class="play-pause"><i class="fas fa-pause"></i></div>
-                <i class="fas fa-step-forward"></i>
-            </div>
-            <div class="np-progress">
-                <div class="np-progress-bar"></div>
-            </div>
-        </div>
-
-        <!-- Bottom Navigation -->
-        <div class="bottom-nav">
-            <div class="nav-item active">
-                <i class="fas fa-home"></i>
-                <span>Главная</span>
-            </div>
-            <div class="nav-item">
-                <i class="fas fa-pen-nib"></i>
-                <span>Тексты</span>
-            </div>
-            <div class="nav-item">
-                <i class="fas fa-robot"></i>
-                <span>AI</span>
-            </div>
-            <div class="nav-item">
-                <i class="fas fa-user"></i>
-                <span>Профиль</span>
-            </div>
-        </div>
+    <!-- Фоновые эффекты -->
+    <div class="bg-effects">
+        <div class="bg-orb bg-orb-1"></div>
+        <div class="bg-orb bg-orb-2"></div>
+        <div class="bg-orb bg-orb-3"></div>
     </div>
 
-    <!-- Modal: Add Song -->
-    <div class="modal-overlay" id="addModal" onclick="closeModalOutside(event)">
-        <div class="modal" onclick="event.stopPropagation()">
-            <div class="modal-header">
-                <h3>✨ Новый текст песни</h3>
-                <button class="close-btn" onclick="closeModal()"><i class="fas fa-times"></i></button>
-            </div>
+    <!-- ===== ЭКРАН ВХОДА ===== -->
+    <div class="login-screen" id="loginScreen">
+        <div class="login-logo">EVGENII</div>
+        <div class="login-subtitle">ГДЕ ЗАКАНЧИВАЮСЬ Я — И НАЧИНАЕТСЯ ИИ</div>
+        <div class="login-greeting" id="loginGreeting">Добро пожаловать</div>
+        <form class="login-form" id="loginForm">
+            <input 
+                type="text" 
+                class="login-input" 
+                id="nameInput" 
+                placeholder="Введите ваше имя"
+                autocomplete="off"
+                maxlength="20"
+            >
+            <button type="submit" class="login-btn">ВОЙТИ</button>
+        </form>
+    </div>
 
-            <div class="form-group">
-                <label>Название песни</label>
-                <input type="text" placeholder="Например: Мы летим в небеса" id="songTitle">
+    <!-- ===== ГЛАВНЫЙ ЭКРАН ===== -->
+    <div class="main-screen" id="mainScreen">
+        
+        <!-- Шапка -->
+        <div class="header fade-in-up">
+            <div class="header-left">
+                <div class="header-time" id="headerTime">00:00</div>
+                <div class="header-greeting" id="headerGreeting">ДОБРЫЙ ДЕНЬ</div>
             </div>
-
-            <div class="form-group">
-                <label>Текст песни</label>
-                <textarea placeholder="[Куплет 1]\nВаш текст здесь...\n\n[Припев]\nВаш припев здесь..." id="songLyrics"></textarea>
-                <div class="char-count"><span id="charCount">0</span> символов</div>
+            <div class="header-right">
+                <div class="header-name-label">ГОСТЬ</div>
+                <div class="header-name" id="headerName">ИМЯ</div>
             </div>
+        </div>
 
-            <div class="form-group">
-                <label>Выбрать AI-вокалиста</label>
-                <div class="ai-select">
-                    <div class="ai-option active" onclick="selectAI(this)">
-                        <div class="ai-name">Suno</div>
-                        <div class="ai-type">Полная песня</div>
-                    </div>
-                    <div class="ai-option" onclick="selectAI(this)">
-                        <div class="ai-name">AISinging</div>
-                        <div class="ai-type">Вокал</div>
-                    </div>
-                    <div class="ai-option" onclick="selectAI(this)">
-                        <div class="ai-name">MSong</div>
-                        <div class="ai-type">Вокал</div>
-                    </div>
-                    <div class="ai-option" onclick="selectAI(this)">
-                        <div class="ai-name">TextSong</div>
-                        <div class="ai-type">Быстро</div>
-                    </div>
+        <!-- Баннер -->
+        <div class="banner fade-in-up">
+            <div class="banner-content">
+                <div class="banner-geometric">
+                    <div class="geo-shape"></div>
+                    <div class="geo-shape"></div>
+                    <div class="geo-shape"></div>
+                    <div class="geo-shape"></div>
+                </div>
+                <div class="banner-title">EVGENII</div>
+                <div class="banner-slogan">Где заканчиваюсь я — и начинается ИИ</div>
+            </div>
+        </div>
+
+        <!-- Новый релиз -->
+        <div class="release-section fade-in-up">
+            <div class="section-title">НОВЫЙ РЕЛИЗ</div>
+            <div class="release-card">
+                <div class="release-cover">
+                    <span class="release-badge">NEW</span>
+                    <div style="width:100%;height:100%;background:linear-gradient(135deg,#2a3a4a,#3a2a4a);display:flex;align-items:center;justify-content:center;font-size:1.5rem;">🎵</div>
+                </div>
+                <div class="release-info">
+                    <div class="release-label">ПРЕМЬЕРА</div>
+                    <div class="release-title">Помятая дверь</div>
+                    <div class="release-meta">EVGENII · 2:56</div>
                 </div>
             </div>
-
-            <button class="submit-btn" onclick="submitSong()">
-                <i class="fas fa-wand-magic-sparkles"></i>
-                Сгенерировать AI-вокал
-            </button>
         </div>
+
+        <!-- Быстрый доступ -->
+        <div class="quick-access-section fade-in-up">
+            <div class="section-title">БЫСТРЫЙ ДОСТУП</div>
+            <div class="quick-grid">
+                <div class="quick-tile" onclick="handleTileClick('tracks')">
+                    <div class="tile-icon tracks">🎵</div>
+                    <div class="tile-title">Все треки</div>
+                    <div class="tile-desc">Полная дискография</div>
+                </div>
+                <div class="quick-tile" onclick="handleTileClick('community')">
+                    <div class="tile-icon community">💬</div>
+                    <div class="tile-title">Сообщество</div>
+                    <div class="tile-desc">Bip & Telegram</div>
+                </div>
+                <div class="quick-tile" onclick="handleTileClick('about')">
+                    <div class="tile-icon about">️</div>
+                    <div class="tile-title">О проекте</div>
+                    <div class="tile-desc">Узнать больше</div>
+                </div>
+                <div class="quick-tile disabled">
+                    <div class="tile-icon placeholder">⚡</div>
+                    <div class="tile-title">Скоро</div>
+                    <div class="tile-desc">В разработке</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Кнопка выхода -->
+        <button class="logout-btn" id="logoutBtn">ВЫЙТИ</button>
     </div>
 
     <script>
-        // Toggle lyrics
-        function toggleLyrics(card) {
-            const wasExpanded = card.classList.contains('expanded');
-            document.querySelectorAll('.song-card').forEach(c => c.classList.remove('expanded'));
-            if (!wasExpanded) {
-                card.classList.add('expanded');
-            }
+        // ===== УТИЛИТЫ =====
+        function getGreeting(hour) {
+            if (hour >= 5 && hour < 12) return 'ДОБРОЕ УТРО';
+            if (hour >= 12 && hour < 17) return 'ДОБРЫЙ ДЕНЬ';
+            if (hour >= 17 && hour < 22) return 'ДОБРЫЙ ВЕЧЕР';
+            return 'ДОБРОЙ НОЧИ';
         }
 
-        // Modal
-        function openModal() {
-            document.getElementById('addModal').classList.add('active');
-            document.body.style.overflow = 'hidden';
+        function getLoginGreeting(hour) {
+            if (hour >= 5 && hour < 12) return 'Доброе утро';
+            if (hour >= 12 && hour < 17) return 'Добрый день';
+            if (hour >= 17 && hour < 22) return 'Добрый вечер';
+            return 'Доброй ночи';
         }
 
-        function closeModal() {
-            document.getElementById('addModal').classList.remove('active');
-            document.body.style.overflow = '';
+        function updateTime() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const timeStr = `${hours}:${minutes}`;
+
+            const timeEl = document.getElementById('headerTime');
+            const greetingEl = document.getElementById('headerGreeting');
+
+            if (timeEl) timeEl.textContent = timeStr;
+            if (greetingEl) greetingEl.textContent = getGreeting(now.getHours());
         }
 
-        function closeModalOutside(e) {
-            if (e.target === document.getElementById('addModal')) {
-                closeModal();
-            }
+        // ===== ЛОГИКА ВХОДА =====
+        const loginScreen = document.getElementById('loginScreen');
+        const mainScreen = document.getElementById('mainScreen');
+        const loginForm = document.getElementById('loginForm');
+        const nameInput = document.getElementById('nameInput');
+        const loginGreeting = document.getElementById('loginGreeting');
+        const headerName = document.getElementById('headerName');
+        const logoutBtn = document.getElementById('logoutBtn');
+
+        // Установить приветствие на экране входа
+        const currentHour = new Date().getHours();
+        loginGreeting.textContent = getLoginGreeting(currentHour);
+
+        // Проверить сохранённое имя
+        const savedName = localStorage.getItem('evgenii_user');
+        if (savedName) {
+            showMainScreen(savedName);
         }
 
-        // AI select
-        function selectAI(el) {
-            document.querySelectorAll('.ai-option').forEach(o => o.classList.remove('active'));
-            el.classList.add('active');
-        }
-
-        // Char count
-        document.getElementById('songLyrics').addEventListener('input', function() {
-            document.getElementById('charCount').textContent = this.value.length;
-        });
-
-        // Submit
-        function submitSong() {
-            const title = document.getElementById('songTitle').value;
-            const lyrics = document.getElementById('songLyrics').value;
-            if (!title || !lyrics) {
-                alert('Заполните название и текст песни');
-                return;
-            }
-            alert('Текст сохранён! Переходим к генерации AI-вокала...');
-            closeModal();
-        }
-
-        // Bottom nav
-        document.querySelectorAll('.nav-item').forEach(item => {
-            item.addEventListener('click', function() {
-                document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-                this.classList.add('active');
-            });
-        });
-
-        // Play/Pause
-        document.querySelector('.play-pause').addEventListener('click', function(e) {
-            e.stopPropagation();
-            const icon = this.querySelector('i');
-            if (icon.classList.contains('fa-pause')) {
-                icon.classList.remove('fa-pause');
-                icon.classList.add('fa-play');
-                document.querySelector('.np-cover').style.animation = 'none';
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = nameInput.value.trim();
+            if (name) {
+                localStorage.setItem('evgenii_user', name);
+                showMainScreen(name);
             } else {
-                icon.classList.remove('fa-play');
-                icon.classList.add('fa-pause');
-                document.querySelector('.np-cover').style.animation = 'pulse 2s infinite';
+                nameInput.style.borderColor = '#ff4444';
+                nameInput.style.boxShadow = '0 0 15px rgba(255, 68, 68, 0.2)';
+                setTimeout(() => {
+                    nameInput.style.borderColor = '';
+                    nameInput.style.boxShadow = '';
+                }, 1500);
             }
         });
+
+        function showMainScreen(name) {
+            loginScreen.classList.add('hidden');
+            mainScreen.classList.add('visible');
+            headerName.textContent = name.toUpperCase();
+            updateTime();
+        }
+
+        logoutBtn.addEventListener('click', function() {
+            localStorage.removeItem('evgenii_user');
+            mainScreen.classList.remove('visible');
+            loginScreen.classList.remove('hidden');
+            nameInput.value = '';
+            loginGreeting.textContent = getLoginGreeting(new Date().getHours());
+        });
+
+        // Обновление времени каждую минуту
+        setInterval(updateTime, 1000);
+        updateTime();
+
+        // ===== ОБРАБОТЧИКИ ПЛИТОК =====
+        function handleTileClick(section) {
+            switch(section) {
+                case 'tracks':
+                    alert('🎵 Раздел «Все треки» — в разработке');
+                    break;
+                case 'community':
+                    alert('💬 Раздел «Сообщество» — в разработке');
+                    break;
+                case 'about':
+                    alert('ℹ️ Раздел «О проекте» — в разработке');
+                    break;
+            }
+        }
     </script>
 </body>
 </html>
-'''
 
-with open(os.path.join(output_dir, "index.html"), "w", encoding="utf-8") as f:
-    f.write(html_content)
-
-print(f"Файл обновлён: {os.path.join(output_dir, 'index.html')}")
-print(f"Размер: {len(html_content)} bytes")
