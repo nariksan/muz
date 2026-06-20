@@ -211,6 +211,11 @@
             position: relative; width: 70px; height: 70px; border-radius: 14px; overflow: hidden; flex-shrink: 0;
             background: linear-gradient(135deg, #1a2a3a, #2a1a3a); display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
         }
+        .release-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
         .release-badge {
             position: absolute; top: 6px; left: 6px; background: var(--cyan); color: #000; font-size: 0.55rem;
             font-weight: 700; padding: 3px 6px; border-radius: 6px; letter-spacing: 0.5px; z-index: 2;
@@ -274,6 +279,11 @@
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5); z-index: 1;
             background: linear-gradient(135deg, #2a3a4a, #3a2a4a); display: flex; align-items: center; justify-content: center; font-size: 4rem;
         }
+        .featured-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
         .featured-badge { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; z-index: 1; }
         .featured-badge-star { color: var(--cyan); font-size: 1rem; }
         .featured-badge-text { font-size: 0.85rem; color: var(--cyan); letter-spacing: 2px; font-weight: 600; }
@@ -314,6 +324,12 @@
             width: 56px; height: 56px; border-radius: 12px; overflow: hidden; flex-shrink: 0;
             background: linear-gradient(135deg, #1a2a3a, #2a1a3a); display: flex; align-items: center; justify-content: center;
             font-size: 0.7rem; font-weight: 700; text-align: center; padding: 4px;
+        }
+
+        .track-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .track-info { flex: 1; min-width: 0; }
@@ -506,6 +522,13 @@
         .player-mini-cover {
             width: 48px; height: 48px; border-radius: 10px; background: linear-gradient(135deg, #2a3a4a, #3a2a4a);
             flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
+            overflow: hidden;
+        }
+        .player-mini-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
         }
         .player-mini-info { flex: 1; min-width: 0; }
         .player-mini-title { font-size: 0.95rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 2px; }
@@ -566,6 +589,13 @@
             background: linear-gradient(135deg, #2a3a4a, #3a2a4a); display: flex;
             align-items: center; justify-content: center; font-size: 3rem;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4); overflow: hidden;
+        }
+
+        .modal-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 20px;
         }
 
         .modal-track-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 6px; }
@@ -689,7 +719,10 @@
         <div class="release-section fade-in-up">
             <div class="section-title">НОВЫЙ РЕЛИЗ</div>
             <div class="release-card" onclick="playNewRelease()">
-                <div class="release-cover"><span class="release-badge">NEW</span>🚗</div>
+                <div class="release-cover">
+                    <span class="release-badge">NEW</span>
+                    <img src="cover/cover.jpg" alt="Обложка" onerror="this.style.display='none'; this.parentElement.innerHTML='<span class=\'release-badge\'>NEW</span>🚗'">
+                </div>
                 <div class="release-info">
                     <div class="release-label">ПРЕМЬЕРА</div>
                     <div class="release-title">Помятая дверь</div>
@@ -738,7 +771,9 @@
             <button class="featured-download-btn" onclick="event.stopPropagation(); openDownloadModal(newRelease)" title="Скачать трек">
                 <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
             </button>
-            <div class="featured-cover">🚗</div>
+            <div class="featured-cover" id="featuredCover">
+                <img src="cover/cover.jpg" alt="Обложка" onerror="this.style.display='none'; this.parentElement.innerHTML='🚗'">
+            </div>
             <div class="featured-badge"><span class="featured-badge-star">★</span><span class="featured-badge-text">Новый релиз</span></div>
             <div class="featured-title">Помятая дверь</div>
             <div class="featured-artist">EVGENII</div>
@@ -869,15 +904,15 @@
 
     <script>
 // ===== DATA =====
-const newRelease = { id: 'new-release', title: "Помятая дверь", subtitle: "New Release", file: "tracks/song9.mp3", duration: "2:56", cover:"cover/cover.jpg" };
+const newRelease = { id: 'new-release', title: "Помятая дверь", subtitle: "New Release", file: "tracks/song9.mp3", duration: "2:56", cover: "cover/cover.jpg" };
 const allTracks = [
-    { id: 2, title: "Братья", subtitle: "", file: "tracks/song1.mp3", duration: "4:03", cover:"cover/cover.jpg" },
-    { id: 3, title: "А мне похуй", subtitle: "Когда похуй", file: "tracks/song.mp3", duration: "3:11", cover: "АМП" },
-    { id: 4, title: "Сгоревший экран", subtitle: "", file: "tracks/song2.mp3", duration: "3:48", cover: "СГО" },
-    { id: 5, title: "Тишина", subtitle: "", file: "tracks/song4.mp3", duration: "4:48", cover: "ТИШ" },
-    { id: 6, title: "Воздух Густеет", subtitle: "", file: "tracks/song1.mp3", duration: "3:23", cover: "ВОЗ" },
-    { id: 7, title: "Нейронный Дождь", subtitle: "О чём думает нейросеть?", file: "tracks/song1.mp3", duration: "4:03", cover: "НЕЙ" },
-    { id: 9, title: "Поезд на юг", subtitle: "", file: "tracks/song7.mp3", duration: "3:23", cover: "ПОЕ" }
+    { id: 2, title: "Братья", subtitle: "", file: "tracks/song1.mp3", duration: "4:03", cover: "cover/cover.jpg" },
+    { id: 3, title: "А мне похуй", subtitle: "Когда похуй", file: "tracks/song.mp3", duration: "3:11", cover: "cover/cover.jpg" },
+    { id: 4, title: "Сгоревший экран", subtitle: "", file: "tracks/song2.mp3", duration: "3:48", cover: "cover/cover.jpg" },
+    { id: 5, title: "Тишина", subtitle: "", file: "tracks/song4.mp3", duration: "4:48", cover: "cover/cover.jpg" },
+    { id: 6, title: "Воздух Густеет", subtitle: "", file: "tracks/song1.mp3", duration: "3:23", cover: "cover/cover.jpg" },
+    { id: 7, title: "Нейронный Дождь", subtitle: "О чём думает нейросеть?", file: "tracks/song1.mp3", duration: "4:03", cover: "cover/cover.jpg" },
+    { id: 9, title: "Поезд на юг", subtitle: "", file: "tracks/song7.mp3", duration: "3:23", cover: "cover/cover.jpg" }
 ];
 
 // ===== AUDIO PLAYER =====
@@ -890,7 +925,15 @@ function playTrack(track, index = -1) {
     currentTrackIndex = index >= 0 ? index : playlist.findIndex(t => t.id === track.id);
     document.getElementById('playerTitle').textContent = track.title;
     document.getElementById('playerArtist').textContent = track.subtitle || 'EVGENII';
-    document.getElementById('playerCover').textContent = track.cover || '🎵';
+    
+    // Обновляем обложку в плеере
+    const playerCoverEl = document.getElementById('playerCover');
+    if (track.cover) {
+        playerCoverEl.innerHTML = `<img src="${track.cover}" alt="${track.title}" onerror="this.style.display='none'; this.parentElement.innerHTML='🎵'">`;
+    } else {
+        playerCoverEl.textContent = '🎵';
+    }
+    
     document.getElementById('playerTotalTime').textContent = track.duration;
     document.getElementById('stickyPlayer').classList.add('visible');
     document.querySelectorAll('.track-item').forEach(el => el.classList.remove('active'));
@@ -966,7 +1009,15 @@ let downloadTrack = null;
 
 function openDownloadModal(track) {
     downloadTrack = track;
-    document.getElementById('modalCover').textContent = track.cover || '🎵';
+    
+    // Обновляем обложку в модалке
+    const modalCoverEl = document.getElementById('modalCover');
+    if (track.cover) {
+        modalCoverEl.innerHTML = `<img src="${track.cover}" alt="${track.title}" onerror="this.style.display='none'; this.parentElement.innerHTML='🎵'">`;
+    } else {
+        modalCoverEl.textContent = '🎵';
+    }
+    
     document.getElementById('modalTitle').textContent = track.title;
     document.getElementById('modalDuration').textContent = track.duration;
     const btn = document.getElementById('modalDownloadBtn');
@@ -1011,8 +1062,13 @@ function renderTracks() {
         trackEl.className = 'track-item';
         trackEl.dataset.id = track.id;
         trackEl.onclick = () => playTrack(track, index + 1);
+        
+        const coverHtml = track.cover 
+            ? `<img src="${track.cover}" alt="${track.title}" onerror="this.style.display='none'; this.parentElement.innerHTML='🎵'">`
+            : '🎵';
+        
         trackEl.innerHTML = `
-            <div class="track-cover">${track.cover}</div>
+            <div class="track-cover">${coverHtml}</div>
             <div class="track-info">
                 <div class="track-title">${track.title}</div>
                 <div class="track-artist">${track.subtitle || 'EVGENII'}</div>
@@ -1020,7 +1076,8 @@ function renderTracks() {
             <div class="track-duration">${track.duration}</div>
             <button class="track-download-btn" onclick="event.stopPropagation(); openDownloadModal(allTracks[${index}])" title="Скачать трек">
                 <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
-            </button>`;
+            </button>
+        `;
         container.appendChild(trackEl);
     });
 }
@@ -1138,4 +1195,3 @@ updateTime();
     </script>
 </body>
 </html>
-
