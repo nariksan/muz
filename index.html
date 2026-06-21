@@ -725,8 +725,8 @@
             </form>
 
             <div class="contact-note">
-                Сообщение отправляется напрямую через <span class="highlight">Telegram Bot API</span>.<br>
-                Автор получит его лично в мессенджер.
+                Сообщение отправляется через защищённый сервер.<br>
+                Автор получит его лично в Telegram.
             </div>
         </div>
     </div>
@@ -776,8 +776,8 @@
     <audio id="audioPlayer" preload="metadata"></audio>
 
     <script>
-const TELEGRAM_BOT_TOKEN = '8620797853:AAGE90aW5GIun46NFaGxxGMIUL8LRxPvTrY';
-const TELEGRAM_CHAT_ID   = '5129595944';
+// ✅ ТВОЙ CLOUDFLARE WORKER URL
+const WORKER_URL = 'https://evgenii-contact.eo-efimenko01.workers.dev';
 
 const newRelease = {
     id: 'new-release', title: "Пустой код", subtitle: "New Release",
@@ -1007,11 +1007,6 @@ async function submitContactForm(e) {
         return;
     }
 
-    if (TELEGRAM_BOT_TOKEN.startsWith('8620797853') === false || TELEGRAM_CHAT_ID === '5129595944' === false) {
-        showFormStatus('error', 'Сервер не настроен', 'Автору нужно указать токен бота и chat_id в коде сайта');
-        return;
-    }
-
     const btn = document.getElementById('contactSubmitBtn');
     btn.classList.add('loading'); btn.disabled = true;
     hideFormStatus();
@@ -1030,14 +1025,10 @@ ${escapeMarkdown(message)}
 🕐 _${dateStr}_`;
 
     try {
-        const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+        const response = await fetch(WORKER_URL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                chat_id: TELEGRAM_CHAT_ID,
-                text: text,
-                parse_mode: 'Markdown'
-            })
+            body: JSON.stringify({ text: text })
         });
 
         const data = await response.json();
@@ -1048,7 +1039,7 @@ ${escapeMarkdown(message)}
             const savedName = localStorage.getItem('evgenii_user');
             if (savedName) document.getElementById('contactName').value = savedName;
         } else {
-            console.error('Telegram API error:', data);
+            console.error('Worker error:', data);
             showFormStatus('error', 'Не удалось отправить', 'Попробуй ещё раз чуть позже');
         }
     } catch (err) {
