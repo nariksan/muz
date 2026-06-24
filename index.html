@@ -79,38 +79,15 @@
         .release-meta { font-size: 0.8rem; color: var(--text-secondary); }
         .quick-access-section { margin-bottom: 30px; }
         .quick-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .quick-tile { padding: 20px 16px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.3s ease, border-color 0.3s ease; }
+        .quick-tile { padding: 20px 16px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.3s ease, border-color 0.3s ease; position: relative; }
         .quick-tile:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0, 229, 255, 0.1); border-color: rgba(0, 229, 255, 0.3); }
         .quick-tile:active { transform: translateY(0); }
-        .quick-tile.disabled {
-            opacity: 0.45;
-            cursor: not-allowed;
-            position: relative;
-        }
-        .quick-tile.disabled:hover {
-            transform: none;
-            box-shadow: none;
-            border-color: var(--card-border);
-        }
-        .quick-tile.disabled::after {
-            content: 'Скоро';
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            font-size: 0.6rem;
-            padding: 3px 8px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 6px;
-            color: var(--text-secondary);
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            font-weight: 600;
-        }
+        .quick-tile.disabled { opacity: 0.45; cursor: not-allowed; }
+        .quick-tile.disabled:hover { transform: none; box-shadow: none; border-color: var(--card-border); }
+        .quick-tile.disabled::after { content: 'Скоро'; position: absolute; top: 10px; right: 10px; font-size: 0.6rem; padding: 3px 8px; background: rgba(255, 255, 255, 0.1); border-radius: 6px; color: var(--text-secondary); letter-spacing: 1px; text-transform: uppercase; font-weight: 600; }
         .tile-icon { width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin-bottom: 14px; }
         .tile-icon.tracks { background: rgba(0, 229, 255, 0.15); color: var(--cyan); }
-        .tile-icon.instrumental { background: linear-gradient(135deg, rgba(255, 179, 71, 0.2), rgba(255, 0, 229, 0.15)); color: var(--gold); }
         .tile-icon.subscribers { background: linear-gradient(135deg, rgba(255, 107, 157, 0.2), rgba(176, 0, 255, 0.15)); color: var(--pink); }
-        .tile-icon.chat { background: rgba(0, 229, 255, 0.15); color: var(--cyan); }
         .tile-icon.community { background: rgba(176, 0, 255, 0.15); color: var(--purple); }
         .tile-icon.contact { background: rgba(0, 229, 255, 0.15); color: var(--cyan); }
         .tile-icon.about { background: rgba(255, 0, 229, 0.15); color: var(--magenta); }
@@ -119,11 +96,93 @@
         .tile-desc { font-size: 0.75rem; color: var(--text-secondary); }
         .logout-btn { display: block; margin: 20px auto 0; padding: 12px 30px; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; background: transparent; color: var(--text-secondary); font-size: 0.8rem; font-family: 'Inter', sans-serif; cursor: pointer; transition: all 0.3s ease; letter-spacing: 1px; }
         .logout-btn:hover { border-color: rgba(255, 0, 0, 0.3); color: #ff6b6b; }
-        .page-header { display: flex; align-items: center; gap: 16px; margin-bottom: 30px; padding-top: 10px; }
+        .page-header { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; padding-top: 10px; }
         .back-btn { width: 44px; height: 44px; border-radius: 14px; border: 1px solid var(--card-border); background: var(--card-bg); color: var(--text-primary); font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; flex-shrink: 0; }
         .back-btn:hover { border-color: var(--cyan); background: rgba(0, 229, 255, 0.1); }
         .page-title { font-size: 2.2rem; font-weight: 900; letter-spacing: 1px; }
-        .featured-release { position: relative; width: 100%; border-radius: 28px; overflow: hidden; margin-bottom: 36px; border: 1px solid var(--card-border); background: linear-gradient(180deg, #0d2030 0%, #1a0a2e 50%, #0d1020 100%); padding: 30px 20px 36px; display: flex; flex-direction: column; align-items: center; cursor: pointer; }
+
+        /* ============================================
+           ТАБЫ КАТЕГОРИЙ
+           ============================================ */
+        .category-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+            overflow-x: auto;
+            padding: 4px 2px 8px;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .category-tabs::-webkit-scrollbar { display: none; }
+        .category-tab {
+            flex-shrink: 0;
+            padding: 10px 16px;
+            border-radius: 12px;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Inter', sans-serif;
+            white-space: nowrap;
+        }
+        .category-tab:hover {
+            border-color: rgba(255, 255, 255, 0.25);
+            color: var(--text-primary);
+        }
+        .category-tab.active {
+            background: linear-gradient(135deg, rgba(0, 229, 255, 0.15), rgba(176, 0, 255, 0.15));
+            border-color: var(--cyan);
+            color: var(--text-primary);
+            box-shadow: 0 4px 20px rgba(0, 229, 255, 0.15);
+        }
+        .category-tab .tab-icon { font-size: 1rem; }
+        .category-tab .tab-count {
+            font-size: 0.7rem;
+            padding: 2px 7px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.08);
+            font-weight: 700;
+            font-family: 'Orbitron', monospace;
+        }
+        .category-tab.active .tab-count {
+            background: rgba(0, 229, 255, 0.2);
+            color: var(--cyan);
+        }
+
+        /* Разделитель категории */
+        .category-divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 24px 0 14px;
+            padding: 0 4px;
+        }
+        .category-divider-line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--card-border), transparent);
+        }
+        .category-divider-label {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .category-divider-label.cyan { color: var(--cyan); }
+        .category-divider-label.gold { color: var(--gold); }
+        .category-divider-label.pink { color: var(--pink); }
+
+        .featured-release { position: relative; width: 100%; border-radius: 28px; overflow: hidden; margin-bottom: 30px; border: 1px solid var(--card-border); background: linear-gradient(180deg, #0d2030 0%, #1a0a2e 50%, #0d1020 100%); padding: 30px 20px 36px; display: flex; flex-direction: column; align-items: center; cursor: pointer; }
         .featured-release::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 200px; background: radial-gradient(ellipse at 50% 0%, rgba(0, 229, 255, 0.12) 0%, transparent 70%); pointer-events: none; }
         .featured-cover { position: relative; width: 200px; height: 200px; border-radius: 24px; overflow: hidden; margin-bottom: 20px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5); z-index: 1; background: linear-gradient(135deg, #2a3a4a, #3a2a4a); display: flex; align-items: center; justify-content: center; font-size: 4rem; }
         .featured-cover img { width: 100%; height: 100%; object-fit: cover; }
@@ -139,33 +198,59 @@
         .featured-download-btn { position: absolute; top: 20px; right: 20px; width: 44px; height: 44px; border-radius: 12px; border: 1px solid var(--card-border); background: rgba(20, 20, 40, 0.8); color: var(--text-secondary); cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 2; transition: all 0.3s ease; }
         .featured-download-btn:hover { border-color: var(--cyan); color: var(--cyan); background: rgba(0, 229, 255, 0.1); }
         .featured-download-btn svg { width: 20px; height: 20px; fill: currentColor; }
-        .tracks-list-section { margin-bottom: 30px; }
+
         .tracks-list { display: flex; flex-direction: column; gap: 12px; }
         .track-item { display: flex; align-items: center; gap: 14px; padding: 14px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 18px; transition: transform 0.2s ease, box-shadow 0.3s ease, border-color 0.3s ease; cursor: pointer; }
         .track-item:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0, 229, 255, 0.08); border-color: rgba(0, 229, 255, 0.25); }
         .track-item:active { transform: translateY(0); }
         .track-item.active { border-color: var(--cyan); background: rgba(0, 229, 255, 0.05); }
-        .track-cover { width: 56px; height: 56px; border-radius: 12px; overflow: hidden; flex-shrink: 0; background: linear-gradient(135deg, #1a2a3a, #2a1a3a); display: flex; align-items: center; justify-content: center; }
+        .track-item.active.gold { border-color: var(--gold); background: rgba(255, 179, 71, 0.05); }
+        .track-item.active.pink { border-color: var(--pink); background: rgba(255, 107, 157, 0.05); }
+        .track-cover { width: 56px; height: 56px; border-radius: 12px; overflow: hidden; flex-shrink: 0; background: linear-gradient(135deg, #1a2a3a, #2a1a3a); display: flex; align-items: center; justify-content: center; position: relative; }
         .track-cover img { width: 100%; height: 100%; object-fit: cover; }
+        .track-category-badge {
+            position: absolute;
+            bottom: -4px;
+            right: -4px;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            border: 2px solid var(--dark-bg);
+            z-index: 2;
+        }
+        .track-category-badge.cyan { background: var(--cyan); }
+        .track-category-badge.gold { background: var(--gold); }
+        .track-category-badge.pink { background: var(--pink); }
         .track-info { flex: 1; min-width: 0; }
         .track-title { font-size: 1rem; font-weight: 600; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .track-artist { font-size: 0.8rem; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .track-artist.pink { color: var(--pink); }
+        .track-artist.gold { color: var(--gold); }
         .track-duration { font-size: 0.85rem; color: var(--text-secondary); font-weight: 500; flex-shrink: 0; font-family: 'Orbitron', monospace; margin-right: 8px; }
         .track-download-btn { width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--card-border); background: rgba(20, 20, 40, 0.6); color: var(--text-secondary); cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.3s ease; }
         .track-download-btn:hover { border-color: var(--cyan); color: var(--cyan); background: rgba(0, 229, 255, 0.1); transform: scale(1.05); }
         .track-download-btn:active { transform: scale(0.95); }
         .track-download-btn svg { width: 18px; height: 18px; fill: currentColor; }
 
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-secondary);
+        }
+        .empty-state-icon { font-size: 3rem; margin-bottom: 12px; opacity: 0.5; }
+        .empty-state-text { font-size: 0.95rem; line-height: 1.5; }
+
         .intro-block { border-radius: 20px; padding: 20px; margin-bottom: 24px; position: relative; overflow: hidden; }
         .intro-block::before { content: ''; position: absolute; top: -50%; right: -20%; width: 200px; height: 200px; pointer-events: none; }
-        .intro-block.gold { background: linear-gradient(135deg, rgba(255, 179, 71, 0.08), rgba(176, 0, 255, 0.08)); border: 1px solid rgba(255, 179, 71, 0.2); }
-        .intro-block.gold::before { background: radial-gradient(circle, rgba(255, 179, 71, 0.15), transparent 70%); }
         .intro-block.pink { background: linear-gradient(135deg, rgba(255, 107, 157, 0.08), rgba(176, 0, 255, 0.08)); border: 1px solid rgba(255, 107, 157, 0.2); }
         .intro-block.pink::before { background: radial-gradient(circle, rgba(255, 107, 157, 0.15), transparent 70%); }
         .intro-block.magenta { background: linear-gradient(135deg, rgba(255, 0, 229, 0.08), rgba(176, 0, 255, 0.08)); border: 1px solid rgba(255, 0, 229, 0.2); }
         .intro-block.magenta::before { background: radial-gradient(circle, rgba(255, 0, 229, 0.15), transparent 70%); }
         .intro-title { font-family: 'Orbitron', sans-serif; font-size: 0.85rem; letter-spacing: 3px; margin-bottom: 8px; position: relative; z-index: 1; }
-        .intro-title.gold { color: var(--gold); }
         .intro-title.pink { color: var(--pink); }
         .intro-title.magenta { color: var(--magenta); }
         .intro-text { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; position: relative; z-index: 1; }
@@ -209,7 +294,7 @@
             box-shadow: 0 10px 30px rgba(255, 107, 157, 0.25);
         }
         .voice-toggle-btn:active { transform: translateY(0); }
-        .voice-toggle-btn .btn-icon { font-size: 1.3rem; transition: transform 0.3s ease; }
+        .voice-toggle-btn .btn-icon { font-size: 1.3rem; }
         .voice-toggle-btn .btn-arrow { font-size: 1rem; transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); margin-left: 4px; }
         .voice-toggle-btn.open .btn-arrow { transform: rotate(180deg); }
         .voice-toggle-btn.open {
@@ -230,43 +315,6 @@
             opacity: 1;
             margin-bottom: 30px;
         }
-
-        .special-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 22px; overflow: hidden; margin-bottom: 16px; transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; }
-        .special-card:hover { transform: translateY(-3px); }
-        .special-card.gold:hover { box-shadow: 0 10px 30px rgba(255, 179, 71, 0.1); border-color: rgba(255, 179, 71, 0.3); }
-        .special-card.gold.active { border-color: var(--gold); box-shadow: 0 0 30px rgba(255, 179, 71, 0.15); }
-        .special-card.pink:hover { box-shadow: 0 10px 30px rgba(255, 107, 157, 0.1); border-color: rgba(255, 107, 157, 0.3); }
-        .special-card.pink.active { border-color: var(--pink); box-shadow: 0 0 30px rgba(255, 107, 157, 0.15); }
-        .special-card-top { display: flex; gap: 14px; padding: 16px 16px 12px; align-items: center; }
-        .special-cover { position: relative; width: 80px; height: 80px; border-radius: 16px; overflow: hidden; flex-shrink: 0; display: flex; align-items: center; justify-content: center; cursor: pointer; }
-        .special-cover.gold { background: linear-gradient(135deg, #2a1a3a, #3a2a1a); }
-        .special-cover.pink { background: linear-gradient(135deg, #2a1a3a, #3a1a2a); }
-        .special-cover img { width: 100%; height: 100%; object-fit: cover; }
-        .special-play-overlay { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.5); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease; }
-        .special-cover:hover .special-play-overlay { opacity: 1; }
-        .special-play-overlay svg { width: 32px; height: 32px; fill: #fff; }
-        .special-card.gold.active .special-play-overlay { opacity: 1; background: rgba(255, 179, 71, 0.3); }
-        .special-card.pink.active .special-play-overlay { opacity: 1; background: rgba(255, 107, 157, 0.3); }
-        .special-main-info { flex: 1; min-width: 0; }
-        .special-title { font-size: 1.15rem; font-weight: 700; margin-bottom: 6px; }
-        .special-author { font-size: 0.8rem; color: var(--pink); margin-bottom: 4px; font-weight: 600; }
-        .special-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 4px; }
-        .special-tag { font-size: 0.65rem; padding: 3px 8px; border-radius: 6px; letter-spacing: 0.5px; font-weight: 600; text-transform: uppercase; }
-        .special-tag.genre { background: rgba(255, 179, 71, 0.15); color: var(--gold); }
-        .special-tag.mood { background: rgba(176, 0, 255, 0.15); color: #d580ff; }
-        .special-tag.style { background: rgba(255, 107, 157, 0.15); color: var(--pink); }
-        .special-card-actions { display: flex; gap: 8px; flex-shrink: 0; }
-        .special-card-btn { width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--card-border); background: rgba(20, 20, 40, 0.6); color: var(--text-secondary); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; }
-        .special-card-btn.gold:hover { border-color: var(--gold); color: var(--gold); background: rgba(255, 179, 71, 0.1); }
-        .special-card-btn.pink:hover { border-color: var(--pink); color: var(--pink); background: rgba(255, 107, 157, 0.1); }
-        .special-card-btn svg { width: 18px; height: 18px; fill: currentColor; }
-        .special-description { padding: 12px 16px 16px; color: var(--text-secondary); font-size: 0.9rem; line-height: 1.55; margin-top: 4px; font-style: italic; }
-        .special-description.gold { border-top: 1px dashed rgba(255, 179, 71, 0.15); }
-        .special-description.pink { border-top: 1px dashed rgba(255, 107, 157, 0.15); }
-        .special-description::before { content: '“'; font-size: 1.3rem; font-weight: 700; margin-right: 4px; font-style: normal; }
-        .special-description::after { content: '”'; font-size: 1.3rem; font-weight: 700; margin-left: 4px; font-style: normal; }
-        .special-description.gold::before, .special-description.gold::after { color: var(--gold); }
-        .special-description.pink::before, .special-description.pink::after { color: var(--pink); }
 
         .floating-player { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%) translateY(100%); width: 100%; max-width: 480px; backdrop-filter: blur(20px); padding: 16px 20px 22px; z-index: 100; transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); border-radius: 28px 28px 0 0; }
         .floating-player.visible { transform: translateX(-50%) translateY(0); }
@@ -343,24 +391,6 @@
         .player-bar-container { flex: 1; height: 4px; background: rgba(255, 255, 255, 0.1); border-radius: 2px; overflow: hidden; cursor: pointer; }
         .player-bar-fill { height: 100%; background: linear-gradient(90deg, var(--cyan), var(--purple)); border-radius: 2px; width: 0%; transition: width 0.1s linear; }
 
-        .support-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 22px; padding: 24px 20px; margin-bottom: 16px; transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; }
-        .support-card:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(255, 0, 229, 0.1); border-color: rgba(255, 0, 229, 0.3); }
-        .support-card-header { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
-        .support-card-icon { width: 56px; height: 56px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; flex-shrink: 0; }
-        .support-card-icon.boosty { background: linear-gradient(135deg, #ff6b6b, #ff8e53); }
-        .support-card-icon.tinkoff { background: linear-gradient(135deg, #ffdd2d, #ffd700); }
-        .support-card-icon.crypto { background: linear-gradient(135deg, #f7931a, #ff9500); }
-        .support-card-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 4px; }
-        .support-card-desc { font-size: 0.85rem; color: var(--text-secondary); }
-        .support-card-btn { width: 100%; padding: 14px; border: none; border-radius: 12px; background: linear-gradient(135deg, var(--magenta), var(--purple)); color: #fff; font-weight: 700; font-size: 1rem; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.3s ease; text-transform: uppercase; letter-spacing: 1px; }
-        .support-card-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(255, 0, 229, 0.3); }
-        .support-card-btn:active { transform: translateY(0); }
-        .support-copy-hint { text-align: center; font-size: 0.8rem; color: var(--text-secondary); margin-top: 10px; font-style: italic; }
-        .support-thanks { background: rgba(255, 0, 229, 0.05); border: 1px solid rgba(255, 0, 229, 0.2); border-radius: 18px; padding: 20px; margin-top: 24px; }
-        .support-thanks-title { font-size: 0.8rem; color: var(--magenta); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 12px; font-weight: 600; text-align: center; }
-        .support-thanks-list { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
-        .support-thanks-item { padding: 6px 12px; background: rgba(255, 0, 229, 0.1); border-radius: 8px; font-size: 0.85rem; color: var(--text-secondary); }
-
         .about-content, .community-content { display: flex; flex-direction: column; gap: 20px; }
         .about-card { background: rgba(20, 25, 40, 0.6); border: 1px solid var(--card-border); border-radius: 20px; padding: 24px 20px; line-height: 1.6; font-size: 1rem; }
         .about-card .highlight { color: var(--cyan); font-weight: 600; }
@@ -385,39 +415,6 @@
         .community-badge { display: inline-block; padding: 4px 10px; background: rgba(255, 255, 255, 0.1); border-radius: 8px; font-size: 0.75rem; color: var(--text-secondary); margin-top: 6px; }
         .community-intro { background: rgba(20, 25, 40, 0.6); border: 1px solid var(--card-border); border-radius: 20px; padding: 24px 20px; margin-bottom: 10px; }
         .community-intro p { color: var(--text-secondary); line-height: 1.6; font-size: 1rem; }
-
-        .chat-online-indicator { display: flex; align-items: center; gap: 8px; margin-left: auto; font-size: 0.85rem; color: var(--text-secondary); }
-        .online-dot { width: 10px; height: 10px; border-radius: 50%; background: #00ff88; animation: pulse 2s ease-in-out infinite; }
-        .chat-container { display: flex; flex-direction: column; height: calc(100vh - 180px); background: rgba(20, 25, 40, 0.6); border: 1px solid var(--card-border); border-radius: 20px; overflow: hidden; }
-        .chat-messages { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 16px; }
-        .chat-message { display: flex; gap: 12px; max-width: 85%; animation: messageSlideIn 0.3s ease; }
-        @keyframes messageSlideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .chat-message.sent { align-self: flex-end; flex-direction: row-reverse; }
-        .message-avatar { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
-        .chat-message.received .message-avatar { background: linear-gradient(135deg, var(--cyan), var(--purple)); }
-        .chat-message.sent .message-avatar { background: linear-gradient(135deg, var(--magenta), var(--purple)); }
-        .message-content { flex: 1; }
-        .message-bubble { padding: 12px 16px; border-radius: 16px; font-size: 0.95rem; line-height: 1.5; word-wrap: break-word; }
-        .chat-message.received .message-bubble { background: rgba(30, 35, 55, 0.9); border: 1px solid var(--card-border); border-top-left-radius: 4px; }
-        .chat-message.sent .message-bubble { background: linear-gradient(135deg, rgba(0, 229, 255, 0.15), rgba(176, 0, 255, 0.15)); border: 1px solid rgba(0, 229, 255, 0.3); border-top-right-radius: 4px; }
-        .message-time { font-size: 0.7rem; color: var(--text-secondary); margin-top: 4px; padding: 0 4px; }
-        .chat-message.sent .message-time { text-align: right; }
-        .chat-input-container { display: flex; gap: 12px; padding: 16px; background: rgba(15, 20, 35, 0.9); border-top: 1px solid var(--card-border); }
-        .chat-input { flex: 1; padding: 12px 16px; border: 1px solid var(--card-border); border-radius: 12px; background: rgba(20, 25, 40, 0.8); color: var(--text-primary); font-size: 0.95rem; font-family: 'Inter', sans-serif; outline: none; transition: border-color 0.3s ease; }
-        .chat-input::placeholder { color: var(--text-secondary); }
-        .chat-input:focus { border-color: var(--cyan); }
-        .chat-send-btn { width: 48px; height: 48px; border-radius: 12px; border: none; background: linear-gradient(135deg, var(--cyan), var(--purple)); color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: transform 0.2s ease, box-shadow 0.3s ease; flex-shrink: 0; }
-        .chat-send-btn:hover { transform: scale(1.05); box-shadow: 0 4px 20px rgba(0, 229, 255, 0.3); }
-        .chat-send-btn:active { transform: scale(0.95); }
-        .chat-send-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-        .chat-send-btn svg { width: 20px; height: 20px; fill: currentColor; }
-        .chat-loading { display: flex; align-items: center; justify-content: center; padding: 40px; color: var(--text-secondary); font-size: 0.9rem; }
-        .chat-loading-spinner { width: 24px; height: 24px; border: 3px solid var(--card-border); border-top-color: var(--cyan); border-radius: 50%; animation: spin 0.8s linear infinite; margin-right: 12px; }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        .chat-status { text-align: center; padding: 10px; font-size: 0.8rem; color: var(--text-secondary); }
-        .chat-status.error { color: #ff6b6b; }
-        .chat-status.connected { color: #00ff88; }
-        .chat-status.offline { color: #ffaa00; }
 
         .contact-form-container, .voice-form-container { background: rgba(20, 25, 40, 0.6); border: 1px solid var(--card-border); border-radius: 20px; padding: 24px; margin-top: 0; }
         .voice-form-container { border-color: rgba(255, 107, 157, 0.25); }
@@ -481,6 +478,7 @@
             .page-title { font-size: 1.8rem; }
             .login-logo { font-size: 2.2rem; }
             .voice-toggle-btn { font-size: 0.9rem; letter-spacing: 1px; padding: 18px 20px; }
+            .category-tab { padding: 8px 12px; font-size: 0.8rem; }
         }
     </style>
 </head>
@@ -552,11 +550,6 @@
                 <div class="tile-title">Все треки</div>
                 <div class="tile-desc">Полная дискография</div>
             </div>
-            <div class="quick-tile" onclick="navigateTo('instrumentalsPage')">
-                <div class="tile-icon instrumental">🎹</div>
-                <div class="tile-title">Инструменталы</div>
-                <div class="tile-desc">Музыка без слов</div>
-            </div>
             <div class="quick-tile" onclick="navigateTo('subscribersPage')">
                 <div class="tile-icon subscribers">🎤</div>
                 <div class="tile-title">Дай голос</div>
@@ -573,14 +566,14 @@
                 <div class="tile-desc">Написать автору</div>
             </div>
             <div class="quick-tile disabled">
-                <div class="tile-icon chat">💬</div>
+                <div class="tile-icon" style="background: rgba(0, 229, 255, 0.15); color: var(--cyan);">💬</div>
                 <div class="tile-title">Чат</div>
                 <div class="tile-desc">Скоро будет доступен</div>
             </div>
-            <div class="quick-tile" onclick="navigateTo('supportPage')">
+            <div class="quick-tile disabled">
                 <div class="tile-icon support">💜</div>
                 <div class="tile-title">Поддержать</div>
-                <div class="tile-desc">Помочь проекту</div>
+                <div class="tile-desc">Скоро будет доступно</div>
             </div>
             <div class="quick-tile" onclick="navigateTo('aboutPage')">
                 <div class="tile-icon about">ℹ️</div>
@@ -592,31 +585,39 @@
     <button class="logout-btn" id="logoutBtn">ВЫЙТИ</button>
 </div>
 
-<!-- ТРЕКИ -->
+<!-- ВСЕ ТРЕКИ (ОБЪЕДИНЁННЫЙ БЛОК) -->
 <div class="page" id="tracksPage">
     <div class="page-header fade-in-up">
         <button class="back-btn" onclick="goBack()">←</button>
-        <div class="page-title">Музыка</div>
+        <div class="page-title">Все треки</div>
     </div>
     <div class="featured-release fade-in-up" id="featuredRelease" onclick="playNewRelease()"></div>
-    <div class="tracks-list-section fade-in-up">
-        <div class="section-title">ВСЕ ТРЕКИ</div>
-        <div class="tracks-list" id="tracksList"></div>
-    </div>
-</div>
 
-<!-- ИНСТРУМЕНТАЛЫ -->
-<div class="page" id="instrumentalsPage">
-    <div class="page-header fade-in-up">
-        <button class="back-btn" onclick="goBack()">←</button>
-        <div class="page-title">Инструменталы</div>
+    <!-- ТАБЫ КАТЕГОРИЙ -->
+    <div class="category-tabs fade-in-up" id="categoryTabs">
+        <button class="category-tab active" data-category="all" onclick="switchCategory('all')">
+            <span class="tab-icon">🎧</span>
+            <span>Все</span>
+            <span class="tab-count" id="countAll">0</span>
+        </button>
+        <button class="category-tab" data-category="tracks" onclick="switchCategory('tracks')">
+            <span class="tab-icon">🎵</span>
+            <span>Треки</span>
+            <span class="tab-count" id="countTracks">0</span>
+        </button>
+        <button class="category-tab" data-category="instrumentals" onclick="switchCategory('instrumentals')">
+            <span class="tab-icon">🎹</span>
+            <span>Инструменталы</span>
+            <span class="tab-count" id="countInstrumentals">0</span>
+        </button>
+        <button class="category-tab" data-category="subscribers" onclick="switchCategory('subscribers')">
+            <span class="tab-icon">🎤</span>
+            <span>Дай голос</span>
+            <span class="tab-count" id="countSubscribers">0</span>
+        </button>
     </div>
-    <div class="intro-block gold fade-in-up">
-        <div class="intro-title gold">БЕЗ СЛОВ · ТОЛЬКО ЗВУК</div>
-        <div class="intro-text">Музыка, в которой говорят не тексты, а эмоции. Каждый трек — отдельное настроение, атмосфера и история без единого слова.</div>
-    </div>
-    <div class="section-title fade-in-up">КОЛЛЕКЦИЯ</div>
-    <div class="tracks-list fade-in-up" id="instrumentalsList"></div>
+
+    <div class="tracks-list fade-in-up" id="allTracksList"></div>
 </div>
 
 <!-- ДАЙ ГОЛОС -->
@@ -684,63 +685,6 @@
     <div class="tracks-list fade-in-up" id="subscribersList"></div>
 </div>
 
-<!-- ПОДДЕРЖКА -->
-<div class="page" id="supportPage">
-    <div class="page-header fade-in-up">
-        <button class="back-btn" onclick="goBack()">←</button>
-        <div class="page-title">Поддержать</div>
-    </div>
-    <div class="intro-block magenta fade-in-up">
-        <div class="intro-title magenta">ПОМОЧЬ ПРОЕКТУ</div>
-        <div class="intro-text">EVGENII — независимый проект. Здесь нет лейблов, продюсеров и спонсоров. Только я, мои тексты и ИИ, который их поёт. Каждая поддержка — это возможность создавать больше.</div>
-    </div>
-    <div class="section-title fade-in-up">СПОСОБЫ ПОДДЕРЖКИ</div>
-    <div class="support-card fade-in-up">
-        <div class="support-card-header">
-            <div class="support-card-icon boosty">☕</div>
-            <div>
-                <div class="support-card-title">Купить мне кофе</div>
-                <div class="support-card-desc">Boosty — регулярная поддержка и эксклюзивный контент</div>
-            </div>
-        </div>
-        <button class="support-card-btn" onclick="copyToClipboard('https://boosty.to/evgenii', this)">Скопировать ссылку</button>
-        <div class="support-copy-hint">Нажми — и ссылка скопируется</div>
-    </div>
-    <div class="support-card fade-in-up">
-        <div class="support-card-header">
-            <div class="support-card-icon tinkoff">💳</div>
-            <div>
-                <div class="support-card-title">Перевод на карту</div>
-                <div class="support-card-desc">Tinkoff / Сбер — быстрый перевод</div>
-            </div>
-        </div>
-        <button class="support-card-btn" onclick="copyToClipboard('2200 1234 5678 9012', this)">Скопировать номер карты</button>
-        <div class="support-copy-hint">Tinkoff · на имя Евгений</div>
-    </div>
-    <div class="support-card fade-in-up">
-        <div class="support-card-header">
-            <div class="support-card-icon crypto">₿</div>
-            <div>
-                <div class="support-card-title">Криптовалюта</div>
-                <div class="support-card-desc">USDT TRC-20 — для тех, кто ценит приватность</div>
-            </div>
-        </div>
-        <button class="support-card-btn" onclick="copyToClipboard('TXyz123WalletAddressHere456Abc', this)">Скопировать кошелёк</button>
-        <div class="support-copy-hint">USDT · сеть TRC-20</div>
-    </div>
-    <div class="support-thanks fade-in-up">
-        <div class="support-thanks-title">💜 Благодарности</div>
-        <div class="support-thanks-list">
-            <div class="support-thanks-item">Алексей</div>
-            <div class="support-thanks-item">Мария</div>
-            <div class="support-thanks-item">Дмитрий</div>
-            <div class="support-thanks-item">Анна</div>
-            <div class="support-thanks-item">Сергей</div>
-            <div class="support-thanks-item">+ ещё 12</div>
-        </div>
-    </div>
-</div>
-
 <!-- О ПРОЕКТЕ -->
 <div class="page" id="aboutPage">
     <div class="page-header fade-in-up">
@@ -785,33 +729,6 @@
             <div class="community-info"><div class="community-name">Instagram</div><div class="community-desc">Визуальный контент</div><span class="community-badge">Скоро</span></div>
             <div class="community-arrow">→</div>
         </a>
-    </div>
-</div>
-
-<!-- ЧАТ -->
-<div class="page" id="chatPage">
-    <div class="page-header fade-in-up">
-        <button class="back-btn" onclick="goBack()">←</button>
-        <div class="page-title">Чат</div>
-        <div class="chat-online-indicator">
-            <div class="online-dot"></div>
-            <span>Онлайн</span>
-        </div>
-    </div>
-    <div class="chat-status offline" id="chatStatus">⚠️ Supabase не настроен</div>
-    <div class="chat-container fade-in-up">
-        <div class="chat-messages" id="chatMessages">
-            <div class="chat-loading" id="chatLoading" style="display:none;">
-                <div class="chat-loading-spinner"></div>
-                <span>Загрузка сообщений...</span>
-            </div>
-        </div>
-        <div class="chat-input-container">
-            <input type="text" class="chat-input" id="chatInput" placeholder="Введите сообщение..." maxlength="500">
-            <button class="chat-send-btn" onclick="sendMessage()" id="sendBtn">
-                <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
-            </button>
-        </div>
     </div>
 </div>
 
@@ -1018,6 +935,11 @@ const subscriberTracks = [
 ];
 
 // ============================================
+// ТЕКУЩАЯ КАТЕГОРИЯ
+// ============================================
+let currentCategory = 'all';
+
+// ============================================
 // RENDER
 // ============================================
 function renderNewRelease() {
@@ -1039,41 +961,140 @@ function renderNewRelease() {
     }
 }
 
-function renderInstrumentals() {
-    const list = document.getElementById('instrumentalsList');
-    if (!list) return;
-    list.innerHTML = '';
-    instrumentalTracks.forEach((t, i) => {
-        const card = document.createElement('div');
-        card.className = 'special-card gold';
-        card.dataset.id = t.id;
-        const coverHtml = t.cover ? `<img src="${t.cover}" alt="${t.title}" onerror="this.style.display='none'; this.parentElement.innerHTML='🎹'">` : '🎹';
-        card.innerHTML = `
-            <div class="special-card-top">
-                <div class="special-cover gold" onclick="playInstrumental(instrumentalTracks[${i}], ${i})">
-                    ${coverHtml}
-                    <div class="special-play-overlay"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
-                </div>
-                <div class="special-main-info">
-                    <div class="special-title">${t.title}</div>
-                    <div class="special-tags">
-                        <span class="special-tag genre">${t.genre}</span>
-                        <span class="special-tag mood">${t.mood}</span>
-                    </div>
-                    <div style="font-size:0.75rem; color:var(--text-secondary); font-family:'Orbitron',monospace; margin-top:4px;">${t.duration}</div>
-                </div>
-                <div class="special-card-actions">
-                    <button class="special-card-btn gold" onclick="event.stopPropagation(); openDownloadModal(instrumentalTracks[${i}], 'instrumental')" title="Скачать">
-                        <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
-                    </button>
-                </div>
-            </div>
-            <div class="special-description gold">${t.description}</div>
-        `;
-        list.appendChild(card);
-    });
+// Обновление счётчиков в табах
+function updateCategoryCounts() {
+    const total = allTracks.length + instrumentalTracks.length + subscriberTracks.length;
+    document.getElementById('countAll').textContent = total;
+    document.getElementById('countTracks').textContent = allTracks.length;
+    document.getElementById('countInstrumentals').textContent = instrumentalTracks.length;
+    document.getElementById('countSubscribers').textContent = subscriberTracks.length;
 }
 
+// Создание HTML элемента трека
+function createTrackElement(track, category, globalIndex) {
+    const el = document.createElement('div');
+    el.className = 'track-item';
+    if (category === 'instrumentals') el.classList.add('gold');
+    if (category === 'subscribers') el.classList.add('pink');
+    el.dataset.id = track.id;
+
+    const coverHtml = track.cover
+        ? `<img src="${track.cover}" alt="${track.title}" onerror="this.style.display='none'; this.parentElement.innerHTML='${category === 'instrumentals' ? '🎹' : category === 'subscribers' ? '🎤' : '🎵'}'">`
+        : (category === 'instrumentals' ? '🎹' : category === 'subscribers' ? '🎤' : '🎵');
+
+    const badgeIcon = category === 'instrumentals' ? '🎹' : category === 'subscribers' ? '🎤' : '🎵';
+    const badgeClass = category === 'instrumentals' ? 'gold' : category === 'subscribers' ? 'pink' : 'cyan';
+
+    let artistText = '';
+    let artistClass = '';
+    if (category === 'tracks') {
+        artistText = track.subtitle || 'EVGENII';
+    } else if (category === 'instrumentals') {
+        artistText = `${track.genre} · ${track.mood}`;
+        artistClass = 'gold';
+    } else if (category === 'subscribers') {
+        artistText = `✍ ${track.author} · ${track.style}`;
+        artistClass = 'pink';
+    }
+
+    const playFn = category === 'tracks'
+        ? `playTrack(allTracks[${globalIndex}], ${globalIndex})`
+        : category === 'instrumentals'
+        ? `playInstrumental(instrumentalTracks[${globalIndex}], ${globalIndex})`
+        : `playSubscriber(subscriberTracks[${globalIndex}], ${globalIndex})`;
+
+    const downloadType = category === 'tracks' ? 'regular' : category;
+    const dataArray = category === 'tracks' ? 'allTracks' : category === 'instrumentals' ? 'instrumentalTracks' : 'subscriberTracks';
+
+    el.innerHTML = `
+        <div class="track-cover" onclick="${playFn}">
+            ${coverHtml}
+            <div class="track-category-badge ${badgeClass}">${badgeIcon}</div>
+        </div>
+        <div class="track-info" onclick="${playFn}">
+            <div class="track-title">${track.title}</div>
+            <div class="track-artist ${artistClass}">${artistText}</div>
+        </div>
+        <div class="track-duration">${track.duration}</div>
+        <button class="track-download-btn" onclick="event.stopPropagation(); openDownloadModal(${dataArray}[${globalIndex}], '${downloadType}')" title="Скачать">
+            <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+        </button>
+    `;
+    return el;
+}
+
+// Создание разделителя категории
+function createCategoryDivider(category) {
+    const div = document.createElement('div');
+    div.className = 'category-divider';
+    const labels = {
+        tracks: { icon: '🎵', text: 'ТРЕКИ EVGENII', color: 'cyan' },
+        instrumentals: { icon: '🎹', text: 'ИНСТРУМЕНТАЛЫ', color: 'gold' },
+        subscribers: { icon: '🎤', text: 'ДАЙ ГОЛОС', color: 'pink' }
+    };
+    const l = labels[category];
+    div.innerHTML = `
+        <div class="category-divider-line"></div>
+        <div class="category-divider-label ${l.color}">
+            <span>${l.icon}</span>
+            <span>${l.text}</span>
+        </div>
+        <div class="category-divider-line"></div>
+    `;
+    return div;
+}
+
+// Основная функция рендера
+function renderAllTracksList() {
+    const list = document.getElementById('allTracksList');
+    if (!list) return;
+    list.innerHTML = '';
+
+    if (currentCategory === 'all') {
+        // Показываем все категории с разделителями
+        if (allTracks.length > 0) {
+            list.appendChild(createCategoryDivider('tracks'));
+            allTracks.forEach((t, i) => list.appendChild(createTrackElement(t, 'tracks', i)));
+        }
+        if (instrumentalTracks.length > 0) {
+            list.appendChild(createCategoryDivider('instrumentals'));
+            instrumentalTracks.forEach((t, i) => list.appendChild(createTrackElement(t, 'instrumentals', i)));
+        }
+        if (subscriberTracks.length > 0) {
+            list.appendChild(createCategoryDivider('subscribers'));
+            subscriberTracks.forEach((t, i) => list.appendChild(createTrackElement(t, 'subscribers', i)));
+        }
+    } else if (currentCategory === 'tracks') {
+        if (allTracks.length === 0) {
+            list.innerHTML = `<div class="empty-state"><div class="empty-state-icon">🎵</div><div class="empty-state-text">Пока нет треков</div></div>`;
+            return;
+        }
+        allTracks.forEach((t, i) => list.appendChild(createTrackElement(t, 'tracks', i)));
+    } else if (currentCategory === 'instrumentals') {
+        if (instrumentalTracks.length === 0) {
+            list.innerHTML = `<div class="empty-state"><div class="empty-state-icon">🎹</div><div class="empty-state-text">Пока нет инструменталов</div></div>`;
+            return;
+        }
+        instrumentalTracks.forEach((t, i) => list.appendChild(createTrackElement(t, 'instrumentals', i)));
+    } else if (currentCategory === 'subscribers') {
+        if (subscriberTracks.length === 0) {
+            list.innerHTML = `<div class="empty-state"><div class="empty-state-icon">🎤</div><div class="empty-state-text">Пока нет треков от подписчиков</div></div>`;
+            return;
+        }
+        subscriberTracks.forEach((t, i) => list.appendChild(createTrackElement(t, 'subscribers', i)));
+    }
+}
+
+// Переключение категории
+function switchCategory(category) {
+    currentCategory = category;
+    document.querySelectorAll('.category-tab').forEach(tab => {
+        tab.classList.toggle('active', tab.dataset.category === category);
+    });
+    renderAllTracksList();
+}
+
+// Рендер списка подписчиков (для отдельной страницы subscribersPage)
 function renderSubscribers() {
     const list = document.getElementById('subscribersList');
     if (!list) return;
@@ -1106,20 +1127,6 @@ function renderSubscribers() {
             <div class="special-description pink">${t.description}</div>
         `;
         list.appendChild(card);
-    });
-}
-
-function renderTracks() {
-    const c = document.getElementById('tracksList');
-    c.innerHTML = '';
-    allTracks.forEach((t, i) => {
-        const el = document.createElement('div');
-        el.className = 'track-item';
-        el.dataset.id = t.id;
-        el.onclick = () => playTrack(t, i + 1);
-        const coverHtml = t.cover ? `<img src="${t.cover}" alt="${t.title}" onerror="this.style.display='none'; this.parentElement.innerHTML='🎵'">` : '🎵';
-        el.innerHTML = `<div class="track-cover">${coverHtml}</div><div class="track-info"><div class="track-title">${t.title}</div><div class="track-artist">${t.subtitle || 'EVGENII'}</div></div><div class="track-duration">${t.duration}</div><button class="track-download-btn" onclick="event.stopPropagation(); openDownloadModal(allTracks[${i}], 'regular')" title="Скачать трек"><svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></button>`;
-        c.appendChild(el);
     });
 }
 
@@ -1232,8 +1239,8 @@ function playInstrumental(track, index = -1) {
     const coverEl = document.getElementById('instPlayerCover');
     if (track.cover) { coverEl.innerHTML = `<img src="${track.cover}" alt="${track.title}" onerror="this.style.display='none'; this.parentElement.innerHTML='🎹'">`; } else { coverEl.textContent = '🎹'; }
     document.getElementById('instrumentalPlayer').classList.add('visible');
-    document.querySelectorAll('.special-card.gold').forEach(el => el.classList.remove('active'));
-    const activeCard = document.querySelector(`.special-card.gold[data-id="${track.id}"]`);
+    document.querySelectorAll('.track-item, .special-card').forEach(el => el.classList.remove('active'));
+    const activeCard = document.querySelector(`.track-item[data-id="${track.id}"], .special-card[data-id="${track.id}"]`);
     if (activeCard) activeCard.classList.add('active');
     instAudio.src = track.file;
     instAudio.play().then(() => setInstPlayingState(true)).catch(() => startInstSimulation());
@@ -1289,8 +1296,8 @@ function playSubscriber(track, index = -1) {
     const coverEl = document.getElementById('subPlayerCover');
     if (track.cover) { coverEl.innerHTML = `<img src="${track.cover}" alt="${track.title}" onerror="this.style.display='none'; this.parentElement.innerHTML='🎤'">`; } else { coverEl.textContent = '🎤'; }
     document.getElementById('subscriberPlayer').classList.add('visible');
-    document.querySelectorAll('.special-card.pink').forEach(el => el.classList.remove('active'));
-    const activeCard = document.querySelector(`.special-card.pink[data-id="${track.id}"]`);
+    document.querySelectorAll('.track-item, .special-card').forEach(el => el.classList.remove('active'));
+    const activeCard = document.querySelector(`.track-item[data-id="${track.id}"], .special-card[data-id="${track.id}"]`);
     if (activeCard) activeCard.classList.add('active');
     subAudio.src = track.file;
     subAudio.play().then(() => setSubPlayingState(true)).catch(() => startSubSimulation());
@@ -1421,138 +1428,22 @@ function showMainScreen(name) {
     headerName.textContent = name.toUpperCase();
     updateTime();
     renderNewRelease();
-    renderTracks();
-    renderInstrumentals();
+    updateCategoryCounts();
+    renderAllTracksList();
     renderSubscribers();
 }
 
-let chatSubscription = null;
 logoutBtn.addEventListener('click', function() {
     localStorage.removeItem('evgenii_user');
-    ['homePage','tracksPage','aboutPage','communityPage','chatPage','contactPage','instrumentalsPage','subscribersPage','supportPage'].forEach(p => document.getElementById(p).classList.remove('active'));
+    ['homePage','tracksPage','aboutPage','communityPage','contactPage','subscribersPage','supportPage'].forEach(p => document.getElementById(p).classList.remove('active'));
     currentPage = 'homePage'; pageHistory = ['homePage'];
     loginScreen.classList.remove('hidden'); nameInput.value = '';
     loginGreeting.textContent = getLoginGreeting(new Date().getHours());
     stopAllPlayers();
-    if (chatSubscription && supabaseClient) { supabaseClient.removeChannel(chatSubscription); chatSubscription = null; }
 });
 
 setInterval(updateTime, 1000);
 updateTime();
-
-// ============================================
-// ПОДДЕРЖКА
-// ============================================
-function copyToClipboard(text, btn) {
-    const originalText = btn.textContent;
-    navigator.clipboard.writeText(text).then(() => {
-        btn.textContent = '✓ СКОПИРОВАНО';
-        btn.style.background = 'linear-gradient(135deg, #00ff88, #00e5ff)';
-        setTimeout(() => { btn.textContent = originalText; btn.style.background = ''; }, 2000);
-    }).catch(() => {
-        const textarea = document.createElement('textarea');
-        textarea.value = text; textarea.style.position = 'fixed'; textarea.style.opacity = '0';
-        document.body.appendChild(textarea); textarea.select();
-        try {
-            document.execCommand('copy');
-            btn.textContent = '✓ СКОПИРОВАНО';
-            btn.style.background = 'linear-gradient(135deg, #00ff88, #00e5ff)';
-            setTimeout(() => { btn.textContent = originalText; btn.style.background = ''; }, 2000);
-        } catch (e) { alert('Скопируй вручную: ' + text); }
-        document.body.removeChild(textarea);
-    });
-}
-
-// ============================================
-// ЧАТ
-// ============================================
-const chatMessagesEl = document.getElementById('chatMessages');
-const chatInput = document.getElementById('chatInput');
-const chatLoading = document.getElementById('chatLoading');
-const chatStatus = document.getElementById('chatStatus');
-const sendBtn = document.getElementById('sendBtn');
-
-function getCurrentUser() { return localStorage.getItem('evgenii_user') || 'Гость'; }
-function getUserId() { return localStorage.getItem('evgenii_user') || 'guest_' + Date.now(); }
-
-function addMessageToUI(user, text, time, isSent) {
-    const div = document.createElement('div');
-    div.className = `chat-message ${isSent ? 'sent' : 'received'}`;
-    div.innerHTML = `<div class="message-avatar">${isSent ? '👤' : '👥'}</div><div class="message-content"><div class="message-bubble">${escapeHtml(text)}</div><div class="message-time">${escapeHtml(user)} · ${time}</div></div>`;
-    chatMessagesEl.appendChild(div);
-}
-function scrollToBottom() { setTimeout(() => { chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight; }, 100); }
-
-async function loadChatHistory() {
-    if (!supabaseClient) {
-        chatStatus.textContent = '⚠️ Supabase не настроен. Чат недоступен.';
-        chatStatus.className = 'chat-status offline';
-        chatMessagesEl.innerHTML = '<div style="text-align:center; padding:40px; color:var(--text-secondary);">Чат будет доступен после настройки базы данных</div>';
-        return;
-    }
-    chatLoading.style.display = 'flex';
-    chatMessagesEl.innerHTML = '';
-    chatMessagesEl.appendChild(chatLoading);
-    try {
-        const { data, error } = await supabaseClient.from('messages').select('*').order('created_at', { ascending: true }).limit(100);
-        chatLoading.style.display = 'none';
-        chatMessagesEl.innerHTML = '';
-        if (error) throw error;
-        const userId = getUserId();
-        data.forEach(msg => { addMessageToUI(msg.user_name, msg.text, msg.time, msg.user_id === userId); });
-        chatStatus.textContent = '🟢 Подключено';
-        chatStatus.className = 'chat-status connected';
-        scrollToBottom();
-    } catch (error) {
-        console.error('Ошибка загрузки:', error);
-        chatLoading.innerHTML = '<span style="color: #ff6b6b;">Ошибка подключения к базе</span>';
-        chatStatus.textContent = '🔴 Ошибка подключения';
-        chatStatus.className = 'chat-status error';
-    }
-}
-
-function subscribeToChat() {
-    if (!supabaseClient) return;
-    if (chatSubscription) supabaseClient.removeChannel(chatSubscription);
-    const userId = getUserId();
-    chatSubscription = supabaseClient.channel('chat-messages').on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages' }, (payload) => {
-        const msg = payload.new;
-        addMessageToUI(msg.user_name, msg.text, msg.time, msg.user_id === userId);
-        scrollToBottom();
-    }).subscribe((status) => {
-        if (status === 'SUBSCRIBED') { chatStatus.textContent = '🟢 Подключено'; chatStatus.className = 'chat-status connected'; }
-    });
-}
-
-async function sendMessage() {
-    if (!supabaseClient) { chatStatus.textContent = '⚠️ База данных не настроена'; chatStatus.className = 'chat-status offline'; return; }
-    const text = chatInput.value.trim();
-    if (!text) return;
-    const userName = getCurrentUser();
-    const userId = getUserId();
-    const now = new Date();
-    const time = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
-    sendBtn.disabled = true;
-    try {
-        const { error } = await supabaseClient.from('messages').insert([{ user_name: userName, user_id: userId, text: text, time: time }]);
-        if (error) throw error;
-        chatInput.value = '';
-    } catch (error) {
-        console.error('Ошибка отправки:', error);
-        chatStatus.textContent = '🔴 Ошибка отправки';
-        chatStatus.className = 'chat-status error';
-        setTimeout(() => { chatStatus.textContent = '🟢 Подключено'; chatStatus.className = 'chat-status connected'; }, 3000);
-    } finally { sendBtn.disabled = false; chatInput.focus(); }
-}
-
-chatInput.addEventListener('keypress', function(e) { if (e.key === 'Enter') sendMessage(); });
-
-const chatObserver = new MutationObserver(function(mutations) {
-    mutations.forEach(function(m) {
-        if (m.target.id === 'chatPage' && m.target.classList.contains('active')) { loadChatHistory(); subscribeToChat(); }
-    });
-});
-chatObserver.observe(document.getElementById('chatPage'), { attributes: true, attributeFilter: ['class'] });
 
 // ============================================
 // КОНТАКТЫ
@@ -1655,3 +1546,4 @@ if (voiceForm) {
 </script>
 </body>
 </html>
+
