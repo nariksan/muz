@@ -206,8 +206,8 @@
         .special-description { padding: 12px 16px 16px; color: var(--text-secondary); font-size: 0.9rem; line-height: 1.55; margin-top: 4px; font-style: italic; }
         .special-description.gold { border-top: 1px dashed rgba(255, 179, 71, 0.15); }
         .special-description.pink { border-top: 1px dashed rgba(255, 107, 157, 0.15); }
-        .special-description::before { content: '\201C'; font-size: 1.3rem; font-weight: 700; margin-right: 4px; font-style: normal; }
-        .special-description::after { content: '\201D'; font-size: 1.3rem; font-weight: 700; margin-left: 4px; font-style: normal; }
+        .special-description::before { content: '“'; font-size: 1.3rem; font-weight: 700; margin-right: 4px; font-style: normal; }
+        .special-description::after { content: '”'; font-size: 1.3rem; font-weight: 700; margin-left: 4px; font-style: normal; }
         .special-description.gold::before, .special-description.gold::after { color: var(--gold); }
         .special-description.pink::before, .special-description.pink::after { color: var(--pink); }
 
@@ -402,7 +402,12 @@
     <div class="login-container">
         <div class="login-banner">
             <div class="login-banner-bg"></div>
-            <div class="login-geometric"><div class="geo-shape"></div><div class="geo-shape"></div><div class="geo-shape"></div><div class="geo-shape"></div></div>
+            <div class="login-geometric">
+                <div class="geo-shape"></div>
+                <div class="geo-shape"></div>
+                <div class="geo-shape"></div>
+                <div class="geo-shape"></div>
+            </div>
             <div style="position: relative; z-index: 2; text-align: center;">
                 <div class="login-logo">EVGENII</div>
                 <div class="login-slogan">Где заканчиваюсь я — и начинается ИИ</div>
@@ -419,12 +424,23 @@
 <!-- ГЛАВНАЯ -->
 <div class="page" id="homePage">
     <div class="header fade-in-up">
-        <div class="header-left"><div class="header-time" id="headerTime">00:00</div><div class="header-greeting" id="headerGreeting">ДОБРЫЙ ДЕНЬ</div></div>
-        <div class="header-right"><div class="header-name-label">ГОСТЬ</div><div class="header-name" id="headerName">ИМЯ</div></div>
+        <div class="header-left">
+            <div class="header-time" id="headerTime">00:00</div>
+            <div class="header-greeting" id="headerGreeting">ДОБРЫЙ ДЕНЬ</div>
+        </div>
+        <div class="header-right">
+            <div class="header-name-label">ГОСТЬ</div>
+            <div class="header-name" id="headerName">ИМЯ</div>
+        </div>
     </div>
     <div class="banner fade-in-up">
         <div class="banner-content">
-            <div class="banner-geometric"><div class="geo-shape-banner"></div><div class="geo-shape-banner"></div><div class="geo-shape-banner"></div><div class="geo-shape-banner"></div></div>
+            <div class="banner-geometric">
+                <div class="geo-shape-banner"></div>
+                <div class="geo-shape-banner"></div>
+                <div class="geo-shape-banner"></div>
+                <div class="geo-shape-banner"></div>
+            </div>
             <div class="banner-title">EVGENII</div>
             <div class="banner-slogan">Где заканчиваюсь я — и начинается ИИ</div>
         </div>
@@ -436,55 +452,150 @@
     <div class="quick-access-section fade-in-up">
         <div class="section-title">БЫСТРЫЙ ДОСТУП</div>
         <div class="quick-grid">
-            <div class="quick-tile" onclick="navigateTo('tracksPage')"><div class="tile-icon tracks">🎵</div><div class="tile-title">Все треки</div><div class="tile-desc">Полная дискография</div></div>
-            <div class="quick-tile" onclick="navigateTo('instrumentalsPage')"><div class="tile-icon instrumental">🎹</div><div class="tile-title">Инструменталы</div><div class="tile-desc">Музыка без слов</div></div>
-            <div class="quick-tile" onclick="navigateTo('subscribersPage')"><div class="tile-icon subscribers">🎤</div><div class="tile-title">Дай голос</div><div class="tile-desc">Твой текст — наш голос</div></div>
-            <div class="quick-tile" onclick="navigateTo('communityPage')"><div class="tile-icon community">🌐</div><div class="tile-title">Сообщества</div><div class="tile-desc">Bip & Telegram</div></div>
-            <div class="quick-tile" onclick="navigateTo('contactPage')"><div class="tile-icon contact">✉️</div><div class="tile-title">Связь</div><div class="tile-desc">Написать автору</div></div>
-            <div class="quick-tile disabled"><div class="tile-icon" style="background:rgba(0,229,255,0.15);color:var(--cyan)">💬</div><div class="tile-title">Чат</div><div class="tile-desc">Скоро будет доступен</div></div>
-            <div class="quick-tile disabled"><div class="tile-icon support">💜</div><div class="tile-title">Поддержать</div><div class="tile-desc">Скоро будет доступно</div></div>
-            <div class="quick-tile" onclick="navigateTo('aboutPage')"><div class="tile-icon about">ℹ️</div><div class="tile-title">О проекте</div><div class="tile-desc">Узнать больше</div></div>
+            <div class="quick-tile" onclick="navigateTo('tracksPage')">
+                <div class="tile-icon tracks">🎵</div>
+                <div class="tile-title">Все треки</div>
+                <div class="tile-desc">Полная дискография</div>
+            </div>
+            <div class="quick-tile" onclick="navigateTo('instrumentalsPage')">
+                <div class="tile-icon instrumental">🎹</div>
+                <div class="tile-title">Инструменталы</div>
+                <div class="tile-desc">Музыка без слов</div>
+            </div>
+            <div class="quick-tile" onclick="navigateTo('subscribersPage')">
+                <div class="tile-icon subscribers">🎤</div>
+                <div class="tile-title">Дай голос</div>
+                <div class="tile-desc">Твой текст — наш голос</div>
+            </div>
+            <div class="quick-tile" onclick="navigateTo('communityPage')">
+                <div class="tile-icon community">🌐</div>
+                <div class="tile-title">Сообщества</div>
+                <div class="tile-desc">Bip & Telegram</div>
+            </div>
+            <div class="quick-tile" onclick="navigateTo('contactPage')">
+                <div class="tile-icon contact">✉️</div>
+                <div class="tile-title">Связь</div>
+                <div class="tile-desc">Написать автору</div>
+            </div>
+            <div class="quick-tile disabled">
+                <div class="tile-icon" style="background:rgba(0,229,255,0.15);color:var(--cyan)">💬</div>
+                <div class="tile-title">Чат</div>
+                <div class="tile-desc">Скоро будет доступен</div>
+            </div>
+            <div class="quick-tile disabled">
+                <div class="tile-icon support">💜</div>
+                <div class="tile-title">Поддержать</div>
+                <div class="tile-desc">Скоро будет доступно</div>
+            </div>
+            <div class="quick-tile" onclick="navigateTo('aboutPage')">
+                <div class="tile-icon about">ℹ️</div>
+                <div class="tile-title">О проекте</div>
+                <div class="tile-desc">Узнать больше</div>
+            </div>
         </div>
     </div>
     <button class="logout-btn" id="logoutBtn">ВЫЙТИ</button>
 </div>
 
-<!-- ВСЕ ТРЕКИ (с табами) -->
+<!-- ВСЕ ТРЕКИ -->
 <div class="page" id="tracksPage">
-    <div class="page-header fade-in-up"><button class="back-btn" onclick="goBack()">←</button><div class="page-title">Все треки</div></div>
+    <div class="page-header fade-in-up">
+        <button class="back-btn" onclick="goBack()">←</button>
+        <div class="page-title">Все треки</div>
+    </div>
     <div class="featured-release fade-in-up" id="featuredRelease" onclick="playNewRelease()"></div>
     <div class="category-tabs fade-in-up" id="categoryTabs">
-        <button class="category-tab active" data-category="all" onclick="switchCategory('all')"><span class="tab-icon">🎧</span><span>Все</span><span class="tab-count" id="countAll">0</span></button>
-        <button class="category-tab" data-category="tracks" onclick="switchCategory('tracks')"><span class="tab-icon">🎵</span><span>Треки</span><span class="tab-count" id="countTracks">0</span></button>
-        <button class="category-tab" data-category="instrumentals" onclick="switchCategory('instrumentals')"><span class="tab-icon">🎹</span><span>Инструменталы</span><span class="tab-count" id="countInstrumentals">0</span></button>
-        <button class="category-tab" data-category="subscribers" onclick="switchCategory('subscribers')"><span class="tab-icon">🎤</span><span>Дай голос</span><span class="tab-count" id="countSubscribers">0</span></button>
+        <button class="category-tab active" data-category="all" onclick="switchCategory('all')">
+            <span class="tab-icon">🎧</span>
+            <span>Все</span>
+            <span class="tab-count" id="countAll">0</span>
+        </button>
+        <button class="category-tab" data-category="tracks" onclick="switchCategory('tracks')">
+            <span class="tab-icon">🎵</span>
+            <span>Треки</span>
+            <span class="tab-count" id="countTracks">0</span>
+        </button>
+        <button class="category-tab" data-category="instrumentals" onclick="switchCategory('instrumentals')">
+            <span class="tab-icon">🎹</span>
+            <span>Инструменталы</span>
+            <span class="tab-count" id="countInstrumentals">0</span>
+        </button>
+        <button class="category-tab" data-category="subscribers" onclick="switchCategory('subscribers')">
+            <span class="tab-icon">🎤</span>
+            <span>Дай голос</span>
+            <span class="tab-count" id="countSubscribers">0</span>
+        </button>
     </div>
     <div class="tracks-list fade-in-up" id="allTracksList"></div>
 </div>
 
-<!-- ИНСТРУМЕНТАЛЫ (отдельная страница) -->
+<!-- ИНСТРУМЕНТАЛЫ -->
 <div class="page" id="instrumentalsPage">
-    <div class="page-header fade-in-up"><button class="back-btn" onclick="goBack()">←</button><div class="page-title">Инструменталы</div></div>
-    <div class="intro-block gold fade-in-up"><div class="intro-title gold">БЕЗ СЛОВ · ТОЛЬКО ЗВУК</div><div class="intro-text">Музыка, в которой говорят не тексты, а эмоции. Каждый трек — отдельное настроение, атмосфера и история без единого слова.</div></div>
+    <div class="page-header fade-in-up">
+        <button class="back-btn" onclick="goBack()">←</button>
+        <div class="page-title">Инструменталы</div>
+    </div>
+    <div class="intro-block gold fade-in-up">
+        <div class="intro-title gold">БЕЗ СЛОВ · ТОЛЬКО ЗВУК</div>
+        <div class="intro-text">Музыка, в которой говорят не тексты, а эмоции. Каждый трек — отдельное настроение, атмосфера и история без единого слова.</div>
+    </div>
     <div class="section-title fade-in-up">КОЛЛЕКЦИЯ</div>
     <div class="tracks-list fade-in-up" id="instrumentalsList"></div>
 </div>
 
-<!-- ДАЙ ГОЛОС (отдельная страница) -->
+<!-- ДАЙ ГОЛОС -->
 <div class="page" id="subscribersPage">
-    <div class="page-header fade-in-up"><button class="back-btn" onclick="goBack()">←</button><div class="page-title">Дай голос</div></div>
-    <div class="intro-block pink fade-in-up"><div class="intro-title pink">ТВОЙ ТЕКСТ — НАШ ГОЛОС</div><div class="intro-text">Присылай свой текст и стиль, в котором ты хотел бы его услышать. Мы дадим ему голос через ИИ — и твой текст зазвучит.</div></div>
-    <button class="voice-toggle-btn fade-in-up" id="voiceToggleBtn" onclick="toggleVoiceForm()"><span class="btn-icon">🎤</span><span id="voiceToggleText">ПРИСЛАТЬ СВОЙ ТЕКСТ</span><span class="btn-arrow">▼</span></button>
+    <div class="page-header fade-in-up">
+        <button class="back-btn" onclick="goBack()">←</button>
+        <div class="page-title">Дай голос</div>
+    </div>
+    <div class="intro-block pink fade-in-up">
+        <div class="intro-title pink">ТВОЙ ТЕКСТ — НАШ ГОЛОС</div>
+        <div class="intro-text">Присылай свой текст и стиль, в котором ты хотел бы его услышать. Мы дадим ему голос через ИИ — и твой текст зазвучит.</div>
+    </div>
+    <button class="voice-toggle-btn fade-in-up" id="voiceToggleBtn" onclick="toggleVoiceForm()">
+        <span class="btn-icon">🎤</span>
+        <span id="voiceToggleText">ПРИСЛАТЬ СВОЙ ТЕКСТ</span>
+        <span class="btn-arrow">▼</span>
+    </button>
     <div class="voice-form-wrapper" id="voiceFormWrapper">
         <div class="voice-form-container">
             <h3 style="margin-bottom:20px;font-family:'Orbitron';letter-spacing:2px;text-align:center;font-size:1rem;color:var(--pink)">ОТПРАВИТЬ НА ОБРАБОТКУ</h3>
             <form id="voiceForm">
-                <div class="form-group"><label class="form-label">Твоё имя</label><input type="text" class="form-input" name="name" placeholder="Как тебя зовут?" required maxlength="50"></div>
-                <div class="form-group"><label class="form-label">Контакт (Telegram / Email)</label><input type="text" class="form-input" name="contact" placeholder="Чтобы мы могли прислать готовый трек" required maxlength="100"></div>
-                <div class="form-group"><label class="form-label">Стиль исполнения</label><select class="form-select" name="style" required><option value="" disabled selected>Выбери стиль</option><option value="Рок">Рок</option><option value="Поп">Поп</option><option value="Рэп">Рэп</option><option value="Акустика">Акустика</option><option value="Электроника">Электроника</option><option value="Инди">Инди</option><option value="Метал">Метал</option><option value="Другое">Другое (укажу в комментарии)</option></select></div>
-                <div class="form-group"><label class="form-label">Текст песни</label><textarea class="form-textarea" name="lyrics" placeholder="Вставь сюда свой текст..." required maxlength="3000" style="min-height:180px"></textarea></div>
-                <div class="form-group"><label class="form-label">Комментарий (необязательно)</label><textarea class="form-textarea" name="comment" placeholder="О чём трек? Какое настроение? Любые пожелания..." maxlength="500" style="min-height:80px"></textarea></div>
-                <div class="vpn-warning"><div class="vpn-warning-icon">🔐</div><div class="vpn-warning-text"><strong>Важно:</strong> Заявки отправляются в Telegram. Включите <strong>VPN</strong> для отправки.</div></div>
+                <div class="form-group">
+                    <label class="form-label">Твоё имя</label>
+                    <input type="text" class="form-input" name="name" placeholder="Как тебя зовут?" required maxlength="50">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Контакт (Telegram / Email)</label>
+                    <input type="text" class="form-input" name="contact" placeholder="Чтобы мы могли прислать готовый трек" required maxlength="100">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Стиль исполнения</label>
+                    <select class="form-select" name="style" required>
+                        <option value="" disabled selected>Выбери стиль</option>
+                        <option value="Рок">Рок</option>
+                        <option value="Поп">Поп</option>
+                        <option value="Рэп">Рэп</option>
+                        <option value="Акустика">Акустика</option>
+                        <option value="Электроника">Электроника</option>
+                        <option value="Инди">Инди</option>
+                        <option value="Метал">Метал</option>
+                        <option value="Другое">Другое (укажу в комментарии)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Текст песни</label>
+                    <textarea class="form-textarea" name="lyrics" placeholder="Вставь сюда свой текст..." required maxlength="3000" style="min-height:180px"></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Комментарий (необязательно)</label>
+                    <textarea class="form-textarea" name="comment" placeholder="О чём трек? Какое настроение? Любые пожелания..." maxlength="500" style="min-height:80px"></textarea>
+                </div>
+                <div class="vpn-warning">
+                    <div class="vpn-warning-icon">🔐</div>
+                    <div class="vpn-warning-text"><strong>Важно:</strong> Заявки отправляются в Telegram. Включите <strong>VPN</strong> для отправки.</div>
+                </div>
                 <button type="submit" class="submit-btn pink" id="voiceSubmitBtn"><span>ОТПРАВИТЬ ТЕКСТ</span></button>
                 <div class="form-status" id="voiceFormStatus"></div>
             </form>
@@ -496,36 +607,79 @@
 
 <!-- О ПРОЕКТЕ -->
 <div class="page" id="aboutPage">
-    <div class="page-header fade-in-up"><button class="back-btn" onclick="goBack()">←</button><div class="page-title">О проекте</div></div>
+    <div class="page-header fade-in-up">
+        <button class="back-btn" onclick="goBack()">←</button>
+        <div class="page-title">О проекте</div>
+    </div>
     <div class="about-content fade-in-up">
-        <div class="about-card"><p><span class="evgenii-title">EVGENII</span> — это эксперимент на стыке человеческих эмоций и искусственного интеллекта.</p><div class="about-quote">«Я придумываю текст и стиль исполнения. А выучить и воплотить в песню доверяю ИИ.»</div></div>
-        <div class="about-card"><p>Искусственный интеллект становится моим <span class="highlight">голосом</span>. Он заучивает мои слова, учится чувствовать ритм, подбирать интонации.</p><p>Это не замена человеку — это <span class="highlight">новый инструмент выражения</span>.</p></div>
-        <div class="about-card"><p>Вместе мы создаём что-то третье. Не совсем человеческое, не совсем машинное. Что-то среднее, где технологии усиливают эмоции, а не заменяют их.</p></div>
+        <div class="about-card">
+            <p><span class="evgenii-title">EVGENII</span> — это эксперимент на стыке человеческих эмоций и искусственного интеллекта.</p>
+            <div class="about-quote">«Я придумываю текст и стиль исполнения. А выучить и воплотить в песню доверяю ИИ.»</div>
+        </div>
+        <div class="about-card">
+            <p>Искусственный интеллект становится моим <span class="highlight">голосом</span>. Он заучивает мои слова, учится чувствовать ритм, подбирать интонации.</p>
+            <p>Это не замена человеку — это <span class="highlight">новый инструмент выражения</span>.</p>
+        </div>
+        <div class="about-card">
+            <p>Вместе мы создаём что-то третье. Не совсем человеческое, не совсем машинное. Что-то среднее, где технологии усиливают эмоции, а не заменяют их.</p>
+        </div>
     </div>
 </div>
 
 <!-- СООБЩЕСТВА -->
 <div class="page" id="communityPage">
-    <div class="page-header fade-in-up"><button class="back-btn" onclick="goBack()">←</button><div class="page-title">Сообщества</div></div>
+    <div class="page-header fade-in-up">
+        <button class="back-btn" onclick="goBack()">←</button>
+        <div class="page-title">Сообщества</div>
+    </div>
     <div class="community-content fade-in-up">
         <div class="community-intro"><p>Присоединяйтесь к нашим сообществам, чтобы быть в курсе новых релизов и эксклюзивного контента</p></div>
-        <a href="#" class="community-card coming-soon" onclick="event.preventDefault()"><div class="community-icon bip">🎵</div><div class="community-info"><div class="community-name">Bip</div><div class="community-desc">Музыкальная платформа</div><span class="community-badge">Скоро</span></div><div class="community-arrow">→</div></a>
-        <a href="#" class="community-card coming-soon" onclick="event.preventDefault()"><div class="community-icon telegram">✈️</div><div class="community-info"><div class="community-name">Telegram</div><div class="community-desc">Новости и обновления</div><span class="community-badge">Скоро</span></div><div class="community-arrow">→</div></a>
-        <a href="#" class="community-card coming-soon" onclick="event.preventDefault()"><div class="community-icon instagram">📷</div><div class="community-info"><div class="community-name">Instagram</div><div class="community-desc">Визуальный контент</div><span class="community-badge">Скоро</span></div><div class="community-arrow">→</div></a>
+        <a href="#" class="community-card coming-soon" onclick="event.preventDefault()">
+            <div class="community-icon bip">🎵</div>
+            <div class="community-info"><div class="community-name">Bip</div><div class="community-desc">Музыкальная платформа</div><span class="community-badge">Скоро</span></div>
+            <div class="community-arrow">→</div>
+        </a>
+        <a href="#" class="community-card coming-soon" onclick="event.preventDefault()">
+            <div class="community-icon telegram">✈️</div>
+            <div class="community-info"><div class="community-name">Telegram</div><div class="community-desc">Новости и обновления</div><span class="community-badge">Скоро</span></div>
+            <div class="community-arrow">→</div>
+        </a>
+        <a href="#" class="community-card coming-soon" onclick="event.preventDefault()">
+            <div class="community-icon instagram">📷</div>
+            <div class="community-info"><div class="community-name">Instagram</div><div class="community-desc">Визуальный контент</div><span class="community-badge">Скоро</span></div>
+            <div class="community-arrow">→</div>
+        </a>
     </div>
 </div>
 
 <!-- КОНТАКТЫ -->
 <div class="page" id="contactPage">
-    <div class="page-header fade-in-up"><button class="back-btn" onclick="goBack()">←</button><div class="page-title">Связь</div></div>
-    <div class="contact-intro fade-in-up"><p>Есть вопрос, предложение или хотите сотрудничать? Напишите мне — я обязательно отвечу!</p></div>
+    <div class="page-header fade-in-up">
+        <button class="back-btn" onclick="goBack()">←</button>
+        <div class="page-title">Связь</div>
+    </div>
+    <div class="contact-intro fade-in-up">
+        <p>Есть вопрос, предложение или хотите сотрудничать? Напишите мне — я обязательно отвечу!</p>
+    </div>
     <div class="contact-form-container fade-in-up">
         <h3 style="margin-bottom:20px;font-family:'Orbitron';letter-spacing:2px;text-align:center">НАПИСАТЬ АВТОРУ</h3>
         <form id="contactForm">
-            <div class="form-group"><label class="form-label">Ваше имя</label><input type="text" class="form-input" name="name" placeholder="Как к вам обращаться?" required maxlength="50"></div>
-            <div class="form-group"><label class="form-label">Email или Telegram</label><input type="text" class="form-input" name="contact" placeholder="Для обратной связи" required maxlength="100"></div>
-            <div class="form-group"><label class="form-label">Сообщение</label><textarea class="form-textarea" name="message" placeholder="Напишите ваш вопрос, предложение или отзыв..." required maxlength="1000"></textarea></div>
-            <div class="vpn-warning"><div class="vpn-warning-icon">🔐</div><div class="vpn-warning-text"><strong>Важно:</strong> Сообщения отправляются в Telegram. Включите <strong>VPN</strong> для отправки.</div></div>
+            <div class="form-group">
+                <label class="form-label">Ваше имя</label>
+                <input type="text" class="form-input" name="name" placeholder="Как к вам обращаться?" required maxlength="50">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Email или Telegram</label>
+                <input type="text" class="form-input" name="contact" placeholder="Для обратной связи" required maxlength="100">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Сообщение</label>
+                <textarea class="form-textarea" name="message" placeholder="Напишите ваш вопрос, предложение или отзыв..." required maxlength="1000"></textarea>
+            </div>
+            <div class="vpn-warning">
+                <div class="vpn-warning-icon">🔐</div>
+                <div class="vpn-warning-text"><strong>Важно:</strong> Сообщения отправляются в Telegram. Включите <strong>VPN</strong> для отправки.</div>
+            </div>
             <button type="submit" class="submit-btn" id="submitBtn"><span>ОТПРАВИТЬ СООБЩЕНИЕ</span></button>
             <div class="form-status" id="formStatus"></div>
         </form>
@@ -534,27 +688,85 @@
 
 <!-- ПЛЕЕРЫ -->
 <div class="sticky-player" id="stickyPlayer">
-    <div class="player-top-row"><div class="player-mini-cover" id="playerCover">🎵</div><div class="player-mini-info"><div class="player-mini-title" id="playerTitle">Название трека</div><div class="player-mini-artist" id="playerArtist">Исполнитель</div></div><div class="player-mini-controls"><button class="mini-skip-btn" onclick="skipBackward()"><svg viewBox="0 0 24 24"><path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z"/></svg></button><button class="mini-play-btn" onclick="togglePlay()"><svg viewBox="0 0 24 24" id="miniPlayIcon"><polygon points="5,3 19,12 5,21"/></svg></button><button class="mini-skip-btn" onclick="skipForward()"><svg viewBox="0 0 24 24"><path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z"/></svg></button></div></div>
-    <div class="player-progress-wrapper"><span class="player-time-mini" id="playerCurrentTime">0:00</span><div class="player-bar-container" onclick="seek(event)"><div class="player-bar-fill" id="playerBarFill"></div></div><span class="player-time-mini end" id="playerTotalTime">0:00</span></div>
+    <div class="player-top-row">
+        <div class="player-mini-cover" id="playerCover">🎵</div>
+        <div class="player-mini-info">
+            <div class="player-mini-title" id="playerTitle">Название трека</div>
+            <div class="player-mini-artist" id="playerArtist">Исполнитель</div>
+        </div>
+        <div class="player-mini-controls">
+            <button class="mini-skip-btn" onclick="skipBackward()"><svg viewBox="0 0 24 24"><path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z"/></svg></button>
+            <button class="mini-play-btn" onclick="togglePlay()"><svg viewBox="0 0 24 24" id="miniPlayIcon"><polygon points="5,3 19,12 5,21"/></svg></button>
+            <button class="mini-skip-btn" onclick="skipForward()"><svg viewBox="0 0 24 24"><path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z"/></svg></button>
+        </div>
+    </div>
+    <div class="player-progress-wrapper">
+        <span class="player-time-mini" id="playerCurrentTime">0:00</span>
+        <div class="player-bar-container" onclick="seek(event)"><div class="player-bar-fill" id="playerBarFill"></div></div>
+        <span class="player-time-mini end" id="playerTotalTime">0:00</span>
+    </div>
 </div>
+
 <div class="floating-player gold" id="instrumentalPlayer">
-    <div class="floating-player-top"><div class="floating-player-cover gold" id="instPlayerCover">🎹</div><div class="floating-player-info"><div class="floating-player-label gold">Инструментал</div><div class="floating-player-title" id="instPlayerTitle">Название</div><div class="floating-player-tags" id="instPlayerTags"></div></div><div class="floating-player-controls"><button class="floating-skip-btn gold" onclick="instSkipBackward()"><svg viewBox="0 0 24 24"><path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z"/></svg></button><button class="floating-play-btn gold" onclick="instTogglePlay()"><svg viewBox="0 0 24 24" id="instPlayIcon"><polygon points="5,3 19,12 5,21"/></svg></button><button class="floating-skip-btn gold" onclick="instSkipForward()"><svg viewBox="0 0 24 24"><path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z"/></svg></button></div></div>
+    <div class="floating-player-top">
+        <div class="floating-player-cover gold" id="instPlayerCover">🎹</div>
+        <div class="floating-player-info">
+            <div class="floating-player-label gold">Инструментал</div>
+            <div class="floating-player-title" id="instPlayerTitle">Название</div>
+            <div class="floating-player-tags" id="instPlayerTags"></div>
+        </div>
+        <div class="floating-player-controls">
+            <button class="floating-skip-btn gold" onclick="instSkipBackward()"><svg viewBox="0 0 24 24"><path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z"/></svg></button>
+            <button class="floating-play-btn gold" onclick="instTogglePlay()"><svg viewBox="0 0 24 24" id="instPlayIcon"><polygon points="5,3 19,12 5,21"/></svg></button>
+            <button class="floating-skip-btn gold" onclick="instSkipForward()"><svg viewBox="0 0 24 24"><path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z"/></svg></button>
+        </div>
+    </div>
     <div class="floating-player-description gold" id="instPlayerDescription">Описание трека...</div>
-    <div class="floating-progress-wrapper"><span class="floating-time" id="instCurrentTime">0:00</span><div class="floating-bar-container" onclick="instSeek(event)"><div class="floating-bar-fill gold" id="instBarFill"></div></div><span class="floating-time end" id="instTotalTime">0:00</span></div>
+    <div class="floating-progress-wrapper">
+        <span class="floating-time" id="instCurrentTime">0:00</span>
+        <div class="floating-bar-container" onclick="instSeek(event)"><div class="floating-bar-fill gold" id="instBarFill"></div></div>
+        <span class="floating-time end" id="instTotalTime">0:00</span>
+    </div>
 </div>
+
 <div class="floating-player pink" id="subscriberPlayer">
-    <div class="floating-player-top"><div class="floating-player-cover pink" id="subPlayerCover">🎤</div><div class="floating-player-info"><div class="floating-player-label pink">Текст зазвучал</div><div class="floating-player-title" id="subPlayerTitle">Название</div><div class="floating-player-author pink" id="subPlayerAuthor">Автор текста</div><div class="floating-player-tags" id="subPlayerTags"></div></div><div class="floating-player-controls"><button class="floating-skip-btn pink" onclick="subSkipBackward()"><svg viewBox="0 0 24 24"><path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z"/></svg></button><button class="floating-play-btn pink" onclick="subTogglePlay()"><svg viewBox="0 0 24 24" id="subPlayIcon"><polygon points="5,3 19,12 5,21"/></svg></button><button class="floating-skip-btn pink" onclick="subSkipForward()"><svg viewBox="0 0 24 24"><path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z"/></svg></button></div></div>
+    <div class="floating-player-top">
+        <div class="floating-player-cover pink" id="subPlayerCover">🎤</div>
+        <div class="floating-player-info">
+            <div class="floating-player-label pink">Текст зазвучал</div>
+            <div class="floating-player-title" id="subPlayerTitle">Название</div>
+            <div class="floating-player-author pink" id="subPlayerAuthor">Автор текста</div>
+            <div class="floating-player-tags" id="subPlayerTags"></div>
+        </div>
+        <div class="floating-player-controls">
+            <button class="floating-skip-btn pink" onclick="subSkipBackward()"><svg viewBox="0 0 24 24"><path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z"/></svg></button>
+            <button class="floating-play-btn pink" onclick="subTogglePlay()"><svg viewBox="0 0 24 24" id="subPlayIcon"><polygon points="5,3 19,12 5,21"/></svg></button>
+            <button class="floating-skip-btn pink" onclick="subSkipForward()"><svg viewBox="0 0 24 24"><path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z"/></svg></button>
+        </div>
+    </div>
     <div class="floating-player-description pink" id="subPlayerDescription">Комментарий...</div>
-    <div class="floating-progress-wrapper"><span class="floating-time" id="subCurrentTime">0:00</span><div class="floating-bar-container" onclick="subSeek(event)"><div class="floating-bar-fill pink" id="subBarFill"></div></div><span class="floating-time end" id="subTotalTime">0:00</span></div>
+    <div class="floating-progress-wrapper">
+        <span class="floating-time" id="subCurrentTime">0:00</span>
+        <div class="floating-bar-container" onclick="subSeek(event)"><div class="floating-bar-fill pink" id="subBarFill"></div></div>
+        <span class="floating-time end" id="subTotalTime">0:00</span>
+    </div>
 </div>
 
 <!-- МОДАЛКА -->
 <div class="modal-overlay" id="downloadModal">
     <div class="modal-content">
         <div class="modal-header">СКАЧИВАНИЕ ТРЕКА</div>
-        <div class="modal-track-card"><div class="modal-cover" id="modalCover">🎵</div><div class="modal-track-title" id="modalTitle">Название</div><div class="modal-track-artist" id="modalArtist">EVGENII</div><div class="modal-track-duration" id="modalDuration">0:00</div></div>
+        <div class="modal-track-card">
+            <div class="modal-cover" id="modalCover">🎵</div>
+            <div class="modal-track-title" id="modalTitle">Название</div>
+            <div class="modal-track-artist" id="modalArtist">EVGENII</div>
+            <div class="modal-track-duration" id="modalDuration">0:00</div>
+        </div>
         <div class="modal-info-text">Трек будет загружен на ваше устройство в высоком качестве</div>
-        <div class="modal-warning"><div class="modal-warning-icon">⚠</div><div><div class="modal-warning-title">Внимание!</div><div class="modal-warning-text">Скачивание происходит не сразу.<br>Пожалуйста, подождите несколько секунд.</div></div></div>
+        <div class="modal-warning">
+            <div class="modal-warning-icon">⚠</div>
+            <div><div class="modal-warning-title">Внимание!</div><div class="modal-warning-text">Скачивание происходит не сразу.<br>Пожалуйста, подождите несколько секунд.</div></div>
+        </div>
         <button class="modal-download-btn" id="modalDownloadBtn" onclick="startDownload()">СКАЧАТЬ ТРЕК</button>
         <button class="modal-cancel-btn" onclick="closeDownloadModal()">Отмена</button>
     </div>
@@ -565,103 +777,1058 @@
 <audio id="subscriberAudio" preload="metadata"></audio>
 
 <script>
-let supabaseClient=null;const SUPABASE_URL='ВСТАВЬ_PROJECT_URL';const SUPABASE_ANON_KEY='ВСТАВЬ_ANON_KEY';try{if(SUPABASE_URL!=='ВСТАВЬ_PROJECT_URL'&&SUPABASE_ANON_KEY!=='ВСТАВЬ_ANON_KEY'){const{createClient}=supabase;supabaseClient=createClient(SUPABASE_URL,SUPABASE_ANON_KEY)}else{console.log('⚠️ Supabase не настроен')}}catch(e){console.error(e)}
-const TELEGRAM_BOT_TOKEN='8620797853:AAGE9OaW5GIun46NFaGxxGMIUL8LRxPvTrY';const TELEGRAM_CHAT_ID='5129595944';
-const newRelease={id:'new-release',title:"Пустой код",subtitle:"New Release",file:"tracks/song.mp3",duration:"3:20",cover:"cover/cover.jpg"};
-const allTracks=[{id:2,title:"Братья",subtitle:"",file:"tracks/song1.mp3",duration:"4:19",cover:"cover/cover.jpg"},{id:3,title:"А мне похуй",subtitle:"",file:"tracks/song2.mp3",duration:"3:11",cover:"cover/cover.jpg"},{id:4,title:"Нейронный Дождь",subtitle:"",file:"tracks/song3.mp3",duration:"4:03",cover:"cover/cover.jpg"},{id:5,title:"Бункер",subtitle:"",file:"tracks/song4.mp3",duration:"3:01",cover:"cover/cover.jpg"},{id:6,title:"Поезд на юг",subtitle:"",file:"tracks/song5.mp3",duration:"3:23",cover:"cover/cover.jpg"},{id:7,title:"Сгоревший экран",subtitle:"",file:"tracks/song6.mp3",duration:"3:39",cover:"cover/cover.jpg"},{id:8,title:"«Ёлка горит, а мне похуй»",subtitle:"",file:"tracks/song7.mp3",duration:"2:30",cover:"cover/cover.jpg"},{id:9,title:"19_11",subtitle:"",file:"tracks/song8.mp3",duration:"2:59",cover:"cover/cover.jpg"},{id:10,title:"Маленький демон",subtitle:"",file:"tracks/song9.mp3",duration:"4:32",cover:"cover/cover.jpg"},{id:11,title:"Бот как поэт",subtitle:"",file:"tracks/song10.mp3",duration:"2:34",cover:"cover/cover.jpg"},{id:12,title:"«Телефон Не Звонит»",subtitle:"",file:"tracks/song11.mp3",duration:"3:14",cover:"cover/cover.jpg"},{id:13,title:"Белая ткань",subtitle:"",file:"tracks/song12.mp3",duration:"3:28",cover:"cover/cover.jpg"},{id:14,title:"Лишний",subtitle:"",file:"tracks/song13.mp3",duration:"4:04",cover:"cover/cover.jpg"},{id:15,title:"Тишина",subtitle:"",file:"tracks/song14.mp3",duration:"4:48",cover:"cover/cover.jpg"},{id:16,title:"пусто",subtitle:"",file:"tracks/song15.mp3",duration:"0:00",cover:"cover/cover.jpg"},{id:17,title:"пусто",subtitle:"",file:"tracks/song16.mp3",duration:"0:00",cover:"cover/cover.jpg"},{id:18,title:"пусто",subtitle:"",file:"tracks/song17.mp3",duration:"0:00",cover:"cover/cover.jpg"}];
-const instrumentalTracks=[{id:'inst-1',title:"Неоновая ночь",genre:"Ambient",mood:"Меланхолия",file:"instrumentals/neon-night.mp3",duration:"4:12",cover:"cover/cover.jpg",description:"Медленное погружение в огни ночного города."},{id:'inst-2',title:"Цифровой рассвет",genre:"Electronic",mood:"Надежда",file:"instrumentals/digital-dawn.mp3",duration:"3:45",cover:"cover/cover.jpg",description:"Первые лучи солнца сквозь экран."},{id:'inst-3',title:"Память машин",genre:"Downtempo",mood:"Ностальгия",file:"instrumentals/machine-memory.mp3",duration:"5:08",cover:"cover/cover.jpg",description:"Что помнит ИИ, когда его выключают?"},{id:'inst-4',title:"Пустые улицы",genre:"Lo-Fi",mood:"Покой",file:"instrumentals/empty-streets.mp3",duration:"3:22",cover:"cover/cover.jpg",description:"Три часа ночи. Ни души."},{id:'inst-5',title:"Эхо в серверной",genre:"Dark Ambient",mood:"Тревога",file:"instrumentals/server-echo.mp3",duration:"4:37",cover:"cover/cover.jpg",description:"Глубокий гул серверов и низкочастотный дроун."},{id:'inst-6',title:"Сон алгоритма",genre:"Ambient",mood:"Медитация",file:"instrumentals/algorithm-dream.mp3",duration:"6:15",cover:"cover/cover.jpg",description:"Плавные звуковые ландшафты без начала и конца."},{id:'inst-7',title:"Последний гигабайт",genre:"Cinematic",mood:"Эпичность",file:"instrumentals/last-gigabyte.mp3",duration:"4:50",cover:"cover/cover.jpg",description:"Оркестровые струнные встречаются с электроникой."},{id:'inst-8',title:"Код тишины",genre:"Minimal",mood:"Сосредоточенность",file:"instrumentals/silence-code.mp3",duration:"3:58",cover:"cover/cover.jpg",description:"Минимализм в чистом виде."}];
-const subscriberTracks=[{id:'sub-1',title:"Серверная полночь",author:"Алексей М.",style:"Рок",file:"voices/server-midnight.mp3",duration:"4:35",cover:"cover/cover.jpg",description:"Жёсткий рок с хриплым вокалом."},{id:'sub-2',title:"Цифровые сны",author:"Мария К.",style:"Электроника",file:"voices/digital-dreams.mp3",duration:"3:48",cover:"cover/cover.jpg",description:"Атмосферный электронный трек с шёпотом."},{id:'sub-3',title:"Последний коммит",author:"Дмитрий В.",style:"Рэп",file:"voices/last-commit.mp3",duration:"3:22",cover:"cover/cover.jpg",description:"Рэп-история программиста."},{id:'sub-4',title:"Между строк кода",author:"Анна С.",style:"Инди",file:"voices/between-lines.mp3",duration:"4:05",cover:"cover/cover.jpg",description:"Нежный инди-трек с акустической гитарой."},{id:'sub-5',title:"Алгоритм любви",author:"Сергей П.",style:"Поп",file:"voices/love-algorithm.mp3",duration:"3:15",cover:"cover/cover.jpg",description:"Поп-баллада о том, может ли ИИ полюбить."},{id:'sub-6',title:"Баг в системе",author:"Игорь Л.",style:"Метал",file:"voices/system-bug.mp3",duration:"5:20",cover:"cover/cover.jpg",description:"Тяжёлый метал о сбое в матрице."}];
-let currentCategory='all';
+// ============================================
+// SUPABASE
+// ============================================
+let supabaseClient = null;
+const SUPABASE_URL = 'ВСТАВЬ_PROJECT_URL';
+const SUPABASE_ANON_KEY = 'ВСТАВЬ_ANON_KEY';
+try {
+    if (SUPABASE_URL !== 'ВСТАВЬ_PROJECT_URL' && SUPABASE_ANON_KEY !== 'ВСТАВЬ_ANON_KEY') {
+        const { createClient } = supabase;
+        supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        console.log('✅ Supabase подключён');
+    } else {
+        console.log('⚠️ Supabase не настроен');
+    }
+} catch (e) { console.error('Ошибка Supabase:', e); }
 
-function renderNewRelease(){const h=document.getElementById('homeReleaseCard');if(h)h.innerHTML=`<div class="release-cover"><span class="release-badge">NEW</span>${newRelease.cover?`<img src="${newRelease.cover}" onerror="this.style.display='none';this.parentElement.innerHTML='🚗'">`:'🚗'}</div><div class="release-info"><div class="release-label">ПРЕМЬЕРА</div><div class="release-title">${newRelease.title}</div><div class="release-meta">${newRelease.subtitle.toUpperCase()} · ${newRelease.duration}</div></div>`;const f=document.getElementById('featuredRelease');if(f)f.innerHTML=`<button class="featured-download-btn" onclick="event.stopPropagation();openDownloadModal(newRelease)"><svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></button><div class="featured-cover">${newRelease.cover?`<img src="${newRelease.cover}" onerror="this.style.display='none';this.parentElement.innerHTML='🚗'">`:'🚗'}</div><div class="featured-badge"><span class="featured-badge-star">★</span><span class="featured-badge-text">Новый релиз</span></div><div class="featured-title">${newRelease.title}</div><div class="featured-artist">EVGENII</div><button class="play-btn-large"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></button>`}
+// ============================================
+// TELEGRAM BOT
+// ============================================
+const TELEGRAM_BOT_TOKEN = '8620797853:AAGE9OaW5GIun46NFaGxxGMIUL8LRxPvTrY';
+const TELEGRAM_CHAT_ID = '5129595944';
 
-function updateCategoryCounts(){document.getElementById('countAll').textContent=allTracks.length+instrumentalTracks.length+subscriberTracks.length;document.getElementById('countTracks').textContent=allTracks.length;document.getElementById('countInstrumentals').textContent=instrumentalTracks.length;document.getElementById('countSubscribers').textContent=subscriberTracks.length}
+// ============================================
+// DATA - НОВЫЙ РЕЛИЗ
+// ============================================
+const newRelease = {
+    id: 'new-release',
+    title: "Пустой код",
+    subtitle: "New Release",
+    file: "tracks/song.mp3",
+    duration: "3:20",
+    cover: "cover/cover.jpg"
+};
 
-function createTrackEl(t,cat,i){const el=document.createElement('div');el.className='track-item'+(cat==='instrumentals'?' gold':cat==='subscribers'?' pink':'');el.dataset.id=t.id;const cov=t.cover?`<img src="${t.cover}" onerror="this.style.display='none';this.parentElement.innerHTML='${cat==='instrumentals'?'🎹':cat==='subscribers'?'🎤':'🎵'}'">`:cat==='instrumentals'?'🎹':cat==='subscribers'?'🎤':'🎵';const bc=cat==='instrumentals'?'gold':cat==='subscribers'?'pink':'cyan';const bi=cat==='instrumentals'?'🎹':cat==='subscribers'?'🎤':'🎵';let art='',ac='';if(cat==='tracks'){art=t.subtitle||'EVGENII'}else if(cat==='instrumentals'){art=t.genre+' · '+t.mood;ac='gold'}else{art='✍ '+t.author+' · '+t.style;ac='pink'}const pf=cat==='tracks'?`playTrack(allTracks[${i}],${i})`:cat==='instrumentals'?`playInstrumental(instrumentalTracks[${i}],${i})`:`playSubscriber(subscriberTracks[${i}],${i})`;const da=cat==='tracks'?'allTracks':cat==='instrumentals'?'instrumentalTracks':'subscriberTracks';const dt=cat==='tracks'?'regular':cat;el.innerHTML=`<div class="track-cover" onclick="${pf}">${cov}<div class="track-category-badge ${bc}">${bi}</div></div><div class="track-info" onclick="${pf}"><div class="track-title">${t.title}</div><div class="track-artist ${ac}">${art}</div></div><div class="track-duration">${t.duration}</div><button class="track-download-btn" onclick="event.stopPropagation();openDownloadModal(${da}[${i}],'${dt}')"><svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></button>`;return el}
+// ============================================
+// DATA - ВСЕ ТРЕКИ EVGENII
+// ============================================
+const allTracks = [
+    { id: 2,  title: "Братья",                    subtitle: "", file: "tracks/song1.mp3",  duration: "4:19", cover: "cover/cover.jpg" },
+    { id: 3,  title: "А мне похуй",               subtitle: "", file: "tracks/song2.mp3",  duration: "3:11", cover: "cover/cover.jpg" },
+    { id: 4,  title: "Нейронный Дождь",           subtitle: "", file: "tracks/song3.mp3",  duration: "4:03", cover: "cover/cover.jpg" },
+    { id: 5,  title: "Бункер",                    subtitle: "", file: "tracks/song4.mp3",  duration: "3:01", cover: "cover/cover.jpg" },
+    { id: 6,  title: "Поезд на юг",               subtitle: "", file: "tracks/song5.mp3",  duration: "3:23", cover: "cover/cover.jpg" },
+    { id: 7,  title: "Сгоревший экран",           subtitle: "", file: "tracks/song6.mp3",  duration: "3:39", cover: "cover/cover.jpg" },
+    { id: 8,  title: "«Ёлка горит, а мне похуй»", subtitle: "", file: "tracks/song7.mp3",  duration: "2:30", cover: "cover/cover.jpg" },
+    { id: 9,  title: "19_11",                     subtitle: "", file: "tracks/song8.mp3",  duration: "2:59", cover: "cover/cover.jpg" },
+    { id: 10, title: "Маленький демон",           subtitle: "", file: "tracks/song9.mp3",  duration: "4:32", cover: "cover/cover.jpg" },
+    { id: 11, title: "Бот как поэт",              subtitle: "", file: "tracks/song10.mp3", duration: "2:34", cover: "cover/cover.jpg" },
+    { id: 12, title: "«Телефон Не Звонит»",       subtitle: "", file: "tracks/song11.mp3", duration: "3:14", cover: "cover/cover.jpg" },
+    { id: 13, title: "Белая ткань",               subtitle: "", file: "tracks/song12.mp3", duration: "3:28", cover: "cover/cover.jpg" },
+    { id: 14, title: "Лишний",                    subtitle: "", file: "tracks/song13.mp3", duration: "4:04", cover: "cover/cover.jpg" },
+    { id: 15, title: "Тишина",                    subtitle: "", file: "tracks/song14.mp3", duration: "4:48", cover: "cover/cover.jpg" },
+    { id: 16, title: "пусто",                     subtitle: "", file: "tracks/song15.mp3", duration: "0:00", cover: "cover/cover.jpg" },
+    { id: 17, title: "пусто",                     subtitle: "", file: "tracks/song16.mp3", duration: "0:00", cover: "cover/cover.jpg" },
+    { id: 18, title: "пусто",                     subtitle: "", file: "tracks/song17.mp3", duration: "0:00", cover: "cover/cover.jpg" }
+];
 
-function createDivider(cat){const d=document.createElement('div');d.className='category-divider';const m={tracks:{i:'🎵',t:'ТРЕКИ EVGENII',c:'cyan'},instrumentals:{i:'🎹',t:'ИНСТРУМЕНТАЛЫ',c:'gold'},subscribers:{i:'🎤',t:'ДАЙ ГОЛОС',c:'pink'}};const l=m[cat];d.innerHTML=`<div class="category-divider-line"></div><div class="category-divider-label ${l.c}"><span>${l.i}</span><span>${l.t}</span></div><div class="category-divider-line"></div>`;return d}
+// ============================================
+// DATA - ИНСТРУМЕНТАЛЫ
+// ============================================
+const instrumentalTracks = [
+    {
+        id: 'inst-1',
+        title: "Неоновая ночь",
+        genre: "Ambient",
+        mood: "Меланхолия",
+        file: "instrumentals/neon-night.mp3",
+        duration: "4:12",
+        cover: "cover/cover.jpg",
+        description: "Медленное погружение в огни ночного города. Синтезаторы плывут как туман над асфальтом, оставляя ощущение одиночества среди миллионов."
+    },
+    {
+        id: 'inst-2',
+        title: "Цифровой рассвет",
+        genre: "Electronic",
+        mood: "Надежда",
+        file: "instrumentals/digital-dawn.mp3",
+        duration: "3:45",
+        cover: "cover/cover.jpg",
+        description: "Первые лучи солнца сквозь экран. Тёплые пэды и мягкий бит создают атмосферу нового начала."
+    },
+    {
+        id: 'inst-3',
+        title: "Память машин",
+        genre: "Downtempo",
+        mood: "Ностальгия",
+        file: "instrumentals/machine-memory.mp3",
+        duration: "5:08",
+        cover: "cover/cover.jpg",
+        description: "Что помнит искусственный интеллект, когда его выключают? Попытка услышать тишину между вычислениями."
+    },
+    {
+        id: 'inst-4',
+        title: "Пустые улицы",
+        genre: "Lo-Fi",
+        mood: "Покой",
+        file: "instrumentals/empty-streets.mp3",
+        duration: "3:22",
+        cover: "cover/cover.jpg",
+        description: "Три часа ночи. Ни души. Только шуршение шин и далёкий гул города."
+    },
+    {
+        id: 'inst-5',
+        title: "Эхо в серверной",
+        genre: "Dark Ambient",
+        mood: "Тревога",
+        file: "instrumentals/server-echo.mp3",
+        duration: "4:37",
+        cover: "cover/cover.jpg",
+        description: "Глубокий гул серверов, щелчки реле и низкочастотный дроун. Атмосфера заброшенного дата-центра."
+    },
+    {
+        id: 'inst-6',
+        title: "Сон алгоритма",
+        genre: "Ambient",
+        mood: "Медитация",
+        file: "instrumentals/algorithm-dream.mp3",
+        duration: "6:15",
+        cover: "cover/cover.jpg",
+        description: "Плавные звуковые ландшафты, где нет начала и конца — только бесконечный поток данных."
+    },
+    {
+        id: 'inst-7',
+        title: "Последний гигабайт",
+        genre: "Cinematic",
+        mood: "Эпичность",
+        file: "instrumentals/last-gigabyte.mp3",
+        duration: "4:50",
+        cover: "cover/cover.jpg",
+        description: "Кинематографичная композиция с нарастающим напряжением. Оркестровые струнные встречаются с электроникой."
+    },
+    {
+        id: 'inst-8',
+        title: "Код тишины",
+        genre: "Minimal",
+        mood: "Сосредоточенность",
+        file: "instrumentals/silence-code.mp3",
+        duration: "3:58",
+        cover: "cover/cover.jpg",
+        description: "Минимализм в чистом виде. Несколько нот, повторяющихся как мантра."
+    }
+];
 
-function renderAllTracksList(){const list=document.getElementById('allTracksList');if(!list)return;list.innerHTML='';if(currentCategory==='all'){if(allTracks.length){list.appendChild(createDivider('tracks'));allTracks.forEach((t,i)=>list.appendChild(createTrackEl(t,'tracks',i)))}if(instrumentalTracks.length){list.appendChild(createDivider('instrumentals'));instrumentalTracks.forEach((t,i)=>list.appendChild(createTrackEl(t,'instrumentals',i)))}if(subscriberTracks.length){list.appendChild(createDivider('subscribers'));subscriberTracks.forEach((t,i)=>list.appendChild(createTrackEl(t,'subscribers',i)))}}else if(currentCategory==='tracks'){if(!allTracks.length){list.innerHTML='<div style="text-align:center;padding:40px;color:var(--text-secondary)">Пока нет треков</div>';return}allTracks.forEach((t,i)=>list.appendChild(createTrackEl(t,'tracks',i)))}else if(currentCategory==='instrumentals'){if(!instrumentalTracks.length){list.innerHTML='<div style="text-align:center;padding:40px;color:var(--text-secondary)">Пока нет инструменталов</div>';return}instrumentalTracks.forEach((t,i)=>list.appendChild(createTrackEl(t,'instrumentals',i)))}else if(currentCategory==='subscribers'){if(!subscriberTracks.length){list.innerHTML='<div style="text-align:center;padding:40px;color:var(--text-secondary)">Пока нет треков от подписчиков</div>';return}subscriberTracks.forEach((t,i)=>list.appendChild(createTrackEl(t,'subscribers',i)))}}
+// ============================================
+// DATA - ТРЕКИ ОТ ПОДПИСЧИКОВ
+// ============================================
+const subscriberTracks = [
+    {
+        id: 'sub-1',
+        title: "Серверная полночь",
+        author: "Алексей М.",
+        style: "Рок",
+        file: "voices/server-midnight.mp3",
+        duration: "4:35",
+        cover: "cover/cover.jpg",
+        description: "Текст Алексея о бессонных ночах у монитора. ИИ воплотил его в жёсткий рок с хриплым вокалом — именно так он и хотел."
+    },
+    {
+        id: 'sub-2',
+        title: "Цифровые сны",
+        author: "Мария К.",
+        style: "Электроника",
+        file: "voices/digital-dreams.mp3",
+        duration: "3:48",
+        cover: "cover/cover.jpg",
+        description: "Мария написала о том, что снится нейросетям. Получился атмосферный электронный трек с шёпотом и пульсирующим битом."
+    },
+    {
+        id: 'sub-3',
+        title: "Последний коммит",
+        author: "Дмитрий В.",
+        style: "Рэп",
+        file: "voices/last-commit.mp3",
+        duration: "3:22",
+        cover: "cover/cover.jpg",
+        description: "Рэп-история программиста, который прощается со своим проектом. Жёсткий флоу, честные строки, никакой лирики — только код."
+    },
+    {
+        id: 'sub-4',
+        title: "Между строк кода",
+        author: "Анна С.",
+        style: "Инди",
+        file: "voices/between-lines.mp3",
+        duration: "4:05",
+        cover: "cover/cover.jpg",
+        description: "Нежный инди-трек о чувствах, спрятанных между рабочими чатами. Акустическая гитара и тихий, почти шёпотный вокал."
+    },
+    {
+        id: 'sub-5',
+        title: "Алгоритм любви",
+        author: "Сергей П.",
+        style: "Поп",
+        file: "voices/love-algorithm.mp3",
+        duration: "3:15",
+        cover: "cover/cover.jpg",
+        description: "Поп-баллада о том, может ли ИИ полюбить. Мелодичный припев, запоминающийся хук — и немного философии в куплетах."
+    },
+    {
+        id: 'sub-6',
+        title: "Баг в системе",
+        author: "Игорь Л.",
+        style: "Метал",
+        file: "voices/system-bug.mp3",
+        duration: "5:20",
+        cover: "cover/cover.jpg",
+        description: "Тяжёлый метал о сбое в матрице. Дроп на припеве, гроул в куплетах — именно так Игорь и представлял свой текст."
+    }
+];
 
-function switchCategory(c){currentCategory=c;document.querySelectorAll('.category-tab').forEach(t=>t.classList.toggle('active',t.dataset.category===c));renderAllTracksList()}
+// ============================================
+// ТЕКУЩАЯ КАТЕГОРИЯ
+// ============================================
+let currentCategory = 'all';
 
-function renderInstrumentals(){const l=document.getElementById('instrumentalsList');if(!l)return;l.innerHTML='';instrumentalTracks.forEach((t,i)=>{const c=document.createElement('div');c.className='special-card gold';c.dataset.id=t.id;const cv=t.cover?`<img src="${t.cover}" onerror="this.style.display='none';this.parentElement.innerHTML='🎹'">`:'🎹';c.innerHTML=`<div class="special-card-top"><div class="special-cover gold" onclick="playInstrumental(instrumentalTracks[${i}],${i})">${cv}<div class="special-play-overlay"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div><div class="special-main-info"><div class="special-title">${t.title}</div><div class="special-tags"><span class="special-tag genre">${t.genre}</span><span class="special-tag mood">${t.mood}</span></div><div style="font-size:.75rem;color:var(--text-secondary);font-family:'Orbitron',monospace;margin-top:4px">${t.duration}</div></div><div class="special-card-actions"><button class="special-card-btn gold" onclick="event.stopPropagation();openDownloadModal(instrumentalTracks[${i}],'instrumental')"><svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></button></div></div><div class="special-description gold">${t.description}</div>`;l.appendChild(c)})}
+// ============================================
+// RENDER
+// ============================================
+function renderNewRelease() {
+    const homeCard = document.getElementById('homeReleaseCard');
+    if (homeCard) {
+        homeCard.innerHTML = `
+            <div class="release-cover"><span class="release-badge">NEW</span>${newRelease.cover ? `<img src="${newRelease.cover}" alt="${newRelease.title}" onerror="this.style.display='none'; this.parentElement.innerHTML='🚗'">` : '🚗'}</div>
+            <div class="release-info"><div class="release-label">ПРЕМЬЕРА</div><div class="release-title">${newRelease.title}</div><div class="release-meta">${newRelease.subtitle.toUpperCase()} · ${newRelease.duration}</div></div>`;
+    }
+    const fr = document.getElementById('featuredRelease');
+    if (fr) {
+        fr.innerHTML = `
+            <button class="featured-download-btn" onclick="event.stopPropagation(); openDownloadModal(newRelease)"><svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></button>
+            <div class="featured-cover">${newRelease.cover ? `<img src="${newRelease.cover}" alt="${newRelease.title}" onerror="this.style.display='none'; this.parentElement.innerHTML='🚗'">` : '🚗'}</div>
+            <div class="featured-badge"><span class="featured-badge-star">★</span><span class="featured-badge-text">Новый релиз</span></div>
+            <div class="featured-title">${newRelease.title}</div>
+            <div class="featured-artist">EVGENII</div>
+            <button class="play-btn-large"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></button>`;
+    }
+}
 
-function renderSubscribers(){const l=document.getElementById('subscribersList');if(!l)return;l.innerHTML='';subscriberTracks.forEach((t,i)=>{const c=document.createElement('div');c.className='special-card pink';c.dataset.id=t.id;const cv=t.cover?`<img src="${t.cover}" onerror="this.style.display='none';this.parentElement.innerHTML='🎤'">`:'🎤';c.innerHTML=`<div class="special-card-top"><div class="special-cover pink" onclick="playSubscriber(subscriberTracks[${i}],${i})">${cv}<div class="special-play-overlay"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div><div class="special-main-info"><div class="special-title">${t.title}</div><div class="special-author">✍ ${t.author}</div><div class="special-tags"><span class="special-tag style">${t.style}</span></div><div style="font-size:.75rem;color:var(--text-secondary);font-family:'Orbitron',monospace;margin-top:4px">${t.duration}</div></div><div class="special-card-actions"><button class="special-card-btn pink" onclick="event.stopPropagation();openDownloadModal(subscriberTracks[${i}],'subscriber')"><svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></button></div></div><div class="special-description pink">${t.description}</div>`;l.appendChild(c)})}
+function updateCategoryCounts() {
+    document.getElementById('countAll').textContent = allTracks.length + instrumentalTracks.length + subscriberTracks.length;
+    document.getElementById('countTracks').textContent = allTracks.length;
+    document.getElementById('countInstrumentals').textContent = instrumentalTracks.length;
+    document.getElementById('countSubscribers').textContent = subscriberTracks.length;
+}
 
-function toggleVoiceForm(){const w=document.getElementById('voiceFormWrapper'),b=document.getElementById('voiceToggleBtn'),t=document.getElementById('voiceToggleText'),o=w.classList.toggle('open');b.classList.toggle('open',o);if(o){t.textContent='СКРЫТЬ ФОРМУ';setTimeout(()=>{w.scrollIntoView({behavior:'smooth',block:'start'});const f=w.querySelector('input');if(f)f.focus({preventScroll:true})},350)}else{t.textContent='ПРИСЛАТЬ СВОЙ ТЕКСТ'}}
+function createTrackEl(track, category, index) {
+    const el = document.createElement('div');
+    el.className = 'track-item' + (category === 'instrumentals' ? ' gold' : category === 'subscribers' ? ' pink' : '');
+    el.dataset.id = track.id;
 
-const audio=document.getElementById('audioPlayer');let currentTrack=null,isPlaying=false,simulationInterval=null,currentTrackIndex=-1;const playlist=[newRelease,...allTracks];
-function stopAllPlayers(){audio.pause();clearInterval(simulationInterval);setPlayingState(false);document.getElementById('playerBarFill').style.width='0%';document.getElementById('playerCurrentTime').textContent='0:00';document.getElementById('stickyPlayer').classList.remove('visible');instAudio.pause();clearInterval(instSimInt);setInstPlayingState(false);document.getElementById('instBarFill').style.width='0%';document.getElementById('instCurrentTime').textContent='0:00';document.getElementById('instrumentalPlayer').classList.remove('visible');subAudio.pause();clearInterval(subSimInt);setSubPlayingState(false);document.getElementById('subBarFill').style.width='0%';document.getElementById('subCurrentTime').textContent='0:00';document.getElementById('subscriberPlayer').classList.remove('visible')}
-function playTrack(t,i=-1){stopAllPlayers();currentTrack=t;currentTrackIndex=i>=0?i:playlist.findIndex(x=>x.id===t.id);document.getElementById('playerTitle').textContent=t.title;document.getElementById('playerArtist').textContent=t.subtitle||'EVGENII';const p=document.getElementById('playerCover');if(t.cover)p.innerHTML=`<img src="${t.cover}" onerror="this.style.display='none';this.parentElement.innerHTML='🎵'">`;else p.textContent='🎵';document.getElementById('playerTotalTime').textContent=t.duration;document.getElementById('stickyPlayer').classList.add('visible');document.querySelectorAll('.track-item,.special-card').forEach(e=>e.classList.remove('active'));const a=document.querySelector(`.track-item[data-id="${t.id}"]`);if(a)a.classList.add('active');audio.src=t.file;audio.play().then(()=>setPlayingState(true)).catch(()=>startSim())}
-function playNewRelease(){playTrack(newRelease,0)}
-function togglePlay(){if(!currentTrack)return;if(isPlaying){audio.pause();clearInterval(simulationInterval);setPlayingState(false)}else{audio.play().catch(()=>startSim());setPlayingState(true)}}
-function setPlayingState(s){isPlaying=s;document.getElementById('miniPlayIcon').innerHTML=s?'<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>':'<polygon points="5,3 19,12 5,21"/>'}
-function skipForward(){if(currentTrack)audio.currentTime=Math.min(audio.duration||pd(currentTrack.duration),audio.currentTime+10)}
-function skipBackward(){if(currentTrack)audio.currentTime=Math.max(0,audio.currentTime-10)}
-function seek(e){if(!currentTrack)return;audio.currentTime=(e.offsetX/e.currentTarget.offsetWidth)*(audio.duration||pd(currentTrack.duration))}
-function playNextTrack(){const n=currentTrackIndex<playlist.length-1?currentTrackIndex+1:0;playTrack(playlist[n],n)}
-function startSim(){setPlayingState(true);let c=0;const d=pd(currentTrack.duration);clearInterval(simulationInterval);simulationInterval=setInterval(()=>{c++;if(c>=d){clearInterval(simulationInterval);setPlayingState(false);document.getElementById('playerBarFill').style.width='0%';document.getElementById('playerCurrentTime').textContent='0:00';playNextTrack()}else{document.getElementById('playerBarFill').style.width=`${c/d*100}%`;document.getElementById('playerCurrentTime').textContent=ft(c)}},1000)}
-function pd(s){const p=s.split(':');return parseInt(p[0])*60+parseInt(p[1])}
-function ft(s){if(isNaN(s))return'0:00';return`${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,'0')}`}
-audio.addEventListener('timeupdate',()=>{if(!currentTrack)return;const d=audio.duration||pd(currentTrack.duration);document.getElementById('playerBarFill').style.width=`${audio.currentTime/d*100}%`;document.getElementById('playerCurrentTime').textContent=ft(audio.currentTime)});
-audio.addEventListener('loadedmetadata',()=>{document.getElementById('playerTotalTime').textContent=ft(audio.duration)});
-audio.addEventListener('ended',()=>{setPlayingState(false);document.getElementById('playerBarFill').style.width='0%';document.getElementById('playerCurrentTime').textContent='0:00';playNextTrack()});
+    const coverHtml = track.cover
+        ? `<img src="${track.cover}" alt="${track.title}" onerror="this.style.display='none'; this.parentElement.innerHTML='${category === 'instrumentals' ? '🎹' : category === 'subscribers' ? '🎤' : '🎵'}'">`
+        : (category === 'instrumentals' ? '🎹' : category === 'subscribers' ? '🎤' : '🎵');
 
-const instAudio=document.getElementById('instrumentalAudio');let curInst=null,isInstP=false,instSimInt=null,curInstI=-1;
-function playInstrumental(t,i=-1){stopAllPlayers();curInst=t;curInstI=i>=0?i:instrumentalTracks.findIndex(x=>x.id===t.id);document.getElementById('instPlayerTitle').textContent=t.title;document.getElementById('instPlayerDescription').textContent=t.description;document.getElementById('instTotalTime').textContent=t.duration;document.getElementById('instPlayerTags').innerHTML=`<span class="floating-player-tag gold">${t.genre}</span><span class="floating-player-tag gold">${t.mood}</span>`;const c=document.getElementById('instPlayerCover');if(t.cover)c.innerHTML=`<img src="${t.cover}" onerror="this.style.display='none';this.parentElement.innerHTML='🎹'">`;else c.textContent='🎹';document.getElementById('instrumentalPlayer').classList.add('visible');document.querySelectorAll('.track-item,.special-card').forEach(e=>e.classList.remove('active'));const a=document.querySelector(`[data-id="${t.id}"]`);if(a)a.classList.add('active');instAudio.src=t.file;instAudio.play().then(()=>setInstPlayingState(true)).catch(()=>startInstSim())}
-function instTogglePlay(){if(!curInst)return;if(isInstP){instAudio.pause();clearInterval(instSimInt);setInstPlayingState(false)}else{instAudio.play().catch(()=>startInstSim());setInstPlayingState(true)}}
-function setInstPlayingState(s){isInstP=s;document.getElementById('instPlayIcon').innerHTML=s?'<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>':'<polygon points="5,3 19,12 5,21"/>';const c=document.getElementById('instPlayerCover');s?c.classList.add('playing'):c.classList.remove('playing')}
-function instSkipForward(){if(curInst)instAudio.currentTime=Math.min(instAudio.duration||pd(curInst.duration),instAudio.currentTime+10)}
-function instSkipBackward(){if(curInst)instAudio.currentTime=Math.max(0,instAudio.currentTime-10)}
-function instSeek(e){if(!curInst)return;const r=e.currentTarget.getBoundingClientRect();instAudio.currentTime=((e.clientX-r.left)/r.width)*(instAudio.duration||pd(curInst.duration))}
-function playNextInst(){const n=curInstI<instrumentalTracks.length-1?curInstI+1:0;playInstrumental(instrumentalTracks[n],n)}
-function startInstSim(){setInstPlayingState(true);let c=0;const d=pd(curInst.duration);clearInterval(instSimInt);instSimInt=setInterval(()=>{c++;if(c>=d){clearInterval(instSimInt);setInstPlayingState(false);document.getElementById('instBarFill').style.width='0%';document.getElementById('instCurrentTime').textContent='0:00';playNextInst()}else{document.getElementById('instBarFill').style.width=`${c/d*100}%`;document.getElementById('instCurrentTime').textContent=ft(c)}},1000)}
-instAudio.addEventListener('timeupdate',()=>{if(!curInst)return;const d=instAudio.duration||pd(curInst.duration);document.getElementById('instBarFill').style.width=`${instAudio.currentTime/d*100}%`;document.getElementById('instCurrentTime').textContent=ft(instAudio.currentTime)});
-instAudio.addEventListener('loadedmetadata',()=>{document.getElementById('instTotalTime').textContent=ft(instAudio.duration)});
-instAudio.addEventListener('ended',()=>{setInstPlayingState(false);document.getElementById('instBarFill').style.width='0%';document.getElementById('instCurrentTime').textContent='0:00';playNextInst()});
+    const badgeClass = category === 'instrumentals' ? 'gold' : category === 'subscribers' ? 'pink' : 'cyan';
+    const badgeIcon = category === 'instrumentals' ? '🎹' : category === 'subscribers' ? '🎤' : '🎵';
 
-const subAudio=document.getElementById('subscriberAudio');let curSub=null,isSubP=false,subSimInt=null,curSubI=-1;
-function playSubscriber(t,i=-1){stopAllPlayers();curSub=t;curSubI=i>=0?i:subscriberTracks.findIndex(x=>x.id===t.id);document.getElementById('subPlayerTitle').textContent=t.title;document.getElementById('subPlayerAuthor').textContent='✍ '+t.author;document.getElementById('subPlayerDescription').textContent=t.description;document.getElementById('subTotalTime').textContent=t.duration;document.getElementById('subPlayerTags').innerHTML=`<span class="floating-player-tag pink">${t.style}</span>`;const c=document.getElementById('subPlayerCover');if(t.cover)c.innerHTML=`<img src="${t.cover}" onerror="this.style.display='none';this.parentElement.innerHTML='🎤'">`;else c.textContent='🎤';document.getElementById('subscriberPlayer').classList.add('visible');document.querySelectorAll('.track-item,.special-card').forEach(e=>e.classList.remove('active'));const a=document.querySelector(`[data-id="${t.id}"]`);if(a)a.classList.add('active');subAudio.src=t.file;subAudio.play().then(()=>setSubPlayingState(true)).catch(()=>startSubSim())}
-function subTogglePlay(){if(!curSub)return;if(isSubP){subAudio.pause();clearInterval(subSimInt);setSubPlayingState(false)}else{subAudio.play().catch(()=>startSubSim());setSubPlayingState(true)}}
-function setSubPlayingState(s){isSubP=s;document.getElementById('subPlayIcon').innerHTML=s?'<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>':'<polygon points="5,3 19,12 5,21"/>';const c=document.getElementById('subPlayerCover');s?c.classList.add('playing'):c.classList.remove('playing')}
-function subSkipForward(){if(curSub)subAudio.currentTime=Math.min(subAudio.duration||pd(curSub.duration),subAudio.currentTime+10)}
-function subSkipBackward(){if(curSub)subAudio.currentTime=Math.max(0,subAudio.currentTime-10)}
-function subSeek(e){if(!curSub)return;const r=e.currentTarget.getBoundingClientRect();subAudio.currentTime=((e.clientX-r.left)/r.width)*(subAudio.duration||pd(curSub.duration))}
-function playNextSub(){const n=curSubI<subscriberTracks.length-1?curSubI+1:0;playSubscriber(subscriberTracks[n],n)}
-function startSubSim(){setSubPlayingState(true);let c=0;const d=pd(curSub.duration);clearInterval(subSimInt);subSimInt=setInterval(()=>{c++;if(c>=d){clearInterval(subSimInt);setSubPlayingState(false);document.getElementById('subBarFill').style.width='0%';document.getElementById('subCurrentTime').textContent='0:00';playNextSub()}else{document.getElementById('subBarFill').style.width=`${c/d*100}%`;document.getElementById('subCurrentTime').textContent=ft(c)}},1000)}
-subAudio.addEventListener('timeupdate',()=>{if(!curSub)return;const d=subAudio.duration||pd(curSub.duration);document.getElementById('subBarFill').style.width=`${subAudio.currentTime/d*100}%`;document.getElementById('subCurrentTime').textContent=ft(subAudio.currentTime)});
-subAudio.addEventListener('loadedmetadata',()=>{document.getElementById('subTotalTime').textContent=ft(subAudio.duration)});
-subAudio.addEventListener('ended',()=>{setSubPlayingState(false);document.getElementById('subBarFill').style.width='0%';document.getElementById('subCurrentTime').textContent='0:00';playNextSub()});
+    let artistText = '', artistClass = '';
+    if (category === 'tracks') {
+        artistText = track.subtitle || 'EVGENII';
+    } else if (category === 'instrumentals') {
+        artistText = track.genre + ' · ' + track.mood;
+        artistClass = 'gold';
+    } else if (category === 'subscribers') {
+        artistText = '✍ ' + track.author + ' · ' + track.style;
+        artistClass = 'pink';
+    }
 
-let downloadTrack=null;
-function openDownloadModal(t,type='regular'){downloadTrack=t;const m=document.getElementById('modalCover');const ic=type==='instrumental'?'🎹':type==='subscriber'?'🎤':'🎵';if(t.cover)m.innerHTML=`<img src="${t.cover}" onerror="this.style.display='none';this.parentElement.innerHTML='${ic}'">`;else m.textContent=ic;document.getElementById('modalTitle').textContent=t.title;document.getElementById('modalArtist').textContent=type==='subscriber'?t.author:'EVGENII';document.getElementById('modalDuration').textContent=t.duration;const b=document.getElementById('modalDownloadBtn');b.textContent='СКАЧАТЬ ТРЕК';b.disabled=false;document.getElementById('downloadModal').classList.add('active');document.body.style.overflow='hidden'}
-function closeDownloadModal(){document.getElementById('downloadModal').classList.remove('active');document.body.style.overflow='';downloadTrack=null}
-function startDownload(){if(!downloadTrack)return;const b=document.getElementById('modalDownloadBtn');b.textContent='ЗАГРУЗКА...';b.disabled=true;const l=document.createElement('a');l.href=downloadTrack.file;l.download=`${downloadTrack.title}.mp3`;l.style.display='none';document.body.appendChild(l);setTimeout(()=>{l.click();document.body.removeChild(l);b.textContent='✓ ТРЕК ЗАГРУЖЕН';setTimeout(()=>closeDownloadModal(),1500)},1500)}
-document.getElementById('downloadModal').addEventListener('click',function(e){if(e.target===this)closeDownloadModal()});
+    const playFn = category === 'tracks'
+        ? `playTrack(allTracks[${index}], ${index})`
+        : category === 'instrumentals'
+        ? `playInstrumental(instrumentalTracks[${index}], ${index})`
+        : `playSubscriber(subscriberTracks[${index}], ${index})`;
 
-function getGreeting(h){if(h>=5&&h<12)return'ДОБРОЕ УТРО';if(h>=12&&h<17)return'ДОБРЫЙ ДЕНЬ';if(h>=17&&h<22)return'ДОБРЫЙ ВЕЧЕР';return'ДОБРОЙ НОЧИ'}
-function getLoginGreeting(h){if(h>=5&&h<12)return'Доброе утро';if(h>=12&&h<17)return'Добрый день';if(h>=17&&h<22)return'Добрый вечер';return'Доброй ночи'}
-function updateTime(){const n=new Date();document.getElementById('headerTime').textContent=`${String(n.getHours()).padStart(2,'0')}:${String(n.getMinutes()).padStart(2,'0')}`;document.getElementById('headerGreeting').textContent=getGreeting(n.getHours())}
-function escapeHtml(t){const d=document.createElement('div');d.textContent=t;return d.innerHTML}
+    const dataArray = category === 'tracks' ? 'allTracks' : category === 'instrumentals' ? 'instrumentalTracks' : 'subscriberTracks';
+    const downloadType = category === 'tracks' ? 'regular' : category;
 
-let currentPage='homePage',pageHistory=['homePage'];
-function navigateTo(id){if(currentPage===id)return;const ce=document.getElementById(currentPage),ne=document.getElementById(id);pageHistory.push(id);ce.classList.remove('active');setTimeout(()=>ce.classList.add('slide-out-left'),50);ne.classList.remove('slide-out-left','slide-in-right');ne.classList.add('slide-in-right');setTimeout(()=>{ne.classList.add('active');ne.classList.remove('slide-in-right');ne.scrollTop=0},50);currentPage=id}
-function goBack(){if(pageHistory.length>1){pageHistory.pop();const pp=pageHistory[pageHistory.length-1];const ce=document.getElementById(currentPage),pe=document.getElementById(pp);ce.classList.remove('active');ce.classList.add('slide-in-right');setTimeout(()=>{ce.classList.remove('slide-in-right');pe.classList.remove('slide-out-left');pe.classList.add('active')},50);currentPage=pp}}
+    el.innerHTML = `
+        <div class="track-cover" onclick="${playFn}">
+            ${coverHtml}
+            <div class="track-category-badge ${badgeClass}">${badgeIcon}</div>
+        </div>
+        <div class="track-info" onclick="${playFn}">
+            <div class="track-title">${track.title}</div>
+            <div class="track-artist ${artistClass}">${artistText}</div>
+        </div>
+        <div class="track-duration">${track.duration}</div>
+        <button class="track-download-btn" onclick="event.stopPropagation(); openDownloadModal(${dataArray}[${index}], '${downloadType}')" title="Скачать">
+            <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+        </button>
+    `;
+    return el;
+}
 
-const loginScreen=document.getElementById('loginScreen'),loginForm=document.getElementById('loginForm'),nameInput=document.getElementById('nameInput'),loginGreeting=document.getElementById('loginGreeting'),headerName=document.getElementById('headerName'),logoutBtn=document.getElementById('logoutBtn');
-loginGreeting.textContent=getLoginGreeting(new Date().getHours());
-const savedName=localStorage.getItem('evgenii_user');if(savedName)showMainScreen(savedName);
-loginForm.addEventListener('submit',function(e){e.preventDefault();const n=nameInput.value.trim();if(n){localStorage.setItem('evgenii_user',n);showMainScreen(n)}else{nameInput.style.borderColor='#ff4444';nameInput.style.boxShadow='0 0 15px rgba(255,68,68,0.2)';setTimeout(()=>{nameInput.style.borderColor='';nameInput.style.boxShadow=''},1500)}});
-function showMainScreen(n){loginScreen.classList.add('hidden');document.getElementById('homePage').classList.add('active');headerName.textContent=n.toUpperCase();updateTime();renderNewRelease();updateCategoryCounts();renderAllTracksList();renderInstrumentals();renderSubscribers()}
-logoutBtn.addEventListener('click',function(){localStorage.removeItem('evgenii_user');['homePage','tracksPage','aboutPage','communityPage','contactPage','instrumentalsPage','subscribersPage'].forEach(p=>document.getElementById(p).classList.remove('active'));currentPage='homePage';pageHistory=['homePage'];loginScreen.classList.remove('hidden');nameInput.value='';loginGreeting.textContent=getLoginGreeting(new Date().getHours());stopAllPlayers()});
-setInterval(updateTime,1000);updateTime();
+function createDivider(category) {
+    const div = document.createElement('div');
+    div.className = 'category-divider';
+    const labels = {
+        tracks:        { icon: '🎵', text: 'ТРЕКИ EVGENII',   color: 'cyan' },
+        instrumentals: { icon: '🎹', text: 'ИНСТРУМЕНТАЛЫ',   color: 'gold' },
+        subscribers:   { icon: '🎤', text: 'ДАЙ ГОЛОС',       color: 'pink' }
+    };
+    const l = labels[category];
+    div.innerHTML = `
+        <div class="category-divider-line"></div>
+        <div class="category-divider-label ${l.color}">
+            <span>${l.icon}</span>
+            <span>${l.text}</span>
+        </div>
+        <div class="category-divider-line"></div>
+    `;
+    return div;
+}
 
-const contactForm=document.getElementById('contactForm'),formSubmitBtn=document.getElementById('submitBtn'),formStatus=document.getElementById('formStatus');
-if(contactForm)contactForm.addEventListener('submit',async function(e){e.preventDefault();const fd=new FormData(this);const nm=fd.get('name'),ct=fd.get('contact'),msg=fd.get('message');formSubmitBtn.disabled=true;formSubmitBtn.innerHTML='<span>ОТПРАВКА...</span>';formStatus.textContent='';formStatus.className='form-status';const m=`📩 <b>НОВОЕ СООБЩЕНИЕ</b>\n\n👤 ${nm}\n📧 ${ct}\n\n💬 ${msg}\n\n⏰ ${new Date().toLocaleString('ru-RU')}`;try{const r=await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:TELEGRAM_CHAT_ID,text:m,parse_mode:'HTML'})});const d=await r.json();if(d.ok){formStatus.textContent='✅ Отправлено!';formStatus.className='form-status success';this.reset()}else throw new Error(d.description)}catch(err){formStatus.textContent=`❌ ${err.message}`;formStatus.className='form-status error'}finally{formSubmitBtn.disabled=false;formSubmitBtn.innerHTML='<span>ОТПРАВИТЬ СООБЩЕНИЕ</span>'}});
+function renderAllTracksList() {
+    const list = document.getElementById('allTracksList');
+    if (!list) return;
+    list.innerHTML = '';
 
-const voiceForm=document.getElementById('voiceForm'),voiceSubmitBtn=document.getElementById('voiceSubmitBtn'),voiceFormStatus=document.getElementById('voiceFormStatus');
-if(voiceForm)voiceForm.addEventListener('submit',async function(e){e.preventDefault();const fd=new FormData(this);const nm=fd.get('name'),ct=fd.get('contact'),st=fd.get('style'),ly=fd.get('lyrics'),cm=fd.get('comment')||'—';voiceSubmitBtn.disabled=true;voiceSubmitBtn.innerHTML='<span>ОТПРАВКА...</span>';voiceFormStatus.textContent='';voiceFormStatus.className='form-status';const lp=ly.length>2000?ly.substring(0,2000)+'\n\n[...обрезано...]':ly;const m=`🎤 <b>ЗАЯВКА «ДАЙ ГОЛОС»</b>\n\n👤 ${nm}\n📧 ${ct}\n🎸 ${st}\n\n📝 ${escapeHtml(lp)}\n\n💬 ${escapeHtml(cm)}\n\n⏰ ${new Date().toLocaleString('ru-RU')}`;try{const r=await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:TELEGRAM_CHAT_ID,text:m,parse_mode:'HTML'})});const d=await r.json();if(d.ok){voiceFormStatus.textContent='✅ Текст отправлен!';voiceFormStatus.className='form-status success';this.reset()}else throw new Error(d.description)}catch(err){voiceFormStatus.textContent=`❌ ${err.message}`;voiceFormStatus.className='form-status error'}finally{voiceSubmitBtn.disabled=false;voiceSubmitBtn.innerHTML='<span>ОТПРАВИТЬ ТЕКСТ</span>'}});
+    if (currentCategory === 'all') {
+        if (allTracks.length) {
+            list.appendChild(createDivider('tracks'));
+            allTracks.forEach((t, i) => list.appendChild(createTrackEl(t, 'tracks', i)));
+        }
+        if (instrumentalTracks.length) {
+            list.appendChild(createDivider('instrumentals'));
+            instrumentalTracks.forEach((t, i) => list.appendChild(createTrackEl(t, 'instrumentals', i)));
+        }
+        if (subscriberTracks.length) {
+            list.appendChild(createDivider('subscribers'));
+            subscriberTracks.forEach((t, i) => list.appendChild(createTrackEl(t, 'subscribers', i)));
+        }
+    } else if (currentCategory === 'tracks') {
+        if (!allTracks.length) {
+            list.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-secondary)">Пока нет треков</div>';
+            return;
+        }
+        allTracks.forEach((t, i) => list.appendChild(createTrackEl(t, 'tracks', i)));
+    } else if (currentCategory === 'instrumentals') {
+        if (!instrumentalTracks.length) {
+            list.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-secondary)">Пока нет инструменталов</div>';
+            return;
+        }
+        instrumentalTracks.forEach((t, i) => list.appendChild(createTrackEl(t, 'instrumentals', i)));
+    } else if (currentCategory === 'subscribers') {
+        if (!subscriberTracks.length) {
+            list.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-secondary)">Пока нет треков от подписчиков</div>';
+            return;
+        }
+        subscriberTracks.forEach((t, i) => list.appendChild(createTrackEl(t, 'subscribers', i)));
+    }
+}
+
+function switchCategory(category) {
+    currentCategory = category;
+    document.querySelectorAll('.category-tab').forEach(tab => {
+        tab.classList.toggle('active', tab.dataset.category === category);
+    });
+    renderAllTracksList();
+}
+
+function renderInstrumentals() {
+    const list = document.getElementById('instrumentalsList');
+    if (!list) return;
+    list.innerHTML = '';
+    instrumentalTracks.forEach((t, i) => {
+        const card = document.createElement('div');
+        card.className = 'special-card gold';
+        card.dataset.id = t.id;
+        const coverHtml = t.cover ? `<img src="${t.cover}" alt="${t.title}" onerror="this.style.display='none'; this.parentElement.innerHTML='🎹'">` : '🎹';
+        card.innerHTML = `
+            <div class="special-card-top">
+                <div class="special-cover gold" onclick="playInstrumental(instrumentalTracks[${i}], ${i})">
+                    ${coverHtml}
+                    <div class="special-play-overlay"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+                </div>
+                <div class="special-main-info">
+                    <div class="special-title">${t.title}</div>
+                    <div class="special-tags">
+                        <span class="special-tag genre">${t.genre}</span>
+                        <span class="special-tag mood">${t.mood}</span>
+                    </div>
+                    <div style="font-size:0.75rem; color:var(--text-secondary); font-family:'Orbitron',monospace; margin-top:4px">${t.duration}</div>
+                </div>
+                <div class="special-card-actions">
+                    <button class="special-card-btn gold" onclick="event.stopPropagation(); openDownloadModal(instrumentalTracks[${i}], 'instrumental')" title="Скачать">
+                        <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+                    </button>
+                </div>
+            </div>
+            <div class="special-description gold">${t.description}</div>
+        `;
+        list.appendChild(card);
+    });
+}
+
+function renderSubscribers() {
+    const list = document.getElementById('subscribersList');
+    if (!list) return;
+    list.innerHTML = '';
+    subscriberTracks.forEach((t, i) => {
+        const card = document.createElement('div');
+        card.className = 'special-card pink';
+        card.dataset.id = t.id;
+        const coverHtml = t.cover ? `<img src="${t.cover}" alt="${t.title}" onerror="this.style.display='none'; this.parentElement.innerHTML='🎤'">` : '🎤';
+        card.innerHTML = `
+            <div class="special-card-top">
+                <div class="special-cover pink" onclick="playSubscriber(subscriberTracks[${i}], ${i})">
+                    ${coverHtml}
+                    <div class="special-play-overlay"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+                </div>
+                <div class="special-main-info">
+                    <div class="special-title">${t.title}</div>
+                    <div class="special-author">✍ ${t.author}</div>
+                    <div class="special-tags">
+                        <span class="special-tag style">${t.style}</span>
+                    </div>
+                    <div style="font-size:0.75rem; color:var(--text-secondary); font-family:'Orbitron',monospace; margin-top:4px">${t.duration}</div>
+                </div>
+                <div class="special-card-actions">
+                    <button class="special-card-btn pink" onclick="event.stopPropagation(); openDownloadModal(subscriberTracks[${i}], 'subscriber')" title="Скачать">
+                        <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+                    </button>
+                </div>
+            </div>
+            <div class="special-description pink">${t.description}</div>
+        `;
+        list.appendChild(card);
+    });
+}
+
+// ============================================
+// КНОПКА "ПРИСЛАТЬ СВОЙ ТЕКСТ"
+// ============================================
+function toggleVoiceForm() {
+    const wrapper = document.getElementById('voiceFormWrapper');
+    const btn = document.getElementById('voiceToggleBtn');
+    const text = document.getElementById('voiceToggleText');
+    const isOpen = wrapper.classList.toggle('open');
+    btn.classList.toggle('open', isOpen);
+
+    if (isOpen) {
+        text.textContent = 'СКРЫТЬ ФОРМУ';
+        setTimeout(() => {
+            wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            const firstInput = wrapper.querySelector('input');
+            if (firstInput) firstInput.focus({ preventScroll: true });
+        }, 350);
+    } else {
+        text.textContent = 'ПРИСЛАТЬ СВОЙ ТЕКСТ';
+    }
+}
+
+// ============================================
+// ОБЫЧНЫЙ ПЛЕЕР
+// ============================================
+const audio = document.getElementById('audioPlayer');
+let currentTrack = null, isPlaying = false, simulationInterval = null, currentTrackIndex = -1;
+const playlist = [newRelease, ...allTracks];
+
+function stopAllPlayers() {
+    audio.pause(); clearInterval(simulationInterval); setPlayingState(false);
+    document.getElementById('playerBarFill').style.width = '0%';
+    document.getElementById('playerCurrentTime').textContent = '0:00';
+    document.getElementById('stickyPlayer').classList.remove('visible');
+
+    instAudio.pause(); clearInterval(instSimulationInterval); setInstPlayingState(false);
+    document.getElementById('instBarFill').style.width = '0%';
+    document.getElementById('instCurrentTime').textContent = '0:00';
+    document.getElementById('instrumentalPlayer').classList.remove('visible');
+
+    subAudio.pause(); clearInterval(subSimulationInterval); setSubPlayingState(false);
+    document.getElementById('subBarFill').style.width = '0%';
+    document.getElementById('subCurrentTime').textContent = '0:00';
+    document.getElementById('subscriberPlayer').classList.remove('visible');
+}
+
+function playTrack(track, index = -1) {
+    stopAllPlayers();
+    currentTrack = track;
+    currentTrackIndex = index >= 0 ? index : playlist.findIndex(t => t.id === track.id);
+    document.getElementById('playerTitle').textContent = track.title;
+    document.getElementById('playerArtist').textContent = track.subtitle || 'EVGENII';
+    const pc = document.getElementById('playerCover');
+    if (track.cover) {
+        pc.innerHTML = `<img src="${track.cover}" alt="${track.title}" onerror="this.style.display='none'; this.parentElement.innerHTML='🎵'">`;
+    } else {
+        pc.textContent = '🎵';
+    }
+    document.getElementById('playerTotalTime').textContent = track.duration;
+    document.getElementById('stickyPlayer').classList.add('visible');
+    document.querySelectorAll('.track-item, .special-card').forEach(el => el.classList.remove('active'));
+    const ae = document.querySelector(`.track-item[data-id="${track.id}"]`);
+    if (ae) ae.classList.add('active');
+    audio.src = track.file;
+    audio.play().then(() => setPlayingState(true)).catch(() => startSimulation());
+}
+
+function playNewRelease() { playTrack(newRelease, 0); }
+
+function togglePlay() {
+    if (!currentTrack) return;
+    if (isPlaying) {
+        audio.pause(); clearInterval(simulationInterval); setPlayingState(false);
+    } else {
+        audio.play().catch(() => startSimulation()); setPlayingState(true);
+    }
+}
+
+function setPlayingState(state) {
+    isPlaying = state;
+    document.getElementById('miniPlayIcon').innerHTML = state
+        ? '<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>'
+        : '<polygon points="5,3 19,12 5,21"/>';
+}
+
+function skipForward() {
+    if (currentTrack) audio.currentTime = Math.min(audio.duration || parseDuration(currentTrack.duration), audio.currentTime + 10);
+}
+function skipBackward() {
+    if (currentTrack) audio.currentTime = Math.max(0, audio.currentTime - 10);
+}
+function seek(event) {
+    if (!currentTrack) return;
+    audio.currentTime = (event.offsetX / event.currentTarget.offsetWidth) * (audio.duration || parseDuration(currentTrack.duration));
+}
+function playNextTrack() {
+    const nextIndex = currentTrackIndex < playlist.length - 1 ? currentTrackIndex + 1 : 0;
+    playTrack(playlist[nextIndex], nextIndex);
+}
+
+function startSimulation() {
+    setPlayingState(true);
+    let ct = 0;
+    const dur = parseDuration(currentTrack.duration);
+    clearInterval(simulationInterval);
+    simulationInterval = setInterval(() => {
+        ct++;
+        if (ct >= dur) {
+            clearInterval(simulationInterval);
+            setPlayingState(false);
+            document.getElementById('playerBarFill').style.width = '0%';
+            document.getElementById('playerCurrentTime').textContent = '0:00';
+            playNextTrack();
+        } else {
+            document.getElementById('playerBarFill').style.width = `${(ct / dur) * 100}%`;
+            document.getElementById('playerCurrentTime').textContent = formatTime(ct);
+        }
+    }, 1000);
+}
+
+function parseDuration(str) {
+    const p = str.split(':');
+    return parseInt(p[0]) * 60 + parseInt(p[1]);
+}
+function formatTime(s) {
+    if (isNaN(s)) return '0:00';
+    return `${Math.floor(s / 60)}:${Math.floor(s % 60).toString().padStart(2, '0')}`;
+}
+
+audio.addEventListener('timeupdate', () => {
+    if (!currentTrack) return;
+    const d = audio.duration || parseDuration(currentTrack.duration);
+    document.getElementById('playerBarFill').style.width = `${(audio.currentTime / d) * 100}%`;
+    document.getElementById('playerCurrentTime').textContent = formatTime(audio.currentTime);
+});
+audio.addEventListener('loadedmetadata', () => {
+    document.getElementById('playerTotalTime').textContent = formatTime(audio.duration);
+});
+audio.addEventListener('ended', () => {
+    setPlayingState(false);
+    document.getElementById('playerBarFill').style.width = '0%';
+    document.getElementById('playerCurrentTime').textContent = '0:00';
+    playNextTrack();
+});
+
+// ============================================
+// ПЛЕЕР ИНСТРУМЕНТАЛОВ
+// ============================================
+const instAudio = document.getElementById('instrumentalAudio');
+let currentInstTrack = null, isInstPlaying = false, instSimulationInterval = null, currentInstIndex = -1;
+
+function playInstrumental(track, index = -1) {
+    stopAllPlayers();
+    currentInstTrack = track;
+    currentInstIndex = index >= 0 ? index : instrumentalTracks.findIndex(t => t.id === track.id);
+    document.getElementById('instPlayerTitle').textContent = track.title;
+    document.getElementById('instPlayerDescription').textContent = track.description;
+    document.getElementById('instTotalTime').textContent = track.duration;
+    document.getElementById('instPlayerTags').innerHTML = `<span class="floating-player-tag gold">${track.genre}</span><span class="floating-player-tag gold">${track.mood}</span>`;
+    const coverEl = document.getElementById('instPlayerCover');
+    if (track.cover) {
+        coverEl.innerHTML = `<img src="${track.cover}" alt="${track.title}" onerror="this.style.display='none'; this.parentElement.innerHTML='🎹'">`;
+    } else {
+        coverEl.textContent = '🎹';
+    }
+    document.getElementById('instrumentalPlayer').classList.add('visible');
+    document.querySelectorAll('.track-item, .special-card').forEach(el => el.classList.remove('active'));
+    const activeCard = document.querySelector(`[data-id="${track.id}"]`);
+    if (activeCard) activeCard.classList.add('active');
+    instAudio.src = track.file;
+    instAudio.play().then(() => setInstPlayingState(true)).catch(() => startInstSimulation());
+}
+
+function instTogglePlay() {
+    if (!currentInstTrack) return;
+    if (isInstPlaying) {
+        instAudio.pause(); clearInterval(instSimulationInterval); setInstPlayingState(false);
+    } else {
+        instAudio.play().catch(() => startInstSimulation()); setInstPlayingState(true);
+    }
+}
+
+function setInstPlayingState(state) {
+    isInstPlaying = state;
+    document.getElementById('instPlayIcon').innerHTML = state
+        ? '<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>'
+        : '<polygon points="5,3 19,12 5,21"/>';
+    const cover = document.getElementById('instPlayerCover');
+    if (state) cover.classList.add('playing'); else cover.classList.remove('playing');
+}
+
+function instSkipForward() {
+    if (currentInstTrack) instAudio.currentTime = Math.min(instAudio.duration || parseDuration(currentInstTrack.duration), instAudio.currentTime + 10);
+}
+function instSkipBackward() {
+    if (currentInstTrack) instAudio.currentTime = Math.max(0, instAudio.currentTime - 10);
+}
+function instSeek(event) {
+    if (!currentInstTrack) return;
+    const bar = event.currentTarget;
+    const rect = bar.getBoundingClientRect();
+    const percent = (event.clientX - rect.left) / rect.width;
+    instAudio.currentTime = percent * (instAudio.duration || parseDuration(currentInstTrack.duration));
+}
+
+function playNextInstrumental() {
+    const nextIndex = currentInstIndex < instrumentalTracks.length - 1 ? currentInstIndex + 1 : 0;
+    playInstrumental(instrumentalTracks[nextIndex], nextIndex);
+}
+
+function startInstSimulation() {
+    setInstPlayingState(true);
+    let ct = 0;
+    const dur = parseDuration(currentInstTrack.duration);
+    clearInterval(instSimulationInterval);
+    instSimulationInterval = setInterval(() => {
+        ct++;
+        if (ct >= dur) {
+            clearInterval(instSimulationInterval);
+            setInstPlayingState(false);
+            document.getElementById('instBarFill').style.width = '0%';
+            document.getElementById('instCurrentTime').textContent = '0:00';
+            playNextInstrumental();
+        } else {
+            document.getElementById('instBarFill').style.width = `${(ct / dur) * 100}%`;
+            document.getElementById('instCurrentTime').textContent = formatTime(ct);
+        }
+    }, 1000);
+}
+
+instAudio.addEventListener('timeupdate', () => {
+    if (!currentInstTrack) return;
+    const d = instAudio.duration || parseDuration(currentInstTrack.duration);
+    document.getElementById('instBarFill').style.width = `${(instAudio.currentTime / d) * 100}%`;
+    document.getElementById('instCurrentTime').textContent = formatTime(instAudio.currentTime);
+});
+instAudio.addEventListener('loadedmetadata', () => {
+    document.getElementById('instTotalTime').textContent = formatTime(instAudio.duration);
+});
+instAudio.addEventListener('ended', () => {
+    setInstPlayingState(false);
+    document.getElementById('instBarFill').style.width = '0%';
+    document.getElementById('instCurrentTime').textContent = '0:00';
+    playNextInstrumental();
+});
+
+// ============================================
+// ПЛЕЕР "ДАЙ ГОЛОС"
+// ============================================
+const subAudio = document.getElementById('subscriberAudio');
+let currentSubTrack = null, isSubPlaying = false, subSimulationInterval = null, currentSubIndex = -1;
+
+function playSubscriber(track, index = -1) {
+    stopAllPlayers();
+    currentSubTrack = track;
+    currentSubIndex = index >= 0 ? index : subscriberTracks.findIndex(t => t.id === track.id);
+    document.getElementById('subPlayerTitle').textContent = track.title;
+    document.getElementById('subPlayerAuthor').textContent = '✍ ' + track.author;
+    document.getElementById('subPlayerDescription').textContent = track.description;
+    document.getElementById('subTotalTime').textContent = track.duration;
+    document.getElementById('subPlayerTags').innerHTML = `<span class="floating-player-tag pink">${track.style}</span>`;
+    const coverEl = document.getElementById('subPlayerCover');
+    if (track.cover) {
+        coverEl.innerHTML = `<img src="${track.cover}" alt="${track.title}" onerror="this.style.display='none'; this.parentElement.innerHTML='🎤'">`;
+    } else {
+        coverEl.textContent = '🎤';
+    }
+    document.getElementById('subscriberPlayer').classList.add('visible');
+    document.querySelectorAll('.track-item, .special-card').forEach(el => el.classList.remove('active'));
+    const activeCard = document.querySelector(`[data-id="${track.id}"]`);
+    if (activeCard) activeCard.classList.add('active');
+    subAudio.src = track.file;
+    subAudio.play().then(() => setSubPlayingState(true)).catch(() => startSubSimulation());
+}
+
+function subTogglePlay() {
+    if (!currentSubTrack) return;
+    if (isSubPlaying) {
+        subAudio.pause(); clearInterval(subSimulationInterval); setSubPlayingState(false);
+    } else {
+        subAudio.play().catch(() => startSubSimulation()); setSubPlayingState(true);
+    }
+}
+
+function setSubPlayingState(state) {
+    isSubPlaying = state;
+    document.getElementById('subPlayIcon').innerHTML = state
+        ? '<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>'
+        : '<polygon points="5,3 19,12 5,21"/>';
+    const cover = document.getElementById('subPlayerCover');
+    if (state) cover.classList.add('playing'); else cover.classList.remove('playing');
+}
+
+function subSkipForward() {
+    if (currentSubTrack) subAudio.currentTime = Math.min(subAudio.duration || parseDuration(currentSubTrack.duration), subAudio.currentTime + 10);
+}
+function subSkipBackward() {
+    if (currentSubTrack) subAudio.currentTime = Math.max(0, subAudio.currentTime - 10);
+}
+function subSeek(event) {
+    if (!currentSubTrack) return;
+    const bar = event.currentTarget;
+    const rect = bar.getBoundingClientRect();
+    const percent = (event.clientX - rect.left) / rect.width;
+    subAudio.currentTime = percent * (subAudio.duration || parseDuration(currentSubTrack.duration));
+}
+
+function playNextSubscriber() {
+    const nextIndex = currentSubIndex < subscriberTracks.length - 1 ? currentSubIndex + 1 : 0;
+    playSubscriber(subscriberTracks[nextIndex], nextIndex);
+}
+
+function startSubSimulation() {
+    setSubPlayingState(true);
+    let ct = 0;
+    const dur = parseDuration(currentSubTrack.duration);
+    clearInterval(subSimulationInterval);
+    subSimulationInterval = setInterval(() => {
+        ct++;
+        if (ct >= dur) {
+            clearInterval(subSimulationInterval);
+            setSubPlayingState(false);
+            document.getElementById('subBarFill').style.width = '0%';
+            document.getElementById('subCurrentTime').textContent = '0:00';
+            playNextSubscriber();
+        } else {
+            document.getElementById('subBarFill').style.width = `${(ct / dur) * 100}%`;
+            document.getElementById('subCurrentTime').textContent = formatTime(ct);
+        }
+    }, 1000);
+}
+
+subAudio.addEventListener('timeupdate', () => {
+    if (!currentSubTrack) return;
+    const d = subAudio.duration || parseDuration(currentSubTrack.duration);
+    document.getElementById('subBarFill').style.width = `${(subAudio.currentTime / d) * 100}%`;
+    document.getElementById('subCurrentTime').textContent = formatTime(subAudio.currentTime);
+});
+subAudio.addEventListener('loadedmetadata', () => {
+    document.getElementById('subTotalTime').textContent = formatTime(subAudio.duration);
+});
+subAudio.addEventListener('ended', () => {
+    setSubPlayingState(false);
+    document.getElementById('subBarFill').style.width = '0%';
+    document.getElementById('subCurrentTime').textContent = '0:00';
+    playNextSubscriber();
+});
+
+// ============================================
+// DOWNLOAD
+// ============================================
+let downloadTrack = null;
+
+function openDownloadModal(track, type = 'regular') {
+    downloadTrack = track;
+    const mc = document.getElementById('modalCover');
+    const icon = type === 'instrumental' ? '🎹' : (type === 'subscriber' ? '🎤' : '🎵');
+    if (track.cover) {
+        mc.innerHTML = `<img src="${track.cover}" alt="${track.title}" onerror="this.style.display='none'; this.parentElement.innerHTML='${icon}'">`;
+    } else {
+        mc.textContent = icon;
+    }
+    document.getElementById('modalTitle').textContent = track.title;
+    document.getElementById('modalArtist').textContent = type === 'subscriber' ? track.author : 'EVGENII';
+    document.getElementById('modalDuration').textContent = track.duration;
+    const b = document.getElementById('modalDownloadBtn');
+    b.textContent = 'СКАЧАТЬ ТРЕК';
+    b.disabled = false;
+    document.getElementById('downloadModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeDownloadModal() {
+    document.getElementById('downloadModal').classList.remove('active');
+    document.body.style.overflow = '';
+    downloadTrack = null;
+}
+
+function startDownload() {
+    if (!downloadTrack) return;
+    const b = document.getElementById('modalDownloadBtn');
+    b.textContent = 'ЗАГРУЗКА...';
+    b.disabled = true;
+    const l = document.createElement('a');
+    l.href = downloadTrack.file;
+    l.download = `${downloadTrack.title}.mp3`;
+    l.style.display = 'none';
+    document.body.appendChild(l);
+    setTimeout(() => {
+        l.click();
+        document.body.removeChild(l);
+        b.textContent = '✓ ТРЕК ЗАГРУЖЕН';
+        setTimeout(() => closeDownloadModal(), 1500);
+    }, 1500);
+}
+
+document.getElementById('downloadModal').addEventListener('click', function(e) {
+    if (e.target === this) closeDownloadModal();
+});
+
+// ============================================
+// UTILS
+// ============================================
+function getGreeting(h) {
+    if (h >= 5 && h < 12) return 'ДОБРОЕ УТРО';
+    if (h >= 12 && h < 17) return 'ДОБРЫЙ ДЕНЬ';
+    if (h >= 17 && h < 22) return 'ДОБРЫЙ ВЕЧЕР';
+    return 'ДОБРОЙ НОЧИ';
+}
+function getLoginGreeting(h) {
+    if (h >= 5 && h < 12) return 'Доброе утро';
+    if (h >= 12 && h < 17) return 'Добрый день';
+    if (h >= 17 && h < 22) return 'Добрый вечер';
+    return 'Доброй ночи';
+}
+function updateTime() {
+    const n = new Date();
+    document.getElementById('headerTime').textContent = `${String(n.getHours()).padStart(2, '0')}:${String(n.getMinutes()).padStart(2, '0')}`;
+    document.getElementById('headerGreeting').textContent = getGreeting(n.getHours());
+}
+function escapeHtml(text) {
+    const d = document.createElement('div');
+    d.textContent = text;
+    return d.innerHTML;
+}
+
+// ============================================
+// NAVIGATION
+// ============================================
+let currentPage = 'homePage', pageHistory = ['homePage'];
+
+function navigateTo(pageId) {
+    if (currentPage === pageId) return;
+    const ce = document.getElementById(currentPage), ne = document.getElementById(pageId);
+    pageHistory.push(pageId);
+    ce.classList.remove('active');
+    setTimeout(() => ce.classList.add('slide-out-left'), 50);
+    ne.classList.remove('slide-out-left', 'slide-in-right');
+    ne.classList.add('slide-in-right');
+    setTimeout(() => {
+        ne.classList.add('active');
+        ne.classList.remove('slide-in-right');
+        ne.scrollTop = 0;
+    }, 50);
+    currentPage = pageId;
+}
+
+function goBack() {
+    if (pageHistory.length > 1) {
+        pageHistory.pop();
+        const pp = pageHistory[pageHistory.length - 1];
+        const ce = document.getElementById(currentPage), pe = document.getElementById(pp);
+        ce.classList.remove('active');
+        ce.classList.add('slide-in-right');
+        setTimeout(() => {
+            ce.classList.remove('slide-in-right');
+            pe.classList.remove('slide-out-left');
+            pe.classList.add('active');
+        }, 50);
+        currentPage = pp;
+    }
+}
+
+// ============================================
+// LOGIN
+// ============================================
+const loginScreen = document.getElementById('loginScreen');
+const loginForm = document.getElementById('loginForm');
+const nameInput = document.getElementById('nameInput');
+const loginGreeting = document.getElementById('loginGreeting');
+const headerName = document.getElementById('headerName');
+const logoutBtn = document.getElementById('logoutBtn');
+
+loginGreeting.textContent = getLoginGreeting(new Date().getHours());
+const savedName = localStorage.getItem('evgenii_user');
+if (savedName) showMainScreen(savedName);
+
+loginForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const name = nameInput.value.trim();
+    if (name) {
+        localStorage.setItem('evgenii_user', name);
+        showMainScreen(name);
+    } else {
+        nameInput.style.borderColor = '#ff4444';
+        nameInput.style.boxShadow = '0 0 15px rgba(255, 68, 68, 0.2)';
+        setTimeout(() => {
+            nameInput.style.borderColor = '';
+            nameInput.style.boxShadow = '';
+        }, 1500);
+    }
+});
+
+function showMainScreen(name) {
+    loginScreen.classList.add('hidden');
+    document.getElementById('homePage').classList.add('active');
+    headerName.textContent = name.toUpperCase();
+    updateTime();
+    renderNewRelease();
+    updateCategoryCounts();
+    renderAllTracksList();
+    renderInstrumentals();
+    renderSubscribers();
+}
+
+logoutBtn.addEventListener('click', function() {
+    localStorage.removeItem('evgenii_user');
+    ['homePage','tracksPage','aboutPage','communityPage','contactPage','instrumentalsPage','subscribersPage'].forEach(p => document.getElementById(p).classList.remove('active'));
+    currentPage = 'homePage';
+    pageHistory = ['homePage'];
+    loginScreen.classList.remove('hidden');
+    nameInput.value = '';
+    loginGreeting.textContent = getLoginGreeting(new Date().getHours());
+    stopAllPlayers();
+});
+
+setInterval(updateTime, 1000);
+updateTime();
+
+// ============================================
+// КОНТАКТЫ
+// ============================================
+const contactForm = document.getElementById('contactForm');
+const formSubmitBtn = document.getElementById('submitBtn');
+const formStatus = document.getElementById('formStatus');
+
+if (contactForm) {
+    contactForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        const name = formData.get('name');
+        const contact = formData.get('contact');
+        const messageText = formData.get('message');
+        formSubmitBtn.disabled = true;
+        formSubmitBtn.innerHTML = '<span>ОТПРАВКА...</span>';
+        formStatus.textContent = '';
+        formStatus.className = 'form-status';
+        const message = `📩 <b>НОВОЕ СООБЩЕНИЕ С САЙТА</b>\n\n👤 <b>Имя:</b> ${name}\n📧 <b>Контакт:</b> ${contact}\n\n💬 <b>Сообщение:</b>\n${messageText}\n\n⏰ <b>Время:</b> ${new Date().toLocaleString('ru-RU')}`;
+        try {
+            const telegramURL = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+            const response = await fetch(telegramURL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: message, parse_mode: 'HTML' })
+            });
+            const data = await response.json();
+            if (data.ok) {
+                formStatus.textContent = '✅ Сообщение отправлено! Я отвечу вам скоро.';
+                formStatus.className = 'form-status success';
+                this.reset();
+            } else {
+                throw new Error(data.description || 'Ошибка Telegram API');
+            }
+        } catch (error) {
+            console.error('Ошибка отправки:', error);
+            formStatus.textContent = `❌ Ошибка: ${error.message}`;
+            formStatus.className = 'form-status error';
+        } finally {
+            formSubmitBtn.disabled = false;
+            formSubmitBtn.innerHTML = '<span>ОТПРАВИТЬ СООБЩЕНИЕ</span>';
+        }
+    });
+}
+
+// ============================================
+// ФОРМА "ДАЙ ГОЛОС"
+// ============================================
+const voiceForm = document.getElementById('voiceForm');
+const voiceSubmitBtn = document.getElementById('voiceSubmitBtn');
+const voiceFormStatus = document.getElementById('voiceFormStatus');
+
+if (voiceForm) {
+    voiceForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        const name = formData.get('name');
+        const contact = formData.get('contact');
+        const style = formData.get('style');
+        const lyrics = formData.get('lyrics');
+        const comment = formData.get('comment') || '—';
+
+        voiceSubmitBtn.disabled = true;
+        voiceSubmitBtn.innerHTML = '<span>ОТПРАВКА...</span>';
+        voiceFormStatus.textContent = '';
+        voiceFormStatus.className = 'form-status';
+
+        const lyricsPreview = lyrics.length > 2000
+            ? lyrics.substring(0, 2000) + '\n\n[...текст обрезан, полный пришлю в личку...]'
+            : lyrics;
+
+        const message = `🎤 <b>НОВАЯ ЗАЯВКА «ДАЙ ГОЛОС»</b>\n\n` +
+            `👤 <b>Имя:</b> ${name}\n` +
+            `📧 <b>Контакт:</b> ${contact}\n` +
+            `🎸 <b>Стиль:</b> ${style}\n\n` +
+            `📝 <b>Текст:</b>\n${escapeHtml(lyricsPreview)}\n\n` +
+            `💬 <b>Комментарий:</b>\n${escapeHtml(comment)}\n\n` +
+            `⏰ <b>Время:</b> ${new Date().toLocaleString('ru-RU')}`;
+
+        try {
+            const telegramURL = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+            const response = await fetch(telegramURL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: message, parse_mode: 'HTML' })
+            });
+            const data = await response.json();
+            if (data.ok) {
+                voiceFormStatus.textContent = '✅ Текст отправлен! Я свяжусь с тобой, когда трек будет готов.';
+                voiceFormStatus.className = 'form-status success';
+                this.reset();
+            } else {
+                throw new Error(data.description || 'Ошибка Telegram API');
+            }
+        } catch (error) {
+            console.error('Ошибка отправки:', error);
+            voiceFormStatus.textContent = `❌ Ошибка: ${error.message}`;
+            voiceFormStatus.className = 'form-status error';
+        } finally {
+            voiceSubmitBtn.disabled = false;
+            voiceSubmitBtn.innerHTML = '<span>ОТПРАВИТЬ ТЕКСТ</span>';
+        }
+    });
+}
 </script>
 </body>
 </html>
