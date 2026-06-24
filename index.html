@@ -82,6 +82,30 @@
         .quick-tile { padding: 20px 16px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.3s ease, border-color 0.3s ease; }
         .quick-tile:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0, 229, 255, 0.1); border-color: rgba(0, 229, 255, 0.3); }
         .quick-tile:active { transform: translateY(0); }
+        .quick-tile.disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+            position: relative;
+        }
+        .quick-tile.disabled:hover {
+            transform: none;
+            box-shadow: none;
+            border-color: var(--card-border);
+        }
+        .quick-tile.disabled::after {
+            content: 'Скоро';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 0.6rem;
+            padding: 3px 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            color: var(--text-secondary);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
         .tile-icon { width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin-bottom: 14px; }
         .tile-icon.tracks { background: rgba(0, 229, 255, 0.15); color: var(--cyan); }
         .tile-icon.instrumental { background: linear-gradient(135deg, rgba(255, 179, 71, 0.2), rgba(255, 0, 229, 0.15)); color: var(--gold); }
@@ -146,9 +170,6 @@
         .intro-title.magenta { color: var(--magenta); }
         .intro-text { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; position: relative; z-index: 1; }
 
-        /* ============================================
-           КНОПКА "ПРИСЛАТЬ СВОЙ ТЕКСТ"
-           ============================================ */
         .voice-toggle-btn {
             width: 100%;
             padding: 20px 24px;
@@ -188,27 +209,15 @@
             box-shadow: 0 10px 30px rgba(255, 107, 157, 0.25);
         }
         .voice-toggle-btn:active { transform: translateY(0); }
-        .voice-toggle-btn .btn-icon {
-            font-size: 1.3rem;
-            transition: transform 0.3s ease;
-        }
-        .voice-toggle-btn .btn-arrow {
-            font-size: 1rem;
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            margin-left: 4px;
-        }
-        .voice-toggle-btn.open .btn-arrow {
-            transform: rotate(180deg);
-        }
+        .voice-toggle-btn .btn-icon { font-size: 1.3rem; transition: transform 0.3s ease; }
+        .voice-toggle-btn .btn-arrow { font-size: 1rem; transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); margin-left: 4px; }
+        .voice-toggle-btn.open .btn-arrow { transform: rotate(180deg); }
         .voice-toggle-btn.open {
             border-color: var(--magenta);
             color: var(--magenta);
             background: linear-gradient(135deg, rgba(255, 0, 229, 0.15), rgba(176, 0, 255, 0.15));
         }
 
-        /* ============================================
-           СКРЫВАЕМАЯ ФОРМА
-           ============================================ */
         .voice-form-wrapper {
             max-height: 0;
             overflow: hidden;
@@ -553,11 +562,6 @@
                 <div class="tile-title">Дай голос</div>
                 <div class="tile-desc">Твой текст — наш голос</div>
             </div>
-            <div class="quick-tile" onclick="navigateTo('supportPage')">
-                <div class="tile-icon support">💜</div>
-                <div class="tile-title">Поддержать</div>
-                <div class="tile-desc">Помочь проекту</div>
-            </div>
             <div class="quick-tile" onclick="navigateTo('communityPage')">
                 <div class="tile-icon community">🌐</div>
                 <div class="tile-title">Сообщества</div>
@@ -568,10 +572,15 @@
                 <div class="tile-title">Связь</div>
                 <div class="tile-desc">Написать автору</div>
             </div>
-            <div class="quick-tile" onclick="navigateTo('chatPage')">
+            <div class="quick-tile disabled">
                 <div class="tile-icon chat">💬</div>
                 <div class="tile-title">Чат</div>
-                <div class="tile-desc">Общение</div>
+                <div class="tile-desc">Скоро будет доступен</div>
+            </div>
+            <div class="quick-tile" onclick="navigateTo('supportPage')">
+                <div class="tile-icon support">💜</div>
+                <div class="tile-title">Поддержать</div>
+                <div class="tile-desc">Помочь проекту</div>
             </div>
             <div class="quick-tile" onclick="navigateTo('aboutPage')">
                 <div class="tile-icon about">ℹ️</div>
@@ -621,14 +630,12 @@
         <div class="intro-text">Присылай свой текст и стиль, в котором ты хотел бы его услышать. Мы дадим ему голос через ИИ — и твой текст зазвучит.</div>
     </div>
 
-    <!-- КНОПКА-ТРИГГЕР -->
     <button class="voice-toggle-btn fade-in-up" id="voiceToggleBtn" onclick="toggleVoiceForm()">
         <span class="btn-icon">🎤</span>
         <span id="voiceToggleText">ПРИСЛАТЬ СВОЙ ТЕКСТ</span>
         <span class="btn-arrow">▼</span>
     </button>
 
-    <!-- СКРЫВАЕМАЯ ФОРМА -->
     <div class="voice-form-wrapper" id="voiceFormWrapper">
         <div class="voice-form-container">
             <h3 style="margin-bottom: 20px; font-family: 'Orbitron'; letter-spacing: 2px; text-align: center; font-size: 1rem; color: var(--pink);">ОТПРАВИТЬ НА ОБРАБОТКУ</h3>
@@ -1128,10 +1135,8 @@ function toggleVoiceForm() {
 
     if (isOpen) {
         text.textContent = 'СКРЫТЬ ФОРМУ';
-        // Плавная прокрутка к форме после раскрытия
         setTimeout(() => {
             wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            // Автофокус на первое поле
             const firstInput = wrapper.querySelector('input');
             if (firstInput) firstInput.focus({ preventScroll: true });
         }, 350);
