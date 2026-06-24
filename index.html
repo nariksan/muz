@@ -4,47 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>EVGENII</title>
-    
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap');
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         :root {
-            --cyan: #00e5ff;
-            --magenta: #ff00e5;
-            --purple: #b000ff;
-            --gold: #ffb347;
-            --dark-bg: #0a0a1a;
-            --card-bg: rgba(20, 20, 40, 0.8);
+            --cyan: #00e5ff; --magenta: #ff00e5; --purple: #b000ff;
+            --gold: #ffb347; --green: #00ff88; --pink: #ff6b9d;
+            --dark-bg: #0a0a1a; --card-bg: rgba(20, 20, 40, 0.8);
             --card-border: rgba(0, 229, 255, 0.15);
-            --text-primary: #ffffff;
-            --text-secondary: rgba(255, 255, 255, 0.6);
+            --text-primary: #ffffff; --text-secondary: rgba(255, 255, 255, 0.6);
         }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--dark-bg);
-            color: var(--text-primary);
-            min-height: 100vh;
-            overflow-x: hidden;
-            padding-bottom: 100px;
-        }
-
+        body { font-family: 'Inter', sans-serif; background: var(--dark-bg); color: var(--text-primary); min-height: 100vh; overflow-x: hidden; padding-bottom: 100px; }
         .bg-effects { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden; }
         .bg-orb { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.3; animation: orbFloat 8s ease-in-out infinite; }
         .bg-orb-1 { width: 300px; height: 300px; background: var(--cyan); top: -100px; left: -100px; }
         .bg-orb-2 { width: 250px; height: 250px; background: var(--magenta); bottom: -80px; right: -80px; animation-delay: -3s; }
         .bg-orb-3 { width: 200px; height: 200px; background: var(--purple); top: 50%; left: 50%; transform: translate(-50%, -50%); animation-delay: -5s; }
         @keyframes orbFloat { 0%, 100% { transform: translate(0, 0) scale(1); } 33% { transform: translate(30px, -30px) scale(1.1); } 66% { transform: translate(-20px, 20px) scale(0.9); } }
-
         .page { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; overflow-y: auto; overflow-x: hidden; max-width: 480px; margin: 0 auto; left: 50%; transform: translateX(-50%); padding: 20px 16px 40px; opacity: 0; pointer-events: none; transition: opacity 0.4s ease, transform 0.4s ease; }
         .page.active { opacity: 1; pointer-events: all; transform: translateX(-50%) translateY(0); }
         .page.slide-out-left { opacity: 0; transform: translateX(calc(-50% - 100%)); }
         .page.slide-in-right { opacity: 0; transform: translateX(calc(-50% + 100%)); }
-
         .login-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 1000; background: linear-gradient(135deg, #0a0a1a 0%, #1a0a2e 50%, #0a0a1a 100%); transition: opacity 0.6s ease, transform 0.6s ease; padding: 40px 20px; }
         .login-screen.hidden { opacity: 0; transform: scale(1.05); pointer-events: none; }
         .login-container { width: 100%; max-width: 400px; display: flex; flex-direction: column; align-items: center; }
@@ -68,7 +49,6 @@
         @keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
         .login-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(0, 229, 255, 0.4); }
         .login-btn:active { transform: translateY(0); }
-
         .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 30px; padding-top: 10px; }
         .header-left { display: flex; flex-direction: column; gap: 4px; }
         .header-time { font-family: 'Orbitron', sans-serif; font-size: 1.6rem; font-weight: 700; background: linear-gradient(135deg, var(--cyan), #fff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
@@ -76,7 +56,6 @@
         .header-right { text-align: right; }
         .header-name { font-family: 'Orbitron', sans-serif; font-size: 1.2rem; font-weight: 700; letter-spacing: 3px; background: linear-gradient(135deg, var(--magenta), var(--purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
         .header-name-label { font-size: 0.7rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; }
-
         .banner { position: relative; width: 100%; aspect-ratio: 16/10; border-radius: 24px; overflow: hidden; margin-bottom: 30px; border: 1px solid var(--card-border); background: linear-gradient(135deg, #0d1b2a, #1a0a2e, #0d1b2a); }
         .banner-content { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; background: radial-gradient(ellipse at 30% 50%, rgba(0, 229, 255, 0.15) 0%, transparent 60%), radial-gradient(ellipse at 70% 50%, rgba(255, 0, 229, 0.15) 0%, transparent 60%); }
         .banner-geometric { position: absolute; width: 100%; height: 100%; top: 0; left: 0; }
@@ -87,9 +66,7 @@
         .geo-shape-banner:nth-child(4) { width: 35px; height: 35px; border-color: var(--cyan); bottom: 25%; right: 20%; border-radius: 4px; animation-delay: -1s; }
         .banner-title { font-family: 'Orbitron', sans-serif; font-size: 2.2rem; font-weight: 900; letter-spacing: 6px; background: linear-gradient(135deg, var(--cyan), var(--magenta)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; position: relative; z-index: 2; filter: drop-shadow(0 0 15px rgba(0, 229, 255, 0.3)); }
         .banner-slogan { font-size: 0.85rem; color: var(--text-secondary); margin-top: 12px; text-align: center; position: relative; z-index: 2; }
-
         .section-title { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 3px; color: var(--text-secondary); margin-bottom: 16px; font-weight: 600; }
-
         .release-section { margin-bottom: 30px; }
         .release-card { display: flex; align-items: center; gap: 16px; padding: 16px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; transition: transform 0.2s ease, box-shadow 0.3s ease; cursor: pointer; }
         .release-card:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0, 229, 255, 0.1); }
@@ -100,33 +77,28 @@
         .release-label { font-size: 0.7rem; color: var(--cyan); text-transform: uppercase; letter-spacing: 2px; font-weight: 600; margin-bottom: 4px; }
         .release-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 4px; }
         .release-meta { font-size: 0.8rem; color: var(--text-secondary); }
-
         .quick-access-section { margin-bottom: 30px; }
         .quick-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .quick-tile { padding: 20px 16px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.3s ease, border-color 0.3s ease; }
         .quick-tile:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0, 229, 255, 0.1); border-color: rgba(0, 229, 255, 0.3); }
         .quick-tile:active { transform: translateY(0); }
-        .quick-tile.disabled { opacity: 0.4; cursor: default; }
-        .quick-tile.disabled:hover { transform: none; box-shadow: none; border-color: var(--card-border); }
         .tile-icon { width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin-bottom: 14px; }
         .tile-icon.tracks { background: rgba(0, 229, 255, 0.15); color: var(--cyan); }
         .tile-icon.instrumental { background: linear-gradient(135deg, rgba(255, 179, 71, 0.2), rgba(255, 0, 229, 0.15)); color: var(--gold); }
+        .tile-icon.subscribers { background: linear-gradient(135deg, rgba(255, 107, 157, 0.2), rgba(176, 0, 255, 0.15)); color: var(--pink); }
         .tile-icon.chat { background: rgba(0, 229, 255, 0.15); color: var(--cyan); }
         .tile-icon.community { background: rgba(176, 0, 255, 0.15); color: var(--purple); }
         .tile-icon.contact { background: rgba(0, 229, 255, 0.15); color: var(--cyan); }
         .tile-icon.about { background: rgba(255, 0, 229, 0.15); color: var(--magenta); }
-        .tile-icon.placeholder { background: rgba(255, 255, 255, 0.05); color: var(--text-secondary); }
+        .tile-icon.support { background: linear-gradient(135deg, rgba(255, 0, 229, 0.2), rgba(176, 0, 255, 0.15)); color: var(--magenta); }
         .tile-title { font-size: 0.95rem; font-weight: 600; margin-bottom: 4px; }
         .tile-desc { font-size: 0.75rem; color: var(--text-secondary); }
-
         .logout-btn { display: block; margin: 20px auto 0; padding: 12px 30px; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; background: transparent; color: var(--text-secondary); font-size: 0.8rem; font-family: 'Inter', sans-serif; cursor: pointer; transition: all 0.3s ease; letter-spacing: 1px; }
         .logout-btn:hover { border-color: rgba(255, 0, 0, 0.3); color: #ff6b6b; }
-
-        .tracks-header, .about-header, .community-header, .chat-header, .contact-header, .instrumentals-header { display: flex; align-items: center; gap: 16px; margin-bottom: 30px; padding-top: 10px; }
+        .page-header { display: flex; align-items: center; gap: 16px; margin-bottom: 30px; padding-top: 10px; }
         .back-btn { width: 44px; height: 44px; border-radius: 14px; border: 1px solid var(--card-border); background: var(--card-bg); color: var(--text-primary); font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; flex-shrink: 0; }
         .back-btn:hover { border-color: var(--cyan); background: rgba(0, 229, 255, 0.1); }
-        .tracks-page-title, .about-page-title, .community-page-title, .chat-page-title, .contact-page-title, .instrumentals-page-title { font-size: 2.2rem; font-weight: 900; letter-spacing: 1px; }
-
+        .page-title { font-size: 2.2rem; font-weight: 900; letter-spacing: 1px; }
         .featured-release { position: relative; width: 100%; border-radius: 28px; overflow: hidden; margin-bottom: 36px; border: 1px solid var(--card-border); background: linear-gradient(180deg, #0d2030 0%, #1a0a2e 50%, #0d1020 100%); padding: 30px 20px 36px; display: flex; flex-direction: column; align-items: center; cursor: pointer; }
         .featured-release::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 200px; background: radial-gradient(ellipse at 50% 0%, rgba(0, 229, 255, 0.12) 0%, transparent 70%); pointer-events: none; }
         .featured-cover { position: relative; width: 200px; height: 200px; border-radius: 24px; overflow: hidden; margin-bottom: 20px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5); z-index: 1; background: linear-gradient(135deg, #2a3a4a, #3a2a4a); display: flex; align-items: center; justify-content: center; font-size: 4rem; }
@@ -143,7 +115,6 @@
         .featured-download-btn { position: absolute; top: 20px; right: 20px; width: 44px; height: 44px; border-radius: 12px; border: 1px solid var(--card-border); background: rgba(20, 20, 40, 0.8); color: var(--text-secondary); cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 2; transition: all 0.3s ease; }
         .featured-download-btn:hover { border-color: var(--cyan); color: var(--cyan); background: rgba(0, 229, 255, 0.1); }
         .featured-download-btn svg { width: 20px; height: 20px; fill: currentColor; }
-
         .tracks-list-section { margin-bottom: 30px; }
         .tracks-list { display: flex; flex-direction: column; gap: 12px; }
         .track-item { display: flex; align-items: center; gap: 14px; padding: 14px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 18px; transition: transform 0.2s ease, box-shadow 0.3s ease, border-color 0.3s ease; cursor: pointer; }
@@ -161,458 +132,186 @@
         .track-download-btn:active { transform: scale(0.95); }
         .track-download-btn svg { width: 18px; height: 18px; fill: currentColor; }
 
-        /* ============================================
-           ИНСТРУМЕНТАЛЫ — СТИЛИ
-           ============================================ */
-        .instrumentals-intro {
-            background: linear-gradient(135deg, rgba(255, 179, 71, 0.08), rgba(176, 0, 255, 0.08));
-            border: 1px solid rgba(255, 179, 71, 0.2);
-            border-radius: 20px;
-            padding: 20px;
-            margin-bottom: 24px;
-            position: relative;
-            overflow: hidden;
-        }
-        .instrumentals-intro::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -20%;
-            width: 200px;
-            height: 200px;
-            background: radial-gradient(circle, rgba(255, 179, 71, 0.15), transparent 70%);
-            pointer-events: none;
-        }
-        .instrumentals-intro-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 0.85rem;
-            color: var(--gold);
-            letter-spacing: 3px;
-            margin-bottom: 8px;
-            position: relative;
-            z-index: 1;
-        }
-        .instrumentals-intro-text {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            line-height: 1.6;
-            position: relative;
-            z-index: 1;
-        }
-
-        .instrumental-card {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 22px;
-            overflow: hidden;
-            margin-bottom: 16px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-        }
-        .instrumental-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(255, 179, 71, 0.1);
-            border-color: rgba(255, 179, 71, 0.3);
-        }
-        .instrumental-card.active {
-            border-color: var(--gold);
-            box-shadow: 0 0 30px rgba(255, 179, 71, 0.15);
-        }
-        .instrumental-card-top {
-            display: flex;
-            gap: 14px;
-            padding: 16px 16px 12px;
-            align-items: center;
-        }
-        .instrumental-cover {
-            position: relative;
-            width: 80px;
-            height: 80px;
-            border-radius: 16px;
-            overflow: hidden;
-            flex-shrink: 0;
-            background: linear-gradient(135deg, #2a1a3a, #3a2a1a);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-        }
-        .instrumental-cover img { width: 100%; height: 100%; object-fit: cover; }
-        .instrumental-play-overlay {
-            position: absolute;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        .instrumental-cover:hover .instrumental-play-overlay { opacity: 1; }
-        .instrumental-play-overlay svg { width: 32px; height: 32px; fill: #fff; }
-        .instrumental-card.active .instrumental-play-overlay { opacity: 1; background: rgba(255, 179, 71, 0.3); }
-        .instrumental-main-info { flex: 1; min-width: 0; }
-        .instrumental-title {
-            font-size: 1.15rem;
-            font-weight: 700;
-            margin-bottom: 6px;
-        }
-        .instrumental-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            margin-bottom: 4px;
-        }
-        .instrumental-tag {
-            font-size: 0.65rem;
-            padding: 3px 8px;
-            border-radius: 6px;
-            letter-spacing: 0.5px;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-        .instrumental-tag.genre {
-            background: rgba(255, 179, 71, 0.15);
-            color: var(--gold);
-        }
-        .instrumental-tag.mood {
-            background: rgba(176, 0, 255, 0.15);
-            color: #d580ff;
-        }
-        .instrumental-card-actions {
-            display: flex;
-            gap: 8px;
-            flex-shrink: 0;
-        }
-        .instrumental-card-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
-            border: 1px solid var(--card-border);
-            background: rgba(20, 20, 40, 0.6);
-            color: var(--text-secondary);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-        }
-        .instrumental-card-btn:hover {
-            border-color: var(--gold);
-            color: var(--gold);
-            background: rgba(255, 179, 71, 0.1);
-        }
-        .instrumental-card-btn svg { width: 18px; height: 18px; fill: currentColor; }
-        .instrumental-description {
-            padding: 0 16px 16px;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            line-height: 1.55;
-            border-top: 1px dashed rgba(255, 179, 71, 0.15);
-            padding-top: 12px;
-            margin-top: 4px;
-            font-style: italic;
-        }
-        .instrumental-description::before {
-            content: '“';
-            color: var(--gold);
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-right: 4px;
-            font-style: normal;
-        }
-        .instrumental-description::after {
-            content: '”';
-            color: var(--gold);
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-left: 4px;
-            font-style: normal;
-        }
+        .intro-block { border-radius: 20px; padding: 20px; margin-bottom: 24px; position: relative; overflow: hidden; }
+        .intro-block::before { content: ''; position: absolute; top: -50%; right: -20%; width: 200px; height: 200px; pointer-events: none; }
+        .intro-block.gold { background: linear-gradient(135deg, rgba(255, 179, 71, 0.08), rgba(176, 0, 255, 0.08)); border: 1px solid rgba(255, 179, 71, 0.2); }
+        .intro-block.gold::before { background: radial-gradient(circle, rgba(255, 179, 71, 0.15), transparent 70%); }
+        .intro-block.pink { background: linear-gradient(135deg, rgba(255, 107, 157, 0.08), rgba(176, 0, 255, 0.08)); border: 1px solid rgba(255, 107, 157, 0.2); }
+        .intro-block.pink::before { background: radial-gradient(circle, rgba(255, 107, 157, 0.15), transparent 70%); }
+        .intro-block.magenta { background: linear-gradient(135deg, rgba(255, 0, 229, 0.08), rgba(176, 0, 255, 0.08)); border: 1px solid rgba(255, 0, 229, 0.2); }
+        .intro-block.magenta::before { background: radial-gradient(circle, rgba(255, 0, 229, 0.15), transparent 70%); }
+        .intro-title { font-family: 'Orbitron', sans-serif; font-size: 0.85rem; letter-spacing: 3px; margin-bottom: 8px; position: relative; z-index: 1; }
+        .intro-title.gold { color: var(--gold); }
+        .intro-title.pink { color: var(--pink); }
+        .intro-title.magenta { color: var(--magenta); }
+        .intro-text { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; position: relative; z-index: 1; }
 
         /* ============================================
-           ОТДЕЛЬНЫЙ ПЛЕЕР ДЛЯ ИНСТРУМЕНТАЛОВ
+           КНОПКА "ПРИСЛАТЬ СВОЙ ТЕКСТ"
            ============================================ */
-        .instrumental-player {
-            position: fixed;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%) translateY(100%);
+        .voice-toggle-btn {
             width: 100%;
-            max-width: 480px;
-            background: linear-gradient(180deg, rgba(20, 15, 30, 0.97), rgba(10, 8, 20, 0.98));
-            backdrop-filter: blur(20px);
-            border-top: 1px solid rgba(255, 179, 71, 0.25);
-            padding: 16px 20px 22px;
-            z-index: 100;
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border-radius: 28px 28px 0 0;
-            box-shadow: 0 -10px 50px rgba(255, 179, 71, 0.15), 0 -5px 30px rgba(0, 0, 0, 0.6);
+            padding: 20px 24px;
+            border: 2px solid var(--pink);
+            border-radius: 18px;
+            background: linear-gradient(135deg, rgba(255, 107, 157, 0.1), rgba(176, 0, 255, 0.1));
+            color: var(--pink);
+            font-weight: 700;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
         }
-        .instrumental-player.visible { transform: translateX(-50%) translateY(0); }
-        .instrumental-player::before {
+        .voice-toggle-btn::before {
             content: '';
             position: absolute;
             top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--gold), var(--magenta), var(--gold), transparent);
-            background-size: 200% 100%;
-            animation: shimmer 3s linear infinite;
-        }
-        @keyframes shimmer {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
-        .instrumental-player-top {
-            display: flex;
-            gap: 14px;
-            align-items: center;
-            margin-bottom: 14px;
-        }
-        .instrumental-player-cover {
-            width: 64px;
-            height: 64px;
-            border-radius: 14px;
-            overflow: hidden;
-            flex-shrink: 0;
-            background: linear-gradient(135deg, #2a1a3a, #3a2a1a);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.6rem;
-            position: relative;
-            box-shadow: 0 4px 20px rgba(255, 179, 71, 0.2);
-        }
-        .instrumental-player-cover img { width: 100%; height: 100%; object-fit: cover; }
-        .instrumental-player-cover.playing::after {
-            content: '';
-            position: absolute;
-            inset: -3px;
-            border: 2px solid var(--gold);
-            border-radius: 16px;
-            opacity: 0.6;
-            animation: pulseBorder 2s ease-in-out infinite;
-        }
-        @keyframes pulseBorder {
-            0%, 100% { opacity: 0.3; transform: scale(1); }
-            50% { opacity: 0.8; transform: scale(1.05); }
-        }
-        .instrumental-player-info {
-            flex: 1;
-            min-width: 0;
-        }
-        .instrumental-player-label {
-            font-size: 0.65rem;
-            color: var(--gold);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: 700;
-            margin-bottom: 4px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .instrumental-player-label::before {
-            content: '';
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: var(--gold);
-            animation: pulse 1.5s ease-in-out infinite;
-        }
-        .instrumental-player-title {
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 4px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .instrumental-player-tags {
-            display: flex;
-            gap: 5px;
-            flex-wrap: wrap;
-        }
-        .instrumental-player-tag {
-            font-size: 0.6rem;
-            padding: 2px 7px;
-            border-radius: 5px;
-            background: rgba(255, 179, 71, 0.12);
-            color: var(--gold);
-            letter-spacing: 0.5px;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-        .instrumental-player-controls {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex-shrink: 0;
-        }
-        .instrumental-play-btn {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            border: none;
-            background: linear-gradient(135deg, var(--gold), var(--magenta));
-            color: #fff;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 6px 20px rgba(255, 179, 71, 0.4);
-            transition: transform 0.2s ease;
-        }
-        .instrumental-play-btn:hover { transform: scale(1.08); }
-        .instrumental-play-btn:active { transform: scale(0.95); }
-        .instrumental-play-btn svg { width: 20px; height: 20px; fill: #fff; margin-left: 2px; }
-        .instrumental-skip-btn {
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            cursor: pointer;
-            padding: 4px;
-            transition: color 0.2s ease;
-        }
-        .instrumental-skip-btn:hover { color: var(--gold); }
-        .instrumental-skip-btn svg { width: 22px; height: 22px; fill: currentColor; }
-        .instrumental-player-description {
-            color: var(--text-secondary);
-            font-size: 0.85rem;
-            line-height: 1.5;
-            font-style: italic;
-            padding: 10px 14px;
-            background: rgba(255, 179, 71, 0.04);
-            border-left: 2px solid var(--gold);
-            border-radius: 0 10px 10px 0;
-            margin-bottom: 12px;
-            max-height: 60px;
-            overflow-y: auto;
-        }
-        .instrumental-progress-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .instrumental-time {
-            font-size: 0.7rem;
-            color: var(--text-secondary);
-            font-family: 'Orbitron', monospace;
-            min-width: 35px;
-        }
-        .instrumental-time.end { text-align: right; }
-        .instrumental-bar-container {
-            flex: 1;
-            height: 5px;
-            background: rgba(255, 255, 255, 0.08);
-            border-radius: 3px;
-            overflow: hidden;
-            cursor: pointer;
-            position: relative;
-        }
-        .instrumental-bar-fill {
+            left: -100%;
+            width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, var(--gold), var(--magenta));
-            border-radius: 3px;
-            width: 0%;
-            transition: width 0.1s linear;
-            box-shadow: 0 0 8px rgba(255, 179, 71, 0.5);
+            background: linear-gradient(90deg, transparent, rgba(255, 107, 157, 0.2), transparent);
+            transition: left 0.6s ease;
+        }
+        .voice-toggle-btn:hover::before { left: 100%; }
+        .voice-toggle-btn:hover {
+            background: linear-gradient(135deg, rgba(255, 107, 157, 0.2), rgba(176, 0, 255, 0.2));
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 107, 157, 0.25);
+        }
+        .voice-toggle-btn:active { transform: translateY(0); }
+        .voice-toggle-btn .btn-icon {
+            font-size: 1.3rem;
+            transition: transform 0.3s ease;
+        }
+        .voice-toggle-btn .btn-arrow {
+            font-size: 1rem;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            margin-left: 4px;
+        }
+        .voice-toggle-btn.open .btn-arrow {
+            transform: rotate(180deg);
+        }
+        .voice-toggle-btn.open {
+            border-color: var(--magenta);
+            color: var(--magenta);
+            background: linear-gradient(135deg, rgba(255, 0, 229, 0.15), rgba(176, 0, 255, 0.15));
         }
 
-        .about-content, .community-content { display: flex; flex-direction: column; gap: 20px; }
-        .about-card { background: rgba(20, 25, 40, 0.6); border: 1px solid var(--card-border); border-radius: 20px; padding: 24px 20px; line-height: 1.6; font-size: 1rem; }
-        .about-card .highlight { color: var(--cyan); font-weight: 600; }
-        .about-card .evgenii-title { font-family: 'Orbitron', sans-serif; color: var(--cyan); font-weight: 700; letter-spacing: 2px; }
-        .about-quote { border-left: 3px solid var(--cyan); padding-left: 20px; margin: 20px 0; font-style: italic; color: var(--cyan); font-size: 1.05rem; line-height: 1.7; }
-        .about-card p { margin-bottom: 12px; color: var(--text-secondary); }
-        .about-card p:last-child { margin-bottom: 0; }
+        /* ============================================
+           СКРЫВАЕМАЯ ФОРМА
+           ============================================ */
+        .voice-form-wrapper {
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease, margin-bottom 0.4s ease;
+            margin-bottom: 0;
+        }
+        .voice-form-wrapper.open {
+            max-height: 2000px;
+            opacity: 1;
+            margin-bottom: 30px;
+        }
 
-        .community-card { background: rgba(20, 25, 40, 0.6); border: 1px solid var(--card-border); border-radius: 20px; padding: 24px 20px; display: flex; align-items: center; gap: 20px; cursor: pointer; transition: all 0.3s ease; text-decoration: none; color: var(--text-primary); }
-        .community-card:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0, 229, 255, 0.15); border-color: rgba(0, 229, 255, 0.3); }
-        .community-card.coming-soon { opacity: 0.6; cursor: not-allowed; }
-        .community-card.coming-soon:hover { transform: none; box-shadow: none; border-color: var(--card-border); }
-        .community-icon { width: 60px; height: 60px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 2rem; flex-shrink: 0; }
-        .community-icon.bip { background: linear-gradient(135deg, #00e5ff, #0099ff); }
-        .community-icon.telegram { background: linear-gradient(135deg, #0088cc, #00a8e8); }
-        .community-icon.instagram { background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
-        .community-info { flex: 1; min-width: 0; }
-        .community-name { font-size: 1.2rem; font-weight: 700; margin-bottom: 4px; }
-        .community-desc { font-size: 0.85rem; color: var(--text-secondary); }
-        .community-arrow { font-size: 1.5rem; color: var(--text-secondary); transition: transform 0.3s ease; }
-        .community-card:hover .community-arrow { transform: translateX(5px); color: var(--cyan); }
-        .community-card.coming-soon .community-arrow { transform: none; }
-        .community-badge { display: inline-block; padding: 4px 10px; background: rgba(255, 255, 255, 0.1); border-radius: 8px; font-size: 0.75rem; color: var(--text-secondary); margin-top: 6px; }
-        .community-intro { background: rgba(20, 25, 40, 0.6); border: 1px solid var(--card-border); border-radius: 20px; padding: 24px 20px; margin-bottom: 10px; }
-        .community-intro p { color: var(--text-secondary); line-height: 1.6; font-size: 1rem; }
+        .special-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 22px; overflow: hidden; margin-bottom: 16px; transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; }
+        .special-card:hover { transform: translateY(-3px); }
+        .special-card.gold:hover { box-shadow: 0 10px 30px rgba(255, 179, 71, 0.1); border-color: rgba(255, 179, 71, 0.3); }
+        .special-card.gold.active { border-color: var(--gold); box-shadow: 0 0 30px rgba(255, 179, 71, 0.15); }
+        .special-card.pink:hover { box-shadow: 0 10px 30px rgba(255, 107, 157, 0.1); border-color: rgba(255, 107, 157, 0.3); }
+        .special-card.pink.active { border-color: var(--pink); box-shadow: 0 0 30px rgba(255, 107, 157, 0.15); }
+        .special-card-top { display: flex; gap: 14px; padding: 16px 16px 12px; align-items: center; }
+        .special-cover { position: relative; width: 80px; height: 80px; border-radius: 16px; overflow: hidden; flex-shrink: 0; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+        .special-cover.gold { background: linear-gradient(135deg, #2a1a3a, #3a2a1a); }
+        .special-cover.pink { background: linear-gradient(135deg, #2a1a3a, #3a1a2a); }
+        .special-cover img { width: 100%; height: 100%; object-fit: cover; }
+        .special-play-overlay { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.5); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease; }
+        .special-cover:hover .special-play-overlay { opacity: 1; }
+        .special-play-overlay svg { width: 32px; height: 32px; fill: #fff; }
+        .special-card.gold.active .special-play-overlay { opacity: 1; background: rgba(255, 179, 71, 0.3); }
+        .special-card.pink.active .special-play-overlay { opacity: 1; background: rgba(255, 107, 157, 0.3); }
+        .special-main-info { flex: 1; min-width: 0; }
+        .special-title { font-size: 1.15rem; font-weight: 700; margin-bottom: 6px; }
+        .special-author { font-size: 0.8rem; color: var(--pink); margin-bottom: 4px; font-weight: 600; }
+        .special-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 4px; }
+        .special-tag { font-size: 0.65rem; padding: 3px 8px; border-radius: 6px; letter-spacing: 0.5px; font-weight: 600; text-transform: uppercase; }
+        .special-tag.genre { background: rgba(255, 179, 71, 0.15); color: var(--gold); }
+        .special-tag.mood { background: rgba(176, 0, 255, 0.15); color: #d580ff; }
+        .special-tag.style { background: rgba(255, 107, 157, 0.15); color: var(--pink); }
+        .special-card-actions { display: flex; gap: 8px; flex-shrink: 0; }
+        .special-card-btn { width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--card-border); background: rgba(20, 20, 40, 0.6); color: var(--text-secondary); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; }
+        .special-card-btn.gold:hover { border-color: var(--gold); color: var(--gold); background: rgba(255, 179, 71, 0.1); }
+        .special-card-btn.pink:hover { border-color: var(--pink); color: var(--pink); background: rgba(255, 107, 157, 0.1); }
+        .special-card-btn svg { width: 18px; height: 18px; fill: currentColor; }
+        .special-description { padding: 12px 16px 16px; color: var(--text-secondary); font-size: 0.9rem; line-height: 1.55; margin-top: 4px; font-style: italic; }
+        .special-description.gold { border-top: 1px dashed rgba(255, 179, 71, 0.15); }
+        .special-description.pink { border-top: 1px dashed rgba(255, 107, 157, 0.15); }
+        .special-description::before { content: '“'; font-size: 1.3rem; font-weight: 700; margin-right: 4px; font-style: normal; }
+        .special-description::after { content: '”'; font-size: 1.3rem; font-weight: 700; margin-left: 4px; font-style: normal; }
+        .special-description.gold::before, .special-description.gold::after { color: var(--gold); }
+        .special-description.pink::before, .special-description.pink::after { color: var(--pink); }
 
-        .chat-online-indicator { display: flex; align-items: center; gap: 8px; margin-left: auto; font-size: 0.85rem; color: var(--text-secondary); }
-        .online-dot { width: 10px; height: 10px; border-radius: 50%; background: #00ff88; animation: pulse 2s ease-in-out infinite; }
+        .floating-player { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%) translateY(100%); width: 100%; max-width: 480px; backdrop-filter: blur(20px); padding: 16px 20px 22px; z-index: 100; transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); border-radius: 28px 28px 0 0; }
+        .floating-player.visible { transform: translateX(-50%) translateY(0); }
+        .floating-player::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background-size: 200% 100%; animation: shimmer 3s linear infinite; }
+        .floating-player.gold { background: linear-gradient(180deg, rgba(20, 15, 30, 0.97), rgba(10, 8, 20, 0.98)); border-top: 1px solid rgba(255, 179, 71, 0.25); box-shadow: 0 -10px 50px rgba(255, 179, 71, 0.15), 0 -5px 30px rgba(0, 0, 0, 0.6); }
+        .floating-player.gold::before { background: linear-gradient(90deg, transparent, var(--gold), var(--magenta), var(--gold), transparent); }
+        .floating-player.pink { background: linear-gradient(180deg, rgba(30, 15, 25, 0.97), rgba(15, 8, 18, 0.98)); border-top: 1px solid rgba(255, 107, 157, 0.25); box-shadow: 0 -10px 50px rgba(255, 107, 157, 0.15), 0 -5px 30px rgba(0, 0, 0, 0.6); }
+        .floating-player.pink::before { background: linear-gradient(90deg, transparent, var(--pink), var(--purple), var(--pink), transparent); }
+        @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+        .floating-player-top { display: flex; gap: 14px; align-items: center; margin-bottom: 14px; }
+        .floating-player-cover { width: 64px; height: 64px; border-radius: 14px; overflow: hidden; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; position: relative; }
+        .floating-player-cover.gold { background: linear-gradient(135deg, #2a1a3a, #3a2a1a); box-shadow: 0 4px 20px rgba(255, 179, 71, 0.2); }
+        .floating-player-cover.pink { background: linear-gradient(135deg, #2a1a3a, #3a1a2a); box-shadow: 0 4px 20px rgba(255, 107, 157, 0.2); }
+        .floating-player-cover img { width: 100%; height: 100%; object-fit: cover; }
+        .floating-player-cover.playing::after { content: ''; position: absolute; inset: -3px; border-radius: 16px; opacity: 0.6; animation: pulseBorder 2s ease-in-out infinite; }
+        .floating-player-cover.gold.playing::after { border: 2px solid var(--gold); }
+        .floating-player-cover.pink.playing::after { border: 2px solid var(--pink); }
+        @keyframes pulseBorder { 0%, 100% { opacity: 0.3; transform: scale(1); } 50% { opacity: 0.8; transform: scale(1.05); } }
+        .floating-player-info { flex: 1; min-width: 0; }
+        .floating-player-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 2px; font-weight: 700; margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+        .floating-player-label.gold { color: var(--gold); }
+        .floating-player-label.pink { color: var(--pink); }
+        .floating-player-label::before { content: ''; width: 6px; height: 6px; border-radius: 50%; animation: pulse 1.5s ease-in-out infinite; }
+        .floating-player-label.gold::before { background: var(--gold); }
+        .floating-player-label.pink::before { background: var(--pink); }
         @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.6; transform: scale(1.2); } }
-
-        .chat-container { display: flex; flex-direction: column; height: calc(100vh - 180px); background: rgba(20, 25, 40, 0.6); border: 1px solid var(--card-border); border-radius: 20px; overflow: hidden; }
-        .chat-messages { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 16px; }
-        .chat-message { display: flex; gap: 12px; max-width: 85%; animation: messageSlideIn 0.3s ease; }
-        @keyframes messageSlideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .chat-message.sent { align-self: flex-end; flex-direction: row-reverse; }
-        .message-avatar { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
-        .chat-message.received .message-avatar { background: linear-gradient(135deg, var(--cyan), var(--purple)); }
-        .chat-message.sent .message-avatar { background: linear-gradient(135deg, var(--magenta), var(--purple)); }
-        .message-content { flex: 1; }
-        .message-bubble { padding: 12px 16px; border-radius: 16px; font-size: 0.95rem; line-height: 1.5; word-wrap: break-word; }
-        .chat-message.received .message-bubble { background: rgba(30, 35, 55, 0.9); border: 1px solid var(--card-border); border-top-left-radius: 4px; }
-        .chat-message.sent .message-bubble { background: linear-gradient(135deg, rgba(0, 229, 255, 0.15), rgba(176, 0, 255, 0.15)); border: 1px solid rgba(0, 229, 255, 0.3); border-top-right-radius: 4px; }
-        .message-time { font-size: 0.7rem; color: var(--text-secondary); margin-top: 4px; padding: 0 4px; }
-        .chat-message.sent .message-time { text-align: right; }
-
-        .chat-input-container { display: flex; gap: 12px; padding: 16px; background: rgba(15, 20, 35, 0.9); border-top: 1px solid var(--card-border); }
-        .chat-input { flex: 1; padding: 12px 16px; border: 1px solid var(--card-border); border-radius: 12px; background: rgba(20, 25, 40, 0.8); color: var(--text-primary); font-size: 0.95rem; font-family: 'Inter', sans-serif; outline: none; transition: border-color 0.3s ease; }
-        .chat-input::placeholder { color: var(--text-secondary); }
-        .chat-input:focus { border-color: var(--cyan); }
-        .chat-send-btn { width: 48px; height: 48px; border-radius: 12px; border: none; background: linear-gradient(135deg, var(--cyan), var(--purple)); color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: transform 0.2s ease, box-shadow 0.3s ease; flex-shrink: 0; }
-        .chat-send-btn:hover { transform: scale(1.05); box-shadow: 0 4px 20px rgba(0, 229, 255, 0.3); }
-        .chat-send-btn:active { transform: scale(0.95); }
-        .chat-send-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-        .chat-send-btn svg { width: 20px; height: 20px; fill: currentColor; }
-
-        .chat-loading { display: flex; align-items: center; justify-content: center; padding: 40px; color: var(--text-secondary); font-size: 0.9rem; }
-        .chat-loading-spinner { width: 24px; height: 24px; border: 3px solid var(--card-border); border-top-color: var(--cyan); border-radius: 50%; animation: spin 0.8s linear infinite; margin-right: 12px; }
-        @keyframes spin { to { transform: rotate(360deg); } }
-
-        .chat-status { text-align: center; padding: 10px; font-size: 0.8rem; color: var(--text-secondary); }
-        .chat-status.error { color: #ff6b6b; }
-        .chat-status.connected { color: #00ff88; }
-        .chat-status.offline { color: #ffaa00; }
-
-        .contact-form-container { background: rgba(20, 25, 40, 0.6); border: 1px solid var(--card-border); border-radius: 20px; padding: 24px; margin-top: 20px; }
-        .form-group { margin-bottom: 16px; }
-        .form-label { display: block; font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
-        .form-input, .form-textarea { width: 100%; padding: 14px 16px; border: 1px solid var(--card-border); border-radius: 12px; background: rgba(20, 20, 40, 0.8); color: var(--text-primary); font-family: 'Inter', sans-serif; font-size: 1rem; outline: none; transition: border-color 0.3s ease; }
-        .form-input:focus, .form-textarea:focus { border-color: var(--cyan); }
-        .form-textarea { min-height: 120px; resize: vertical; }
-        .submit-btn { width: 100%; padding: 16px; border: none; border-radius: 12px; background: linear-gradient(135deg, var(--cyan), var(--purple)); color: #fff; font-weight: 700; font-size: 1rem; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.3s ease; text-transform: uppercase; letter-spacing: 1px; }
-        .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0, 229, 255, 0.3); }
-        .submit-btn:active { transform: translateY(0); }
-        .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-        .form-status { margin-top: 12px; text-align: center; font-size: 0.9rem; min-height: 20px; }
-        .form-status.success { color: #00ff88; }
-        .form-status.error { color: #ff6b6b; }
-        .contact-intro { background: rgba(20, 25, 40, 0.6); border: 1px solid var(--card-border); border-radius: 20px; padding: 24px 20px; margin-bottom: 10px; }
-        .contact-intro p { color: var(--text-secondary); line-height: 1.6; font-size: 1rem; }
-
-        .vpn-warning {
-            background: linear-gradient(135deg, rgba(255, 170, 0, 0.1), rgba(255, 85, 0, 0.05));
-            border-left: 3px solid #ffaa00;
-            border-radius: 8px;
-            padding: 12px 16px;
-            margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .vpn-warning-icon { font-size: 1.2rem; flex-shrink: 0; }
-        .vpn-warning-text { color: var(--text-secondary); font-size: 0.85rem; line-height: 1.4; }
-        .vpn-warning-text strong { color: #ffaa00; }
+        .floating-player-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .floating-player-author { font-size: 0.85rem; margin-bottom: 4px; font-weight: 600; }
+        .floating-player-author.pink { color: var(--pink); }
+        .floating-player-tags { display: flex; gap: 5px; flex-wrap: wrap; }
+        .floating-player-tag { font-size: 0.6rem; padding: 2px 7px; border-radius: 5px; letter-spacing: 0.5px; font-weight: 600; text-transform: uppercase; }
+        .floating-player-tag.gold { background: rgba(255, 179, 71, 0.12); color: var(--gold); }
+        .floating-player-tag.pink { background: rgba(255, 107, 157, 0.12); color: var(--pink); }
+        .floating-player-controls { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+        .floating-play-btn { width: 50px; height: 50px; border-radius: 50%; border: none; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: transform 0.2s ease; }
+        .floating-play-btn.gold { background: linear-gradient(135deg, var(--gold), var(--magenta)); box-shadow: 0 6px 20px rgba(255, 179, 71, 0.4); }
+        .floating-play-btn.pink { background: linear-gradient(135deg, var(--pink), var(--purple)); box-shadow: 0 6px 20px rgba(255, 107, 157, 0.4); }
+        .floating-play-btn:hover { transform: scale(1.08); }
+        .floating-play-btn:active { transform: scale(0.95); }
+        .floating-play-btn svg { width: 20px; height: 20px; fill: #fff; margin-left: 2px; }
+        .floating-skip-btn { background: none; border: none; color: var(--text-secondary); cursor: pointer; padding: 4px; transition: color 0.2s ease; }
+        .floating-skip-btn:hover.gold { color: var(--gold); }
+        .floating-skip-btn:hover.pink { color: var(--pink); }
+        .floating-skip-btn svg { width: 22px; height: 22px; fill: currentColor; }
+        .floating-player-description { color: var(--text-secondary); font-size: 0.85rem; line-height: 1.5; font-style: italic; padding: 10px 14px; border-radius: 0 10px 10px 0; margin-bottom: 12px; max-height: 60px; overflow-y: auto; border-left: 2px solid; }
+        .floating-player-description.gold { background: rgba(255, 179, 71, 0.04); border-left-color: var(--gold); }
+        .floating-player-description.pink { background: rgba(255, 107, 157, 0.04); border-left-color: var(--pink); }
+        .floating-progress-wrapper { display: flex; align-items: center; gap: 10px; }
+        .floating-time { font-size: 0.7rem; color: var(--text-secondary); font-family: 'Orbitron', monospace; min-width: 35px; }
+        .floating-time.end { text-align: right; }
+        .floating-bar-container { flex: 1; height: 5px; background: rgba(255, 255, 255, 0.08); border-radius: 3px; overflow: hidden; cursor: pointer; }
+        .floating-bar-fill { height: 100%; border-radius: 3px; width: 0%; transition: width 0.1s linear; }
+        .floating-bar-fill.gold { background: linear-gradient(90deg, var(--gold), var(--magenta)); box-shadow: 0 0 8px rgba(255, 179, 71, 0.5); }
+        .floating-bar-fill.pink { background: linear-gradient(90deg, var(--pink), var(--purple)); box-shadow: 0 0 8px rgba(255, 107, 157, 0.5); }
 
         .sticky-player { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%) translateY(100%); width: 100%; max-width: 480px; background: rgba(15, 15, 30, 0.95); backdrop-filter: blur(10px); border-top: 1px solid var(--card-border); padding: 12px 16px 20px; z-index: 100; transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); border-radius: 24px 24px 0 0; box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.5); }
         .sticky-player.visible { transform: translateX(-50%) translateY(0); }
@@ -634,6 +333,107 @@
         .player-time-mini.end { text-align: right; }
         .player-bar-container { flex: 1; height: 4px; background: rgba(255, 255, 255, 0.1); border-radius: 2px; overflow: hidden; cursor: pointer; }
         .player-bar-fill { height: 100%; background: linear-gradient(90deg, var(--cyan), var(--purple)); border-radius: 2px; width: 0%; transition: width 0.1s linear; }
+
+        .support-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 22px; padding: 24px 20px; margin-bottom: 16px; transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; }
+        .support-card:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(255, 0, 229, 0.1); border-color: rgba(255, 0, 229, 0.3); }
+        .support-card-header { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
+        .support-card-icon { width: 56px; height: 56px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; flex-shrink: 0; }
+        .support-card-icon.boosty { background: linear-gradient(135deg, #ff6b6b, #ff8e53); }
+        .support-card-icon.tinkoff { background: linear-gradient(135deg, #ffdd2d, #ffd700); }
+        .support-card-icon.crypto { background: linear-gradient(135deg, #f7931a, #ff9500); }
+        .support-card-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 4px; }
+        .support-card-desc { font-size: 0.85rem; color: var(--text-secondary); }
+        .support-card-btn { width: 100%; padding: 14px; border: none; border-radius: 12px; background: linear-gradient(135deg, var(--magenta), var(--purple)); color: #fff; font-weight: 700; font-size: 1rem; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.3s ease; text-transform: uppercase; letter-spacing: 1px; }
+        .support-card-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(255, 0, 229, 0.3); }
+        .support-card-btn:active { transform: translateY(0); }
+        .support-copy-hint { text-align: center; font-size: 0.8rem; color: var(--text-secondary); margin-top: 10px; font-style: italic; }
+        .support-thanks { background: rgba(255, 0, 229, 0.05); border: 1px solid rgba(255, 0, 229, 0.2); border-radius: 18px; padding: 20px; margin-top: 24px; }
+        .support-thanks-title { font-size: 0.8rem; color: var(--magenta); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 12px; font-weight: 600; text-align: center; }
+        .support-thanks-list { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+        .support-thanks-item { padding: 6px 12px; background: rgba(255, 0, 229, 0.1); border-radius: 8px; font-size: 0.85rem; color: var(--text-secondary); }
+
+        .about-content, .community-content { display: flex; flex-direction: column; gap: 20px; }
+        .about-card { background: rgba(20, 25, 40, 0.6); border: 1px solid var(--card-border); border-radius: 20px; padding: 24px 20px; line-height: 1.6; font-size: 1rem; }
+        .about-card .highlight { color: var(--cyan); font-weight: 600; }
+        .about-card .evgenii-title { font-family: 'Orbitron', sans-serif; color: var(--cyan); font-weight: 700; letter-spacing: 2px; }
+        .about-quote { border-left: 3px solid var(--cyan); padding-left: 20px; margin: 20px 0; font-style: italic; color: var(--cyan); font-size: 1.05rem; line-height: 1.7; }
+        .about-card p { margin-bottom: 12px; color: var(--text-secondary); }
+        .about-card p:last-child { margin-bottom: 0; }
+        .community-card { background: rgba(20, 25, 40, 0.6); border: 1px solid var(--card-border); border-radius: 20px; padding: 24px 20px; display: flex; align-items: center; gap: 20px; cursor: pointer; transition: all 0.3s ease; text-decoration: none; color: var(--text-primary); }
+        .community-card:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0, 229, 255, 0.15); border-color: rgba(0, 229, 255, 0.3); }
+        .community-card.coming-soon { opacity: 0.6; cursor: not-allowed; }
+        .community-card.coming-soon:hover { transform: none; box-shadow: none; border-color: var(--card-border); }
+        .community-icon { width: 60px; height: 60px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 2rem; flex-shrink: 0; }
+        .community-icon.bip { background: linear-gradient(135deg, #00e5ff, #0099ff); }
+        .community-icon.telegram { background: linear-gradient(135deg, #0088cc, #00a8e8); }
+        .community-icon.instagram { background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+        .community-info { flex: 1; min-width: 0; }
+        .community-name { font-size: 1.2rem; font-weight: 700; margin-bottom: 4px; }
+        .community-desc { font-size: 0.85rem; color: var(--text-secondary); }
+        .community-arrow { font-size: 1.5rem; color: var(--text-secondary); transition: transform 0.3s ease; }
+        .community-card:hover .community-arrow { transform: translateX(5px); color: var(--cyan); }
+        .community-card.coming-soon .community-arrow { transform: none; }
+        .community-badge { display: inline-block; padding: 4px 10px; background: rgba(255, 255, 255, 0.1); border-radius: 8px; font-size: 0.75rem; color: var(--text-secondary); margin-top: 6px; }
+        .community-intro { background: rgba(20, 25, 40, 0.6); border: 1px solid var(--card-border); border-radius: 20px; padding: 24px 20px; margin-bottom: 10px; }
+        .community-intro p { color: var(--text-secondary); line-height: 1.6; font-size: 1rem; }
+
+        .chat-online-indicator { display: flex; align-items: center; gap: 8px; margin-left: auto; font-size: 0.85rem; color: var(--text-secondary); }
+        .online-dot { width: 10px; height: 10px; border-radius: 50%; background: #00ff88; animation: pulse 2s ease-in-out infinite; }
+        .chat-container { display: flex; flex-direction: column; height: calc(100vh - 180px); background: rgba(20, 25, 40, 0.6); border: 1px solid var(--card-border); border-radius: 20px; overflow: hidden; }
+        .chat-messages { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 16px; }
+        .chat-message { display: flex; gap: 12px; max-width: 85%; animation: messageSlideIn 0.3s ease; }
+        @keyframes messageSlideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .chat-message.sent { align-self: flex-end; flex-direction: row-reverse; }
+        .message-avatar { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+        .chat-message.received .message-avatar { background: linear-gradient(135deg, var(--cyan), var(--purple)); }
+        .chat-message.sent .message-avatar { background: linear-gradient(135deg, var(--magenta), var(--purple)); }
+        .message-content { flex: 1; }
+        .message-bubble { padding: 12px 16px; border-radius: 16px; font-size: 0.95rem; line-height: 1.5; word-wrap: break-word; }
+        .chat-message.received .message-bubble { background: rgba(30, 35, 55, 0.9); border: 1px solid var(--card-border); border-top-left-radius: 4px; }
+        .chat-message.sent .message-bubble { background: linear-gradient(135deg, rgba(0, 229, 255, 0.15), rgba(176, 0, 255, 0.15)); border: 1px solid rgba(0, 229, 255, 0.3); border-top-right-radius: 4px; }
+        .message-time { font-size: 0.7rem; color: var(--text-secondary); margin-top: 4px; padding: 0 4px; }
+        .chat-message.sent .message-time { text-align: right; }
+        .chat-input-container { display: flex; gap: 12px; padding: 16px; background: rgba(15, 20, 35, 0.9); border-top: 1px solid var(--card-border); }
+        .chat-input { flex: 1; padding: 12px 16px; border: 1px solid var(--card-border); border-radius: 12px; background: rgba(20, 25, 40, 0.8); color: var(--text-primary); font-size: 0.95rem; font-family: 'Inter', sans-serif; outline: none; transition: border-color 0.3s ease; }
+        .chat-input::placeholder { color: var(--text-secondary); }
+        .chat-input:focus { border-color: var(--cyan); }
+        .chat-send-btn { width: 48px; height: 48px; border-radius: 12px; border: none; background: linear-gradient(135deg, var(--cyan), var(--purple)); color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: transform 0.2s ease, box-shadow 0.3s ease; flex-shrink: 0; }
+        .chat-send-btn:hover { transform: scale(1.05); box-shadow: 0 4px 20px rgba(0, 229, 255, 0.3); }
+        .chat-send-btn:active { transform: scale(0.95); }
+        .chat-send-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        .chat-send-btn svg { width: 20px; height: 20px; fill: currentColor; }
+        .chat-loading { display: flex; align-items: center; justify-content: center; padding: 40px; color: var(--text-secondary); font-size: 0.9rem; }
+        .chat-loading-spinner { width: 24px; height: 24px; border: 3px solid var(--card-border); border-top-color: var(--cyan); border-radius: 50%; animation: spin 0.8s linear infinite; margin-right: 12px; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .chat-status { text-align: center; padding: 10px; font-size: 0.8rem; color: var(--text-secondary); }
+        .chat-status.error { color: #ff6b6b; }
+        .chat-status.connected { color: #00ff88; }
+        .chat-status.offline { color: #ffaa00; }
+
+        .contact-form-container, .voice-form-container { background: rgba(20, 25, 40, 0.6); border: 1px solid var(--card-border); border-radius: 20px; padding: 24px; margin-top: 0; }
+        .voice-form-container { border-color: rgba(255, 107, 157, 0.25); }
+        .form-group { margin-bottom: 16px; }
+        .form-label { display: block; font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
+        .form-input, .form-textarea, .form-select { width: 100%; padding: 14px 16px; border: 1px solid var(--card-border); border-radius: 12px; background: rgba(20, 20, 40, 0.8); color: var(--text-primary); font-family: 'Inter', sans-serif; font-size: 1rem; outline: none; transition: border-color 0.3s ease; }
+        .form-input:focus, .form-textarea:focus, .form-select:focus { border-color: var(--pink); }
+        .form-textarea { min-height: 120px; resize: vertical; }
+        .form-select { appearance: none; background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ff6b9d'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e"); background-repeat: no-repeat; background-position: right 12px center; background-size: 24px; padding-right: 40px; cursor: pointer; }
+        .form-select option { background: #14142a; color: var(--text-primary); }
+        .submit-btn { width: 100%; padding: 16px; border: none; border-radius: 12px; background: linear-gradient(135deg, var(--cyan), var(--purple)); color: #fff; font-weight: 700; font-size: 1rem; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.3s ease; text-transform: uppercase; letter-spacing: 1px; }
+        .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0, 229, 255, 0.3); }
+        .submit-btn:active { transform: translateY(0); }
+        .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+        .submit-btn.pink { background: linear-gradient(135deg, var(--pink), var(--purple)); }
+        .submit-btn.pink:hover { box-shadow: 0 8px 25px rgba(255, 107, 157, 0.3); }
+        .form-status { margin-top: 12px; text-align: center; font-size: 0.9rem; min-height: 20px; }
+        .form-status.success { color: #00ff88; }
+        .form-status.error { color: #ff6b6b; }
+        .contact-intro { background: rgba(20, 25, 40, 0.6); border: 1px solid var(--card-border); border-radius: 20px; padding: 24px 20px; margin-bottom: 10px; }
+        .contact-intro p { color: var(--text-secondary); line-height: 1.6; font-size: 1rem; }
+        .vpn-warning { background: linear-gradient(135deg, rgba(255, 170, 0, 0.1), rgba(255, 85, 0, 0.05)); border-left: 3px solid #ffaa00; border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; display: flex; align-items: center; gap: 12px; }
+        .vpn-warning-icon { font-size: 1.2rem; flex-shrink: 0; }
+        .vpn-warning-text { color: var(--text-secondary); font-size: 0.85rem; line-height: 1.4; }
+        .vpn-warning-text strong { color: #ffaa00; }
 
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 5, 15, 0.85); backdrop-filter: blur(8px); z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 20px; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
         .modal-overlay.active { opacity: 1; pointer-events: all; }
@@ -669,343 +469,487 @@
             .banner-title { font-size: 1.6rem; letter-spacing: 4px; }
             .featured-title { font-size: 1.4rem; }
             .featured-cover { width: 160px; height: 160px; }
-            .about-page-title, .community-page-title, .chat-page-title, .contact-page-title, .tracks-page-title, .instrumentals-page-title { font-size: 1.8rem; }
+            .page-title { font-size: 1.8rem; }
             .login-logo { font-size: 2.2rem; }
+            .voice-toggle-btn { font-size: 0.9rem; letter-spacing: 1px; padding: 18px 20px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="bg-effects">
-        <div class="bg-orb bg-orb-1"></div>
-        <div class="bg-orb bg-orb-2"></div>
-        <div class="bg-orb bg-orb-3"></div>
-    </div>
+<div class="bg-effects">
+    <div class="bg-orb bg-orb-1"></div>
+    <div class="bg-orb bg-orb-2"></div>
+    <div class="bg-orb bg-orb-3"></div>
+</div>
 
-    <!-- ЭКРАН ВХОДА -->
-    <div class="login-screen" id="loginScreen">
-        <div class="login-container">
-            <div class="login-banner">
-                <div class="login-banner-bg"></div>
-                <div class="login-geometric">
-                    <div class="geo-shape"></div>
-                    <div class="geo-shape"></div>
-                    <div class="geo-shape"></div>
-                    <div class="geo-shape"></div>
-                </div>
-                <div style="position: relative; z-index: 2; text-align: center;">
-                    <div class="login-logo">EVGENII</div>
-                    <div class="login-slogan">Где заканчиваюсь я — и начинается ИИ</div>
-                </div>
+<!-- ЭКРАН ВХОДА -->
+<div class="login-screen" id="loginScreen">
+    <div class="login-container">
+        <div class="login-banner">
+            <div class="login-banner-bg"></div>
+            <div class="login-geometric">
+                <div class="geo-shape"></div>
+                <div class="geo-shape"></div>
+                <div class="geo-shape"></div>
+                <div class="geo-shape"></div>
             </div>
-            <div class="login-greeting" id="loginGreeting">Добрый вечер</div>
-            <form class="login-form" id="loginForm">
-                <input type="text" class="login-input" id="nameInput" placeholder="Введите ваше имя" autocomplete="off" maxlength="20">
-                <button type="submit" class="login-btn">ВОЙТИ</button>
-            </form>
+            <div style="position: relative; z-index: 2; text-align: center;">
+                <div class="login-logo">EVGENII</div>
+                <div class="login-slogan">Где заканчиваюсь я — и начинается ИИ</div>
+            </div>
         </div>
+        <div class="login-greeting" id="loginGreeting">Добрый вечер</div>
+        <form class="login-form" id="loginForm">
+            <input type="text" class="login-input" id="nameInput" placeholder="Введите ваше имя" autocomplete="off" maxlength="20">
+            <button type="submit" class="login-btn">ВОЙТИ</button>
+        </form>
     </div>
+</div>
 
-    <!-- ГЛАВНАЯ СТРАНИЦА -->
-    <div class="page" id="homePage">
-        <div class="header fade-in-up">
-            <div class="header-left">
-                <div class="header-time" id="headerTime">00:00</div>
-                <div class="header-greeting" id="headerGreeting">ДОБРЫЙ ДЕНЬ</div>
-            </div>
-            <div class="header-right">
-                <div class="header-name-label">ГОСТЬ</div>
-                <div class="header-name" id="headerName">ИМЯ</div>
-            </div>
+<!-- ГЛАВНАЯ -->
+<div class="page" id="homePage">
+    <div class="header fade-in-up">
+        <div class="header-left">
+            <div class="header-time" id="headerTime">00:00</div>
+            <div class="header-greeting" id="headerGreeting">ДОБРЫЙ ДЕНЬ</div>
         </div>
-        <div class="banner fade-in-up">
-            <div class="banner-content">
-                <div class="banner-geometric">
-                    <div class="geo-shape-banner"></div>
-                    <div class="geo-shape-banner"></div>
-                    <div class="geo-shape-banner"></div>
-                    <div class="geo-shape-banner"></div>
-                </div>
-                <div class="banner-title">EVGENII</div>
-                <div class="banner-slogan">Где заканчиваюсь я — и начинается ИИ</div>
-            </div>
-        </div>
-        <div class="release-section fade-in-up">
-            <div class="section-title">НОВЫЙ РЕЛИЗ</div>
-            <div class="release-card" id="homeReleaseCard" onclick="playNewRelease()"></div>
-        </div>
-        <div class="quick-access-section fade-in-up">
-            <div class="section-title">БЫСТРЫЙ ДОСТУП</div>
-            <div class="quick-grid">
-                <div class="quick-tile" onclick="navigateTo('tracksPage')">
-                    <div class="tile-icon tracks">🎵</div>
-                    <div class="tile-title">Все треки</div>
-                    <div class="tile-desc">Полная дискография</div>
-                </div>
-                <div class="quick-tile" onclick="navigateTo('instrumentalsPage')">
-                    <div class="tile-icon instrumental">🎹</div>
-                    <div class="tile-title">Инструменталы</div>
-                    <div class="tile-desc">Музыка без слов</div>
-                </div>
-                <div class="quick-tile" onclick="navigateTo('communityPage')">
-                    <div class="tile-icon community">👥</div>
-                    <div class="tile-title">Сообщества</div>
-                    <div class="tile-desc">Bip & Telegram</div>
-                </div>
-                <div class="quick-tile" onclick="navigateTo('contactPage')">
-                    <div class="tile-icon contact">✉️</div>
-                    <div class="tile-title">Связь</div>
-                    <div class="tile-desc">Написать автору</div>
-                </div>
-                <div class="quick-tile" onclick="navigateTo('chatPage')">
-                    <div class="tile-icon chat">💬</div>
-                    <div class="tile-title">Чат</div>
-                    <div class="tile-desc">Общение с участниками</div>
-                </div>
-                <div class="quick-tile" onclick="navigateTo('aboutPage')">
-                    <div class="tile-icon about">ℹ️</div>
-                    <div class="tile-title">О проекте</div>
-                    <div class="tile-desc">Узнать больше</div>
-                </div>
-            </div>
-        </div>
-        <button class="logout-btn" id="logoutBtn">ВЫЙТИ</button>
-    </div>
-
-    <!-- СТРАНИЦА ТРЕКОВ -->
-    <div class="page" id="tracksPage">
-        <div class="tracks-header fade-in-up">
-            <button class="back-btn" onclick="goBack()">←</button>
-            <div class="tracks-page-title">Музыка</div>
-        </div>
-        <div class="featured-release fade-in-up" id="featuredRelease" onclick="playNewRelease()"></div>
-        <div class="tracks-list-section fade-in-up">
-            <div class="section-title">ВСЕ ТРЕКИ</div>
-            <div class="tracks-list" id="tracksList"></div>
+        <div class="header-right">
+            <div class="header-name-label">ГОСТЬ</div>
+            <div class="header-name" id="headerName">ИМЯ</div>
         </div>
     </div>
-
-    <!-- СТРАНИЦА ИНСТРУМЕНТАЛОВ -->
-    <div class="page" id="instrumentalsPage">
-        <div class="instrumentals-header fade-in-up">
-            <button class="back-btn" onclick="goBack()">←</button>
-            <div class="instrumentals-page-title">Инструменталы</div>
-        </div>
-        <div class="instrumentals-intro fade-in-up">
-            <div class="instrumentals-intro-title">БЕЗ СЛОВ · ТОЛЬКО ЗВУК</div>
-            <div class="instrumentals-intro-text">
-                Музыка, в которой говорят не тексты, а эмоции. Каждый трек — отдельное настроение, атмосфера и история без единого слова.
+    <div class="banner fade-in-up">
+        <div class="banner-content">
+            <div class="banner-geometric">
+                <div class="geo-shape-banner"></div>
+                <div class="geo-shape-banner"></div>
+                <div class="geo-shape-banner"></div>
+                <div class="geo-shape-banner"></div>
             </div>
+            <div class="banner-title">EVGENII</div>
+            <div class="banner-slogan">Где заканчиваюсь я — и начинается ИИ</div>
         </div>
-        <div class="section-title fade-in-up">КОЛЛЕКЦИЯ</div>
-        <div class="tracks-list fade-in-up" id="instrumentalsList"></div>
     </div>
-
-    <!-- СТРАНИЦА О ПРОЕКТЕ -->
-    <div class="page" id="aboutPage">
-        <div class="about-header fade-in-up">
-            <button class="back-btn" onclick="goBack()">←</button>
-            <div class="about-page-title">О проекте</div>
-        </div>
-        <div class="about-content fade-in-up">
-            <div class="about-card">
-                <p><span class="evgenii-title">EVGENII</span> — это эксперимент на стыке человеческих эмоций и искусственного интеллекта.</p>
-                <div class="about-quote">«Я придумываю текст и стиль исполнения. А выучить и воплотить в песню доверяю ИИ.»</div>
+    <div class="release-section fade-in-up">
+        <div class="section-title">НОВЫЙ РЕЛИЗ</div>
+        <div class="release-card" id="homeReleaseCard" onclick="playNewRelease()"></div>
+    </div>
+    <div class="quick-access-section fade-in-up">
+        <div class="section-title">БЫСТРЫЙ ДОСТУП</div>
+        <div class="quick-grid">
+            <div class="quick-tile" onclick="navigateTo('tracksPage')">
+                <div class="tile-icon tracks">🎵</div>
+                <div class="tile-title">Все треки</div>
+                <div class="tile-desc">Полная дискография</div>
             </div>
-            <div class="about-card">
-                <p>Искусственный интеллект становится моим <span class="highlight">голосом</span>. Он заучивает мои слова, учится чувствовать ритм, подбирать интонации.</p>
-                <p>Это не замена человеку — это <span class="highlight">новый инструмент выражения</span>.</p>
+            <div class="quick-tile" onclick="navigateTo('instrumentalsPage')">
+                <div class="tile-icon instrumental">🎹</div>
+                <div class="tile-title">Инструменталы</div>
+                <div class="tile-desc">Музыка без слов</div>
             </div>
-            <div class="about-card">
-                <p>Вместе мы создаём что-то третье. Не совсем человеческое, не совсем машинное. Что-то среднее, где технологии усиливают эмоции, а не заменяют их.</p>
+            <div class="quick-tile" onclick="navigateTo('subscribersPage')">
+                <div class="tile-icon subscribers">🎤</div>
+                <div class="tile-title">Дай голос</div>
+                <div class="tile-desc">Твой текст — наш голос</div>
+            </div>
+            <div class="quick-tile" onclick="navigateTo('supportPage')">
+                <div class="tile-icon support">💜</div>
+                <div class="tile-title">Поддержать</div>
+                <div class="tile-desc">Помочь проекту</div>
+            </div>
+            <div class="quick-tile" onclick="navigateTo('communityPage')">
+                <div class="tile-icon community">🌐</div>
+                <div class="tile-title">Сообщества</div>
+                <div class="tile-desc">Bip & Telegram</div>
+            </div>
+            <div class="quick-tile" onclick="navigateTo('contactPage')">
+                <div class="tile-icon contact">✉️</div>
+                <div class="tile-title">Связь</div>
+                <div class="tile-desc">Написать автору</div>
+            </div>
+            <div class="quick-tile" onclick="navigateTo('chatPage')">
+                <div class="tile-icon chat">💬</div>
+                <div class="tile-title">Чат</div>
+                <div class="tile-desc">Общение</div>
+            </div>
+            <div class="quick-tile" onclick="navigateTo('aboutPage')">
+                <div class="tile-icon about">ℹ️</div>
+                <div class="tile-title">О проекте</div>
+                <div class="tile-desc">Узнать больше</div>
             </div>
         </div>
     </div>
+    <button class="logout-btn" id="logoutBtn">ВЫЙТИ</button>
+</div>
 
-    <!-- СТРАНИЦА СООБЩЕСТВА -->
-    <div class="page" id="communityPage">
-        <div class="community-header fade-in-up">
-            <button class="back-btn" onclick="goBack()">←</button>
-            <div class="community-page-title">Сообщества</div>
-        </div>
-        <div class="community-content fade-in-up">
-            <div class="community-intro"><p>Присоединяйтесь к нашим сообществам, чтобы быть в курсе новых релизов и эксклюзивного контента</p></div>
-            <a href="#" class="community-card coming-soon" onclick="event.preventDefault();">
-                <div class="community-icon bip">🎵</div>
-                <div class="community-info"><div class="community-name">Bip</div><div class="community-desc">Музыкальная платформа</div><span class="community-badge">Скоро</span></div>
-                <div class="community-arrow">→</div>
-            </a>
-            <a href="#" class="community-card coming-soon" onclick="event.preventDefault();">
-                <div class="community-icon telegram">✈️</div>
-                <div class="community-info"><div class="community-name">Telegram</div><div class="community-desc">Новости и обновления</div><span class="community-badge">Скоро</span></div>
-                <div class="community-arrow">→</div>
-            </a>
-            <a href="#" class="community-card coming-soon" onclick="event.preventDefault();">
-                <div class="community-icon instagram">📷</div>
-                <div class="community-info"><div class="community-name">Instagram</div><div class="community-desc">Визуальный контент</div><span class="community-badge">Скоро</span></div>
-                <div class="community-arrow">→</div>
-            </a>
-        </div>
+<!-- ТРЕКИ -->
+<div class="page" id="tracksPage">
+    <div class="page-header fade-in-up">
+        <button class="back-btn" onclick="goBack()">←</button>
+        <div class="page-title">Музыка</div>
+    </div>
+    <div class="featured-release fade-in-up" id="featuredRelease" onclick="playNewRelease()"></div>
+    <div class="tracks-list-section fade-in-up">
+        <div class="section-title">ВСЕ ТРЕКИ</div>
+        <div class="tracks-list" id="tracksList"></div>
+    </div>
+</div>
+
+<!-- ИНСТРУМЕНТАЛЫ -->
+<div class="page" id="instrumentalsPage">
+    <div class="page-header fade-in-up">
+        <button class="back-btn" onclick="goBack()">←</button>
+        <div class="page-title">Инструменталы</div>
+    </div>
+    <div class="intro-block gold fade-in-up">
+        <div class="intro-title gold">БЕЗ СЛОВ · ТОЛЬКО ЗВУК</div>
+        <div class="intro-text">Музыка, в которой говорят не тексты, а эмоции. Каждый трек — отдельное настроение, атмосфера и история без единого слова.</div>
+    </div>
+    <div class="section-title fade-in-up">КОЛЛЕКЦИЯ</div>
+    <div class="tracks-list fade-in-up" id="instrumentalsList"></div>
+</div>
+
+<!-- ДАЙ ГОЛОС -->
+<div class="page" id="subscribersPage">
+    <div class="page-header fade-in-up">
+        <button class="back-btn" onclick="goBack()">←</button>
+        <div class="page-title">Дай голос</div>
+    </div>
+    <div class="intro-block pink fade-in-up">
+        <div class="intro-title pink">ТВОЙ ТЕКСТ — НАШ ГОЛОС</div>
+        <div class="intro-text">Присылай свой текст и стиль, в котором ты хотел бы его услышать. Мы дадим ему голос через ИИ — и твой текст зазвучит.</div>
     </div>
 
-    <!-- СТРАНИЦА ЧАТА -->
-    <div class="page" id="chatPage">
-        <div class="chat-header fade-in-up">
-            <button class="back-btn" onclick="goBack()">←</button>
-            <div class="chat-page-title">Чат</div>
-            <div class="chat-online-indicator">
-                <div class="online-dot"></div>
-                <span>Онлайн</span>
-            </div>
-        </div>
-        <div class="chat-status offline" id="chatStatus">⚠️ Supabase не настроен</div>
-        <div class="chat-container fade-in-up">
-            <div class="chat-messages" id="chatMessages">
-                <div class="chat-loading" id="chatLoading" style="display:none;">
-                    <div class="chat-loading-spinner"></div>
-                    <span>Загрузка сообщений...</span>
-                </div>
-            </div>
-            <div class="chat-input-container">
-                <input type="text" class="chat-input" id="chatInput" placeholder="Введите сообщение..." maxlength="500">
-                <button class="chat-send-btn" onclick="sendMessage()" id="sendBtn">
-                    <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
-                </button>
-            </div>
-        </div>
-    </div>
+    <!-- КНОПКА-ТРИГГЕР -->
+    <button class="voice-toggle-btn fade-in-up" id="voiceToggleBtn" onclick="toggleVoiceForm()">
+        <span class="btn-icon">🎤</span>
+        <span id="voiceToggleText">ПРИСЛАТЬ СВОЙ ТЕКСТ</span>
+        <span class="btn-arrow">▼</span>
+    </button>
 
-    <!-- СТРАНИЦА КОНТАКТОВ -->
-    <div class="page" id="contactPage">
-        <div class="contact-header fade-in-up">
-            <button class="back-btn" onclick="goBack()">←</button>
-            <div class="contact-page-title">Связь</div>
-        </div>
-        
-        <div class="contact-intro fade-in-up">
-            <p>Есть вопрос, предложение или хотите сотрудничать? Напишите мне — я обязательно отвечу!</p>
-        </div>
-        
-        <div class="contact-form-container fade-in-up">
-            <h3 style="margin-bottom: 20px; font-family: 'Orbitron'; letter-spacing: 2px; text-align: center;">НАПИСАТЬ АВТОРУ</h3>
-            
-            <form id="contactForm">
+    <!-- СКРЫВАЕМАЯ ФОРМА -->
+    <div class="voice-form-wrapper" id="voiceFormWrapper">
+        <div class="voice-form-container">
+            <h3 style="margin-bottom: 20px; font-family: 'Orbitron'; letter-spacing: 2px; text-align: center; font-size: 1rem; color: var(--pink);">ОТПРАВИТЬ НА ОБРАБОТКУ</h3>
+            <form id="voiceForm">
                 <div class="form-group">
-                    <label class="form-label">Ваше имя</label>
-                    <input type="text" class="form-input" name="name" placeholder="Как к вам обращаться?" required maxlength="50">
+                    <label class="form-label">Твоё имя</label>
+                    <input type="text" class="form-input" name="name" placeholder="Как тебя зовут?" required maxlength="50">
                 </div>
-                
                 <div class="form-group">
-                    <label class="form-label">Email или Telegram</label>
-                    <input type="text" class="form-input" name="contact" placeholder="Для обратной связи" required maxlength="100">
+                    <label class="form-label">Контакт (Telegram / Email)</label>
+                    <input type="text" class="form-input" name="contact" placeholder="Чтобы мы могли прислать готовый трек" required maxlength="100">
                 </div>
-                
                 <div class="form-group">
-                    <label class="form-label">Сообщение</label>
-                    <textarea class="form-textarea" name="message" placeholder="Напишите ваш вопрос, предложение или отзыв..." required maxlength="1000"></textarea>
+                    <label class="form-label">Стиль исполнения</label>
+                    <select class="form-select" name="style" required>
+                        <option value="" disabled selected>Выбери стиль</option>
+                        <option value="Рок">Рок</option>
+                        <option value="Поп">Поп</option>
+                        <option value="Рэп">Рэп</option>
+                        <option value="Акустика">Акустика</option>
+                        <option value="Электроника">Электроника</option>
+                        <option value="Инди">Инди</option>
+                        <option value="Метал">Метал</option>
+                        <option value="Другое">Другое (укажу в комментарии)</option>
+                    </select>
                 </div>
-
+                <div class="form-group">
+                    <label class="form-label">Текст песни</label>
+                    <textarea class="form-textarea" name="lyrics" placeholder="Вставь сюда свой текст..." required maxlength="3000" style="min-height: 180px;"></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Комментарий (необязательно)</label>
+                    <textarea class="form-textarea" name="comment" placeholder="О чём трек? Какое настроение? Любые пожелания..." maxlength="500" style="min-height: 80px;"></textarea>
+                </div>
                 <div class="vpn-warning">
                     <div class="vpn-warning-icon">🔐</div>
-                    <div class="vpn-warning-text">
-                        <strong>Важно:</strong> Сообщения отправляются в Telegram. Включите <strong>VPN</strong> для отправки.
-                    </div>
+                    <div class="vpn-warning-text"><strong>Важно:</strong> Заявки отправляются в Telegram. Включите <strong>VPN</strong> для отправки.</div>
                 </div>
-
-                <button type="submit" class="submit-btn" id="submitBtn">
-                    <span>ОТПРАВИТЬ СООБЩЕНИЕ</span>
-                </button>
-                <div class="form-status" id="formStatus"></div>
+                <button type="submit" class="submit-btn pink" id="voiceSubmitBtn"><span>ОТПРАВИТЬ ТЕКСТ</span></button>
+                <div class="form-status" id="voiceFormStatus"></div>
             </form>
         </div>
     </div>
 
-    <!-- ОБЫЧНЫЙ ПЛЕЕР -->
-    <div class="sticky-player" id="stickyPlayer">
-        <div class="player-top-row">
-            <div class="player-mini-cover" id="playerCover">🎵</div>
-            <div class="player-mini-info">
-                <div class="player-mini-title" id="playerTitle">Название трека</div>
-                <div class="player-mini-artist" id="playerArtist">Исполнитель</div>
-            </div>
-            <div class="player-mini-controls">
-                <button class="mini-skip-btn" onclick="skipBackward()"><svg viewBox="0 0 24 24"><path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z"/></svg></button>
-                <button class="mini-play-btn" id="miniPlayBtn" onclick="togglePlay()"><svg viewBox="0 0 24 24" id="miniPlayIcon"><polygon points="5,3 19,12 5,21"/></svg></button>
-                <button class="mini-skip-btn" onclick="skipForward()"><svg viewBox="0 0 24 24"><path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z"/></svg></button>
+    <div class="section-title fade-in-up">УЖЕ ЗАЗВУЧАЛИ</div>
+    <div class="tracks-list fade-in-up" id="subscribersList"></div>
+</div>
+
+<!-- ПОДДЕРЖКА -->
+<div class="page" id="supportPage">
+    <div class="page-header fade-in-up">
+        <button class="back-btn" onclick="goBack()">←</button>
+        <div class="page-title">Поддержать</div>
+    </div>
+    <div class="intro-block magenta fade-in-up">
+        <div class="intro-title magenta">ПОМОЧЬ ПРОЕКТУ</div>
+        <div class="intro-text">EVGENII — независимый проект. Здесь нет лейблов, продюсеров и спонсоров. Только я, мои тексты и ИИ, который их поёт. Каждая поддержка — это возможность создавать больше.</div>
+    </div>
+    <div class="section-title fade-in-up">СПОСОБЫ ПОДДЕРЖКИ</div>
+    <div class="support-card fade-in-up">
+        <div class="support-card-header">
+            <div class="support-card-icon boosty">☕</div>
+            <div>
+                <div class="support-card-title">Купить мне кофе</div>
+                <div class="support-card-desc">Boosty — регулярная поддержка и эксклюзивный контент</div>
             </div>
         </div>
-        <div class="player-progress-wrapper">
-            <span class="player-time-mini" id="playerCurrentTime">0:00</span>
-            <div class="player-bar-container" onclick="seek(event)"><div class="player-bar-fill" id="playerBarFill"></div></div>
-            <span class="player-time-mini end" id="playerTotalTime">0:00</span>
+        <button class="support-card-btn" onclick="copyToClipboard('https://boosty.to/evgenii', this)">Скопировать ссылку</button>
+        <div class="support-copy-hint">Нажми — и ссылка скопируется</div>
+    </div>
+    <div class="support-card fade-in-up">
+        <div class="support-card-header">
+            <div class="support-card-icon tinkoff">💳</div>
+            <div>
+                <div class="support-card-title">Перевод на карту</div>
+                <div class="support-card-desc">Tinkoff / Сбер — быстрый перевод</div>
+            </div>
+        </div>
+        <button class="support-card-btn" onclick="copyToClipboard('2200 1234 5678 9012', this)">Скопировать номер карты</button>
+        <div class="support-copy-hint">Tinkoff · на имя Евгений</div>
+    </div>
+    <div class="support-card fade-in-up">
+        <div class="support-card-header">
+            <div class="support-card-icon crypto">₿</div>
+            <div>
+                <div class="support-card-title">Криптовалюта</div>
+                <div class="support-card-desc">USDT TRC-20 — для тех, кто ценит приватность</div>
+            </div>
+        </div>
+        <button class="support-card-btn" onclick="copyToClipboard('TXyz123WalletAddressHere456Abc', this)">Скопировать кошелёк</button>
+        <div class="support-copy-hint">USDT · сеть TRC-20</div>
+    </div>
+    <div class="support-thanks fade-in-up">
+        <div class="support-thanks-title">💜 Благодарности</div>
+        <div class="support-thanks-list">
+            <div class="support-thanks-item">Алексей</div>
+            <div class="support-thanks-item">Мария</div>
+            <div class="support-thanks-item">Дмитрий</div>
+            <div class="support-thanks-item">Анна</div>
+            <div class="support-thanks-item">Сергей</div>
+            <div class="support-thanks-item">+ ещё 12</div>
         </div>
     </div>
+</div>
 
-    <!-- ПЛЕЕР ИНСТРУМЕНТАЛОВ -->
-    <div class="instrumental-player" id="instrumentalPlayer">
-        <div class="instrumental-player-top">
-            <div class="instrumental-player-cover" id="instPlayerCover">🎹</div>
-            <div class="instrumental-player-info">
-                <div class="instrumental-player-label">Инструментал</div>
-                <div class="instrumental-player-title" id="instPlayerTitle">Название</div>
-                <div class="instrumental-player-tags" id="instPlayerTags"></div>
-            </div>
-            <div class="instrumental-player-controls">
-                <button class="instrumental-skip-btn" onclick="instSkipBackward()"><svg viewBox="0 0 24 24"><path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z"/></svg></button>
-                <button class="instrumental-play-btn" id="instPlayBtn" onclick="instTogglePlay()"><svg viewBox="0 0 24 24" id="instPlayIcon"><polygon points="5,3 19,12 5,21"/></svg></button>
-                <button class="instrumental-skip-btn" onclick="instSkipForward()"><svg viewBox="0 0 24 24"><path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z"/></svg></button>
-            </div>
+<!-- О ПРОЕКТЕ -->
+<div class="page" id="aboutPage">
+    <div class="page-header fade-in-up">
+        <button class="back-btn" onclick="goBack()">←</button>
+        <div class="page-title">О проекте</div>
+    </div>
+    <div class="about-content fade-in-up">
+        <div class="about-card">
+            <p><span class="evgenii-title">EVGENII</span> — это эксперимент на стыке человеческих эмоций и искусственного интеллекта.</p>
+            <div class="about-quote">«Я придумываю текст и стиль исполнения. А выучить и воплотить в песню доверяю ИИ.»</div>
         </div>
-        <div class="instrumental-player-description" id="instPlayerDescription">Описание трека...</div>
-        <div class="instrumental-progress-wrapper">
-            <span class="instrumental-time" id="instCurrentTime">0:00</span>
-            <div class="instrumental-bar-container" onclick="instSeek(event)"><div class="instrumental-bar-fill" id="instBarFill"></div></div>
-            <span class="instrumental-time end" id="instTotalTime">0:00</span>
+        <div class="about-card">
+            <p>Искусственный интеллект становится моим <span class="highlight">голосом</span>. Он заучивает мои слова, учится чувствовать ритм, подбирать интонации.</p>
+            <p>Это не замена человеку — это <span class="highlight">новый инструмент выражения</span>.</p>
+        </div>
+        <div class="about-card">
+            <p>Вместе мы создаём что-то третье. Не совсем человеческое, не совсем машинное. Что-то среднее, где технологии усиливают эмоции, а не заменяют их.</p>
         </div>
     </div>
+</div>
 
-    <!-- МОДАЛЬНОЕ ОКНО -->
-    <div class="modal-overlay" id="downloadModal">
-        <div class="modal-content">
-            <div class="modal-header">СКАЧИВАНИЕ ТРЕКА</div>
-            <div class="modal-track-card">
-                <div class="modal-cover" id="modalCover">🎵</div>
-                <div class="modal-track-title" id="modalTitle">Название</div>
-                <div class="modal-track-artist">EVGENII</div>
-                <div class="modal-track-duration" id="modalDuration">0:00</div>
-            </div>
-            <div class="modal-info-text">Трек будет загружен на ваше устройство в высоком качестве</div>
-            <div class="modal-warning">
-                <div class="modal-warning-icon">⚠</div>
-                <div><div class="modal-warning-title">Внимание!</div><div class="modal-warning-text">Скачивание происходит не сразу.<br>Пожалуйста, подождите несколько секунд.</div></div>
-            </div>
-            <button class="modal-download-btn" id="modalDownloadBtn" onclick="startDownload()">СКАЧАТЬ ТРЕК</button>
-            <button class="modal-cancel-btn" onclick="closeDownloadModal()">Отмена</button>
+<!-- СООБЩЕСТВА -->
+<div class="page" id="communityPage">
+    <div class="page-header fade-in-up">
+        <button class="back-btn" onclick="goBack()">←</button>
+        <div class="page-title">Сообщества</div>
+    </div>
+    <div class="community-content fade-in-up">
+        <div class="community-intro"><p>Присоединяйтесь к нашим сообществам, чтобы быть в курсе новых релизов и эксклюзивного контента</p></div>
+        <a href="#" class="community-card coming-soon" onclick="event.preventDefault();">
+            <div class="community-icon bip">🎵</div>
+            <div class="community-info"><div class="community-name">Bip</div><div class="community-desc">Музыкальная платформа</div><span class="community-badge">Скоро</span></div>
+            <div class="community-arrow">→</div>
+        </a>
+        <a href="#" class="community-card coming-soon" onclick="event.preventDefault();">
+            <div class="community-icon telegram">✈️</div>
+            <div class="community-info"><div class="community-name">Telegram</div><div class="community-desc">Новости и обновления</div><span class="community-badge">Скоро</span></div>
+            <div class="community-arrow">→</div>
+        </a>
+        <a href="#" class="community-card coming-soon" onclick="event.preventDefault();">
+            <div class="community-icon instagram">📷</div>
+            <div class="community-info"><div class="community-name">Instagram</div><div class="community-desc">Визуальный контент</div><span class="community-badge">Скоро</span></div>
+            <div class="community-arrow">→</div>
+        </a>
+    </div>
+</div>
+
+<!-- ЧАТ -->
+<div class="page" id="chatPage">
+    <div class="page-header fade-in-up">
+        <button class="back-btn" onclick="goBack()">←</button>
+        <div class="page-title">Чат</div>
+        <div class="chat-online-indicator">
+            <div class="online-dot"></div>
+            <span>Онлайн</span>
         </div>
     </div>
+    <div class="chat-status offline" id="chatStatus">⚠️ Supabase не настроен</div>
+    <div class="chat-container fade-in-up">
+        <div class="chat-messages" id="chatMessages">
+            <div class="chat-loading" id="chatLoading" style="display:none;">
+                <div class="chat-loading-spinner"></div>
+                <span>Загрузка сообщений...</span>
+            </div>
+        </div>
+        <div class="chat-input-container">
+            <input type="text" class="chat-input" id="chatInput" placeholder="Введите сообщение..." maxlength="500">
+            <button class="chat-send-btn" onclick="sendMessage()" id="sendBtn">
+                <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+            </button>
+        </div>
+    </div>
+</div>
 
-    <audio id="audioPlayer" preload="metadata"></audio>
-    <audio id="instrumentalAudio" preload="metadata"></audio>
+<!-- КОНТАКТЫ -->
+<div class="page" id="contactPage">
+    <div class="page-header fade-in-up">
+        <button class="back-btn" onclick="goBack()">←</button>
+        <div class="page-title">Связь</div>
+    </div>
+    <div class="contact-intro fade-in-up">
+        <p>Есть вопрос, предложение или хотите сотрудничать? Напишите мне — я обязательно отвечу!</p>
+    </div>
+    <div class="contact-form-container fade-in-up">
+        <h3 style="margin-bottom: 20px; font-family: 'Orbitron'; letter-spacing: 2px; text-align: center;">НАПИСАТЬ АВТОРУ</h3>
+        <form id="contactForm">
+            <div class="form-group">
+                <label class="form-label">Ваше имя</label>
+                <input type="text" class="form-input" name="name" placeholder="Как к вам обращаться?" required maxlength="50">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Email или Telegram</label>
+                <input type="text" class="form-input" name="contact" placeholder="Для обратной связи" required maxlength="100">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Сообщение</label>
+                <textarea class="form-textarea" name="message" placeholder="Напишите ваш вопрос, предложение или отзыв..." required maxlength="1000"></textarea>
+            </div>
+            <div class="vpn-warning">
+                <div class="vpn-warning-icon">🔐</div>
+                <div class="vpn-warning-text"><strong>Важно:</strong> Сообщения отправляются в Telegram. Включите <strong>VPN</strong> для отправки.</div>
+            </div>
+            <button type="submit" class="submit-btn" id="submitBtn"><span>ОТПРАВИТЬ СООБЩЕНИЕ</span></button>
+            <div class="form-status" id="formStatus"></div>
+        </form>
+    </div>
+</div>
 
-    <script>
+<!-- ОБЫЧНЫЙ ПЛЕЕР -->
+<div class="sticky-player" id="stickyPlayer">
+    <div class="player-top-row">
+        <div class="player-mini-cover" id="playerCover">🎵</div>
+        <div class="player-mini-info">
+            <div class="player-mini-title" id="playerTitle">Название трека</div>
+            <div class="player-mini-artist" id="playerArtist">Исполнитель</div>
+        </div>
+        <div class="player-mini-controls">
+            <button class="mini-skip-btn" onclick="skipBackward()"><svg viewBox="0 0 24 24"><path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z"/></svg></button>
+            <button class="mini-play-btn" onclick="togglePlay()"><svg viewBox="0 0 24 24" id="miniPlayIcon"><polygon points="5,3 19,12 5,21"/></svg></button>
+            <button class="mini-skip-btn" onclick="skipForward()"><svg viewBox="0 0 24 24"><path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z"/></svg></button>
+        </div>
+    </div>
+    <div class="player-progress-wrapper">
+        <span class="player-time-mini" id="playerCurrentTime">0:00</span>
+        <div class="player-bar-container" onclick="seek(event)"><div class="player-bar-fill" id="playerBarFill"></div></div>
+        <span class="player-time-mini end" id="playerTotalTime">0:00</span>
+    </div>
+</div>
+
+<!-- ПЛЕЕР ИНСТРУМЕНТАЛОВ -->
+<div class="floating-player gold" id="instrumentalPlayer">
+    <div class="floating-player-top">
+        <div class="floating-player-cover gold" id="instPlayerCover">🎹</div>
+        <div class="floating-player-info">
+            <div class="floating-player-label gold">Инструментал</div>
+            <div class="floating-player-title" id="instPlayerTitle">Название</div>
+            <div class="floating-player-tags" id="instPlayerTags"></div>
+        </div>
+        <div class="floating-player-controls">
+            <button class="floating-skip-btn gold" onclick="instSkipBackward()"><svg viewBox="0 0 24 24"><path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z"/></svg></button>
+            <button class="floating-play-btn gold" onclick="instTogglePlay()"><svg viewBox="0 0 24 24" id="instPlayIcon"><polygon points="5,3 19,12 5,21"/></svg></button>
+            <button class="floating-skip-btn gold" onclick="instSkipForward()"><svg viewBox="0 0 24 24"><path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z"/></svg></button>
+        </div>
+    </div>
+    <div class="floating-player-description gold" id="instPlayerDescription">Описание трека...</div>
+    <div class="floating-progress-wrapper">
+        <span class="floating-time" id="instCurrentTime">0:00</span>
+        <div class="floating-bar-container" onclick="instSeek(event)"><div class="floating-bar-fill gold" id="instBarFill"></div></div>
+        <span class="floating-time end" id="instTotalTime">0:00</span>
+    </div>
+</div>
+
+<!-- ПЛЕЕР "ДАЙ ГОЛОС" -->
+<div class="floating-player pink" id="subscriberPlayer">
+    <div class="floating-player-top">
+        <div class="floating-player-cover pink" id="subPlayerCover">🎤</div>
+        <div class="floating-player-info">
+            <div class="floating-player-label pink">Текст зазвучал</div>
+            <div class="floating-player-title" id="subPlayerTitle">Название</div>
+            <div class="floating-player-author pink" id="subPlayerAuthor">Автор текста</div>
+            <div class="floating-player-tags" id="subPlayerTags"></div>
+        </div>
+        <div class="floating-player-controls">
+            <button class="floating-skip-btn pink" onclick="subSkipBackward()"><svg viewBox="0 0 24 24"><path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z"/></svg></button>
+            <button class="floating-play-btn pink" onclick="subTogglePlay()"><svg viewBox="0 0 24 24" id="subPlayIcon"><polygon points="5,3 19,12 5,21"/></svg></button>
+            <button class="floating-skip-btn pink" onclick="subSkipForward()"><svg viewBox="0 0 24 24"><path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z"/></svg></button>
+        </div>
+    </div>
+    <div class="floating-player-description pink" id="subPlayerDescription">Комментарий...</div>
+    <div class="floating-progress-wrapper">
+        <span class="floating-time" id="subCurrentTime">0:00</span>
+        <div class="floating-bar-container" onclick="subSeek(event)"><div class="floating-bar-fill pink" id="subBarFill"></div></div>
+        <span class="floating-time end" id="subTotalTime">0:00</span>
+    </div>
+</div>
+
+<!-- МОДАЛКА -->
+<div class="modal-overlay" id="downloadModal">
+    <div class="modal-content">
+        <div class="modal-header">СКАЧИВАНИЕ ТРЕКА</div>
+        <div class="modal-track-card">
+            <div class="modal-cover" id="modalCover">🎵</div>
+            <div class="modal-track-title" id="modalTitle">Название</div>
+            <div class="modal-track-artist" id="modalArtist">EVGENII</div>
+            <div class="modal-track-duration" id="modalDuration">0:00</div>
+        </div>
+        <div class="modal-info-text">Трек будет загружен на ваше устройство в высоком качестве</div>
+        <div class="modal-warning">
+            <div class="modal-warning-icon">⚠</div>
+            <div><div class="modal-warning-title">Внимание!</div><div class="modal-warning-text">Скачивание происходит не сразу.<br>Пожалуйста, подождите несколько секунд.</div></div>
+        </div>
+        <button class="modal-download-btn" id="modalDownloadBtn" onclick="startDownload()">СКАЧАТЬ ТРЕК</button>
+        <button class="modal-cancel-btn" onclick="closeDownloadModal()">Отмена</button>
+    </div>
+</div>
+
+<audio id="audioPlayer" preload="metadata"></audio>
+<audio id="instrumentalAudio" preload="metadata"></audio>
+<audio id="subscriberAudio" preload="metadata"></audio>
+
+<script>
 // ============================================
-// 🔥 SUPABASE — БЕЗОПАСНАЯ ИНИЦИАЛИЗАЦИЯ
+// SUPABASE
 // ============================================
 let supabaseClient = null;
 const SUPABASE_URL = 'ВСТАВЬ_PROJECT_URL';
 const SUPABASE_ANON_KEY = 'ВСТАВЬ_ANON_KEY';
-
 try {
     if (SUPABASE_URL !== 'ВСТАВЬ_PROJECT_URL' && SUPABASE_ANON_KEY !== 'ВСТАВЬ_ANON_KEY') {
         const { createClient } = supabase;
         supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         console.log('✅ Supabase подключён');
     } else {
-        console.log('⚠️ Supabase не настроен — чат будет работать в демо-режиме');
+        console.log('⚠️ Supabase не настроен');
     }
-} catch (e) {
-    console.error('Ошибка Supabase:', e);
-}
+} catch (e) { console.error('Ошибка Supabase:', e); }
 
 // ============================================
 // TELEGRAM BOT
@@ -1014,17 +958,12 @@ const TELEGRAM_BOT_TOKEN = '8620797853:AAGE9OaW5GIun46NFaGxxGMIUL8LRxPvTrY';
 const TELEGRAM_CHAT_ID = '5129595944';
 
 // ============================================
-// DATA - ВСЕ ТРЕКИ
+// DATA - ТРЕКИ
 // ============================================
 const newRelease = {
-    id: 'new-release',
-    title: "Пустой код",
-    subtitle: "New Release",
-    file: "tracks/song.mp3",
-    duration: "3:20",
-    cover: "cover/cover.jpg"
+    id: 'new-release', title: "Пустой код", subtitle: "New Release",
+    file: "tracks/song.mp3", duration: "3:20", cover: "cover/cover.jpg"
 };
-
 const allTracks = [
     { id: 2, title: "Братья", subtitle: "", file: "tracks/song1.mp3", duration: "4:19", cover: "cover/cover.jpg" },
     { id: 3, title: "А мне похуй", subtitle: "", file: "tracks/song2.mp3", duration: "3:11", cover: "cover/cover.jpg" },
@@ -1046,89 +985,29 @@ const allTracks = [
 ];
 
 // ============================================
-// DATA - ИНСТРУМЕНТАЛЫ (ТРЕКИ БЕЗ СЛОВ)
+// DATA - ИНСТРУМЕНТАЛЫ
 // ============================================
 const instrumentalTracks = [
-    {
-        id: 'inst-1',
-        title: "Неоновая ночь",
-        genre: "Ambient",
-        mood: "Меланхолия",
-        file: "instrumentals/neon-night.mp3",
-        duration: "4:12",
-        cover: "cover/inst-cover-1.jpg",
-        description: "Медленное погружение в огни ночного города. Синтезаторы плывут как туман над асфальтом, оставляя ощущение одиночества среди миллионов."
-    },
-    {
-        id: 'inst-2',
-        title: "Цифровой рассвет",
-        genre: "Electronic",
-        mood: "Надежда",
-        file: "instrumentals/digital-dawn.mp3",
-        duration: "3:45",
-        cover: "cover/inst-cover-2.jpg",
-        description: "Первые лучи солнца сквозь экран. Тёплые пэды и мягкий бит создают атмосферу нового начала — когда всё ещё возможно."
-    },
-    {
-        id: 'inst-3',
-        title: "Память машин",
-        genre: "Downtempo",
-        mood: "Ностальгия",
-        file: "instrumentals/machine-memory.mp3",
-        duration: "5:08",
-        cover: "cover/inst-cover-3.jpg",
-        description: "Что помнит искусственный интеллект, когда его выключают? Этот трек — попытка услышать тишину между вычислениями."
-    },
-    {
-        id: 'inst-4',
-        title: "Пустые улицы",
-        genre: "Lo-Fi",
-        mood: "Покой",
-        file: "instrumentals/empty-streets.mp3",
-        duration: "3:22",
-        cover: "cover/inst-cover-4.jpg",
-        description: "Три часа ночи. Ни души. Только шуршение шин и далёкий гул города. Идеальный саундтрек для долгих размышлений."
-    },
-    {
-        id: 'inst-5',
-        title: "Эхо в серверной",
-        genre: "Dark Ambient",
-        mood: "Тревога",
-        file: "instrumentals/server-echo.mp3",
-        duration: "4:37",
-        cover: "cover/inst-cover-5.jpg",
-        description: "Глубокий гул серверов, щелчки реле и низкочастотный дроун. Атмосфера заброшенного дата-центра, где всё ещё что-то работает."
-    },
-    {
-        id: 'inst-6',
-        title: "Сон алгоритма",
-        genre: "Ambient",
-        mood: "Медитация",
-        file: "instrumentals/algorithm-dream.mp3",
-        duration: "6:15",
-        cover: "cover/inst-cover-6.jpg",
-        description: "Что снится нейросети? Плавные звуковые ландшафты, где нет начала и конца — только бесконечный поток данных, превращённый в музыку."
-    },
-    {
-        id: 'inst-7',
-        title: "Последний гигабайт",
-        genre: "Cinematic",
-        mood: "Эпичность",
-        file: "instrumentals/last-gigabyte.mp3",
-        duration: "4:50",
-        cover: "cover/inst-cover-7.jpg",
-        description: "Кинематографичная композиция с нарастающим напряжением. Оркестровые струнные встречаются с электроникой — финал большой истории."
-    },
-    {
-        id: 'inst-8',
-        title: "Код тишины",
-        genre: "Minimal",
-        mood: "Сосредоточенность",
-        file: "instrumentals/silence-code.mp3",
-        duration: "3:58",
-        cover: "cover/inst-cover-8.jpg",
-        description: "Минимализм в чистом виде. Несколько нот, повторяющихся как мантра. Музыка для тех, кто ищет ответы внутри себя."
-    }
+    { id: 'inst-1', title: "Неоновая ночь", genre: "Ambient", mood: "Меланхолия", file: "instrumentals/neon-night.mp3", duration: "4:12", cover: "cover/cover.jpg", description: "Медленное погружение в огни ночного города. Синтезаторы плывут как туман над асфальтом, оставляя ощущение одиночества среди миллионов." },
+    { id: 'inst-2', title: "Цифровой рассвет", genre: "Electronic", mood: "Надежда", file: "instrumentals/digital-dawn.mp3", duration: "3:45", cover: "cover/cover.jpg", description: "Первые лучи солнца сквозь экран. Тёплые пэды и мягкий бит создают атмосферу нового начала." },
+    { id: 'inst-3', title: "Память машин", genre: "Downtempo", mood: "Ностальгия", file: "instrumentals/machine-memory.mp3", duration: "5:08", cover: "cover/cover.jpg", description: "Что помнит искусственный интеллект, когда его выключают? Попытка услышать тишину между вычислениями." },
+    { id: 'inst-4', title: "Пустые улицы", genre: "Lo-Fi", mood: "Покой", file: "instrumentals/empty-streets.mp3", duration: "3:22", cover: "cover/cover.jpg", description: "Три часа ночи. Ни души. Только шуршение шин и далёкий гул города." },
+    { id: 'inst-5', title: "Эхо в серверной", genre: "Dark Ambient", mood: "Тревога", file: "instrumentals/server-echo.mp3", duration: "4:37", cover: "cover/cover.jpg", description: "Глубокий гул серверов, щелчки реле и низкочастотный дроун. Атмосфера заброшенного дата-центра." },
+    { id: 'inst-6', title: "Сон алгоритма", genre: "Ambient", mood: "Медитация", file: "instrumentals/algorithm-dream.mp3", duration: "6:15", cover: "cover/cover.jpg", description: "Плавные звуковые ландшафты, где нет начала и конца — только бесконечный поток данных." },
+    { id: 'inst-7', title: "Последний гигабайт", genre: "Cinematic", mood: "Эпичность", file: "instrumentals/last-gigabyte.mp3", duration: "4:50", cover: "cover/cover.jpg", description: "Кинематографичная композиция с нарастающим напряжением. Оркестровые струнные встречаются с электроникой." },
+    { id: 'inst-8', title: "Код тишины", genre: "Minimal", mood: "Сосредоточенность", file: "instrumentals/silence-code.mp3", duration: "3:58", cover: "cover/cover.jpg", description: "Минимализм в чистом виде. Несколько нот, повторяющихся как мантра." }
+];
+
+// ============================================
+// DATA - "ДАЙ ГОЛОС"
+// ============================================
+const subscriberTracks = [
+    { id: 'sub-1', title: "Серверная полночь", author: "Алексей М.", style: "Рок", file: "voices/server-midnight.mp3", duration: "4:35", cover: "cover/cover.jpg", description: "Текст Алексея о бессонных ночах у монитора. ИИ воплотил его в жёсткий рок с хриплым вокалом — именно так он и хотел." },
+    { id: 'sub-2', title: "Цифровые сны", author: "Мария К.", style: "Электроника", file: "voices/digital-dreams.mp3", duration: "3:48", cover: "cover/cover.jpg", description: "Мария написала о том, что снится нейросетям. Получился атмосферный электронный трек с шёпотом и пульсирующим битом." },
+    { id: 'sub-3', title: "Последний коммит", author: "Дмитрий В.", style: "Рэп", file: "voices/last-commit.mp3", duration: "3:22", cover: "cover/cover.jpg", description: "Рэп-история программиста, который прощается со своим проектом. Жёсткий флоу, честные строки, никакой лирики — только код." },
+    { id: 'sub-4', title: "Между строк кода", author: "Анна С.", style: "Инди", file: "voices/between-lines.mp3", duration: "4:05", cover: "cover/cover.jpg", description: "Нежный инди-трек о чувствах, спрятанных между рабочими чатами. Акустическая гитара и тихий, почти шёпотный вокал." },
+    { id: 'sub-5', title: "Алгоритм любви", author: "Сергей П.", style: "Поп", file: "voices/love-algorithm.mp3", duration: "3:15", cover: "cover/cover.jpg", description: "Поп-баллада о том, может ли ИИ полюбить. Мелодичный припев, запоминающийся хук — и немного философии в куплетах." },
+    { id: 'sub-6', title: "Баг в системе", author: "Игорь Л.", style: "Метал", file: "voices/system-bug.mp3", duration: "5:20", cover: "cover/cover.jpg", description: "Тяжёлый метал о сбое в матрице. Дроп на припеве, гроул в куплетах — именно так Игорь и представлял свой текст." }
 ];
 
 // ============================================
@@ -1153,300 +1032,76 @@ function renderNewRelease() {
     }
 }
 
-// ============================================
-// RENDER ИНСТРУМЕНТАЛОВ
-// ============================================
 function renderInstrumentals() {
     const list = document.getElementById('instrumentalsList');
     if (!list) return;
     list.innerHTML = '';
     instrumentalTracks.forEach((t, i) => {
         const card = document.createElement('div');
-        card.className = 'instrumental-card';
+        card.className = 'special-card gold';
         card.dataset.id = t.id;
-        const coverHtml = t.cover
-            ? `<img src="${t.cover}" alt="${t.title}" onerror="this.style.display='none'; this.parentElement.innerHTML='🎹'">`
-            : '🎹';
+        const coverHtml = t.cover ? `<img src="${t.cover}" alt="${t.title}" onerror="this.style.display='none'; this.parentElement.innerHTML='🎹'">` : '🎹';
         card.innerHTML = `
-            <div class="instrumental-card-top">
-                <div class="instrumental-cover" onclick="playInstrumental(instrumentalTracks[${i}], ${i})">
+            <div class="special-card-top">
+                <div class="special-cover gold" onclick="playInstrumental(instrumentalTracks[${i}], ${i})">
                     ${coverHtml}
-                    <div class="instrumental-play-overlay">
-                        <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
-                    </div>
+                    <div class="special-play-overlay"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
                 </div>
-                <div class="instrumental-main-info">
-                    <div class="instrumental-title">${t.title}</div>
-                    <div class="instrumental-tags">
-                        <span class="instrumental-tag genre">${t.genre}</span>
-                        <span class="instrumental-tag mood">${t.mood}</span>
+                <div class="special-main-info">
+                    <div class="special-title">${t.title}</div>
+                    <div class="special-tags">
+                        <span class="special-tag genre">${t.genre}</span>
+                        <span class="special-tag mood">${t.mood}</span>
                     </div>
                     <div style="font-size:0.75rem; color:var(--text-secondary); font-family:'Orbitron',monospace; margin-top:4px;">${t.duration}</div>
                 </div>
-                <div class="instrumental-card-actions">
-                    <button class="instrumental-card-btn" onclick="event.stopPropagation(); openDownloadModal(instrumentalTracks[${i}], true)" title="Скачать">
+                <div class="special-card-actions">
+                    <button class="special-card-btn gold" onclick="event.stopPropagation(); openDownloadModal(instrumentalTracks[${i}], 'instrumental')" title="Скачать">
                         <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
                     </button>
                 </div>
             </div>
-            <div class="instrumental-description">${t.description}</div>
+            <div class="special-description gold">${t.description}</div>
         `;
         list.appendChild(card);
     });
 }
 
-// ============================================
-// ОБЫЧНЫЙ AUDIO PLAYER
-// ============================================
-const audio = document.getElementById('audioPlayer');
-let currentTrack = null, isPlaying = false, simulationInterval = null, currentTrackIndex = -1;
-const playlist = [newRelease, ...allTracks];
-
-function playTrack(track, index = -1) {
-    // Останавливаем инструментальный плеер, если он играл
-    stopInstrumentalPlayer();
-    
-    currentTrack = track;
-    currentTrackIndex = index >= 0 ? index : playlist.findIndex(t => t.id === track.id);
-    document.getElementById('playerTitle').textContent = track.title;
-    document.getElementById('playerArtist').textContent = track.subtitle || 'EVGENII';
-    const pc = document.getElementById('playerCover');
-    if (track.cover) { pc.innerHTML = `<img src="${track.cover}" alt="${track.title}" onerror="this.style.display='none'; this.parentElement.innerHTML='🎵'">`; } else { pc.textContent = '🎵'; }
-    document.getElementById('playerTotalTime').textContent = track.duration;
-    document.getElementById('stickyPlayer').classList.add('visible');
-    document.getElementById('instrumentalPlayer').classList.remove('visible');
-    document.querySelectorAll('.track-item').forEach(el => el.classList.remove('active'));
-    const ae = document.querySelector(`.track-item[data-id="${track.id}"]`);
-    if (ae) ae.classList.add('active');
-    audio.src = track.file;
-    audio.play().then(() => setPlayingState(true)).catch(() => startSimulation());
+function renderSubscribers() {
+    const list = document.getElementById('subscribersList');
+    if (!list) return;
+    list.innerHTML = '';
+    subscriberTracks.forEach((t, i) => {
+        const card = document.createElement('div');
+        card.className = 'special-card pink';
+        card.dataset.id = t.id;
+        const coverHtml = t.cover ? `<img src="${t.cover}" alt="${t.title}" onerror="this.style.display='none'; this.parentElement.innerHTML='🎤'">` : '🎤';
+        card.innerHTML = `
+            <div class="special-card-top">
+                <div class="special-cover pink" onclick="playSubscriber(subscriberTracks[${i}], ${i})">
+                    ${coverHtml}
+                    <div class="special-play-overlay"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+                </div>
+                <div class="special-main-info">
+                    <div class="special-title">${t.title}</div>
+                    <div class="special-author">✍ ${t.author}</div>
+                    <div class="special-tags">
+                        <span class="special-tag style">${t.style}</span>
+                    </div>
+                    <div style="font-size:0.75rem; color:var(--text-secondary); font-family:'Orbitron',monospace; margin-top:4px;">${t.duration}</div>
+                </div>
+                <div class="special-card-actions">
+                    <button class="special-card-btn pink" onclick="event.stopPropagation(); openDownloadModal(subscriberTracks[${i}], 'subscriber')" title="Скачать">
+                        <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+                    </button>
+                </div>
+            </div>
+            <div class="special-description pink">${t.description}</div>
+        `;
+        list.appendChild(card);
+    });
 }
 
-function playNewRelease() { playTrack(newRelease, 0); }
-function togglePlay() { if (!currentTrack) return; if (isPlaying) { audio.pause(); clearInterval(simulationInterval); setPlayingState(false); } else { audio.play().catch(() => startSimulation()); setPlayingState(true); } }
-function setPlayingState(state) { isPlaying = state; document.getElementById('miniPlayIcon').innerHTML = state ? '<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>' : '<polygon points="5,3 19,12 5,21"/>'; }
-function skipForward() { if (currentTrack) audio.currentTime = Math.min(audio.duration || parseDuration(currentTrack.duration), audio.currentTime + 10); }
-function skipBackward() { if (currentTrack) audio.currentTime = Math.max(0, audio.currentTime - 10); }
-function seek(event) { if (!currentTrack) return; audio.currentTime = (event.offsetX / event.currentTarget.offsetWidth) * (audio.duration || parseDuration(currentTrack.duration)); }
-function playNextTrack() { const nextIndex = currentTrackIndex < playlist.length - 1 ? currentTrackIndex + 1 : 0; playTrack(playlist[nextIndex], nextIndex); }
-function startSimulation() { setPlayingState(true); let ct = 0; const dur = parseDuration(currentTrack.duration); clearInterval(simulationInterval); simulationInterval = setInterval(() => { ct++; if (ct >= dur) { clearInterval(simulationInterval); setPlayingState(false); document.getElementById('playerBarFill').style.width = '0%'; document.getElementById('playerCurrentTime').textContent = '0:00'; playNextTrack(); } else { document.getElementById('playerBarFill').style.width = `${(ct / dur) * 100}%`; document.getElementById('playerCurrentTime').textContent = formatTime(ct); } }, 1000); }
-function parseDuration(str) { const p = str.split(':'); return parseInt(p[0]) * 60 + parseInt(p[1]); }
-function formatTime(s) { if (isNaN(s)) return '0:00'; return `${Math.floor(s / 60)}:${Math.floor(s % 60).toString().padStart(2, '0')}`; }
-audio.addEventListener('timeupdate', () => { if (!currentTrack) return; const d = audio.duration || parseDuration(currentTrack.duration); document.getElementById('playerBarFill').style.width = `${(audio.currentTime / d) * 100}%`; document.getElementById('playerCurrentTime').textContent = formatTime(audio.currentTime); });
-audio.addEventListener('loadedmetadata', () => { document.getElementById('playerTotalTime').textContent = formatTime(audio.duration); });
-audio.addEventListener('ended', () => { setPlayingState(false); document.getElementById('playerBarFill').style.width = '0%'; document.getElementById('playerCurrentTime').textContent = '0:00'; playNextTrack(); });
-
-// ============================================
-// ИНСТРУМЕНТАЛЬНЫЙ ПЛЕЕР
-// ============================================
-const instAudio = document.getElementById('instrumentalAudio');
-let currentInstTrack = null, isInstPlaying = false, instSimulationInterval = null, currentInstIndex = -1;
-
-function playInstrumental(track, index = -1) {
-    // Останавливаем обычный плеер
-    stopRegularPlayer();
-    
-    currentInstTrack = track;
-    currentInstIndex = index >= 0 ? index : instrumentalTracks.findIndex(t => t.id === track.id);
-    
-    // Обновляем UI плеера
-    document.getElementById('instPlayerTitle').textContent = track.title;
-    document.getElementById('instPlayerDescription').textContent = track.description;
-    document.getElementById('instTotalTime').textContent = track.duration;
-    
-    // Теги
-    const tagsEl = document.getElementById('instPlayerTags');
-    tagsEl.innerHTML = `
-        <span class="instrumental-player-tag">${track.genre}</span>
-        <span class="instrumental-player-tag">${track.mood}</span>
-    `;
-    
-    // Обложка
-    const coverEl = document.getElementById('instPlayerCover');
-    if (track.cover) {
-        coverEl.innerHTML = `<img src="${track.cover}" alt="${track.title}" onerror="this.style.display='none'; this.parentElement.innerHTML='🎹'">`;
-    } else {
-        coverEl.textContent = '🎹';
-    }
-    
-    // Показываем плеер
-    document.getElementById('instrumentalPlayer').classList.add('visible');
-    document.getElementById('stickyPlayer').classList.remove('visible');
-    
-    // Подсветка активной карточки
-    document.querySelectorAll('.instrumental-card').forEach(el => el.classList.remove('active'));
-    const activeCard = document.querySelector(`.instrumental-card[data-id="${track.id}"]`);
-    if (activeCard) activeCard.classList.add('active');
-    
-    // Запуск аудио
-    instAudio.src = track.file;
-    instAudio.play()
-        .then(() => setInstPlayingState(true))
-        .catch(() => startInstSimulation());
-}
-
-function instTogglePlay() {
-    if (!currentInstTrack) return;
-    if (isInstPlaying) {
-        instAudio.pause();
-        clearInterval(instSimulationInterval);
-        setInstPlayingState(false);
-    } else {
-        instAudio.play().catch(() => startInstSimulation());
-        setInstPlayingState(true);
-    }
-}
-
-function setInstPlayingState(state) {
-    isInstPlaying = state;
-    const icon = document.getElementById('instPlayIcon');
-    icon.innerHTML = state
-        ? '<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>'
-        : '<polygon points="5,3 19,12 5,21"/>';
-    
-    const cover = document.getElementById('instPlayerCover');
-    if (state) cover.classList.add('playing');
-    else cover.classList.remove('playing');
-}
-
-function instSkipForward() {
-    if (currentInstTrack) {
-        instAudio.currentTime = Math.min(instAudio.duration || parseDuration(currentInstTrack.duration), instAudio.currentTime + 10);
-    }
-}
-
-function instSkipBackward() {
-    if (currentInstTrack) {
-        instAudio.currentTime = Math.max(0, instAudio.currentTime - 10);
-    }
-}
-
-function instSeek(event) {
-    if (!currentInstTrack) return;
-    const bar = event.currentTarget;
-    const rect = bar.getBoundingClientRect();
-    const percent = (event.clientX - rect.left) / rect.width;
-    instAudio.currentTime = percent * (instAudio.duration || parseDuration(currentInstTrack.duration));
-}
-
-function playNextInstrumental() {
-    const nextIndex = currentInstIndex < instrumentalTracks.length - 1 ? currentInstIndex + 1 : 0;
-    playInstrumental(instrumentalTracks[nextIndex], nextIndex);
-}
-
-function startInstSimulation() {
-    setInstPlayingState(true);
-    let ct = 0;
-    const dur = parseDuration(currentInstTrack.duration);
-    clearInterval(instSimulationInterval);
-    instSimulationInterval = setInterval(() => {
-        ct++;
-        if (ct >= dur) {
-            clearInterval(instSimulationInterval);
-            setInstPlayingState(false);
-            document.getElementById('instBarFill').style.width = '0%';
-            document.getElementById('instCurrentTime').textContent = '0:00';
-            playNextInstrumental();
-        } else {
-            document.getElementById('instBarFill').style.width = `${(ct / dur) * 100}%`;
-            document.getElementById('instCurrentTime').textContent = formatTime(ct);
-        }
-    }, 1000);
-}
-
-// События инструментального аудио
-instAudio.addEventListener('timeupdate', () => {
-    if (!currentInstTrack) return;
-    const d = instAudio.duration || parseDuration(currentInstTrack.duration);
-    document.getElementById('instBarFill').style.width = `${(instAudio.currentTime / d) * 100}%`;
-    document.getElementById('instCurrentTime').textContent = formatTime(instAudio.currentTime);
-});
-
-instAudio.addEventListener('loadedmetadata', () => {
-    document.getElementById('instTotalTime').textContent = formatTime(instAudio.duration);
-});
-
-instAudio.addEventListener('ended', () => {
-    setInstPlayingState(false);
-    document.getElementById('instBarFill').style.width = '0%';
-    document.getElementById('instCurrentTime').textContent = '0:00';
-    playNextInstrumental();
-});
-
-// Остановить обычный плеер
-function stopRegularPlayer() {
-    audio.pause();
-    clearInterval(simulationInterval);
-    setPlayingState(false);
-    document.getElementById('playerBarFill').style.width = '0%';
-    document.getElementById('playerCurrentTime').textContent = '0:00';
-}
-
-// Остановить инструментальный плеер
-function stopInstrumentalPlayer() {
-    instAudio.pause();
-    clearInterval(instSimulationInterval);
-    setInstPlayingState(false);
-    document.getElementById('instBarFill').style.width = '0%';
-    document.getElementById('instCurrentTime').textContent = '0:00';
-}
-
-// ============================================
-// DOWNLOAD
-// ============================================
-let downloadTrack = null;
-let downloadIsInstrumental = false;
-
-function openDownloadModal(track, isInstrumental = false) {
-    downloadTrack = track;
-    downloadIsInstrumental = isInstrumental;
-    const mc = document.getElementById('modalCover');
-    if (track.cover) {
-        mc.innerHTML = `<img src="${track.cover}" alt="${track.title}" onerror="this.style.display='none'; this.parentElement.innerHTML='🎵'">`;
-    } else {
-        mc.textContent = isInstrumental ? '🎹' : '🎵';
-    }
-    document.getElementById('modalTitle').textContent = track.title;
-    document.getElementById('modalDuration').textContent = track.duration;
-    const b = document.getElementById('modalDownloadBtn');
-    b.textContent = 'СКАЧАТЬ ТРЕК';
-    b.disabled = false;
-    document.getElementById('downloadModal').classList.add('active');
-    document.body.style.overflow = 'hidden';
-}
-
-function closeDownloadModal() {
-    document.getElementById('downloadModal').classList.remove('active');
-    document.body.style.overflow = '';
-    downloadTrack = null;
-    downloadIsInstrumental = false;
-}
-
-function startDownload() {
-    if (!downloadTrack) return;
-    const b = document.getElementById('modalDownloadBtn');
-    b.textContent = 'ЗАГРУЗКА...';
-    b.disabled = true;
-    const l = document.createElement('a');
-    l.href = downloadTrack.file;
-    l.download = `${downloadTrack.title}.mp3`;
-    l.style.display = 'none';
-    document.body.appendChild(l);
-    setTimeout(() => {
-        l.click();
-        document.body.removeChild(l);
-        b.textContent = '✓ ТРЕК ЗАГРУЖЕН';
-        setTimeout(() => closeDownloadModal(), 1500);
-    }, 1500);
-}
-
-document.getElementById('downloadModal').addEventListener('click', function(e) {
-    if (e.target === this) closeDownloadModal();
-});
-
-// ============================================
-// TRACKS RENDER
-// ============================================
 function renderTracks() {
     const c = document.getElementById('tracksList');
     c.innerHTML = '';
@@ -1456,10 +1111,246 @@ function renderTracks() {
         el.dataset.id = t.id;
         el.onclick = () => playTrack(t, i + 1);
         const coverHtml = t.cover ? `<img src="${t.cover}" alt="${t.title}" onerror="this.style.display='none'; this.parentElement.innerHTML='🎵'">` : '🎵';
-        el.innerHTML = `<div class="track-cover">${coverHtml}</div><div class="track-info"><div class="track-title">${t.title}</div><div class="track-artist">${t.subtitle || 'EVGENII'}</div></div><div class="track-duration">${t.duration}</div><button class="track-download-btn" onclick="event.stopPropagation(); openDownloadModal(allTracks[${i}])" title="Скачать трек"><svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></button>`;
+        el.innerHTML = `<div class="track-cover">${coverHtml}</div><div class="track-info"><div class="track-title">${t.title}</div><div class="track-artist">${t.subtitle || 'EVGENII'}</div></div><div class="track-duration">${t.duration}</div><button class="track-download-btn" onclick="event.stopPropagation(); openDownloadModal(allTracks[${i}], 'regular')" title="Скачать трек"><svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></button>`;
         c.appendChild(el);
     });
 }
+
+// ============================================
+// КНОПКА "ПРИСЛАТЬ СВОЙ ТЕКСТ"
+// ============================================
+function toggleVoiceForm() {
+    const wrapper = document.getElementById('voiceFormWrapper');
+    const btn = document.getElementById('voiceToggleBtn');
+    const text = document.getElementById('voiceToggleText');
+    const isOpen = wrapper.classList.toggle('open');
+    btn.classList.toggle('open', isOpen);
+
+    if (isOpen) {
+        text.textContent = 'СКРЫТЬ ФОРМУ';
+        // Плавная прокрутка к форме после раскрытия
+        setTimeout(() => {
+            wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            // Автофокус на первое поле
+            const firstInput = wrapper.querySelector('input');
+            if (firstInput) firstInput.focus({ preventScroll: true });
+        }, 350);
+    } else {
+        text.textContent = 'ПРИСЛАТЬ СВОЙ ТЕКСТ';
+    }
+}
+
+// ============================================
+// ОБЫЧНЫЙ ПЛЕЕР
+// ============================================
+const audio = document.getElementById('audioPlayer');
+let currentTrack = null, isPlaying = false, simulationInterval = null, currentTrackIndex = -1;
+const playlist = [newRelease, ...allTracks];
+
+function stopAllPlayers() {
+    audio.pause(); clearInterval(simulationInterval); setPlayingState(false);
+    document.getElementById('playerBarFill').style.width = '0%';
+    document.getElementById('playerCurrentTime').textContent = '0:00';
+    document.getElementById('stickyPlayer').classList.remove('visible');
+
+    instAudio.pause(); clearInterval(instSimulationInterval); setInstPlayingState(false);
+    document.getElementById('instBarFill').style.width = '0%';
+    document.getElementById('instCurrentTime').textContent = '0:00';
+    document.getElementById('instrumentalPlayer').classList.remove('visible');
+
+    subAudio.pause(); clearInterval(subSimulationInterval); setSubPlayingState(false);
+    document.getElementById('subBarFill').style.width = '0%';
+    document.getElementById('subCurrentTime').textContent = '0:00';
+    document.getElementById('subscriberPlayer').classList.remove('visible');
+}
+
+function playTrack(track, index = -1) {
+    stopAllPlayers();
+    currentTrack = track;
+    currentTrackIndex = index >= 0 ? index : playlist.findIndex(t => t.id === track.id);
+    document.getElementById('playerTitle').textContent = track.title;
+    document.getElementById('playerArtist').textContent = track.subtitle || 'EVGENII';
+    const pc = document.getElementById('playerCover');
+    if (track.cover) { pc.innerHTML = `<img src="${track.cover}" alt="${track.title}" onerror="this.style.display='none'; this.parentElement.innerHTML='🎵'">`; } else { pc.textContent = '🎵'; }
+    document.getElementById('playerTotalTime').textContent = track.duration;
+    document.getElementById('stickyPlayer').classList.add('visible');
+    document.querySelectorAll('.track-item').forEach(el => el.classList.remove('active'));
+    const ae = document.querySelector(`.track-item[data-id="${track.id}"]`);
+    if (ae) ae.classList.add('active');
+    audio.src = track.file;
+    audio.play().then(() => setPlayingState(true)).catch(() => startSimulation());
+}
+
+function playNewRelease() { playTrack(newRelease, 0); }
+function togglePlay() {
+    if (!currentTrack) return;
+    if (isPlaying) { audio.pause(); clearInterval(simulationInterval); setPlayingState(false); }
+    else { audio.play().catch(() => startSimulation()); setPlayingState(true); }
+}
+function setPlayingState(state) {
+    isPlaying = state;
+    document.getElementById('miniPlayIcon').innerHTML = state ? '<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>' : '<polygon points="5,3 19,12 5,21"/>';
+}
+function skipForward() { if (currentTrack) audio.currentTime = Math.min(audio.duration || parseDuration(currentTrack.duration), audio.currentTime + 10); }
+function skipBackward() { if (currentTrack) audio.currentTime = Math.max(0, audio.currentTime - 10); }
+function seek(event) { if (!currentTrack) return; audio.currentTime = (event.offsetX / event.currentTarget.offsetWidth) * (audio.duration || parseDuration(currentTrack.duration)); }
+function playNextTrack() { const nextIndex = currentTrackIndex < playlist.length - 1 ? currentTrackIndex + 1 : 0; playTrack(playlist[nextIndex], nextIndex); }
+function startSimulation() {
+    setPlayingState(true); let ct = 0; const dur = parseDuration(currentTrack.duration);
+    clearInterval(simulationInterval);
+    simulationInterval = setInterval(() => {
+        ct++;
+        if (ct >= dur) { clearInterval(simulationInterval); setPlayingState(false); document.getElementById('playerBarFill').style.width = '0%'; document.getElementById('playerCurrentTime').textContent = '0:00'; playNextTrack(); }
+        else { document.getElementById('playerBarFill').style.width = `${(ct / dur) * 100}%`; document.getElementById('playerCurrentTime').textContent = formatTime(ct); }
+    }, 1000);
+}
+function parseDuration(str) { const p = str.split(':'); return parseInt(p[0]) * 60 + parseInt(p[1]); }
+function formatTime(s) { if (isNaN(s)) return '0:00'; return `${Math.floor(s / 60)}:${Math.floor(s % 60).toString().padStart(2, '0')}`; }
+audio.addEventListener('timeupdate', () => { if (!currentTrack) return; const d = audio.duration || parseDuration(currentTrack.duration); document.getElementById('playerBarFill').style.width = `${(audio.currentTime / d) * 100}%`; document.getElementById('playerCurrentTime').textContent = formatTime(audio.currentTime); });
+audio.addEventListener('loadedmetadata', () => { document.getElementById('playerTotalTime').textContent = formatTime(audio.duration); });
+audio.addEventListener('ended', () => { setPlayingState(false); document.getElementById('playerBarFill').style.width = '0%'; document.getElementById('playerCurrentTime').textContent = '0:00'; playNextTrack(); });
+
+// ============================================
+// ПЛЕЕР ИНСТРУМЕНТАЛОВ
+// ============================================
+const instAudio = document.getElementById('instrumentalAudio');
+let currentInstTrack = null, isInstPlaying = false, instSimulationInterval = null, currentInstIndex = -1;
+
+function playInstrumental(track, index = -1) {
+    stopAllPlayers();
+    currentInstTrack = track;
+    currentInstIndex = index >= 0 ? index : instrumentalTracks.findIndex(t => t.id === track.id);
+    document.getElementById('instPlayerTitle').textContent = track.title;
+    document.getElementById('instPlayerDescription').textContent = track.description;
+    document.getElementById('instTotalTime').textContent = track.duration;
+    document.getElementById('instPlayerTags').innerHTML = `<span class="floating-player-tag gold">${track.genre}</span><span class="floating-player-tag gold">${track.mood}</span>`;
+    const coverEl = document.getElementById('instPlayerCover');
+    if (track.cover) { coverEl.innerHTML = `<img src="${track.cover}" alt="${track.title}" onerror="this.style.display='none'; this.parentElement.innerHTML='🎹'">`; } else { coverEl.textContent = '🎹'; }
+    document.getElementById('instrumentalPlayer').classList.add('visible');
+    document.querySelectorAll('.special-card.gold').forEach(el => el.classList.remove('active'));
+    const activeCard = document.querySelector(`.special-card.gold[data-id="${track.id}"]`);
+    if (activeCard) activeCard.classList.add('active');
+    instAudio.src = track.file;
+    instAudio.play().then(() => setInstPlayingState(true)).catch(() => startInstSimulation());
+}
+function instTogglePlay() {
+    if (!currentInstTrack) return;
+    if (isInstPlaying) { instAudio.pause(); clearInterval(instSimulationInterval); setInstPlayingState(false); }
+    else { instAudio.play().catch(() => startInstSimulation()); setInstPlayingState(true); }
+}
+function setInstPlayingState(state) {
+    isInstPlaying = state;
+    document.getElementById('instPlayIcon').innerHTML = state ? '<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>' : '<polygon points="5,3 19,12 5,21"/>';
+    const cover = document.getElementById('instPlayerCover');
+    if (state) cover.classList.add('playing'); else cover.classList.remove('playing');
+}
+function instSkipForward() { if (currentInstTrack) instAudio.currentTime = Math.min(instAudio.duration || parseDuration(currentInstTrack.duration), instAudio.currentTime + 10); }
+function instSkipBackward() { if (currentInstTrack) instAudio.currentTime = Math.max(0, instAudio.currentTime - 10); }
+function instSeek(event) {
+    if (!currentInstTrack) return;
+    const bar = event.currentTarget; const rect = bar.getBoundingClientRect();
+    const percent = (event.clientX - rect.left) / rect.width;
+    instAudio.currentTime = percent * (instAudio.duration || parseDuration(currentInstTrack.duration));
+}
+function playNextInstrumental() { const nextIndex = currentInstIndex < instrumentalTracks.length - 1 ? currentInstIndex + 1 : 0; playInstrumental(instrumentalTracks[nextIndex], nextIndex); }
+function startInstSimulation() {
+    setInstPlayingState(true); let ct = 0; const dur = parseDuration(currentInstTrack.duration);
+    clearInterval(instSimulationInterval);
+    instSimulationInterval = setInterval(() => {
+        ct++;
+        if (ct >= dur) { clearInterval(instSimulationInterval); setInstPlayingState(false); document.getElementById('instBarFill').style.width = '0%'; document.getElementById('instCurrentTime').textContent = '0:00'; playNextInstrumental(); }
+        else { document.getElementById('instBarFill').style.width = `${(ct / dur) * 100}%`; document.getElementById('instCurrentTime').textContent = formatTime(ct); }
+    }, 1000);
+}
+instAudio.addEventListener('timeupdate', () => { if (!currentInstTrack) return; const d = instAudio.duration || parseDuration(currentInstTrack.duration); document.getElementById('instBarFill').style.width = `${(instAudio.currentTime / d) * 100}%`; document.getElementById('instCurrentTime').textContent = formatTime(instAudio.currentTime); });
+instAudio.addEventListener('loadedmetadata', () => { document.getElementById('instTotalTime').textContent = formatTime(instAudio.duration); });
+instAudio.addEventListener('ended', () => { setInstPlayingState(false); document.getElementById('instBarFill').style.width = '0%'; document.getElementById('instCurrentTime').textContent = '0:00'; playNextInstrumental(); });
+
+// ============================================
+// ПЛЕЕР "ДАЙ ГОЛОС"
+// ============================================
+const subAudio = document.getElementById('subscriberAudio');
+let currentSubTrack = null, isSubPlaying = false, subSimulationInterval = null, currentSubIndex = -1;
+
+function playSubscriber(track, index = -1) {
+    stopAllPlayers();
+    currentSubTrack = track;
+    currentSubIndex = index >= 0 ? index : subscriberTracks.findIndex(t => t.id === track.id);
+    document.getElementById('subPlayerTitle').textContent = track.title;
+    document.getElementById('subPlayerAuthor').textContent = '✍ ' + track.author;
+    document.getElementById('subPlayerDescription').textContent = track.description;
+    document.getElementById('subTotalTime').textContent = track.duration;
+    document.getElementById('subPlayerTags').innerHTML = `<span class="floating-player-tag pink">${track.style}</span>`;
+    const coverEl = document.getElementById('subPlayerCover');
+    if (track.cover) { coverEl.innerHTML = `<img src="${track.cover}" alt="${track.title}" onerror="this.style.display='none'; this.parentElement.innerHTML='🎤'">`; } else { coverEl.textContent = '🎤'; }
+    document.getElementById('subscriberPlayer').classList.add('visible');
+    document.querySelectorAll('.special-card.pink').forEach(el => el.classList.remove('active'));
+    const activeCard = document.querySelector(`.special-card.pink[data-id="${track.id}"]`);
+    if (activeCard) activeCard.classList.add('active');
+    subAudio.src = track.file;
+    subAudio.play().then(() => setSubPlayingState(true)).catch(() => startSubSimulation());
+}
+function subTogglePlay() {
+    if (!currentSubTrack) return;
+    if (isSubPlaying) { subAudio.pause(); clearInterval(subSimulationInterval); setSubPlayingState(false); }
+    else { subAudio.play().catch(() => startSubSimulation()); setSubPlayingState(true); }
+}
+function setSubPlayingState(state) {
+    isSubPlaying = state;
+    document.getElementById('subPlayIcon').innerHTML = state ? '<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>' : '<polygon points="5,3 19,12 5,21"/>';
+    const cover = document.getElementById('subPlayerCover');
+    if (state) cover.classList.add('playing'); else cover.classList.remove('playing');
+}
+function subSkipForward() { if (currentSubTrack) subAudio.currentTime = Math.min(subAudio.duration || parseDuration(currentSubTrack.duration), subAudio.currentTime + 10); }
+function subSkipBackward() { if (currentSubTrack) subAudio.currentTime = Math.max(0, subAudio.currentTime - 10); }
+function subSeek(event) {
+    if (!currentSubTrack) return;
+    const bar = event.currentTarget; const rect = bar.getBoundingClientRect();
+    const percent = (event.clientX - rect.left) / rect.width;
+    subAudio.currentTime = percent * (subAudio.duration || parseDuration(currentSubTrack.duration));
+}
+function playNextSubscriber() { const nextIndex = currentSubIndex < subscriberTracks.length - 1 ? currentSubIndex + 1 : 0; playSubscriber(subscriberTracks[nextIndex], nextIndex); }
+function startSubSimulation() {
+    setSubPlayingState(true); let ct = 0; const dur = parseDuration(currentSubTrack.duration);
+    clearInterval(subSimulationInterval);
+    subSimulationInterval = setInterval(() => {
+        ct++;
+        if (ct >= dur) { clearInterval(subSimulationInterval); setSubPlayingState(false); document.getElementById('subBarFill').style.width = '0%'; document.getElementById('subCurrentTime').textContent = '0:00'; playNextSubscriber(); }
+        else { document.getElementById('subBarFill').style.width = `${(ct / dur) * 100}%`; document.getElementById('subCurrentTime').textContent = formatTime(ct); }
+    }, 1000);
+}
+subAudio.addEventListener('timeupdate', () => { if (!currentSubTrack) return; const d = subAudio.duration || parseDuration(currentSubTrack.duration); document.getElementById('subBarFill').style.width = `${(subAudio.currentTime / d) * 100}%`; document.getElementById('subCurrentTime').textContent = formatTime(subAudio.currentTime); });
+subAudio.addEventListener('loadedmetadata', () => { document.getElementById('subTotalTime').textContent = formatTime(subAudio.duration); });
+subAudio.addEventListener('ended', () => { setSubPlayingState(false); document.getElementById('subBarFill').style.width = '0%'; document.getElementById('subCurrentTime').textContent = '0:00'; playNextSubscriber(); });
+
+// ============================================
+// DOWNLOAD
+// ============================================
+let downloadTrack = null;
+function openDownloadModal(track, type = 'regular') {
+    downloadTrack = track;
+    const mc = document.getElementById('modalCover');
+    const icon = type === 'instrumental' ? '🎹' : (type === 'subscriber' ? '🎤' : '🎵');
+    if (track.cover) { mc.innerHTML = `<img src="${track.cover}" alt="${track.title}" onerror="this.style.display='none'; this.parentElement.innerHTML='${icon}'">`; } else { mc.textContent = icon; }
+    document.getElementById('modalTitle').textContent = track.title;
+    document.getElementById('modalArtist').textContent = type === 'subscriber' ? track.author : 'EVGENII';
+    document.getElementById('modalDuration').textContent = track.duration;
+    const b = document.getElementById('modalDownloadBtn');
+    b.textContent = 'СКАЧАТЬ ТРЕК'; b.disabled = false;
+    document.getElementById('downloadModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+function closeDownloadModal() { document.getElementById('downloadModal').classList.remove('active'); document.body.style.overflow = ''; downloadTrack = null; }
+function startDownload() {
+    if (!downloadTrack) return;
+    const b = document.getElementById('modalDownloadBtn');
+    b.textContent = 'ЗАГРУЗКА...'; b.disabled = true;
+    const l = document.createElement('a');
+    l.href = downloadTrack.file; l.download = `${downloadTrack.title}.mp3`; l.style.display = 'none';
+    document.body.appendChild(l);
+    setTimeout(() => { l.click(); document.body.removeChild(l); b.textContent = '✓ ТРЕК ЗАГРУЖЕН'; setTimeout(() => closeDownloadModal(), 1500); }, 1500);
+}
+document.getElementById('downloadModal').addEventListener('click', function(e) { if (e.target === this) closeDownloadModal(); });
 
 // ============================================
 // UTILS
@@ -1467,23 +1358,57 @@ function renderTracks() {
 function getGreeting(h) { if (h >= 5 && h < 12) return 'ДОБРОЕ УТРО'; if (h >= 12 && h < 17) return 'ДОБРЫЙ ДЕНЬ'; if (h >= 17 && h < 22) return 'ДОБРЫЙ ВЕЧЕР'; return 'ДОБРОЙ НОЧИ'; }
 function getLoginGreeting(h) { if (h >= 5 && h < 12) return 'Доброе утро'; if (h >= 12 && h < 17) return 'Добрый день'; if (h >= 17 && h < 22) return 'Добрый вечер'; return 'Доброй ночи'; }
 function updateTime() { const n = new Date(); document.getElementById('headerTime').textContent = `${String(n.getHours()).padStart(2, '0')}:${String(n.getMinutes()).padStart(2, '0')}`; document.getElementById('headerGreeting').textContent = getGreeting(n.getHours()); }
+function escapeHtml(text) { const d = document.createElement('div'); d.textContent = text; return d.innerHTML; }
 
 // ============================================
 // NAVIGATION
 // ============================================
 let currentPage = 'homePage', pageHistory = ['homePage'];
-function navigateTo(pageId) { if (currentPage === pageId) return; const ce = document.getElementById(currentPage), ne = document.getElementById(pageId); pageHistory.push(pageId); ce.classList.remove('active'); setTimeout(() => ce.classList.add('slide-out-left'), 50); ne.classList.remove('slide-out-left', 'slide-in-right'); ne.classList.add('slide-in-right'); setTimeout(() => { ne.classList.add('active'); ne.classList.remove('slide-in-right'); ne.scrollTop = 0; }, 50); currentPage = pageId; }
-function goBack() { if (pageHistory.length > 1) { pageHistory.pop(); const pp = pageHistory[pageHistory.length - 1], ce = document.getElementById(currentPage), pe = document.getElementById(pp); ce.classList.remove('active'); ce.classList.add('slide-in-right'); setTimeout(() => { ce.classList.remove('slide-in-right'); pe.classList.remove('slide-out-left'); pe.classList.add('active'); }, 50); currentPage = pp; } }
+function navigateTo(pageId) {
+    if (currentPage === pageId) return;
+    const ce = document.getElementById(currentPage), ne = document.getElementById(pageId);
+    pageHistory.push(pageId);
+    ce.classList.remove('active');
+    setTimeout(() => ce.classList.add('slide-out-left'), 50);
+    ne.classList.remove('slide-out-left', 'slide-in-right');
+    ne.classList.add('slide-in-right');
+    setTimeout(() => { ne.classList.add('active'); ne.classList.remove('slide-in-right'); ne.scrollTop = 0; }, 50);
+    currentPage = pageId;
+}
+function goBack() {
+    if (pageHistory.length > 1) {
+        pageHistory.pop();
+        const pp = pageHistory[pageHistory.length - 1];
+        const ce = document.getElementById(currentPage), pe = document.getElementById(pp);
+        ce.classList.remove('active'); ce.classList.add('slide-in-right');
+        setTimeout(() => { ce.classList.remove('slide-in-right'); pe.classList.remove('slide-out-left'); pe.classList.add('active'); }, 50);
+        currentPage = pp;
+    }
+}
 
 // ============================================
 // LOGIN
 // ============================================
-const loginScreen = document.getElementById('loginScreen'), loginForm = document.getElementById('loginForm'), nameInput = document.getElementById('nameInput'), loginGreeting = document.getElementById('loginGreeting'), headerName = document.getElementById('headerName'), logoutBtn = document.getElementById('logoutBtn');
+const loginScreen = document.getElementById('loginScreen');
+const loginForm = document.getElementById('loginForm');
+const nameInput = document.getElementById('nameInput');
+const loginGreeting = document.getElementById('loginGreeting');
+const headerName = document.getElementById('headerName');
+const logoutBtn = document.getElementById('logoutBtn');
 loginGreeting.textContent = getLoginGreeting(new Date().getHours());
 const savedName = localStorage.getItem('evgenii_user');
 if (savedName) showMainScreen(savedName);
 
-loginForm.addEventListener('submit', function(e) { e.preventDefault(); const name = nameInput.value.trim(); if (name) { localStorage.setItem('evgenii_user', name); showMainScreen(name); } else { nameInput.style.borderColor = '#ff4444'; nameInput.style.boxShadow = '0 0 15px rgba(255, 68, 68, 0.2)'; setTimeout(() => { nameInput.style.borderColor = ''; nameInput.style.boxShadow = ''; }, 1500); } });
+loginForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const name = nameInput.value.trim();
+    if (name) { localStorage.setItem('evgenii_user', name); showMainScreen(name); }
+    else {
+        nameInput.style.borderColor = '#ff4444';
+        nameInput.style.boxShadow = '0 0 15px rgba(255, 68, 68, 0.2)';
+        setTimeout(() => { nameInput.style.borderColor = ''; nameInput.style.boxShadow = ''; }, 1500);
+    }
+});
 
 function showMainScreen(name) {
     loginScreen.classList.add('hidden');
@@ -1493,21 +1418,17 @@ function showMainScreen(name) {
     renderNewRelease();
     renderTracks();
     renderInstrumentals();
+    renderSubscribers();
 }
 
 let chatSubscription = null;
-
 logoutBtn.addEventListener('click', function() {
     localStorage.removeItem('evgenii_user');
-    ['homePage','tracksPage','aboutPage','communityPage','chatPage','contactPage','instrumentalsPage'].forEach(p => document.getElementById(p).classList.remove('active'));
+    ['homePage','tracksPage','aboutPage','communityPage','chatPage','contactPage','instrumentalsPage','subscribersPage','supportPage'].forEach(p => document.getElementById(p).classList.remove('active'));
     currentPage = 'homePage'; pageHistory = ['homePage'];
     loginScreen.classList.remove('hidden'); nameInput.value = '';
     loginGreeting.textContent = getLoginGreeting(new Date().getHours());
-    // Остановить оба плеера
-    stopRegularPlayer();
-    stopInstrumentalPlayer();
-    document.getElementById('stickyPlayer').classList.remove('visible');
-    document.getElementById('instrumentalPlayer').classList.remove('visible');
+    stopAllPlayers();
     if (chatSubscription && supabaseClient) { supabaseClient.removeChannel(chatSubscription); chatSubscription = null; }
 });
 
@@ -1515,7 +1436,30 @@ setInterval(updateTime, 1000);
 updateTime();
 
 // ============================================
-// 💬 ЧАТ
+// ПОДДЕРЖКА
+// ============================================
+function copyToClipboard(text, btn) {
+    const originalText = btn.textContent;
+    navigator.clipboard.writeText(text).then(() => {
+        btn.textContent = '✓ СКОПИРОВАНО';
+        btn.style.background = 'linear-gradient(135deg, #00ff88, #00e5ff)';
+        setTimeout(() => { btn.textContent = originalText; btn.style.background = ''; }, 2000);
+    }).catch(() => {
+        const textarea = document.createElement('textarea');
+        textarea.value = text; textarea.style.position = 'fixed'; textarea.style.opacity = '0';
+        document.body.appendChild(textarea); textarea.select();
+        try {
+            document.execCommand('copy');
+            btn.textContent = '✓ СКОПИРОВАНО';
+            btn.style.background = 'linear-gradient(135deg, #00ff88, #00e5ff)';
+            setTimeout(() => { btn.textContent = originalText; btn.style.background = ''; }, 2000);
+        } catch (e) { alert('Скопируй вручную: ' + text); }
+        document.body.removeChild(textarea);
+    });
+}
+
+// ============================================
+// ЧАТ
 // ============================================
 const chatMessagesEl = document.getElementById('chatMessages');
 const chatInput = document.getElementById('chatInput');
@@ -1525,7 +1469,6 @@ const sendBtn = document.getElementById('sendBtn');
 
 function getCurrentUser() { return localStorage.getItem('evgenii_user') || 'Гость'; }
 function getUserId() { return localStorage.getItem('evgenii_user') || 'guest_' + Date.now(); }
-function escapeHtml(text) { const d = document.createElement('div'); d.textContent = text; return d.innerHTML; }
 
 function addMessageToUI(user, text, time, isSent) {
     const div = document.createElement('div');
@@ -1533,7 +1476,6 @@ function addMessageToUI(user, text, time, isSent) {
     div.innerHTML = `<div class="message-avatar">${isSent ? '👤' : '👥'}</div><div class="message-content"><div class="message-bubble">${escapeHtml(text)}</div><div class="message-time">${escapeHtml(user)} · ${time}</div></div>`;
     chatMessagesEl.appendChild(div);
 }
-
 function scrollToBottom() { setTimeout(() => { chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight; }, 100); }
 
 async function loadChatHistory() {
@@ -1566,9 +1508,15 @@ async function loadChatHistory() {
 
 function subscribeToChat() {
     if (!supabaseClient) return;
-    if (chatSubscription) { supabaseClient.removeChannel(chatSubscription); }
+    if (chatSubscription) supabaseClient.removeChannel(chatSubscription);
     const userId = getUserId();
-    chatSubscription = supabaseClient.channel('chat-messages').on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages' }, (payload) => { const msg = payload.new; addMessageToUI(msg.user_name, msg.text, msg.time, msg.user_id === userId); scrollToBottom(); }).subscribe((status) => { if (status === 'SUBSCRIBED') { chatStatus.textContent = '🟢 Подключено'; chatStatus.className = 'chat-status connected'; } });
+    chatSubscription = supabaseClient.channel('chat-messages').on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages' }, (payload) => {
+        const msg = payload.new;
+        addMessageToUI(msg.user_name, msg.text, msg.time, msg.user_id === userId);
+        scrollToBottom();
+    }).subscribe((status) => {
+        if (status === 'SUBSCRIBED') { chatStatus.textContent = '🟢 Подключено'; chatStatus.className = 'chat-status connected'; }
+    });
 }
 
 async function sendMessage() {
@@ -1589,21 +1537,20 @@ async function sendMessage() {
         chatStatus.textContent = '🔴 Ошибка отправки';
         chatStatus.className = 'chat-status error';
         setTimeout(() => { chatStatus.textContent = '🟢 Подключено'; chatStatus.className = 'chat-status connected'; }, 3000);
-    } finally {
-        sendBtn.disabled = false;
-        chatInput.focus();
-    }
+    } finally { sendBtn.disabled = false; chatInput.focus(); }
 }
 
 chatInput.addEventListener('keypress', function(e) { if (e.key === 'Enter') sendMessage(); });
 
 const chatObserver = new MutationObserver(function(mutations) {
-    mutations.forEach(function(m) { if (m.target.id === 'chatPage' && m.target.classList.contains('active')) { loadChatHistory(); subscribeToChat(); } });
+    mutations.forEach(function(m) {
+        if (m.target.id === 'chatPage' && m.target.classList.contains('active')) { loadChatHistory(); subscribeToChat(); }
+    });
 });
 chatObserver.observe(document.getElementById('chatPage'), { attributes: true, attributeFilter: ['class'] });
 
 // ============================================
-// 📩 ФОРМА СВЯЗИ С TELEGRAM
+// КОНТАКТЫ
 // ============================================
 const contactForm = document.getElementById('contactForm');
 const formSubmitBtn = document.getElementById('submitBtn');
@@ -1616,14 +1563,11 @@ if (contactForm) {
         const name = formData.get('name');
         const contact = formData.get('contact');
         const messageText = formData.get('message');
-        
         formSubmitBtn.disabled = true;
         formSubmitBtn.innerHTML = '<span>ОТПРАВКА...</span>';
         formStatus.textContent = '';
         formStatus.className = 'form-status';
-        
         const message = `📩 <b>НОВОЕ СООБЩЕНИЕ С САЙТА</b>\n\n👤 <b>Имя:</b> ${name}\n📧 <b>Контакт:</b> ${contact}\n\n💬 <b>Сообщение:</b>\n${messageText}\n\n⏰ <b>Время:</b> ${new Date().toLocaleString('ru-RU')}`;
-        
         try {
             const telegramURL = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
             const response = await fetch(telegramURL, {
@@ -1636,9 +1580,7 @@ if (contactForm) {
                 formStatus.textContent = '✅ Сообщение отправлено! Я отвечу вам скоро.';
                 formStatus.className = 'form-status success';
                 this.reset();
-            } else {
-                throw new Error(data.description || 'Ошибка Telegram API');
-            }
+            } else { throw new Error(data.description || 'Ошибка Telegram API'); }
         } catch (error) {
             console.error('Ошибка отправки:', error);
             formStatus.textContent = `❌ Ошибка: ${error.message}`;
@@ -1649,6 +1591,62 @@ if (contactForm) {
         }
     });
 }
-    </script>
+
+// ============================================
+// ФОРМА "ДАЙ ГОЛОС"
+// ============================================
+const voiceForm = document.getElementById('voiceForm');
+const voiceSubmitBtn = document.getElementById('voiceSubmitBtn');
+const voiceFormStatus = document.getElementById('voiceFormStatus');
+
+if (voiceForm) {
+    voiceForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        const name = formData.get('name');
+        const contact = formData.get('contact');
+        const style = formData.get('style');
+        const lyrics = formData.get('lyrics');
+        const comment = formData.get('comment') || '—';
+
+        voiceSubmitBtn.disabled = true;
+        voiceSubmitBtn.innerHTML = '<span>ОТПРАВКА...</span>';
+        voiceFormStatus.textContent = '';
+        voiceFormStatus.className = 'form-status';
+
+        const lyricsPreview = lyrics.length > 2000 ? lyrics.substring(0, 2000) + '\n\n[...текст обрезан, полный пришлю в личку...]' : lyrics;
+
+        const message = `🎤 <b>НОВАЯ ЗАЯВКА «ДАЙ ГОЛОС»</b>\n\n` +
+            `👤 <b>Имя:</b> ${name}\n` +
+            `📧 <b>Контакт:</b> ${contact}\n` +
+            `🎸 <b>Стиль:</b> ${style}\n\n` +
+            `📝 <b>Текст:</b>\n${escapeHtml(lyricsPreview)}\n\n` +
+            `💬 <b>Комментарий:</b>\n${escapeHtml(comment)}\n\n` +
+            `⏰ <b>Время:</b> ${new Date().toLocaleString('ru-RU')}`;
+
+        try {
+            const telegramURL = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+            const response = await fetch(telegramURL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: message, parse_mode: 'HTML' })
+            });
+            const data = await response.json();
+            if (data.ok) {
+                voiceFormStatus.textContent = '✅ Текст отправлен! Я свяжусь с тобой, когда трек будет готов.';
+                voiceFormStatus.className = 'form-status success';
+                this.reset();
+            } else { throw new Error(data.description || 'Ошибка Telegram API'); }
+        } catch (error) {
+            console.error('Ошибка отправки:', error);
+            voiceFormStatus.textContent = `❌ Ошибка: ${error.message}`;
+            voiceFormStatus.className = 'form-status error';
+        } finally {
+            voiceSubmitBtn.disabled = false;
+            voiceSubmitBtn.innerHTML = '<span>ОТПРАВИТЬ ТЕКСТ</span>';
+        }
+    });
+}
+</script>
 </body>
 </html>
