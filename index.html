@@ -82,40 +82,47 @@
         .quick-tile { padding: 20px 16px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.3s ease, border-color 0.3s ease; position: relative; }
         .quick-tile:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0, 229, 255, 0.1); border-color: rgba(0, 229, 255, 0.3); }
         .quick-tile:active { transform: translateY(0); }
-        .quick-tile.disabled { opacity: 0.45; cursor: not-allowed; }
-        .quick-tile.disabled:hover { transform: none; box-shadow: none; border-color: var(--card-border); }
-        .quick-tile.disabled::after { content: 'Скоро'; position: absolute; top: 10px; right: 10px; font-size: 0.6rem; padding: 3px 8px; background: rgba(255, 255, 255, 0.1); border-radius: 6px; color: var(--text-secondary); letter-spacing: 1px; text-transform: uppercase; font-weight: 600; }
+        .quick-tile.disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+        }
+        .quick-tile.disabled:hover {
+            transform: none;
+            box-shadow: none;
+            border-color: var(--card-border);
+        }
+        .quick-tile.disabled::after {
+            content: 'Скоро';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 0.6rem;
+            padding: 3px 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            color: var(--text-secondary);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
         .tile-icon { width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin-bottom: 14px; }
         .tile-icon.tracks { background: rgba(0, 229, 255, 0.15); color: var(--cyan); }
         .tile-icon.instrumental { background: linear-gradient(135deg, rgba(255, 179, 71, 0.2), rgba(255, 0, 229, 0.15)); color: var(--gold); }
         .tile-icon.subscribers { background: linear-gradient(135deg, rgba(255, 107, 157, 0.2), rgba(176, 0, 255, 0.15)); color: var(--pink); }
+        .tile-icon.chat { background: rgba(0, 229, 255, 0.15); color: var(--cyan); }
         .tile-icon.community { background: rgba(176, 0, 255, 0.15); color: var(--purple); }
         .tile-icon.contact { background: rgba(0, 229, 255, 0.15); color: var(--cyan); }
         .tile-icon.about { background: rgba(255, 0, 229, 0.15); color: var(--magenta); }
-        .tile-icon.support { background: linear-gradient(135deg, rgba(255, 179, 71, 0.2), rgba(255, 107, 157, 0.15)); color: var(--gold); }
+        .tile-icon.support { background: linear-gradient(135deg, rgba(255, 0, 229, 0.2), rgba(176, 0, 255, 0.15)); color: var(--magenta); }
         .tile-title { font-size: 0.95rem; font-weight: 600; margin-bottom: 4px; }
         .tile-desc { font-size: 0.75rem; color: var(--text-secondary); }
         .logout-btn { display: block; margin: 20px auto 0; padding: 12px 30px; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; background: transparent; color: var(--text-secondary); font-size: 0.8rem; font-family: 'Inter', sans-serif; cursor: pointer; transition: all 0.3s ease; letter-spacing: 1px; }
         .logout-btn:hover { border-color: rgba(255, 0, 0, 0.3); color: #ff6b6b; }
-        .page-header { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; padding-top: 10px; }
+        .page-header { display: flex; align-items: center; gap: 16px; margin-bottom: 30px; padding-top: 10px; }
         .back-btn { width: 44px; height: 44px; border-radius: 14px; border: 1px solid var(--card-border); background: var(--card-bg); color: var(--text-primary); font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; flex-shrink: 0; }
         .back-btn:hover { border-color: var(--cyan); background: rgba(0, 229, 255, 0.1); }
         .page-title { font-size: 2.2rem; font-weight: 900; letter-spacing: 1px; }
-        .category-tabs { display: flex; gap: 8px; margin-bottom: 24px; overflow-x: auto; padding: 4px 2px 8px; scrollbar-width: none; -ms-overflow-style: none; }
-        .category-tabs::-webkit-scrollbar { display: none; }
-        .category-tab { flex-shrink: 0; padding: 10px 16px; border-radius: 12px; background: var(--card-bg); border: 1px solid var(--card-border); color: var(--text-secondary); font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 8px; font-family: 'Inter', sans-serif; white-space: nowrap; }
-        .category-tab:hover { border-color: rgba(255, 255, 255, 0.25); color: var(--text-primary); }
-        .category-tab.active { background: linear-gradient(135deg, rgba(0, 229, 255, 0.15), rgba(176, 0, 255, 0.15)); border-color: var(--cyan); color: var(--text-primary); box-shadow: 0 4px 20px rgba(0, 229, 255, 0.15); }
-        .category-tab .tab-icon { font-size: 1rem; }
-        .category-tab .tab-count { font-size: 0.7rem; padding: 2px 7px; border-radius: 8px; background: rgba(255, 255, 255, 0.08); font-weight: 700; font-family: 'Orbitron', monospace; }
-        .category-tab.active .tab-count { background: rgba(0, 229, 255, 0.2); color: var(--cyan); }
-        .category-divider { display: flex; align-items: center; gap: 12px; margin: 24px 0 14px; padding: 0 4px; }
-        .category-divider-line { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--card-border), transparent); }
-        .category-divider-label { font-family: 'Orbitron', sans-serif; font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; font-weight: 700; display: flex; align-items: center; gap: 8px; }
-        .category-divider-label.cyan { color: var(--cyan); }
-        .category-divider-label.gold { color: var(--gold); }
-        .category-divider-label.pink { color: var(--pink); }
-        .featured-release { position: relative; width: 100%; border-radius: 28px; overflow: hidden; margin-bottom: 30px; border: 1px solid var(--card-border); background: linear-gradient(180deg, #0d2030 0%, #1a0a2e 50%, #0d1020 100%); padding: 30px 20px 36px; display: flex; flex-direction: column; align-items: center; cursor: pointer; }
+        .featured-release { position: relative; width: 100%; border-radius: 28px; overflow: hidden; margin-bottom: 36px; border: 1px solid var(--card-border); background: linear-gradient(180deg, #0d2030 0%, #1a0a2e 50%, #0d1020 100%); padding: 30px 20px 36px; display: flex; flex-direction: column; align-items: center; cursor: pointer; }
         .featured-release::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 200px; background: radial-gradient(ellipse at 50% 0%, rgba(0, 229, 255, 0.12) 0%, transparent 70%); pointer-events: none; }
         .featured-cover { position: relative; width: 200px; height: 200px; border-radius: 24px; overflow: hidden; margin-bottom: 20px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5); z-index: 1; background: linear-gradient(135deg, #2a3a4a, #3a2a4a); display: flex; align-items: center; justify-content: center; font-size: 4rem; }
         .featured-cover img { width: 100%; height: 100%; object-fit: cover; }
@@ -131,39 +138,98 @@
         .featured-download-btn { position: absolute; top: 20px; right: 20px; width: 44px; height: 44px; border-radius: 12px; border: 1px solid var(--card-border); background: rgba(20, 20, 40, 0.8); color: var(--text-secondary); cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 2; transition: all 0.3s ease; }
         .featured-download-btn:hover { border-color: var(--cyan); color: var(--cyan); background: rgba(0, 229, 255, 0.1); }
         .featured-download-btn svg { width: 20px; height: 20px; fill: currentColor; }
+        .tracks-list-section { margin-bottom: 30px; }
         .tracks-list { display: flex; flex-direction: column; gap: 12px; }
         .track-item { display: flex; align-items: center; gap: 14px; padding: 14px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 18px; transition: transform 0.2s ease, box-shadow 0.3s ease, border-color 0.3s ease; cursor: pointer; }
         .track-item:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0, 229, 255, 0.08); border-color: rgba(0, 229, 255, 0.25); }
         .track-item:active { transform: translateY(0); }
         .track-item.active { border-color: var(--cyan); background: rgba(0, 229, 255, 0.05); }
-        .track-item.active.gold { border-color: var(--gold); background: rgba(255, 179, 71, 0.05); }
-        .track-item.active.pink { border-color: var(--pink); background: rgba(255, 107, 157, 0.05); }
-        .track-cover { width: 56px; height: 56px; border-radius: 12px; overflow: hidden; flex-shrink: 0; background: linear-gradient(135deg, #1a2a3a, #2a1a3a); display: flex; align-items: center; justify-content: center; position: relative; }
+        .track-cover { width: 56px; height: 56px; border-radius: 12px; overflow: hidden; flex-shrink: 0; background: linear-gradient(135deg, #1a2a3a, #2a1a3a); display: flex; align-items: center; justify-content: center; }
         .track-cover img { width: 100%; height: 100%; object-fit: cover; }
-        .track-category-badge { position: absolute; bottom: -4px; right: -4px; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; border: 2px solid var(--dark-bg); z-index: 2; }
-        .track-category-badge.cyan { background: var(--cyan); }
-        .track-category-badge.gold { background: var(--gold); }
-        .track-category-badge.pink { background: var(--pink); }
         .track-info { flex: 1; min-width: 0; }
         .track-title { font-size: 1rem; font-weight: 600; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .track-artist { font-size: 0.8rem; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .track-artist.pink { color: var(--pink); }
-        .track-artist.gold { color: var(--gold); }
         .track-duration { font-size: 0.85rem; color: var(--text-secondary); font-weight: 500; flex-shrink: 0; font-family: 'Orbitron', monospace; margin-right: 8px; }
         .track-download-btn { width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--card-border); background: rgba(20, 20, 40, 0.6); color: var(--text-secondary); cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.3s ease; }
         .track-download-btn:hover { border-color: var(--cyan); color: var(--cyan); background: rgba(0, 229, 255, 0.1); transform: scale(1.05); }
         .track-download-btn:active { transform: scale(0.95); }
         .track-download-btn svg { width: 18px; height: 18px; fill: currentColor; }
+
         .intro-block { border-radius: 20px; padding: 20px; margin-bottom: 24px; position: relative; overflow: hidden; }
         .intro-block::before { content: ''; position: absolute; top: -50%; right: -20%; width: 200px; height: 200px; pointer-events: none; }
         .intro-block.gold { background: linear-gradient(135deg, rgba(255, 179, 71, 0.08), rgba(176, 0, 255, 0.08)); border: 1px solid rgba(255, 179, 71, 0.2); }
         .intro-block.gold::before { background: radial-gradient(circle, rgba(255, 179, 71, 0.15), transparent 70%); }
         .intro-block.pink { background: linear-gradient(135deg, rgba(255, 107, 157, 0.08), rgba(176, 0, 255, 0.08)); border: 1px solid rgba(255, 107, 157, 0.2); }
         .intro-block.pink::before { background: radial-gradient(circle, rgba(255, 107, 157, 0.15), transparent 70%); }
+        .intro-block.magenta { background: linear-gradient(135deg, rgba(255, 0, 229, 0.08), rgba(176, 0, 255, 0.08)); border: 1px solid rgba(255, 0, 229, 0.2); }
+        .intro-block.magenta::before { background: radial-gradient(circle, rgba(255, 0, 229, 0.15), transparent 70%); }
         .intro-title { font-family: 'Orbitron', sans-serif; font-size: 0.85rem; letter-spacing: 3px; margin-bottom: 8px; position: relative; z-index: 1; }
         .intro-title.gold { color: var(--gold); }
         .intro-title.pink { color: var(--pink); }
+        .intro-title.magenta { color: var(--magenta); }
         .intro-text { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; position: relative; z-index: 1; }
+
+        .voice-toggle-btn {
+            width: 100%;
+            padding: 20px 24px;
+            border: 2px solid var(--pink);
+            border-radius: 18px;
+            background: linear-gradient(135deg, rgba(255, 107, 157, 0.1), rgba(176, 0, 255, 0.1));
+            color: var(--pink);
+            font-weight: 700;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        .voice-toggle-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 107, 157, 0.2), transparent);
+            transition: left 0.6s ease;
+        }
+        .voice-toggle-btn:hover::before { left: 100%; }
+        .voice-toggle-btn:hover {
+            background: linear-gradient(135deg, rgba(255, 107, 157, 0.2), rgba(176, 0, 255, 0.2));
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 107, 157, 0.25);
+        }
+        .voice-toggle-btn:active { transform: translateY(0); }
+        .voice-toggle-btn .btn-icon { font-size: 1.3rem; transition: transform 0.3s ease; }
+        .voice-toggle-btn .btn-arrow { font-size: 1rem; transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); margin-left: 4px; }
+        .voice-toggle-btn.open .btn-arrow { transform: rotate(180deg); }
+        .voice-toggle-btn.open {
+            border-color: var(--magenta);
+            color: var(--magenta);
+            background: linear-gradient(135deg, rgba(255, 0, 229, 0.15), rgba(176, 0, 255, 0.15));
+        }
+
+        .voice-form-wrapper {
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease, margin-bottom 0.4s ease;
+            margin-bottom: 0;
+        }
+        .voice-form-wrapper.open {
+            max-height: 2000px;
+            opacity: 1;
+            margin-bottom: 30px;
+        }
+
         .special-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 22px; overflow: hidden; margin-bottom: 16px; transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; }
         .special-card:hover { transform: translateY(-3px); }
         .special-card.gold:hover { box-shadow: 0 10px 30px rgba(255, 179, 71, 0.1); border-color: rgba(255, 179, 71, 0.3); }
@@ -196,21 +262,11 @@
         .special-description { padding: 12px 16px 16px; color: var(--text-secondary); font-size: 0.9rem; line-height: 1.55; margin-top: 4px; font-style: italic; }
         .special-description.gold { border-top: 1px dashed rgba(255, 179, 71, 0.15); }
         .special-description.pink { border-top: 1px dashed rgba(255, 107, 157, 0.15); }
-        .special-description::before { content: '"'; font-size: 1.3rem; font-weight: 700; margin-right: 4px; font-style: normal; }
-        .special-description::after { content: '"'; font-size: 1.3rem; font-weight: 700; margin-left: 4px; font-style: normal; }
+        .special-description::before { content: '“'; font-size: 1.3rem; font-weight: 700; margin-right: 4px; font-style: normal; }
+        .special-description::after { content: '”'; font-size: 1.3rem; font-weight: 700; margin-left: 4px; font-style: normal; }
         .special-description.gold::before, .special-description.gold::after { color: var(--gold); }
         .special-description.pink::before, .special-description.pink::after { color: var(--pink); }
-        .voice-toggle-btn { width: 100%; padding: 20px 24px; border: 2px solid var(--pink); border-radius: 18px; background: linear-gradient(135deg, rgba(255, 107, 157, 0.1), rgba(176, 0, 255, 0.1)); color: var(--pink); font-weight: 700; font-size: 1rem; font-family: 'Inter', sans-serif; cursor: pointer; transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 2px; display: flex; align-items: center; justify-content: center; gap: 14px; margin-bottom: 20px; position: relative; overflow: hidden; }
-        .voice-toggle-btn::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255, 107, 157, 0.2), transparent); transition: left 0.6s ease; }
-        .voice-toggle-btn:hover::before { left: 100%; }
-        .voice-toggle-btn:hover { background: linear-gradient(135deg, rgba(255, 107, 157, 0.2), rgba(176, 0, 255, 0.2)); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(255, 107, 157, 0.25); }
-        .voice-toggle-btn:active { transform: translateY(0); }
-        .voice-toggle-btn .btn-icon { font-size: 1.3rem; }
-        .voice-toggle-btn .btn-arrow { font-size: 1rem; transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); margin-left: 4px; }
-        .voice-toggle-btn.open .btn-arrow { transform: rotate(180deg); }
-        .voice-toggle-btn.open { border-color: var(--magenta); color: var(--magenta); background: linear-gradient(135deg, rgba(255, 0, 229, 0.15), rgba(176, 0, 255, 0.15)); }
-        .voice-form-wrapper { max-height: 0; overflow: hidden; opacity: 0; transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease, margin-bottom 0.4s ease; margin-bottom: 0; }
-        .voice-form-wrapper.open { max-height: 2000px; opacity: 1; margin-bottom: 30px; }
+
         .floating-player { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%) translateY(100%); width: 100%; max-width: 480px; backdrop-filter: blur(20px); padding: 16px 20px 22px; z-index: 100; transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); border-radius: 28px 28px 0 0; }
         .floating-player.visible { transform: translateX(-50%) translateY(0); }
         .floating-player::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background-size: 200% 100%; animation: shimmer 3s linear infinite; }
@@ -264,6 +320,7 @@
         .floating-bar-fill { height: 100%; border-radius: 3px; width: 0%; transition: width 0.1s linear; }
         .floating-bar-fill.gold { background: linear-gradient(90deg, var(--gold), var(--magenta)); box-shadow: 0 0 8px rgba(255, 179, 71, 0.5); }
         .floating-bar-fill.pink { background: linear-gradient(90deg, var(--pink), var(--purple)); box-shadow: 0 0 8px rgba(255, 107, 157, 0.5); }
+
         .sticky-player { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%) translateY(100%); width: 100%; max-width: 480px; background: rgba(15, 15, 30, 0.95); backdrop-filter: blur(10px); border-top: 1px solid var(--card-border); padding: 12px 16px 20px; z-index: 100; transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); border-radius: 24px 24px 0 0; box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.5); }
         .sticky-player.visible { transform: translateX(-50%) translateY(0); }
         .player-top-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
@@ -284,6 +341,25 @@
         .player-time-mini.end { text-align: right; }
         .player-bar-container { flex: 1; height: 4px; background: rgba(255, 255, 255, 0.1); border-radius: 2px; overflow: hidden; cursor: pointer; }
         .player-bar-fill { height: 100%; background: linear-gradient(90deg, var(--cyan), var(--purple)); border-radius: 2px; width: 0%; transition: width 0.1s linear; }
+
+        .support-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 22px; padding: 24px 20px; margin-bottom: 16px; transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; }
+        .support-card:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(255, 0, 229, 0.1); border-color: rgba(255, 0, 229, 0.3); }
+        .support-card-header { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
+        .support-card-icon { width: 56px; height: 56px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; flex-shrink: 0; }
+        .support-card-icon.boosty { background: linear-gradient(135deg, #ff6b6b, #ff8e53); }
+        .support-card-icon.tinkoff { background: linear-gradient(135deg, #ffdd2d, #ffd700); }
+        .support-card-icon.crypto { background: linear-gradient(135deg, #f7931a, #ff9500); }
+        .support-card-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 4px; }
+        .support-card-desc { font-size: 0.85rem; color: var(--text-secondary); }
+        .support-card-btn { width: 100%; padding: 14px; border: none; border-radius: 12px; background: linear-gradient(135deg, var(--magenta), var(--purple)); color: #fff; font-weight: 700; font-size: 1rem; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.3s ease; text-transform: uppercase; letter-spacing: 1px; }
+        .support-card-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(255, 0, 229, 0.3); }
+        .support-card-btn:active { transform: translateY(0); }
+        .support-copy-hint { text-align: center; font-size: 0.8rem; color: var(--text-secondary); margin-top: 10px; font-style: italic; }
+        .support-thanks { background: rgba(255, 0, 229, 0.05); border: 1px solid rgba(255, 0, 229, 0.2); border-radius: 18px; padding: 20px; margin-top: 24px; }
+        .support-thanks-title { font-size: 0.8rem; color: var(--magenta); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 12px; font-weight: 600; text-align: center; }
+        .support-thanks-list { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+        .support-thanks-item { padding: 6px 12px; background: rgba(255, 0, 229, 0.1); border-radius: 8px; font-size: 0.85rem; color: var(--text-secondary); }
+
         .about-content, .community-content { display: flex; flex-direction: column; gap: 20px; }
         .about-card { background: rgba(20, 25, 40, 0.6); border: 1px solid var(--card-border); border-radius: 20px; padding: 24px 20px; line-height: 1.6; font-size: 1rem; }
         .about-card .highlight { color: var(--cyan); font-weight: 600; }
@@ -308,6 +384,40 @@
         .community-badge { display: inline-block; padding: 4px 10px; background: rgba(255, 255, 255, 0.1); border-radius: 8px; font-size: 0.75rem; color: var(--text-secondary); margin-top: 6px; }
         .community-intro { background: rgba(20, 25, 40, 0.6); border: 1px solid var(--card-border); border-radius: 20px; padding: 24px 20px; margin-bottom: 10px; }
         .community-intro p { color: var(--text-secondary); line-height: 1.6; font-size: 1rem; }
+
+        .chat-online-indicator { display: flex; align-items: center; gap: 8px; margin-left: auto; font-size: 0.85rem; color: var(--text-secondary); }
+        .online-dot { width: 10px; height: 10px; border-radius: 50%; background: #00ff88; animation: pulse 2s ease-in-out infinite; }
+        .chat-container { display: flex; flex-direction: column; height: calc(100vh - 180px); background: rgba(20, 25, 40, 0.6); border: 1px solid var(--card-border); border-radius: 20px; overflow: hidden; }
+        .chat-messages { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 16px; }
+        .chat-message { display: flex; gap: 12px; max-width: 85%; animation: messageSlideIn 0.3s ease; }
+        @keyframes messageSlideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .chat-message.sent { align-self: flex-end; flex-direction: row-reverse; }
+        .message-avatar { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+        .chat-message.received .message-avatar { background: linear-gradient(135deg, var(--cyan), var(--purple)); }
+        .chat-message.sent .message-avatar { background: linear-gradient(135deg, var(--magenta), var(--purple)); }
+        .message-content { flex: 1; }
+        .message-bubble { padding: 12px 16px; border-radius: 16px; font-size: 0.95rem; line-height: 1.5; word-wrap: break-word; }
+        .chat-message.received .message-bubble { background: rgba(30, 35, 55, 0.9); border: 1px solid var(--card-border); border-top-left-radius: 4px; }
+        .chat-message.sent .message-bubble { background: linear-gradient(135deg, rgba(0, 229, 255, 0.15), rgba(176, 0, 255, 0.15)); border: 1px solid rgba(0, 229, 255, 0.3); border-top-right-radius: 4px; }
+        .message-time { font-size: 0.7rem; color: var(--text-secondary); margin-top: 4px; padding: 0 4px; }
+        .chat-message.sent .message-time { text-align: right; }
+        .chat-input-container { display: flex; gap: 12px; padding: 16px; background: rgba(15, 20, 35, 0.9); border-top: 1px solid var(--card-border); }
+        .chat-input { flex: 1; padding: 12px 16px; border: 1px solid var(--card-border); border-radius: 12px; background: rgba(20, 25, 40, 0.8); color: var(--text-primary); font-size: 0.95rem; font-family: 'Inter', sans-serif; outline: none; transition: border-color 0.3s ease; }
+        .chat-input::placeholder { color: var(--text-secondary); }
+        .chat-input:focus { border-color: var(--cyan); }
+        .chat-send-btn { width: 48px; height: 48px; border-radius: 12px; border: none; background: linear-gradient(135deg, var(--cyan), var(--purple)); color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: transform 0.2s ease, box-shadow 0.3s ease; flex-shrink: 0; }
+        .chat-send-btn:hover { transform: scale(1.05); box-shadow: 0 4px 20px rgba(0, 229, 255, 0.3); }
+        .chat-send-btn:active { transform: scale(0.95); }
+        .chat-send-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        .chat-send-btn svg { width: 20px; height: 20px; fill: currentColor; }
+        .chat-loading { display: flex; align-items: center; justify-content: center; padding: 40px; color: var(--text-secondary); font-size: 0.9rem; }
+        .chat-loading-spinner { width: 24px; height: 24px; border: 3px solid var(--card-border); border-top-color: var(--cyan); border-radius: 50%; animation: spin 0.8s linear infinite; margin-right: 12px; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .chat-status { text-align: center; padding: 10px; font-size: 0.8rem; color: var(--text-secondary); }
+        .chat-status.error { color: #ff6b6b; }
+        .chat-status.connected { color: #00ff88; }
+        .chat-status.offline { color: #ffaa00; }
+
         .contact-form-container, .voice-form-container { background: rgba(20, 25, 40, 0.6); border: 1px solid var(--card-border); border-radius: 20px; padding: 24px; margin-top: 0; }
         .voice-form-container { border-color: rgba(255, 107, 157, 0.25); }
         .form-group { margin-bottom: 16px; }
@@ -332,6 +442,7 @@
         .vpn-warning-icon { font-size: 1.2rem; flex-shrink: 0; }
         .vpn-warning-text { color: var(--text-secondary); font-size: 0.85rem; line-height: 1.4; }
         .vpn-warning-text strong { color: #ffaa00; }
+
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 5, 15, 0.85); backdrop-filter: blur(8px); z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 20px; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
         .modal-overlay.active { opacity: 1; pointer-events: all; }
         .modal-content { width: 100%; max-width: 440px; background: linear-gradient(180deg, #0f1525 0%, #0a0e1a 100%); border: 1px solid var(--card-border); border-radius: 28px; padding: 30px 24px 24px; transform: translateY(30px) scale(0.95); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); max-height: 90vh; overflow-y: auto; }
@@ -353,318 +464,7 @@
         .modal-download-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
         .modal-cancel-btn { width: 100%; padding: 16px; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; background: rgba(20, 20, 40, 0.6); color: var(--text-secondary); font-size: 1rem; font-family: 'Inter', sans-serif; cursor: pointer; transition: all 0.3s ease; }
         .modal-cancel-btn:hover { border-color: rgba(255, 255, 255, 0.2); color: var(--text-primary); }
-        .support-intro {
-            background: linear-gradient(135deg, rgba(255, 179, 71, 0.06), rgba(255, 107, 157, 0.06));
-            border: 1px solid rgba(255, 179, 71, 0.2);
-            border-radius: 20px;
-            padding: 24px 20px;
-            margin-bottom: 24px;
-            position: relative;
-            overflow: hidden;
-        }
-        .support-intro::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -20%;
-            width: 200px;
-            height: 200px;
-            background: radial-gradient(circle, rgba(255, 179, 71, 0.1), transparent 70%);
-            pointer-events: none;
-        }
-        .support-intro p {
-            color: var(--text-secondary);
-            line-height: 1.6;
-            font-size: 1rem;
-            position: relative;
-            z-index: 1;
-        }
-        .support-cards {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            margin-bottom: 24px;
-        }
-        .support-card {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            padding: 20px;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        .support-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            transition: left 0.6s ease;
-            z-index: 0;
-        }
-        .support-card:hover::before {
-            left: 100%;
-        }
-        .support-card > * {
-            position: relative;
-            z-index: 1;
-        }
-        .support-card.coffee {
-            background: linear-gradient(135deg, rgba(255, 179, 71, 0.08), rgba(255, 140, 50, 0.04));
-            border: 1px solid rgba(255, 179, 71, 0.25);
-        }
-        .support-card.coffee::before {
-            background: linear-gradient(90deg, transparent, rgba(255, 179, 71, 0.15), transparent);
-        }
-        .support-card.coffee:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(255, 179, 71, 0.2);
-            border-color: rgba(255, 179, 71, 0.5);
-        }
-        .support-card.coffee:active {
-            transform: translateY(0);
-        }
-        .support-card.project {
-            background: linear-gradient(135deg, rgba(0, 229, 255, 0.08), rgba(176, 0, 255, 0.08));
-            border: 1px solid rgba(0, 229, 255, 0.25);
-        }
-        .support-card.project::before {
-            background: linear-gradient(90deg, transparent, rgba(0, 229, 255, 0.15), transparent);
-        }
-        .support-card.project:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(0, 229, 255, 0.2);
-            border-color: rgba(0, 229, 255, 0.5);
-        }
-        .support-card.project:active {
-            transform: translateY(0);
-        }
-        .support-card.vtb {
-            background: linear-gradient(135deg, rgba(0, 102, 204, 0.08), rgba(0, 153, 204, 0.08));
-            border: 1px solid rgba(0, 102, 204, 0.25);
-        }
-        .support-card.vtb::before {
-            background: linear-gradient(90deg, transparent, rgba(0, 102, 204, 0.15), transparent);
-        }
-        .support-card.vtb:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(0, 102, 204, 0.2);
-            border-color: rgba(0, 102, 204, 0.5);
-        }
-        .support-card.vtb:active {
-            transform: translateY(0);
-        }
-        .support-card-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            flex-shrink: 0;
-        }
-        .support-card.coffee .support-card-icon {
-            background: linear-gradient(135deg, rgba(255, 179, 71, 0.2), rgba(255, 140, 50, 0.1));
-            box-shadow: 0 4px 15px rgba(255, 179, 71, 0.15);
-        }
-        .support-card.project .support-card-icon {
-            background: linear-gradient(135deg, rgba(0, 229, 255, 0.2), rgba(176, 0, 255, 0.1));
-            box-shadow: 0 4px 15px rgba(0, 229, 255, 0.15);
-        }
-        .support-card.vtb .support-card-icon {
-            background: linear-gradient(135deg, rgba(0, 102, 204, 0.2), rgba(0, 153, 204, 0.1));
-            box-shadow: 0 4px 15px rgba(0, 102, 204, 0.15);
-        }
-        .support-card-content {
-            flex: 1;
-            min-width: 0;
-        }
-        .support-card-title {
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
-        .support-card.coffee .support-card-title {
-            color: var(--gold);
-        }
-        .support-card.project .support-card-title {
-            background: linear-gradient(135deg, var(--cyan), var(--purple));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .support-card.vtb .support-card-title {
-            color: #0099cc;
-        }
-        .support-card-desc {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-        }
-        .support-card-price {
-            font-family: 'Orbitron', monospace;
-            font-size: 0.9rem;
-            font-weight: 700;
-            padding: 8px 14px;
-            border-radius: 10px;
-            flex-shrink: 0;
-        }
-        .support-card.coffee .support-card-price {
-            background: rgba(255, 179, 71, 0.15);
-            color: var(--gold);
-            border: 1px solid rgba(255, 179, 71, 0.3);
-        }
-        .support-card.project .support-card-price {
-            background: rgba(0, 229, 255, 0.1);
-            color: var(--cyan);
-            border: 1px solid rgba(0, 229, 255, 0.25);
-        }
-        .support-card.vtb .support-card-price {
-            background: rgba(0, 102, 204, 0.15);
-            color: #0099cc;
-            border: 1px solid rgba(0, 102, 204, 0.3);
-        }
-        .support-note {
-            background: rgba(20, 25, 40, 0.4);
-            border: 1px dashed var(--card-border);
-            border-radius: 16px;
-            padding: 16px 18px;
-        }
-        .support-note p {
-            color: var(--text-secondary);
-            font-size: 0.85rem;
-            line-height: 1.5;
-            text-align: center;
-        }
-        .qr-section {
-            text-align: center;
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 1px dashed rgba(255, 255, 255, 0.1);
-        }
-        .qr-code {
-            width: 200px;
-            height: 200px;
-            margin: 0 auto 12px;
-            padding: 12px;
-            background: #fff;
-            border-radius: 16px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-        }
-        .qr-code img {
-            width: 100%;
-            height: 100%;
-            display: block;
-        }
-        .qr-label {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            margin-bottom: 4px;
-        }
-        .qr-hint {
-            font-size: 0.75rem;
-            color: rgba(255, 255, 255, 0.4);
-        }
-        .amount-modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(5, 5, 15, 0.9);
-            backdrop-filter: blur(8px);
-            z-index: 3000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-        .amount-modal-overlay.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-        .amount-modal {
-            background: linear-gradient(180deg, #0f1525 0%, #0a0e1a 100%);
-            border: 1px solid var(--card-border);
-            border-radius: 28px;
-            padding: 30px 24px;
-            max-width: 400px;
-            width: 100%;
-            transform: translateY(30px) scale(0.95);
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        .amount-modal-overlay.active .amount-modal {
-            transform: translateY(0) scale(1);
-        }
-        .amount-modal-header {
-            text-align: center;
-            margin-bottom: 24px;
-        }
-        .amount-modal-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.2rem;
-            font-weight: 700;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 8px;
-            background: linear-gradient(135deg, var(--cyan), var(--purple));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .amount-modal-subtitle {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-        .amount-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-        .amount-btn {
-            padding: 16px;
-            border: 1px solid rgba(0, 229, 255, 0.2);
-            border-radius: 14px;
-            background: rgba(20, 20, 40, 0.6);
-            color: var(--text-primary);
-            font-family: 'Orbitron', monospace;
-            font-size: 1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .amount-btn:hover {
-            border-color: var(--cyan);
-            background: rgba(0, 229, 255, 0.1);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0, 229, 255, 0.2);
-        }
-        .amount-btn:active {
-            transform: translateY(0);
-        }
-        .amount-modal-cancel {
-            width: 100%;
-            padding: 14px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 14px;
-            background: rgba(20, 20, 40, 0.6);
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .amount-modal-cancel:hover {
-            border-color: rgba(255, 255, 255, 0.2);
-            color: var(--text-primary);
-        }
+
         .fade-in-up { opacity: 0; transform: translateY(20px); animation: fadeInUp 0.6s ease forwards; }
         @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
         .page.active .fade-in-up:nth-child(1) { animation-delay: 0.1s; }
@@ -672,6 +472,7 @@
         .page.active .fade-in-up:nth-child(3) { animation-delay: 0.3s; }
         .page.active .fade-in-up:nth-child(4) { animation-delay: 0.4s; }
         .page.active .fade-in-up:nth-child(5) { animation-delay: 0.5s; }
+
         @media (max-width: 380px) {
             .banner-title { font-size: 1.6rem; letter-spacing: 4px; }
             .featured-title { font-size: 1.4rem; }
@@ -679,7 +480,6 @@
             .page-title { font-size: 1.8rem; }
             .login-logo { font-size: 2.2rem; }
             .voice-toggle-btn { font-size: 0.9rem; letter-spacing: 1px; padding: 18px 20px; }
-            .category-tab { padding: 8px 12px; font-size: 0.8rem; }
         }
     </style>
 </head>
@@ -696,7 +496,12 @@
     <div class="login-container">
         <div class="login-banner">
             <div class="login-banner-bg"></div>
-            <div class="login-geometric"><div class="geo-shape"></div><div class="geo-shape"></div><div class="geo-shape"></div><div class="geo-shape"></div></div>
+            <div class="login-geometric">
+                <div class="geo-shape"></div>
+                <div class="geo-shape"></div>
+                <div class="geo-shape"></div>
+                <div class="geo-shape"></div>
+            </div>
             <div style="position: relative; z-index: 2; text-align: center;">
                 <div class="login-logo">EVGENII</div>
                 <div class="login-slogan">Где заканчиваюсь я — и начинается ИИ</div>
@@ -713,12 +518,23 @@
 <!-- ГЛАВНАЯ -->
 <div class="page" id="homePage">
     <div class="header fade-in-up">
-        <div class="header-left"><div class="header-time" id="headerTime">00:00</div><div class="header-greeting" id="headerGreeting">ДОБРЫЙ ДЕНЬ</div></div>
-        <div class="header-right"><div class="header-name-label">ГОСТЬ</div><div class="header-name" id="headerName">ИМЯ</div></div>
+        <div class="header-left">
+            <div class="header-time" id="headerTime">00:00</div>
+            <div class="header-greeting" id="headerGreeting">ДОБРЫЙ ДЕНЬ</div>
+        </div>
+        <div class="header-right">
+            <div class="header-name-label">ГОСТЬ</div>
+            <div class="header-name" id="headerName">ИМЯ</div>
+        </div>
     </div>
     <div class="banner fade-in-up">
         <div class="banner-content">
-            <div class="banner-geometric"><div class="geo-shape-banner"></div><div class="geo-shape-banner"></div><div class="geo-shape-banner"></div><div class="geo-shape-banner"></div></div>
+            <div class="banner-geometric">
+                <div class="geo-shape-banner"></div>
+                <div class="geo-shape-banner"></div>
+                <div class="geo-shape-banner"></div>
+                <div class="geo-shape-banner"></div>
+            </div>
             <div class="banner-title">EVGENII</div>
             <div class="banner-slogan">Где заканчиваюсь я — и начинается ИИ</div>
         </div>
@@ -730,208 +546,393 @@
     <div class="quick-access-section fade-in-up">
         <div class="section-title">БЫСТРЫЙ ДОСТУП</div>
         <div class="quick-grid">
-            <div class="quick-tile" onclick="navigateTo('tracksPage')"><div class="tile-icon tracks">🎵</div><div class="tile-title">Все треки</div><div class="tile-desc">Полная дискография</div></div>
-            <div class="quick-tile" onclick="navigateTo('instrumentalsPage')"><div class="tile-icon instrumental">🎹</div><div class="tile-title">Инструменталы</div><div class="tile-desc">Музыка без слов</div></div>
-            <div class="quick-tile" onclick="navigateTo('subscribersPage')"><div class="tile-icon subscribers">🎤</div><div class="tile-title">Дай голос</div><div class="tile-desc">Твой текст — наш голос</div></div>
-            <div class="quick-tile" onclick="navigateTo('communityPage')"><div class="tile-icon community">🌐</div><div class="tile-title">Сообщества</div><div class="tile-desc">Bip & Telegram</div></div>
-            <div class="quick-tile" onclick="navigateTo('contactPage')"><div class="tile-icon contact">✉️</div><div class="tile-title">Связь</div><div class="tile-desc">Написать автору</div></div>
-            <div class="quick-tile disabled"><div class="tile-icon" style="background:rgba(0,229,255,0.15);color:var(--cyan)">💬</div><div class="tile-title">Чат</div><div class="tile-desc">Скоро будет доступен</div></div>
-            <div class="quick-tile" onclick="navigateTo('supportPage')"><div class="tile-icon support">💜</div><div class="tile-title">Поддержать</div><div class="tile-desc">Сказать спасибо</div></div>
-            <div class="quick-tile" onclick="navigateTo('aboutPage')"><div class="tile-icon about">ℹ️</div><div class="tile-title">О проекте</div><div class="tile-desc">Узнать больше</div></div>
+            <div class="quick-tile" onclick="navigateTo('tracksPage')">
+                <div class="tile-icon tracks">🎵</div>
+                <div class="tile-title">Все треки</div>
+                <div class="tile-desc">Полная дискография</div>
+            </div>
+            <div class="quick-tile" onclick="navigateTo('instrumentalsPage')">
+                <div class="tile-icon instrumental">🎹</div>
+                <div class="tile-title">Инструменталы</div>
+                <div class="tile-desc">Музыка без слов</div>
+            </div>
+            <div class="quick-tile" onclick="navigateTo('subscribersPage')">
+                <div class="tile-icon subscribers">🎤</div>
+                <div class="tile-title">Дай голос</div>
+                <div class="tile-desc">Твой текст — наш голос</div>
+            </div>
+            <div class="quick-tile" onclick="navigateTo('communityPage')">
+                <div class="tile-icon community">🌐</div>
+                <div class="tile-title">Сообщества</div>
+                <div class="tile-desc">Bip & Telegram</div>
+            </div>
+            <div class="quick-tile" onclick="navigateTo('contactPage')">
+                <div class="tile-icon contact">✉️</div>
+                <div class="tile-title">Связь</div>
+                <div class="tile-desc">Написать автору</div>
+            </div>
+            <div class="quick-tile disabled">
+                <div class="tile-icon chat">💬</div>
+                <div class="tile-title">Чат</div>
+                <div class="tile-desc">Скоро будет доступен</div>
+            </div>
+            <div class="quick-tile disabled">
+                <div class="tile-icon support">💜</div>
+                <div class="tile-title">Поддержать</div>
+                <div class="tile-desc">Скоро будет доступно</div>
+            </div>
+            <div class="quick-tile" onclick="navigateTo('aboutPage')">
+                <div class="tile-icon about">ℹ️</div>
+                <div class="tile-title">О проекте</div>
+                <div class="tile-desc">Узнать больше</div>
+            </div>
         </div>
     </div>
     <button class="logout-btn" id="logoutBtn">ВЫЙТИ</button>
 </div>
 
-<!-- ВСЕ ТРЕКИ -->
+<!-- ТРЕКИ -->
 <div class="page" id="tracksPage">
-    <div class="page-header fade-in-up"><button class="back-btn" onclick="goBack()">←</button><div class="page-title">Все треки</div></div>
-    <div class="featured-release fade-in-up" id="featuredRelease" onclick="playNewRelease()"></div>
-    <div class="category-tabs fade-in-up" id="categoryTabs">
-        <button class="category-tab active" data-category="all" onclick="switchCategory('all')"><span class="tab-icon">🎧</span><span>Все</span><span class="tab-count" id="countAll">0</span></button>
-        <button class="category-tab" data-category="tracks" onclick="switchCategory('tracks')"><span class="tab-icon">🎵</span><span>Треки</span><span class="tab-count" id="countTracks">0</span></button>
-        <button class="category-tab" data-category="instrumentals" onclick="switchCategory('instrumentals')"><span class="tab-icon">🎹</span><span>Инструменталы</span><span class="tab-count" id="countInstrumentals">0</span></button>
-        <button class="category-tab" data-category="subscribers" onclick="switchCategory('subscribers')"><span class="tab-icon">🎤</span><span>Дай голос</span><span class="tab-count" id="countSubscribers">0</span></button>
+    <div class="page-header fade-in-up">
+        <button class="back-btn" onclick="goBack()">←</button>
+        <div class="page-title">Музыка</div>
     </div>
-    <div class="tracks-list fade-in-up" id="allTracksList"></div>
+    <div class="featured-release fade-in-up" id="featuredRelease" onclick="playNewRelease()"></div>
+    <div class="tracks-list-section fade-in-up">
+        <div class="section-title">ВСЕ ТРЕКИ</div>
+        <div class="tracks-list" id="tracksList"></div>
+    </div>
 </div>
 
 <!-- ИНСТРУМЕНТАЛЫ -->
 <div class="page" id="instrumentalsPage">
-    <div class="page-header fade-in-up"><button class="back-btn" onclick="goBack()">←</button><div class="page-title">Инструменталы</div></div>
-    <div class="intro-block gold fade-in-up"><div class="intro-title gold">БЕЗ СЛОВ · ТОЛЬКО ЗВУК</div><div class="intro-text">Музыка, в которой говорят не тексты, а эмоции. Каждый трек — отдельное настроение, атмосфера и история без единого слова.</div></div>
+    <div class="page-header fade-in-up">
+        <button class="back-btn" onclick="goBack()">←</button>
+        <div class="page-title">Инструменталы</div>
+    </div>
+    <div class="intro-block gold fade-in-up">
+        <div class="intro-title gold">БЕЗ СЛОВ · ТОЛЬКО ЗВУК</div>
+        <div class="intro-text">Музыка, в которой говорят не тексты, а эмоции. Каждый трек — отдельное настроение, атмосфера и история без единого слова.</div>
+    </div>
     <div class="section-title fade-in-up">КОЛЛЕКЦИЯ</div>
     <div class="tracks-list fade-in-up" id="instrumentalsList"></div>
 </div>
 
 <!-- ДАЙ ГОЛОС -->
 <div class="page" id="subscribersPage">
-    <div class="page-header fade-in-up"><button class="back-btn" onclick="goBack()">←</button><div class="page-title">Дай голос</div></div>
-    <div class="intro-block pink fade-in-up"><div class="intro-title pink">ТВОЙ ТЕКСТ — НАШ ГОЛОС</div><div class="intro-text">Присылай свой текст и стиль, в котором ты хотел бы его услышать. Мы дадим ему голос через ИИ — и твой текст зазвучит.</div></div>
-    <button class="voice-toggle-btn fade-in-up" id="voiceToggleBtn" onclick="toggleVoiceForm()"><span class="btn-icon">🎤</span><span id="voiceToggleText">ПРИСЛАТЬ СВОЙ ТЕКСТ</span><span class="btn-arrow">▼</span></button>
+    <div class="page-header fade-in-up">
+        <button class="back-btn" onclick="goBack()">←</button>
+        <div class="page-title">Дай голос</div>
+    </div>
+    <div class="intro-block pink fade-in-up">
+        <div class="intro-title pink">ТВОЙ ТЕКСТ — НАШ ГОЛОС</div>
+        <div class="intro-text">Присылай свой текст и стиль, в котором ты хотел бы его услышать. Мы дадим ему голос через ИИ — и твой текст зазвучит.</div>
+    </div>
+
+    <button class="voice-toggle-btn fade-in-up" id="voiceToggleBtn" onclick="toggleVoiceForm()">
+        <span class="btn-icon">🎤</span>
+        <span id="voiceToggleText">ПРИСЛАТЬ СВОЙ ТЕКСТ</span>
+        <span class="btn-arrow">▼</span>
+    </button>
+
     <div class="voice-form-wrapper" id="voiceFormWrapper">
         <div class="voice-form-container">
-            <h3 style="margin-bottom:20px;font-family:'Orbitron';letter-spacing:2px;text-align:center;font-size:1rem;color:var(--pink)">ОТПРАВИТЬ НА ОБРАБОТКУ</h3>
+            <h3 style="margin-bottom: 20px; font-family: 'Orbitron'; letter-spacing: 2px; text-align: center; font-size: 1rem; color: var(--pink);">ОТПРАВИТЬ НА ОБРАБОТКУ</h3>
             <form id="voiceForm">
-                <div class="form-group"><label class="form-label">Твоё имя</label><input type="text" class="form-input" name="name" placeholder="Как тебя зовут?" required maxlength="50"></div>
-                <div class="form-group"><label class="form-label">Контакт (Telegram / Email)</label><input type="text" class="form-input" name="contact" placeholder="Чтобы мы могли прислать готовый трек" required maxlength="100"></div>
-                <div class="form-group"><label class="form-label">Стиль исполнения</label><select class="form-select" name="style" required><option value="" disabled selected>Выбери стиль</option><option value="Рок">Рок</option><option value="Поп">Поп</option><option value="Рэп">Рэп</option><option value="Акустика">Акустика</option><option value="Электроника">Электроника</option><option value="Инди">Инди</option><option value="Метал">Метал</option><option value="Другое">Другое (укажу в комментарии)</option></select></div>
-                <div class="form-group"><label class="form-label">Текст песни</label><textarea class="form-textarea" name="lyrics" placeholder="Вставь сюда свой текст..." required maxlength="3000" style="min-height:180px"></textarea></div>
-                <div class="form-group"><label class="form-label">Комментарий (необязательно)</label><textarea class="form-textarea" name="comment" placeholder="О чём трек? Какое настроение? Любые пожелания..." maxlength="500" style="min-height:80px"></textarea></div>
-                <div class="vpn-warning"><div class="vpn-warning-icon">🔐</div><div class="vpn-warning-text"><strong>Важно:</strong> Заявки отправляются в Telegram. Включите <strong>VPN</strong> для отправки.</div></div>
+                <div class="form-group">
+                    <label class="form-label">Твоё имя</label>
+                    <input type="text" class="form-input" name="name" placeholder="Как тебя зовут?" required maxlength="50">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Контакт (Telegram / Email)</label>
+                    <input type="text" class="form-input" name="contact" placeholder="Чтобы мы могли прислать готовый трек" required maxlength="100">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Стиль исполнения</label>
+                    <select class="form-select" name="style" required>
+                        <option value="" disabled selected>Выбери стиль</option>
+                        <option value="Рок">Рок</option>
+                        <option value="Поп">Поп</option>
+                        <option value="Рэп">Рэп</option>
+                        <option value="Акустика">Акустика</option>
+                        <option value="Электроника">Электроника</option>
+                        <option value="Инди">Инди</option>
+                        <option value="Метал">Метал</option>
+                        <option value="Другое">Другое (укажу в комментарии)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Текст песни</label>
+                    <textarea class="form-textarea" name="lyrics" placeholder="Вставь сюда свой текст..." required maxlength="3000" style="min-height: 180px;"></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Комментарий (необязательно)</label>
+                    <textarea class="form-textarea" name="comment" placeholder="О чём трек? Какое настроение? Любые пожелания..." maxlength="500" style="min-height: 80px;"></textarea>
+                </div>
+                <div class="vpn-warning">
+                    <div class="vpn-warning-icon">🔐</div>
+                    <div class="vpn-warning-text"><strong>Важно:</strong> Заявки отправляются в Telegram. Включите <strong>VPN</strong> для отправки.</div>
+                </div>
                 <button type="submit" class="submit-btn pink" id="voiceSubmitBtn"><span>ОТПРАВИТЬ ТЕКСТ</span></button>
                 <div class="form-status" id="voiceFormStatus"></div>
             </form>
         </div>
     </div>
+
     <div class="section-title fade-in-up">УЖЕ ЗАЗВУЧАЛИ</div>
     <div class="tracks-list fade-in-up" id="subscribersList"></div>
 </div>
 
+<!-- ПОДДЕРЖКА -->
+<div class="page" id="supportPage">
+    <div class="page-header fade-in-up">
+        <button class="back-btn" onclick="goBack()">←</button>
+        <div class="page-title">Поддержать</div>
+    </div>
+    <div class="intro-block magenta fade-in-up">
+        <div class="intro-title magenta">ПОМОЧЬ ПРОЕКТУ</div>
+        <div class="intro-text">EVGENII — независимый проект. Здесь нет лейблов, продюсеров и спонсоров. Только я, мои тексты и ИИ, который их поёт. Каждая поддержка — это возможность создавать больше.</div>
+    </div>
+    <div class="section-title fade-in-up">СПОСОБЫ ПОДДЕРЖКИ</div>
+    <div class="support-card fade-in-up">
+        <div class="support-card-header">
+            <div class="support-card-icon boosty">☕</div>
+            <div>
+                <div class="support-card-title">Купить мне кофе</div>
+                <div class="support-card-desc">Boosty — регулярная поддержка и эксклюзивный контент</div>
+            </div>
+        </div>
+        <button class="support-card-btn" onclick="copyToClipboard('https://boosty.to/evgenii', this)">Скопировать ссылку</button>
+        <div class="support-copy-hint">Нажми — и ссылка скопируется</div>
+    </div>
+    <div class="support-card fade-in-up">
+        <div class="support-card-header">
+            <div class="support-card-icon tinkoff">💳</div>
+            <div>
+                <div class="support-card-title">Перевод на карту</div>
+                <div class="support-card-desc">Tinkoff / Сбер — быстрый перевод</div>
+            </div>
+        </div>
+        <button class="support-card-btn" onclick="copyToClipboard('2200 1234 5678 9012', this)">Скопировать номер карты</button>
+        <div class="support-copy-hint">Tinkoff · на имя Евгений</div>
+    </div>
+    <div class="support-card fade-in-up">
+        <div class="support-card-header">
+            <div class="support-card-icon crypto">₿</div>
+            <div>
+                <div class="support-card-title">Криптовалюта</div>
+                <div class="support-card-desc">USDT TRC-20 — для тех, кто ценит приватность</div>
+            </div>
+        </div>
+        <button class="support-card-btn" onclick="copyToClipboard('TXyz123WalletAddressHere456Abc', this)">Скопировать кошелёк</button>
+        <div class="support-copy-hint">USDT · сеть TRC-20</div>
+    </div>
+    <div class="support-thanks fade-in-up">
+        <div class="support-thanks-title">💜 Благодарности</div>
+        <div class="support-thanks-list">
+            <div class="support-thanks-item">Алексей</div>
+            <div class="support-thanks-item">Мария</div>
+            <div class="support-thanks-item">Дмитрий</div>
+            <div class="support-thanks-item">Анна</div>
+            <div class="support-thanks-item">Сергей</div>
+            <div class="support-thanks-item">+ ещё 12</div>
+        </div>
+    </div>
+</div>
+
 <!-- О ПРОЕКТЕ -->
 <div class="page" id="aboutPage">
-    <div class="page-header fade-in-up"><button class="back-btn" onclick="goBack()">←</button><div class="page-title">О проекте</div></div>
+    <div class="page-header fade-in-up">
+        <button class="back-btn" onclick="goBack()">←</button>
+        <div class="page-title">О проекте</div>
+    </div>
     <div class="about-content fade-in-up">
-        <div class="about-card"><p><span class="evgenii-title">EVGENII</span> — это эксперимент на стыке человеческих эмоций и искусственного интеллекта.</p><div class="about-quote">«Я придумываю текст и стиль исполнения. А выучить и воплотить в песню доверяю ИИ.»</div></div>
-        <div class="about-card"><p>Искусственный интеллект становится моим <span class="highlight">голосом</span>. Он заучивает мои слова, учится чувствовать ритм, подбирать интонации.</p><p>Это не замена человеку — это <span class="highlight">новый инструмент выражения</span>.</p></div>
-        <div class="about-card"><p>Вместе мы создаём что-то третье. Не совсем человеческое, не совсем машинное. Что-то среднее, где технологии усиливают эмоции, а не заменяют их.</p></div>
+        <div class="about-card">
+            <p><span class="evgenii-title">EVGENII</span> — это эксперимент на стыке человеческих эмоций и искусственного интеллекта.</p>
+            <div class="about-quote">«Я придумываю текст и стиль исполнения. А выучить и воплотить в песню доверяю ИИ.»</div>
+        </div>
+        <div class="about-card">
+            <p>Искусственный интеллект становится моим <span class="highlight">голосом</span>. Он заучивает мои слова, учится чувствовать ритм, подбирать интонации.</p>
+            <p>Это не замена человеку — это <span class="highlight">новый инструмент выражения</span>.</p>
+        </div>
+        <div class="about-card">
+            <p>Вместе мы создаём что-то третье. Не совсем человеческое, не совсем машинное. Что-то среднее, где технологии усиливают эмоции, а не заменяют их.</p>
+        </div>
     </div>
 </div>
 
 <!-- СООБЩЕСТВА -->
 <div class="page" id="communityPage">
-    <div class="page-header fade-in-up"><button class="back-btn" onclick="goBack()">←</button><div class="page-title">Сообщества</div></div>
+    <div class="page-header fade-in-up">
+        <button class="back-btn" onclick="goBack()">←</button>
+        <div class="page-title">Сообщества</div>
+    </div>
     <div class="community-content fade-in-up">
         <div class="community-intro"><p>Присоединяйтесь к нашим сообществам, чтобы быть в курсе новых релизов и эксклюзивного контента</p></div>
-        <a href="#" class="community-card coming-soon" onclick="event.preventDefault()"><div class="community-icon bip">🎵</div><div class="community-info"><div class="community-name">Bip</div><div class="community-desc">Музыкальная платформа</div><span class="community-badge">Скоро</span></div><div class="community-arrow">→</div></a>
-        <a href="#" class="community-card coming-soon" onclick="event.preventDefault()"><div class="community-icon telegram">✈️</div><div class="community-info"><div class="community-name">Telegram</div><div class="community-desc">Новости и обновления</div><span class="community-badge">Скоро</span></div><div class="community-arrow">→</div></a>
-        <a href="#" class="community-card coming-soon" onclick="event.preventDefault()"><div class="community-icon instagram">📷</div><div class="community-info"><div class="community-name">Instagram</div><div class="community-desc">Визуальный контент</div><span class="community-badge">Скоро</span></div><div class="community-arrow">→</div></a>
+        <a href="#" class="community-card coming-soon" onclick="event.preventDefault();">
+            <div class="community-icon bip">🎵</div>
+            <div class="community-info"><div class="community-name">Bip</div><div class="community-desc">Музыкальная платформа</div><span class="community-badge">Скоро</span></div>
+            <div class="community-arrow">→</div>
+        </a>
+        <a href="#" class="community-card coming-soon" onclick="event.preventDefault();">
+            <div class="community-icon telegram">✈️</div>
+            <div class="community-info"><div class="community-name">Telegram</div><div class="community-desc">Новости и обновления</div><span class="community-badge">Скоро</span></div>
+            <div class="community-arrow">→</div>
+        </a>
+        <a href="#" class="community-card coming-soon" onclick="event.preventDefault();">
+            <div class="community-icon instagram">📷</div>
+            <div class="community-info"><div class="community-name">Instagram</div><div class="community-desc">Визуальный контент</div><span class="community-badge">Скоро</span></div>
+            <div class="community-arrow">→</div>
+        </a>
+    </div>
+</div>
+
+<!-- ЧАТ -->
+<div class="page" id="chatPage">
+    <div class="page-header fade-in-up">
+        <button class="back-btn" onclick="goBack()">←</button>
+        <div class="page-title">Чат</div>
+        <div class="chat-online-indicator">
+            <div class="online-dot"></div>
+            <span>Онлайн</span>
+        </div>
+    </div>
+    <div class="chat-status offline" id="chatStatus">⚠️ Supabase не настроен</div>
+    <div class="chat-container fade-in-up">
+        <div class="chat-messages" id="chatMessages">
+            <div class="chat-loading" id="chatLoading" style="display:none;">
+                <div class="chat-loading-spinner"></div>
+                <span>Загрузка сообщений...</span>
+            </div>
+        </div>
+        <div class="chat-input-container">
+            <input type="text" class="chat-input" id="chatInput" placeholder="Введите сообщение..." maxlength="500">
+            <button class="chat-send-btn" onclick="sendMessage()" id="sendBtn">
+                <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+            </button>
+        </div>
     </div>
 </div>
 
 <!-- КОНТАКТЫ -->
 <div class="page" id="contactPage">
-    <div class="page-header fade-in-up"><button class="back-btn" onclick="goBack()">←</button><div class="page-title">Связь</div></div>
-    <div class="contact-intro fade-in-up"><p>Есть вопрос, предложение или хотите сотрудничать? Напишите мне — я обязательно отвечу!</p></div>
+    <div class="page-header fade-in-up">
+        <button class="back-btn" onclick="goBack()">←</button>
+        <div class="page-title">Связь</div>
+    </div>
+    <div class="contact-intro fade-in-up">
+        <p>Есть вопрос, предложение или хотите сотрудничать? Напишите мне — я обязательно отвечу!</p>
+    </div>
     <div class="contact-form-container fade-in-up">
-        <h3 style="margin-bottom:20px;font-family:'Orbitron';letter-spacing:2px;text-align:center">НАПИСАТЬ АВТОРУ</h3>
+        <h3 style="margin-bottom: 20px; font-family: 'Orbitron'; letter-spacing: 2px; text-align: center;">НАПИСАТЬ АВТОРУ</h3>
         <form id="contactForm">
-            <div class="form-group"><label class="form-label">Ваше имя</label><input type="text" class="form-input" name="name" placeholder="Как к вам обращаться?" required maxlength="50"></div>
-            <div class="form-group"><label class="form-label">Email или Telegram</label><input type="text" class="form-input" name="contact" placeholder="Для обратной связи" required maxlength="100"></div>
-            <div class="form-group"><label class="form-label">Сообщение</label><textarea class="form-textarea" name="message" placeholder="Напишите ваш вопрос, предложение или отзыв..." required maxlength="1000"></textarea></div>
-            <div class="vpn-warning"><div class="vpn-warning-icon">🔐</div><div class="vpn-warning-text"><strong>Важно:</strong> Сообщения отправляются в Telegram. Включите <strong>VPN</strong> для отправки.</div></div>
+            <div class="form-group">
+                <label class="form-label">Ваше имя</label>
+                <input type="text" class="form-input" name="name" placeholder="Как к вам обращаться?" required maxlength="50">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Email или Telegram</label>
+                <input type="text" class="form-input" name="contact" placeholder="Для обратной связи" required maxlength="100">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Сообщение</label>
+                <textarea class="form-textarea" name="message" placeholder="Напишите ваш вопрос, предложение или отзыв..." required maxlength="1000"></textarea>
+            </div>
+            <div class="vpn-warning">
+                <div class="vpn-warning-icon">🔐</div>
+                <div class="vpn-warning-text"><strong>Важно:</strong> Сообщения отправляются в Telegram. Включите <strong>VPN</strong> для отправки.</div>
+            </div>
             <button type="submit" class="submit-btn" id="submitBtn"><span>ОТПРАВИТЬ СООБЩЕНИЕ</span></button>
             <div class="form-status" id="formStatus"></div>
         </form>
     </div>
 </div>
 
-<!-- ПОДДЕРЖАТЬ -->
-<div class="page" id="supportPage">
-    <div class="page-header fade-in-up">
-        <button class="back-btn" onclick="goBack()">←</button>
-        <div class="page-title">Поддержать</div>
-    </div>
-    <div class="support-intro fade-in-up">
-        <p>Твоя поддержка помогает создавать новую музыку. Спасибо, что ты с нами!</p>
-    </div>
-    <div class="support-cards fade-in-up">
-        <div class="support-card coffee" onclick="openSupportLink('coffee')">
-            <div class="support-card-icon">☕</div>
-            <div class="support-card-content">
-                <div class="support-card-title">Автору на кофе</div>
-                <div class="support-card-desc">Быстрый способ сказать спасибо</div>
-            </div>
-            <div class="support-card-price">100 ₽</div>
-        </div>
-        <div class="support-card project" onclick="openSupportLink('project')">
-            <div class="support-card-icon">💜</div>
-            <div class="support-card-content">
-                <div class="support-card-title">Поддержать проект</div>
-                <div class="support-card-desc">Помочь развитию и новым релизам</div>
-            </div>
-            <div class="support-card-price">Выбрать сумму</div>
-        </div>
-        <div class="support-card vtb" onclick="openSupportLink('vtb')">
-            <div class="support-card-icon">🏦</div>
-            <div class="support-card-content">
-                <div class="support-card-title">ВТБ Оплата</div>
-                <div class="support-card-desc">QR-код для оплаты любой суммы</div>
-            </div>
-            <div class="support-card-price">Любая</div>
-        </div>
-    </div>
-    <div class="support-note fade-in-up">
-        <p>💳 Удобная оплата картой через ЮMoney. Спасибо за поддержку!</p>
-        <div class="qr-section">
-            <div class="qr-code">
-                <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://yoomoney.ru/quickpay/confirm.xml?receiver=4100119560778927&quickpay-form=shop&targets=Автору+на+кофе&sum=100&paymentType=AC" alt="QR код для оплаты">
-            </div>
-            <div class="qr-label">Отсканируй для оплаты 100 ₽</div>
-            <div class="qr-hint">Камера телефона → QR код</div>
-        </div>
-    </div>
-</div>
-
-<!-- ПЛЕЕРЫ -->
+<!-- ОБЫЧНЫЙ ПЛЕЕР -->
 <div class="sticky-player" id="stickyPlayer">
-    <div class="player-top-row"><div class="player-mini-cover" id="playerCover">🎵</div><div class="player-mini-info"><div class="player-mini-title" id="playerTitle">Название трека</div><div class="player-mini-artist" id="playerArtist">Исполнитель</div></div><div class="player-mini-controls"><button class="mini-skip-btn" onclick="skipBackward()"><svg viewBox="0 0 24 24"><path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z"/></svg></button><button class="mini-play-btn" onclick="togglePlay()"><svg viewBox="0 0 24 24" id="miniPlayIcon"><polygon points="5,3 19,12 5,21"/></svg></button><button class="mini-skip-btn" onclick="skipForward()"><svg viewBox="0 0 24 24"><path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z"/></svg></button></div></div>
-    <div class="player-progress-wrapper"><span class="player-time-mini" id="playerCurrentTime">0:00</span><div class="player-bar-container" onclick="seek(event)"><div class="player-bar-fill" id="playerBarFill"></div></div><span class="player-time-mini end" id="playerTotalTime">0:00</span></div>
-</div>
-<div class="floating-player gold" id="instrumentalPlayer">
-    <div class="floating-player-top"><div class="floating-player-cover gold" id="instPlayerCover">🎹</div><div class="floating-player-info"><div class="floating-player-label gold">Инструментал</div><div class="floating-player-title" id="instPlayerTitle">Название</div><div class="floating-player-tags" id="instPlayerTags"></div></div><div class="floating-player-controls"><button class="floating-skip-btn gold" onclick="instSkipBackward()"><svg viewBox="0 0 24 24"><path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z"/></svg></button><button class="floating-play-btn gold" onclick="instTogglePlay()"><svg viewBox="0 0 24 24" id="instPlayIcon"><polygon points="5,3 19,12 5,21"/></svg></button><button class="floating-skip-btn gold" onclick="instSkipForward()"><svg viewBox="0 0 24 24"><path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z"/></svg></button></div></div>
-    <div class="floating-player-description gold" id="instPlayerDescription">Описание трека...</div>
-    <div class="floating-progress-wrapper"><span class="floating-time" id="instCurrentTime">0:00</span><div class="floating-bar-container" onclick="instSeek(event)"><div class="floating-bar-fill gold" id="instBarFill"></div></div><span class="floating-time end" id="instTotalTime">0:00</span></div>
-</div>
-<div class="floating-player pink" id="subscriberPlayer">
-    <div class="floating-player-top"><div class="floating-player-cover pink" id="subPlayerCover">🎤</div><div class="floating-player-info"><div class="floating-player-label pink">Текст зазвучал</div><div class="floating-player-title" id="subPlayerTitle">Название</div><div class="floating-player-author pink" id="subPlayerAuthor">Автор текста</div><div class="floating-player-tags" id="subPlayerTags"></div></div><div class="floating-player-controls"><button class="floating-skip-btn pink" onclick="subSkipBackward()"><svg viewBox="0 0 24 24"><path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z"/></svg></button><button class="floating-play-btn pink" onclick="subTogglePlay()"><svg viewBox="0 0 24 24" id="subPlayIcon"><polygon points="5,3 19,12 5,21"/></svg></button><button class="floating-skip-btn pink" onclick="subSkipForward()"><svg viewBox="0 0 24 24"><path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z"/></svg></button></div></div>
-    <div class="floating-player-description pink" id="subPlayerDescription">Комментарий...</div>
-    <div class="floating-progress-wrapper"><span class="floating-time" id="subCurrentTime">0:00</span><div class="floating-bar-container" onclick="subSeek(event)"><div class="floating-bar-fill pink" id="subBarFill"></div></div><span class="floating-time end" id="subTotalTime">0:00</span></div>
+    <div class="player-top-row">
+        <div class="player-mini-cover" id="playerCover">🎵</div>
+        <div class="player-mini-info">
+            <div class="player-mini-title" id="playerTitle">Название трека</div>
+            <div class="player-mini-artist" id="playerArtist">Исполнитель</div>
+        </div>
+        <div class="player-mini-controls">
+            <button class="mini-skip-btn" onclick="skipBackward()"><svg viewBox="0 0 24 24"><path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z"/></svg></button>
+            <button class="mini-play-btn" onclick="togglePlay()"><svg viewBox="0 0 24 24" id="miniPlayIcon"><polygon points="5,3 19,12 5,21"/></svg></button>
+            <button class="mini-skip-btn" onclick="skipForward()"><svg viewBox="0 0 24 24"><path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z"/></svg></button>
+        </div>
+    </div>
+    <div class="player-progress-wrapper">
+        <span class="player-time-mini" id="playerCurrentTime">0:00</span>
+        <div class="player-bar-container" onclick="seek(event)"><div class="player-bar-fill" id="playerBarFill"></div></div>
+        <span class="player-time-mini end" id="playerTotalTime">0:00</span>
+    </div>
 </div>
 
-<!-- МОДАЛКА СКАЧИВАНИЯ -->
+<!-- ПЛЕЕР ИНСТРУМЕНТАЛОВ -->
+<div class="floating-player gold" id="instrumentalPlayer">
+    <div class="floating-player-top">
+        <div class="floating-player-cover gold" id="instPlayerCover">🎹</div>
+        <div class="floating-player-info">
+            <div class="floating-player-label gold">Инструментал</div>
+            <div class="floating-player-title" id="instPlayerTitle">Название</div>
+            <div class="floating-player-tags" id="instPlayerTags"></div>
+        </div>
+        <div class="floating-player-controls">
+            <button class="floating-skip-btn gold" onclick="instSkipBackward()"><svg viewBox="0 0 24 24"><path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z"/></svg></button>
+            <button class="floating-play-btn gold" onclick="instTogglePlay()"><svg viewBox="0 0 24 24" id="instPlayIcon"><polygon points="5,3 19,12 5,21"/></svg></button>
+            <button class="floating-skip-btn gold" onclick="instSkipForward()"><svg viewBox="0 0 24 24"><path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z"/></svg></button>
+        </div>
+    </div>
+    <div class="floating-player-description gold" id="instPlayerDescription">Описание трека...</div>
+    <div class="floating-progress-wrapper">
+        <span class="floating-time" id="instCurrentTime">0:00</span>
+        <div class="floating-bar-container" onclick="instSeek(event)"><div class="floating-bar-fill gold" id="instBarFill"></div></div>
+        <span class="floating-time end" id="instTotalTime">0:00</span>
+    </div>
+</div>
+
+<!-- ПЛЕЕР "ДАЙ ГОЛОС" -->
+<div class="floating-player pink" id="subscriberPlayer">
+    <div class="floating-player-top">
+        <div class="floating-player-cover pink" id="subPlayerCover">🎤</div>
+        <div class="floating-player-info">
+            <div class="floating-player-label pink">Текст зазвучал</div>
+            <div class="floating-player-title" id="subPlayerTitle">Название</div>
+            <div class="floating-player-author pink" id="subPlayerAuthor">Автор текста</div>
+            <div class="floating-player-tags" id="subPlayerTags"></div>
+        </div>
+        <div class="floating-player-controls">
+            <button class="floating-skip-btn pink" onclick="subSkipBackward()"><svg viewBox="0 0 24 24"><path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z"/></svg></button>
+            <button class="floating-play-btn pink" onclick="subTogglePlay()"><svg viewBox="0 0 24 24" id="subPlayIcon"><polygon points="5,3 19,12 5,21"/></svg></button>
+            <button class="floating-skip-btn pink" onclick="subSkipForward()"><svg viewBox="0 0 24 24"><path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z"/></svg></button>
+        </div>
+    </div>
+    <div class="floating-player-description pink" id="subPlayerDescription">Комментарий...</div>
+    <div class="floating-progress-wrapper">
+        <span class="floating-time" id="subCurrentTime">0:00</span>
+        <div class="floating-bar-container" onclick="subSeek(event)"><div class="floating-bar-fill pink" id="subBarFill"></div></div>
+        <span class="floating-time end" id="subTotalTime">0:00</span>
+    </div>
+</div>
+
+<!-- МОДАЛКА -->
 <div class="modal-overlay" id="downloadModal">
     <div class="modal-content">
         <div class="modal-header">СКАЧИВАНИЕ ТРЕКА</div>
-        <div class="modal-track-card"><div class="modal-cover" id="modalCover">🎵</div><div class="modal-track-title" id="modalTitle">Название</div><div class="modal-track-artist" id="modalArtist">EVGENII</div><div class="modal-track-duration" id="modalDuration">0:00</div></div>
+        <div class="modal-track-card">
+            <div class="modal-cover" id="modalCover">🎵</div>
+            <div class="modal-track-title" id="modalTitle">Название</div>
+            <div class="modal-track-artist" id="modalArtist">EVGENII</div>
+            <div class="modal-track-duration" id="modalDuration">0:00</div>
+        </div>
         <div class="modal-info-text">Трек будет загружен на ваше устройство в высоком качестве</div>
-        <div class="modal-warning"><div class="modal-warning-icon">⚠</div><div><div class="modal-warning-title">Внимание!</div><div class="modal-warning-text">Скачивание происходит не сразу.<br>Пожалуйста, подождите несколько секунд.</div></div></div>
+        <div class="modal-warning">
+            <div class="modal-warning-icon">⚠</div>
+            <div><div class="modal-warning-title">Внимание!</div><div class="modal-warning-text">Скачивание происходит не сразу.<br>Пожалуйста, подождите несколько секунд.</div></div>
+        </div>
         <button class="modal-download-btn" id="modalDownloadBtn" onclick="startDownload()">СКАЧАТЬ ТРЕК</button>
         <button class="modal-cancel-btn" onclick="closeDownloadModal()">Отмена</button>
-    </div>
-</div>
-
-<!-- МОДАЛКА ВЫБОРА СУММЫ -->
-<div class="amount-modal-overlay" id="amountModal">
-    <div class="amount-modal">
-        <div class="amount-modal-header">
-            <div class="amount-modal-title">Выбери сумму</div>
-            <div class="amount-modal-subtitle">Поддержи проект EVGENII</div>
-        </div>
-        <div class="amount-grid">
-            <button class="amount-btn" onclick="selectAmount(50)">50 ₽</button>
-            <button class="amount-btn" onclick="selectAmount(100)">100 ₽</button>
-            <button class="amount-btn" onclick="selectAmount(300)">300 ₽</button>
-            <button class="amount-btn" onclick="selectAmount(500)">500 ₽</button>
-            <button class="amount-btn" onclick="selectAmount(800)">800 ₽</button>
-            <button class="amount-btn" onclick="selectAmount(1000)">1000 ₽</button>
-        </div>
-        <button class="amount-modal-cancel" onclick="closeAmountModal()">Отмена</button>
-    </div>
-</div>
-
-<!-- МОДАЛКА ВТБ QR -->
-<div class="modal-overlay" id="vtbModal">
-    <div class="modal-content">
-        <div class="modal-header">ОПЛАТА ЧЕРЕЗ ВТБ</div>
-        <div style="text-align: center; margin-bottom: 20px;">
-            <p style="color: var(--text-secondary); margin-bottom: 20px;">Отсканируй QR-код для оплаты любой суммы</p>
-            <div class="qr-code" style="width: 250px; height: 250px; margin: 0 auto 16px;">
-                <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=https://c2c.cbrpay.ru/BS1I004T83DR0LNI9IFPMAQC4JP5BGCC" alt="QR код ВТБ">
-            </div>
-            <p style="font-size: 0.85rem; color: var(--text-secondary);">Любая сумма · Мгновенно · Безопасно</p>
-        </div>
-        <button class="modal-cancel-btn" onclick="closeVTBModal()">Закрыть</button>
     </div>
 </div>
 
@@ -951,7 +952,9 @@ try {
         const { createClient } = supabase;
         supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         console.log('✅ Supabase подключён');
-    } else { console.log('⚠️ Supabase не настроен'); }
+    } else {
+        console.log('⚠️ Supabase не настроен');
+    }
 } catch (e) { console.error('Ошибка Supabase:', e); }
 
 // ============================================
@@ -961,132 +964,78 @@ const TELEGRAM_BOT_TOKEN = '8620797853:AAGE9OaW5GIun46NFaGxxGMIUL8LRxPvTrY';
 const TELEGRAM_CHAT_ID = '5129595944';
 
 // ============================================
-// DATA - НОВЫЙ РЕЛИЗ
+// DATA - ТРЕКИ
 // ============================================
 const newRelease = {
     id: 'new-release', title: "Пустой код", subtitle: "New Release",
     file: "tracks/song.mp3", duration: "3:20", cover: "cover/cover.jpg"
 };
-
-// ============================================
-// DATA - ВСЕ ТРЕКИ EVGENII
-// ============================================
 const allTracks = [
-    { id: 2,  title: "Братья",                    subtitle: "", file: "tracks/song1.mp3",  duration: "4:19", cover: "cover/cover.jpg" },
-    { id: 3,  title: "А мне похуй",               subtitle: "", file: "tracks/song2.mp3",  duration: "3:11", cover: "cover/cover.jpg" },
-    { id: 4,  title: "Нейронный Дождь",           subtitle: "", file: "tracks/song3.mp3",  duration: "4:03", cover: "cover/cover.jpg" },
-    { id: 5,  title: "Бункер",                    subtitle: "", file: "tracks/song4.mp3",  duration: "3:01", cover: "cover/cover.jpg" },
-    { id: 6,  title: "Поезд на юг",               subtitle: "", file: "tracks/song5.mp3",  duration: "3:23", cover: "cover/cover.jpg" },
-    { id: 7,  title: "Сгоревший экран",           subtitle: "", file: "tracks/song6.mp3",  duration: "3:39", cover: "cover/cover.jpg" },
-    { id: 8,  title: "«Ёлка горит, а мне похуй»", subtitle: "", file: "tracks/song7.mp3",  duration: "2:30", cover: "cover/cover.jpg" },
-    { id: 9,  title: "19_11",                     subtitle: "", file: "tracks/song8.mp3",  duration: "2:59", cover: "cover/cover.jpg" },
-    { id: 10, title: "Маленький демон",           subtitle: "", file: "tracks/song9.mp3",  duration: "4:32", cover: "cover/cover.jpg" },
-    { id: 11, title: "Бот как поэт",              subtitle: "", file: "tracks/song10.mp3", duration: "2:34", cover: "cover/cover.jpg" },
-    { id: 12, title: "«Телефон Не Звонит»",       subtitle: "", file: "tracks/song11.mp3", duration: "3:14", cover: "cover/cover.jpg" },
-    { id: 13, title: "Белая ткань",               subtitle: "", file: "tracks/song12.mp3", duration: "3:28", cover: "cover/cover.jpg" },
-    { id: 14, title: "Лишний",                    subtitle: "", file: "tracks/song13.mp3", duration: "4:04", cover: "cover/cover.jpg" },
-    { id: 15, title: "Тишина",                    subtitle: "", file: "tracks/song14.mp3", duration: "4:48", cover: "cover/cover.jpg" },
-    { id: 16, title: "пусто",                     subtitle: "", file: "tracks/song15.mp3", duration: "0:00", cover: "cover/cover.jpg" },
-    { id: 17, title: "пусто",                     subtitle: "", file: "tracks/song16.mp3", duration: "0:00", cover: "cover/cover.jpg" },
-    { id: 18, title: "пусто",                     subtitle: "", file: "tracks/song17.mp3", duration: "0:00", cover: "cover/cover.jpg" }
+    { id: 2, title: "Братья", subtitle: "", file: "tracks/song1.mp3", duration: "4:19", cover: "cover/cover.jpg" },
+    { id: 3, title: "А мне похуй", subtitle: "", file: "tracks/song2.mp3", duration: "3:11", cover: "cover/cover.jpg" },
+    { id: 4, title: "Нейронный Дождь", subtitle: "", file: "tracks/song3.mp3", duration: "4:03", cover: "cover/cover.jpg" },
+    { id: 5, title: "Бункер", subtitle: "", file: "tracks/song4.mp3", duration: "3:01", cover: "cover/cover.jpg" },
+    { id: 6, title: "Поезд на юг", subtitle: "", file: "tracks/song5.mp3", duration: "3:23", cover: "cover/cover.jpg" },
+    { id: 7, title: "Сгоревший экран", subtitle: "", file: "tracks/song6.mp3", duration: "3:39", cover: "cover/cover.jpg" },
+    { id: 8, title: "«Ёлка горит, а мне похуй»", subtitle: "", file: "tracks/song7.mp3", duration: "2:30", cover: "cover/cover.jpg" },
+    { id: 9, title: "19_11", subtitle: "", file: "tracks/song8.mp3", duration: "2:59", cover: "cover/cover.jpg" },
+    { id: 10, title: "Маленький демон", subtitle: "", file: "tracks/song9.mp3", duration: "4:32", cover: "cover/cover.jpg" },
+    { id: 11, title: "Бот как поэт", subtitle: "", file: "tracks/song10.mp3", duration: "2:34", cover: "cover/cover.jpg" },
+    { id: 12, title: "«Телефон Не Звонит»", subtitle: "", file: "tracks/song11.mp3", duration: "3:14", cover: "cover/cover.jpg" },
+    { id: 13, title: "Белая ткань", subtitle: "", file: "tracks/song12.mp3", duration: "3:28", cover: "cover/cover.jpg" },
+    { id: 14, title: "Лишний", subtitle: "", file: "tracks/song13.mp3", duration: "4:04", cover: "cover/cover.jpg" },
+    { id: 15, title: "Тишина", subtitle: "", file: "tracks/song14.mp3", duration: "4:48", cover: "cover/cover.jpg" },
+    { id: 16, title: "пусто", subtitle: "", file: "tracks/song15.mp3", duration: "0:00", cover: "cover/cover.jpg" },
+    { id: 17, title: "пусто", subtitle: "", file: "tracks/song16.mp3", duration: "0:00", cover: "cover/cover.jpg" },
+    { id: 18, title: "пусто", subtitle: "", file: "tracks/song17.mp3", duration: "0:00", cover: "cover/cover.jpg" }
 ];
 
 // ============================================
 // DATA - ИНСТРУМЕНТАЛЫ
 // ============================================
 const instrumentalTracks = [
-    { id: 'inst-1', title: "Неоновая ночь", genre: "Ambient", mood: "Меланхолия", file: "instrumentals/instru.mp3", duration: "4:39", cover: "cover/cover.jpg", description: "Медленное погружение в огни ночного города. Синтезаторы плывут как туман над асфальтом, оставляя ощущение одиночества среди миллионов." },
-    { id: 'inst-2', title: "Цифровой рассвет", genre: "Electronic", mood: "Надежда", file: "instrumentals/instru1.mp3", duration: "5:10", cover: "cover/cover.jpg", description: "Первые лучи солнца сквозь экран. Тёплые пэды и мягкий бит создают атмосферу нового начала." },
-    { id: 'inst-3', title: "Память машин", genre: "Downtempo", mood: "Ностальгия", file: "instrumentals/instru2.mp3", duration: "5:13", cover: "cover/cover.jpg", description: "Что помнит искусственный интеллект, когда его выключают? Попытка услышать тишину между вычислениями." },
-    { id: 'inst-4', title: "Пустые улицы", genre: "Lo-Fi", mood: "Покой", file: "instrumentals/instru3.mp3", duration: "2:36", cover: "cover/cover.jpg", description: "Три часа ночи. Ни души. Только шуршение шин и далёкий гул города." },
-    { id: 'inst-5', title: "Эхо в серверной", genre: "Dark Ambient", mood: "Тревога", file: "instrumentals/server-echo.mp3", duration: "0:00", cover: "cover/cover.jpg", description: "Глубокий гул серверов, щелчки реле и низкочастотный дроун. Атмосфера заброшенного дата-центра." },
-    { id: 'inst-6', title: "Сон алгоритма", genre: "Ambient", mood: "Медитация", file: "instrumentals/algorithm-dream.mp3", duration: "0:00", cover: "cover/cover.jpg", description: "Плавные звуковые ландшафты, где нет начала и конца — только бесконечный поток данных." },
-    { id: 'inst-7', title: "Последний гигабайт", genre: "Cinematic", mood: "Эпичность", file: "instrumentals/last-gigabyte.mp3", duration: "0:00", cover: "cover/cover.jpg", description: "Кинематографичная композиция с нарастающим напряжением. Оркестровые струнные встречаются с электроникой." },
-    { id: 'inst-8', title: "Код тишины", genre: "Minimal", mood: "Сосредоточенность", file: "instrumentals/silence-code.mp3", duration: "0:00", cover: "cover/cover.jpg", description: "Минимализм в чистом виде. Несколько нот, повторяющихся как мантра." }
+    { id: 'inst-1', title: "Неоновая ночь", genre: "Ambient", mood: "Меланхолия", file: "instrumentals/neon-night.mp3", duration: "4:12", cover: "cover/cover.jpg", description: "Медленное погружение в огни ночного города. Синтезаторы плывут как туман над асфальтом, оставляя ощущение одиночества среди миллионов." },
+    { id: 'inst-2', title: "Цифровой рассвет", genre: "Electronic", mood: "Надежда", file: "instrumentals/digital-dawn.mp3", duration: "3:45", cover: "cover/cover.jpg", description: "Первые лучи солнца сквозь экран. Тёплые пэды и мягкий бит создают атмосферу нового начала." },
+    { id: 'inst-3', title: "Память машин", genre: "Downtempo", mood: "Ностальгия", file: "instrumentals/machine-memory.mp3", duration: "5:08", cover: "cover/cover.jpg", description: "Что помнит искусственный интеллект, когда его выключают? Попытка услышать тишину между вычислениями." },
+    { id: 'inst-4', title: "Пустые улицы", genre: "Lo-Fi", mood: "Покой", file: "instrumentals/empty-streets.mp3", duration: "3:22", cover: "cover/cover.jpg", description: "Три часа ночи. Ни души. Только шуршение шин и далёкий гул города." },
+    { id: 'inst-5', title: "Эхо в серверной", genre: "Dark Ambient", mood: "Тревога", file: "instrumentals/server-echo.mp3", duration: "4:37", cover: "cover/cover.jpg", description: "Глубокий гул серверов, щелчки реле и низкочастотный дроун. Атмосфера заброшенного дата-центра." },
+    { id: 'inst-6', title: "Сон алгоритма", genre: "Ambient", mood: "Медитация", file: "instrumentals/algorithm-dream.mp3", duration: "6:15", cover: "cover/cover.jpg", description: "Плавные звуковые ландшафты, где нет начала и конца — только бесконечный поток данных." },
+    { id: 'inst-7', title: "Последний гигабайт", genre: "Cinematic", mood: "Эпичность", file: "instrumentals/last-gigabyte.mp3", duration: "4:50", cover: "cover/cover.jpg", description: "Кинематографичная композиция с нарастающим напряжением. Оркестровые струнные встречаются с электроникой." },
+    { id: 'inst-8', title: "Код тишины", genre: "Minimal", mood: "Сосредоточенность", file: "instrumentals/silence-code.mp3", duration: "3:58", cover: "cover/cover.jpg", description: "Минимализм в чистом виде. Несколько нот, повторяющихся как мантра." }
 ];
 
 // ============================================
-// DATA - ТРЕКИ ОТ ПОДПИСЧИКОВ
+// DATA - "ДАЙ ГОЛОС"
 // ============================================
 const subscriberTracks = [
     { id: 'sub-1', title: "пусто", author: "имя.", style: "Рок", file: "voices/server-midnight.mp3", duration: "0:00", cover: "cover/cover.jpg", description: "Текст ." },
-    { id: 'sub-2', title: "пусто", author: "имя.", style: "Электроника", file: "voices/digital-dreams.mp3", duration: "0:00", cover: "cover/cover.jpg", description: "." },
-    { id: 'sub-3', title: "пусто", author: "имя.", style: "Рэп", file: "voices/last-commit.mp3", duration: "0:00", cover: "cover/cover.jpg", description: "." },
-    { id: 'sub-4', title: "пусто", author: "имя.", style: "Инди", file: "voices/between-lines.mp3", duration: "0:00", cover: "cover/cover.jpg", description: "." },
-    { id: 'sub-5', title: "пусто", author: "имя.", style: "Поп", file: "voices/love-algorithm.mp3", duration: "0:00", cover: "cover/cover.jpg", description: "." },
-    { id: 'sub-6', title: "Бпусто", author: "имя.", style: "Метал", file: "voices/system-bug.mp3", duration: "0:00", cover: "cover/cover.jpg", description: "." }
+    { id: 'sub-2', title: "пусто", author: "пусто.", style: "Электроника", file: "voices/digital-dreams.mp3", duration: "0:00", cover: "cover/cover.jpg", description: "." },
+    { id: 'sub-3', title: "пусто", author: "пусто.", style: "Рэп", file: "voices/last-commit.mp3", duration: "0:00", cover: "cover/cover.jpg", description: "." },
+    { id: 'sub-4', title: "пусто", author: "пусто.", style: "Инди", file: "voices/between-lines.mp3", duration: "0:00", cover: "cover/cover.jpg", description: "." },
+    { id: 'sub-5', title: "пусто", author: "пусто.", style: "Поп", file: "voices/love-algorithm.mp3", duration: "0:00", cover: "cover/cover.jpg", description: "." },
+    { id: 'sub-6', title: "пусто", author: "пусто.", style: "Метал", file: "voices/system-bug.mp3", duration: "0:00", cover: "cover/cover.jpg", description: "." }
 ];
-
-let currentCategory = 'all';
 
 // ============================================
 // RENDER
 // ============================================
 function renderNewRelease() {
-    const h = document.getElementById('homeReleaseCard');
-    if (h) h.innerHTML = `<div class="release-cover"><span class="release-badge">NEW</span>${newRelease.cover ? `<img src="${newRelease.cover}" onerror="this.style.display='none';this.parentElement.innerHTML='🚗'">` : '🚗'}</div><div class="release-info"><div class="release-label">ПРЕМЬЕРА</div><div class="release-title">${newRelease.title}</div><div class="release-meta">${newRelease.subtitle.toUpperCase()} · ${newRelease.duration}</div></div>`;
-    const f = document.getElementById('featuredRelease');
-    if (f) f.innerHTML = `<button class="featured-download-btn" onclick="event.stopPropagation();openDownloadModal(newRelease)"><svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></button><div class="featured-cover">${newRelease.cover ? `<img src="${newRelease.cover}" onerror="this.style.display='none';this.parentElement.innerHTML='🚗'">` : ''}</div><div class="featured-badge"><span class="featured-badge-star">★</span><span class="featured-badge-text">Новый релиз</span></div><div class="featured-title">${newRelease.title}</div><div class="featured-artist">EVGENII</div><button class="play-btn-large"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></button>`;
-}
-
-function updateCategoryCounts() {
-    document.getElementById('countAll').textContent = allTracks.length + instrumentalTracks.length + subscriberTracks.length;
-    document.getElementById('countTracks').textContent = allTracks.length;
-    document.getElementById('countInstrumentals').textContent = instrumentalTracks.length;
-    document.getElementById('countSubscribers').textContent = subscriberTracks.length;
-}
-
-function createTrackEl(track, category, index) {
-    const el = document.createElement('div');
-    el.className = 'track-item' + (category === 'instrumentals' ? ' gold' : category === 'subscribers' ? ' pink' : '');
-    el.dataset.id = track.id;
-    const coverHtml = track.cover ? `<img src="${track.cover}" onerror="this.style.display='none';this.parentElement.innerHTML='${category === 'instrumentals' ? '🎹' : category === 'subscribers' ? '🎤' : '🎵'}'">` : (category === 'instrumentals' ? '🎹' : category === 'subscribers' ? '🎤' : '🎵');
-    const badgeClass = category === 'instrumentals' ? 'gold' : category === 'subscribers' ? 'pink' : 'cyan';
-    const badgeIcon = category === 'instrumentals' ? '🎹' : category === 'subscribers' ? '🎤' : '🎵';
-    let artistText = '', artistClass = '';
-    if (category === 'tracks') artistText = track.subtitle || 'EVGENII';
-    else if (category === 'instrumentals') { artistText = track.genre + ' · ' + track.mood; artistClass = 'gold'; }
-    else if (category === 'subscribers') { artistText = '✍ ' + track.author + ' · ' + track.style; artistClass = 'pink'; }
-    const playFn = category === 'tracks' ? `playTrack(allTracks[${index}],${index})` : category === 'instrumentals' ? `playInstrumental(instrumentalTracks[${index}],${index})` : `playSubscriber(subscriberTracks[${index}],${index})`;
-    const dataArray = category === 'tracks' ? 'allTracks' : category === 'instrumentals' ? 'instrumentalTracks' : 'subscriberTracks';
-    const downloadType = category === 'tracks' ? 'regular' : category;
-    el.innerHTML = `<div class="track-cover" onclick="${playFn}">${coverHtml}<div class="track-category-badge ${badgeClass}">${badgeIcon}</div></div><div class="track-info" onclick="${playFn}"><div class="track-title">${track.title}</div><div class="track-artist ${artistClass}">${artistText}</div></div><div class="track-duration">${track.duration}</div><button class="track-download-btn" onclick="event.stopPropagation();openDownloadModal(${dataArray}[${index}],'${downloadType}')"><svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></button>`;
-    return el;
-}
-
-function createDivider(category) {
-    const div = document.createElement('div');
-    div.className = 'category-divider';
-    const labels = { tracks: { icon: '', text: 'ТРЕКИ EVGENII', color: 'cyan' }, instrumentals: { icon: '🎹', text: 'ИНСТРУМЕНТАЛЫ', color: 'gold' }, subscribers: { icon: '🎤', text: 'ДАЙ ГОЛОС', color: 'pink' } };
-    const l = labels[category];
-    div.innerHTML = `<div class="category-divider-line"></div><div class="category-divider-label ${l.color}"><span>${l.icon}</span><span>${l.text}</span></div><div class="category-divider-line"></div>`;
-    return div;
-}
-
-function renderAllTracksList() {
-    const list = document.getElementById('allTracksList');
-    if (!list) return;
-    list.innerHTML = '';
-    if (currentCategory === 'all') {
-        if (allTracks.length) { list.appendChild(createDivider('tracks')); allTracks.forEach((t, i) => list.appendChild(createTrackEl(t, 'tracks', i))); }
-        if (instrumentalTracks.length) { list.appendChild(createDivider('instrumentals')); instrumentalTracks.forEach((t, i) => list.appendChild(createTrackEl(t, 'instrumentals', i))); }
-        if (subscriberTracks.length) { list.appendChild(createDivider('subscribers')); subscriberTracks.forEach((t, i) => list.appendChild(createTrackEl(t, 'subscribers', i))); }
-    } else if (currentCategory === 'tracks') {
-        if (!allTracks.length) { list.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-secondary)">Пока нет треков</div>'; return; }
-        allTracks.forEach((t, i) => list.appendChild(createTrackEl(t, 'tracks', i)));
-    } else if (currentCategory === 'instrumentals') {
-        if (!instrumentalTracks.length) { list.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-secondary)">Пока нет инструменталов</div>'; return; }
-        instrumentalTracks.forEach((t, i) => list.appendChild(createTrackEl(t, 'instrumentals', i)));
-    } else if (currentCategory === 'subscribers') {
-        if (!subscriberTracks.length) { list.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-secondary)">Пока нет треков от подписчиков</div>'; return; }
-        subscriberTracks.forEach((t, i) => list.appendChild(createTrackEl(t, 'subscribers', i)));
+    const homeCard = document.getElementById('homeReleaseCard');
+    if (homeCard) {
+        homeCard.innerHTML = `
+            <div class="release-cover"><span class="release-badge">NEW</span>${newRelease.cover ? `<img src="${newRelease.cover}" alt="${newRelease.title}" onerror="this.style.display='none'; this.parentElement.innerHTML='🚗'">` : '🚗'}</div>
+            <div class="release-info"><div class="release-label">ПРЕМЬЕРА</div><div class="release-title">${newRelease.title}</div><div class="release-meta">${newRelease.subtitle.toUpperCase()} · ${newRelease.duration}</div></div>`;
     }
-}
-
-function switchCategory(category) {
-    currentCategory = category;
-    document.querySelectorAll('.category-tab').forEach(tab => tab.classList.toggle('active', tab.dataset.category === category));
-    renderAllTracksList();
+    const fr = document.getElementById('featuredRelease');
+    if (fr) {
+        fr.innerHTML = `
+            <button class="featured-download-btn" onclick="event.stopPropagation(); openDownloadModal(newRelease)"><svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></button>
+            <div class="featured-cover">${newRelease.cover ? `<img src="${newRelease.cover}" alt="${newRelease.title}" onerror="this.style.display='none'; this.parentElement.innerHTML='🚗'">` : '🚗'}</div>
+            <div class="featured-badge"><span class="featured-badge-star">★</span><span class="featured-badge-text">Новый релиз</span></div>
+            <div class="featured-title">${newRelease.title}</div>
+            <div class="featured-artist">EVGENII</div>
+            <button class="play-btn-large"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></button>`;
+    }
 }
 
 function renderInstrumentals() {
@@ -1097,8 +1046,29 @@ function renderInstrumentals() {
         const card = document.createElement('div');
         card.className = 'special-card gold';
         card.dataset.id = t.id;
-        const coverHtml = t.cover ? `<img src="${t.cover}" onerror="this.style.display='none';this.parentElement.innerHTML='🎹'">` : '🎹';
-        card.innerHTML = `<div class="special-card-top"><div class="special-cover gold" onclick="playInstrumental(instrumentalTracks[${i}],${i})">${coverHtml}<div class="special-play-overlay"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div><div class="special-main-info"><div class="special-title">${t.title}</div><div class="special-tags"><span class="special-tag genre">${t.genre}</span><span class="special-tag mood">${t.mood}</span></div><div style="font-size:.75rem;color:var(--text-secondary);font-family:'Orbitron',monospace;margin-top:4px">${t.duration}</div></div><div class="special-card-actions"><button class="special-card-btn gold" onclick="event.stopPropagation();openDownloadModal(instrumentalTracks[${i}],'instrumental')"><svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></button></div></div><div class="special-description gold">${t.description}</div>`;
+        const coverHtml = t.cover ? `<img src="${t.cover}" alt="${t.title}" onerror="this.style.display='none'; this.parentElement.innerHTML='🎹'">` : '🎹';
+        card.innerHTML = `
+            <div class="special-card-top">
+                <div class="special-cover gold" onclick="playInstrumental(instrumentalTracks[${i}], ${i})">
+                    ${coverHtml}
+                    <div class="special-play-overlay"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+                </div>
+                <div class="special-main-info">
+                    <div class="special-title">${t.title}</div>
+                    <div class="special-tags">
+                        <span class="special-tag genre">${t.genre}</span>
+                        <span class="special-tag mood">${t.mood}</span>
+                    </div>
+                    <div style="font-size:0.75rem; color:var(--text-secondary); font-family:'Orbitron',monospace; margin-top:4px;">${t.duration}</div>
+                </div>
+                <div class="special-card-actions">
+                    <button class="special-card-btn gold" onclick="event.stopPropagation(); openDownloadModal(instrumentalTracks[${i}], 'instrumental')" title="Скачать">
+                        <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+                    </button>
+                </div>
+            </div>
+            <div class="special-description gold">${t.description}</div>
+        `;
         list.appendChild(card);
     });
 }
@@ -1111,9 +1081,44 @@ function renderSubscribers() {
         const card = document.createElement('div');
         card.className = 'special-card pink';
         card.dataset.id = t.id;
-        const coverHtml = t.cover ? `<img src="${t.cover}" onerror="this.style.display='none';this.parentElement.innerHTML='🎤'">` : '🎤';
-        card.innerHTML = `<div class="special-card-top"><div class="special-cover pink" onclick="playSubscriber(subscriberTracks[${i}],${i})">${coverHtml}<div class="special-play-overlay"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div><div class="special-main-info"><div class="special-title">${t.title}</div><div class="special-author">✍ ${t.author}</div><div class="special-tags"><span class="special-tag style">${t.style}</span></div><div style="font-size:.75rem;color:var(--text-secondary);font-family:'Orbitron',monospace;margin-top:4px">${t.duration}</div></div><div class="special-card-actions"><button class="special-card-btn pink" onclick="event.stopPropagation();openDownloadModal(subscriberTracks[${i}],'subscriber')"><svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></button></div></div><div class="special-description pink">${t.description}</div>`;
+        const coverHtml = t.cover ? `<img src="${t.cover}" alt="${t.title}" onerror="this.style.display='none'; this.parentElement.innerHTML='🎤'">` : '🎤';
+        card.innerHTML = `
+            <div class="special-card-top">
+                <div class="special-cover pink" onclick="playSubscriber(subscriberTracks[${i}], ${i})">
+                    ${coverHtml}
+                    <div class="special-play-overlay"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+                </div>
+                <div class="special-main-info">
+                    <div class="special-title">${t.title}</div>
+                    <div class="special-author">✍ ${t.author}</div>
+                    <div class="special-tags">
+                        <span class="special-tag style">${t.style}</span>
+                    </div>
+                    <div style="font-size:0.75rem; color:var(--text-secondary); font-family:'Orbitron',monospace; margin-top:4px;">${t.duration}</div>
+                </div>
+                <div class="special-card-actions">
+                    <button class="special-card-btn pink" onclick="event.stopPropagation(); openDownloadModal(subscriberTracks[${i}], 'subscriber')" title="Скачать">
+                        <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+                    </button>
+                </div>
+            </div>
+            <div class="special-description pink">${t.description}</div>
+        `;
         list.appendChild(card);
+    });
+}
+
+function renderTracks() {
+    const c = document.getElementById('tracksList');
+    c.innerHTML = '';
+    allTracks.forEach((t, i) => {
+        const el = document.createElement('div');
+        el.className = 'track-item';
+        el.dataset.id = t.id;
+        el.onclick = () => playTrack(t, i + 1);
+        const coverHtml = t.cover ? `<img src="${t.cover}" alt="${t.title}" onerror="this.style.display='none'; this.parentElement.innerHTML='🎵'">` : '🎵';
+        el.innerHTML = `<div class="track-cover">${coverHtml}</div><div class="track-info"><div class="track-title">${t.title}</div><div class="track-artist">${t.subtitle || 'EVGENII'}</div></div><div class="track-duration">${t.duration}</div><button class="track-download-btn" onclick="event.stopPropagation(); openDownloadModal(allTracks[${i}], 'regular')" title="Скачать трек"><svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></button>`;
+        c.appendChild(el);
     });
 }
 
@@ -1126,10 +1131,17 @@ function toggleVoiceForm() {
     const text = document.getElementById('voiceToggleText');
     const isOpen = wrapper.classList.toggle('open');
     btn.classList.toggle('open', isOpen);
+
     if (isOpen) {
         text.textContent = 'СКРЫТЬ ФОРМУ';
-        setTimeout(() => { wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' }); const f = wrapper.querySelector('input'); if (f) f.focus({ preventScroll: true }); }, 350);
-    } else { text.textContent = 'ПРИСЛАТЬ СВОЙ ТЕКСТ'; }
+        setTimeout(() => {
+            wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            const firstInput = wrapper.querySelector('input');
+            if (firstInput) firstInput.focus({ preventScroll: true });
+        }, 350);
+    } else {
+        text.textContent = 'ПРИСЛАТЬ СВОЙ ТЕКСТ';
+    }
 }
 
 // ============================================
@@ -1144,10 +1156,12 @@ function stopAllPlayers() {
     document.getElementById('playerBarFill').style.width = '0%';
     document.getElementById('playerCurrentTime').textContent = '0:00';
     document.getElementById('stickyPlayer').classList.remove('visible');
+
     instAudio.pause(); clearInterval(instSimulationInterval); setInstPlayingState(false);
     document.getElementById('instBarFill').style.width = '0%';
     document.getElementById('instCurrentTime').textContent = '0:00';
     document.getElementById('instrumentalPlayer').classList.remove('visible');
+
     subAudio.pause(); clearInterval(subSimulationInterval); setSubPlayingState(false);
     document.getElementById('subBarFill').style.width = '0%';
     document.getElementById('subCurrentTime').textContent = '0:00';
@@ -1161,10 +1175,10 @@ function playTrack(track, index = -1) {
     document.getElementById('playerTitle').textContent = track.title;
     document.getElementById('playerArtist').textContent = track.subtitle || 'EVGENII';
     const pc = document.getElementById('playerCover');
-    if (track.cover) pc.innerHTML = `<img src="${track.cover}" onerror="this.style.display='none';this.parentElement.innerHTML='🎵'">`; else pc.textContent = '🎵';
+    if (track.cover) { pc.innerHTML = `<img src="${track.cover}" alt="${track.title}" onerror="this.style.display='none'; this.parentElement.innerHTML='🎵'">`; } else { pc.textContent = '🎵'; }
     document.getElementById('playerTotalTime').textContent = track.duration;
     document.getElementById('stickyPlayer').classList.add('visible');
-    document.querySelectorAll('.track-item, .special-card').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.track-item').forEach(el => el.classList.remove('active'));
     const ae = document.querySelector(`.track-item[data-id="${track.id}"]`);
     if (ae) ae.classList.add('active');
     audio.src = track.file;
@@ -1172,17 +1186,32 @@ function playTrack(track, index = -1) {
 }
 
 function playNewRelease() { playTrack(newRelease, 0); }
-function togglePlay() { if (!currentTrack) return; if (isPlaying) { audio.pause(); clearInterval(simulationInterval); setPlayingState(false); } else { audio.play().catch(() => startSimulation()); setPlayingState(true); } }
-function setPlayingState(state) { isPlaying = state; document.getElementById('miniPlayIcon').innerHTML = state ? '<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>' : '<polygon points="5,3 19,12 5,21"/>'; }
-function skipForward() { if (currentTrack) audio.currentTime = Math.min(audio.duration || pd(currentTrack.duration), audio.currentTime + 10); }
+function togglePlay() {
+    if (!currentTrack) return;
+    if (isPlaying) { audio.pause(); clearInterval(simulationInterval); setPlayingState(false); }
+    else { audio.play().catch(() => startSimulation()); setPlayingState(true); }
+}
+function setPlayingState(state) {
+    isPlaying = state;
+    document.getElementById('miniPlayIcon').innerHTML = state ? '<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>' : '<polygon points="5,3 19,12 5,21"/>';
+}
+function skipForward() { if (currentTrack) audio.currentTime = Math.min(audio.duration || parseDuration(currentTrack.duration), audio.currentTime + 10); }
 function skipBackward() { if (currentTrack) audio.currentTime = Math.max(0, audio.currentTime - 10); }
-function seek(event) { if (!currentTrack) return; audio.currentTime = (event.offsetX / event.currentTarget.offsetWidth) * (audio.duration || pd(currentTrack.duration)); }
-function playNextTrack() { const n = currentTrackIndex < playlist.length - 1 ? currentTrackIndex + 1 : 0; playTrack(playlist[n], n); }
-function startSimulation() { setPlayingState(true); let c = 0; const d = pd(currentTrack.duration); clearInterval(simulationInterval); simulationInterval = setInterval(() => { c++; if (c >= d) { clearInterval(simulationInterval); setPlayingState(false); document.getElementById('playerBarFill').style.width = '0%'; document.getElementById('playerCurrentTime').textContent = '0:00'; playNextTrack(); } else { document.getElementById('playerBarFill').style.width = `${c / d * 100}%`; document.getElementById('playerCurrentTime').textContent = ft(c); } }, 1000); }
-function pd(s) { const p = s.split(':'); return parseInt(p[0]) * 60 + parseInt(p[1]); }
-function ft(s) { if (isNaN(s)) return '0:00'; return `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`; }
-audio.addEventListener('timeupdate', () => { if (!currentTrack) return; const d = audio.duration || pd(currentTrack.duration); document.getElementById('playerBarFill').style.width = `${audio.currentTime / d * 100}%`; document.getElementById('playerCurrentTime').textContent = ft(audio.currentTime); });
-audio.addEventListener('loadedmetadata', () => { document.getElementById('playerTotalTime').textContent = ft(audio.duration); });
+function seek(event) { if (!currentTrack) return; audio.currentTime = (event.offsetX / event.currentTarget.offsetWidth) * (audio.duration || parseDuration(currentTrack.duration)); }
+function playNextTrack() { const nextIndex = currentTrackIndex < playlist.length - 1 ? currentTrackIndex + 1 : 0; playTrack(playlist[nextIndex], nextIndex); }
+function startSimulation() {
+    setPlayingState(true); let ct = 0; const dur = parseDuration(currentTrack.duration);
+    clearInterval(simulationInterval);
+    simulationInterval = setInterval(() => {
+        ct++;
+        if (ct >= dur) { clearInterval(simulationInterval); setPlayingState(false); document.getElementById('playerBarFill').style.width = '0%'; document.getElementById('playerCurrentTime').textContent = '0:00'; playNextTrack(); }
+        else { document.getElementById('playerBarFill').style.width = `${(ct / dur) * 100}%`; document.getElementById('playerCurrentTime').textContent = formatTime(ct); }
+    }, 1000);
+}
+function parseDuration(str) { const p = str.split(':'); return parseInt(p[0]) * 60 + parseInt(p[1]); }
+function formatTime(s) { if (isNaN(s)) return '0:00'; return `${Math.floor(s / 60)}:${Math.floor(s % 60).toString().padStart(2, '0')}`; }
+audio.addEventListener('timeupdate', () => { if (!currentTrack) return; const d = audio.duration || parseDuration(currentTrack.duration); document.getElementById('playerBarFill').style.width = `${(audio.currentTime / d) * 100}%`; document.getElementById('playerCurrentTime').textContent = formatTime(audio.currentTime); });
+audio.addEventListener('loadedmetadata', () => { document.getElementById('playerTotalTime').textContent = formatTime(audio.duration); });
 audio.addEventListener('ended', () => { setPlayingState(false); document.getElementById('playerBarFill').style.width = '0%'; document.getElementById('playerCurrentTime').textContent = '0:00'; playNextTrack(); });
 
 // ============================================
@@ -1190,6 +1219,7 @@ audio.addEventListener('ended', () => { setPlayingState(false); document.getElem
 // ============================================
 const instAudio = document.getElementById('instrumentalAudio');
 let currentInstTrack = null, isInstPlaying = false, instSimulationInterval = null, currentInstIndex = -1;
+
 function playInstrumental(track, index = -1) {
     stopAllPlayers();
     currentInstTrack = track;
@@ -1198,24 +1228,46 @@ function playInstrumental(track, index = -1) {
     document.getElementById('instPlayerDescription').textContent = track.description;
     document.getElementById('instTotalTime').textContent = track.duration;
     document.getElementById('instPlayerTags').innerHTML = `<span class="floating-player-tag gold">${track.genre}</span><span class="floating-player-tag gold">${track.mood}</span>`;
-    const c = document.getElementById('instPlayerCover');
-    if (track.cover) c.innerHTML = `<img src="${track.cover}" onerror="this.style.display='none';this.parentElement.innerHTML='🎹'">`; else c.textContent = '🎹';
+    const coverEl = document.getElementById('instPlayerCover');
+    if (track.cover) { coverEl.innerHTML = `<img src="${track.cover}" alt="${track.title}" onerror="this.style.display='none'; this.parentElement.innerHTML='🎹'">`; } else { coverEl.textContent = '🎹'; }
     document.getElementById('instrumentalPlayer').classList.add('visible');
-    document.querySelectorAll('.track-item, .special-card').forEach(el => el.classList.remove('active'));
-    const a = document.querySelector(`[data-id="${track.id}"]`);
-    if (a) a.classList.add('active');
+    document.querySelectorAll('.special-card.gold').forEach(el => el.classList.remove('active'));
+    const activeCard = document.querySelector(`.special-card.gold[data-id="${track.id}"]`);
+    if (activeCard) activeCard.classList.add('active');
     instAudio.src = track.file;
     instAudio.play().then(() => setInstPlayingState(true)).catch(() => startInstSimulation());
 }
-function instTogglePlay() { if (!currentInstTrack) return; if (isInstPlaying) { instAudio.pause(); clearInterval(instSimulationInterval); setInstPlayingState(false); } else { instAudio.play().catch(() => startInstSimulation()); setInstPlayingState(true); } }
-function setInstPlayingState(state) { isInstPlaying = state; document.getElementById('instPlayIcon').innerHTML = state ? '<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>' : '<polygon points="5,3 19,12 5,21"/>'; const c = document.getElementById('instPlayerCover'); state ? c.classList.add('playing') : c.classList.remove('playing'); }
-function instSkipForward() { if (currentInstTrack) instAudio.currentTime = Math.min(instAudio.duration || pd(currentInstTrack.duration), instAudio.currentTime + 10); }
+function instTogglePlay() {
+    if (!currentInstTrack) return;
+    if (isInstPlaying) { instAudio.pause(); clearInterval(instSimulationInterval); setInstPlayingState(false); }
+    else { instAudio.play().catch(() => startInstSimulation()); setInstPlayingState(true); }
+}
+function setInstPlayingState(state) {
+    isInstPlaying = state;
+    document.getElementById('instPlayIcon').innerHTML = state ? '<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>' : '<polygon points="5,3 19,12 5,21"/>';
+    const cover = document.getElementById('instPlayerCover');
+    if (state) cover.classList.add('playing'); else cover.classList.remove('playing');
+}
+function instSkipForward() { if (currentInstTrack) instAudio.currentTime = Math.min(instAudio.duration || parseDuration(currentInstTrack.duration), instAudio.currentTime + 10); }
 function instSkipBackward() { if (currentInstTrack) instAudio.currentTime = Math.max(0, instAudio.currentTime - 10); }
-function instSeek(event) { if (!currentInstTrack) return; const r = event.currentTarget.getBoundingClientRect(); instAudio.currentTime = ((event.clientX - r.left) / r.width) * (instAudio.duration || pd(currentInstTrack.duration)); }
-function playNextInstrumental() { const n = currentInstIndex < instrumentalTracks.length - 1 ? currentInstIndex + 1 : 0; playInstrumental(instrumentalTracks[n], n); }
-function startInstSimulation() { setInstPlayingState(true); let c = 0; const d = pd(currentInstTrack.duration); clearInterval(instSimulationInterval); instSimulationInterval = setInterval(() => { c++; if (c >= d) { clearInterval(instSimulationInterval); setInstPlayingState(false); document.getElementById('instBarFill').style.width = '0%'; document.getElementById('instCurrentTime').textContent = '0:00'; playNextInstrumental(); } else { document.getElementById('instBarFill').style.width = `${c / d * 100}%`; document.getElementById('instCurrentTime').textContent = ft(c); } }, 1000); }
-instAudio.addEventListener('timeupdate', () => { if (!currentInstTrack) return; const d = instAudio.duration || pd(currentInstTrack.duration); document.getElementById('instBarFill').style.width = `${instAudio.currentTime / d * 100}%`; document.getElementById('instCurrentTime').textContent = ft(instAudio.currentTime); });
-instAudio.addEventListener('loadedmetadata', () => { document.getElementById('instTotalTime').textContent = ft(instAudio.duration); });
+function instSeek(event) {
+    if (!currentInstTrack) return;
+    const bar = event.currentTarget; const rect = bar.getBoundingClientRect();
+    const percent = (event.clientX - rect.left) / rect.width;
+    instAudio.currentTime = percent * (instAudio.duration || parseDuration(currentInstTrack.duration));
+}
+function playNextInstrumental() { const nextIndex = currentInstIndex < instrumentalTracks.length - 1 ? currentInstIndex + 1 : 0; playInstrumental(instrumentalTracks[nextIndex], nextIndex); }
+function startInstSimulation() {
+    setInstPlayingState(true); let ct = 0; const dur = parseDuration(currentInstTrack.duration);
+    clearInterval(instSimulationInterval);
+    instSimulationInterval = setInterval(() => {
+        ct++;
+        if (ct >= dur) { clearInterval(instSimulationInterval); setInstPlayingState(false); document.getElementById('instBarFill').style.width = '0%'; document.getElementById('instCurrentTime').textContent = '0:00'; playNextInstrumental(); }
+        else { document.getElementById('instBarFill').style.width = `${(ct / dur) * 100}%`; document.getElementById('instCurrentTime').textContent = formatTime(ct); }
+    }, 1000);
+}
+instAudio.addEventListener('timeupdate', () => { if (!currentInstTrack) return; const d = instAudio.duration || parseDuration(currentInstTrack.duration); document.getElementById('instBarFill').style.width = `${(instAudio.currentTime / d) * 100}%`; document.getElementById('instCurrentTime').textContent = formatTime(instAudio.currentTime); });
+instAudio.addEventListener('loadedmetadata', () => { document.getElementById('instTotalTime').textContent = formatTime(instAudio.duration); });
 instAudio.addEventListener('ended', () => { setInstPlayingState(false); document.getElementById('instBarFill').style.width = '0%'; document.getElementById('instCurrentTime').textContent = '0:00'; playNextInstrumental(); });
 
 // ============================================
@@ -1223,6 +1275,7 @@ instAudio.addEventListener('ended', () => { setInstPlayingState(false); document
 // ============================================
 const subAudio = document.getElementById('subscriberAudio');
 let currentSubTrack = null, isSubPlaying = false, subSimulationInterval = null, currentSubIndex = -1;
+
 function playSubscriber(track, index = -1) {
     stopAllPlayers();
     currentSubTrack = track;
@@ -1232,24 +1285,46 @@ function playSubscriber(track, index = -1) {
     document.getElementById('subPlayerDescription').textContent = track.description;
     document.getElementById('subTotalTime').textContent = track.duration;
     document.getElementById('subPlayerTags').innerHTML = `<span class="floating-player-tag pink">${track.style}</span>`;
-    const c = document.getElementById('subPlayerCover');
-    if (track.cover) c.innerHTML = `<img src="${track.cover}" onerror="this.style.display='none';this.parentElement.innerHTML='🎤'">`; else c.textContent = '🎤';
+    const coverEl = document.getElementById('subPlayerCover');
+    if (track.cover) { coverEl.innerHTML = `<img src="${track.cover}" alt="${track.title}" onerror="this.style.display='none'; this.parentElement.innerHTML='🎤'">`; } else { coverEl.textContent = '🎤'; }
     document.getElementById('subscriberPlayer').classList.add('visible');
-    document.querySelectorAll('.track-item, .special-card').forEach(el => el.classList.remove('active'));
-    const a = document.querySelector(`[data-id="${track.id}"]`);
-    if (a) a.classList.add('active');
+    document.querySelectorAll('.special-card.pink').forEach(el => el.classList.remove('active'));
+    const activeCard = document.querySelector(`.special-card.pink[data-id="${track.id}"]`);
+    if (activeCard) activeCard.classList.add('active');
     subAudio.src = track.file;
     subAudio.play().then(() => setSubPlayingState(true)).catch(() => startSubSimulation());
 }
-function subTogglePlay() { if (!currentSubTrack) return; if (isSubPlaying) { subAudio.pause(); clearInterval(subSimulationInterval); setSubPlayingState(false); } else { subAudio.play().catch(() => startSubSimulation()); setSubPlayingState(true); } }
-function setSubPlayingState(state) { isSubPlaying = state; document.getElementById('subPlayIcon').innerHTML = state ? '<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>' : '<polygon points="5,3 19,12 5,21"/>'; const c = document.getElementById('subPlayerCover'); state ? c.classList.add('playing') : c.classList.remove('playing'); }
-function subSkipForward() { if (currentSubTrack) subAudio.currentTime = Math.min(subAudio.duration || pd(currentSubTrack.duration), subAudio.currentTime + 10); }
+function subTogglePlay() {
+    if (!currentSubTrack) return;
+    if (isSubPlaying) { subAudio.pause(); clearInterval(subSimulationInterval); setSubPlayingState(false); }
+    else { subAudio.play().catch(() => startSubSimulation()); setSubPlayingState(true); }
+}
+function setSubPlayingState(state) {
+    isSubPlaying = state;
+    document.getElementById('subPlayIcon').innerHTML = state ? '<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>' : '<polygon points="5,3 19,12 5,21"/>';
+    const cover = document.getElementById('subPlayerCover');
+    if (state) cover.classList.add('playing'); else cover.classList.remove('playing');
+}
+function subSkipForward() { if (currentSubTrack) subAudio.currentTime = Math.min(subAudio.duration || parseDuration(currentSubTrack.duration), subAudio.currentTime + 10); }
 function subSkipBackward() { if (currentSubTrack) subAudio.currentTime = Math.max(0, subAudio.currentTime - 10); }
-function subSeek(event) { if (!currentSubTrack) return; const r = event.currentTarget.getBoundingClientRect(); subAudio.currentTime = ((event.clientX - r.left) / r.width) * (subAudio.duration || pd(currentSubTrack.duration)); }
-function playNextSubscriber() { const n = currentSubIndex < subscriberTracks.length - 1 ? currentSubIndex + 1 : 0; playSubscriber(subscriberTracks[n], n); }
-function startSubSimulation() { setSubPlayingState(true); let c = 0; const d = pd(currentSubTrack.duration); clearInterval(subSimulationInterval); subSimulationInterval = setInterval(() => { c++; if (c >= d) { clearInterval(subSimulationInterval); setSubPlayingState(false); document.getElementById('subBarFill').style.width = '0%'; document.getElementById('subCurrentTime').textContent = '0:00'; playNextSubscriber(); } else { document.getElementById('subBarFill').style.width = `${c / d * 100}%`; document.getElementById('subCurrentTime').textContent = ft(c); } }, 1000); }
-subAudio.addEventListener('timeupdate', () => { if (!currentSubTrack) return; const d = subAudio.duration || pd(currentSubTrack.duration); document.getElementById('subBarFill').style.width = `${subAudio.currentTime / d * 100}%`; document.getElementById('subCurrentTime').textContent = ft(subAudio.currentTime); });
-subAudio.addEventListener('loadedmetadata', () => { document.getElementById('subTotalTime').textContent = ft(subAudio.duration); });
+function subSeek(event) {
+    if (!currentSubTrack) return;
+    const bar = event.currentTarget; const rect = bar.getBoundingClientRect();
+    const percent = (event.clientX - rect.left) / rect.width;
+    subAudio.currentTime = percent * (subAudio.duration || parseDuration(currentSubTrack.duration));
+}
+function playNextSubscriber() { const nextIndex = currentSubIndex < subscriberTracks.length - 1 ? currentSubIndex + 1 : 0; playSubscriber(subscriberTracks[nextIndex], nextIndex); }
+function startSubSimulation() {
+    setSubPlayingState(true); let ct = 0; const dur = parseDuration(currentSubTrack.duration);
+    clearInterval(subSimulationInterval);
+    subSimulationInterval = setInterval(() => {
+        ct++;
+        if (ct >= dur) { clearInterval(subSimulationInterval); setSubPlayingState(false); document.getElementById('subBarFill').style.width = '0%'; document.getElementById('subCurrentTime').textContent = '0:00'; playNextSubscriber(); }
+        else { document.getElementById('subBarFill').style.width = `${(ct / dur) * 100}%`; document.getElementById('subCurrentTime').textContent = formatTime(ct); }
+    }, 1000);
+}
+subAudio.addEventListener('timeupdate', () => { if (!currentSubTrack) return; const d = subAudio.duration || parseDuration(currentSubTrack.duration); document.getElementById('subBarFill').style.width = `${(subAudio.currentTime / d) * 100}%`; document.getElementById('subCurrentTime').textContent = formatTime(subAudio.currentTime); });
+subAudio.addEventListener('loadedmetadata', () => { document.getElementById('subTotalTime').textContent = formatTime(subAudio.duration); });
 subAudio.addEventListener('ended', () => { setSubPlayingState(false); document.getElementById('subBarFill').style.width = '0%'; document.getElementById('subCurrentTime').textContent = '0:00'; playNextSubscriber(); });
 
 // ============================================
@@ -1259,8 +1334,8 @@ let downloadTrack = null;
 function openDownloadModal(track, type = 'regular') {
     downloadTrack = track;
     const mc = document.getElementById('modalCover');
-    const icon = type === 'instrumental' ? '🎹' : type === 'subscriber' ? '🎤' : '🎵';
-    if (track.cover) mc.innerHTML = `<img src="${track.cover}" onerror="this.style.display='none';this.parentElement.innerHTML='${icon}'">`; else mc.textContent = icon;
+    const icon = type === 'instrumental' ? '🎹' : (type === 'subscriber' ? '🎤' : '🎵');
+    if (track.cover) { mc.innerHTML = `<img src="${track.cover}" alt="${track.title}" onerror="this.style.display='none'; this.parentElement.innerHTML='${icon}'">`; } else { mc.textContent = icon; }
     document.getElementById('modalTitle').textContent = track.title;
     document.getElementById('modalArtist').textContent = type === 'subscriber' ? track.author : 'EVGENII';
     document.getElementById('modalDuration').textContent = track.duration;
@@ -1327,33 +1402,156 @@ const logoutBtn = document.getElementById('logoutBtn');
 loginGreeting.textContent = getLoginGreeting(new Date().getHours());
 const savedName = localStorage.getItem('evgenii_user');
 if (savedName) showMainScreen(savedName);
+
 loginForm.addEventListener('submit', function(e) {
     e.preventDefault();
     const name = nameInput.value.trim();
     if (name) { localStorage.setItem('evgenii_user', name); showMainScreen(name); }
-    else { nameInput.style.borderColor = '#ff4444'; nameInput.style.boxShadow = '0 0 15px rgba(255, 68, 68, 0.2)'; setTimeout(() => { nameInput.style.borderColor = ''; nameInput.style.boxShadow = ''; }, 1500); }
+    else {
+        nameInput.style.borderColor = '#ff4444';
+        nameInput.style.boxShadow = '0 0 15px rgba(255, 68, 68, 0.2)';
+        setTimeout(() => { nameInput.style.borderColor = ''; nameInput.style.boxShadow = ''; }, 1500);
+    }
 });
+
 function showMainScreen(name) {
     loginScreen.classList.add('hidden');
     document.getElementById('homePage').classList.add('active');
     headerName.textContent = name.toUpperCase();
     updateTime();
     renderNewRelease();
-    updateCategoryCounts();
-    renderAllTracksList();
+    renderTracks();
     renderInstrumentals();
     renderSubscribers();
 }
+
+let chatSubscription = null;
 logoutBtn.addEventListener('click', function() {
     localStorage.removeItem('evgenii_user');
-    ['homePage','tracksPage','aboutPage','communityPage','contactPage','instrumentalsPage','subscribersPage','supportPage'].forEach(p => document.getElementById(p).classList.remove('active'));
+    ['homePage','tracksPage','aboutPage','communityPage','chatPage','contactPage','instrumentalsPage','subscribersPage','supportPage'].forEach(p => document.getElementById(p).classList.remove('active'));
     currentPage = 'homePage'; pageHistory = ['homePage'];
     loginScreen.classList.remove('hidden'); nameInput.value = '';
     loginGreeting.textContent = getLoginGreeting(new Date().getHours());
     stopAllPlayers();
+    if (chatSubscription && supabaseClient) { supabaseClient.removeChannel(chatSubscription); chatSubscription = null; }
 });
+
 setInterval(updateTime, 1000);
 updateTime();
+
+// ============================================
+// ПОДДЕРЖКА
+// ============================================
+function copyToClipboard(text, btn) {
+    const originalText = btn.textContent;
+    navigator.clipboard.writeText(text).then(() => {
+        btn.textContent = '✓ СКОПИРОВАНО';
+        btn.style.background = 'linear-gradient(135deg, #00ff88, #00e5ff)';
+        setTimeout(() => { btn.textContent = originalText; btn.style.background = ''; }, 2000);
+    }).catch(() => {
+        const textarea = document.createElement('textarea');
+        textarea.value = text; textarea.style.position = 'fixed'; textarea.style.opacity = '0';
+        document.body.appendChild(textarea); textarea.select();
+        try {
+            document.execCommand('copy');
+            btn.textContent = '✓ СКОПИРОВАНО';
+            btn.style.background = 'linear-gradient(135deg, #00ff88, #00e5ff)';
+            setTimeout(() => { btn.textContent = originalText; btn.style.background = ''; }, 2000);
+        } catch (e) { alert('Скопируй вручную: ' + text); }
+        document.body.removeChild(textarea);
+    });
+}
+
+// ============================================
+// ЧАТ
+// ============================================
+const chatMessagesEl = document.getElementById('chatMessages');
+const chatInput = document.getElementById('chatInput');
+const chatLoading = document.getElementById('chatLoading');
+const chatStatus = document.getElementById('chatStatus');
+const sendBtn = document.getElementById('sendBtn');
+
+function getCurrentUser() { return localStorage.getItem('evgenii_user') || 'Гость'; }
+function getUserId() { return localStorage.getItem('evgenii_user') || 'guest_' + Date.now(); }
+
+function addMessageToUI(user, text, time, isSent) {
+    const div = document.createElement('div');
+    div.className = `chat-message ${isSent ? 'sent' : 'received'}`;
+    div.innerHTML = `<div class="message-avatar">${isSent ? '👤' : '👥'}</div><div class="message-content"><div class="message-bubble">${escapeHtml(text)}</div><div class="message-time">${escapeHtml(user)} · ${time}</div></div>`;
+    chatMessagesEl.appendChild(div);
+}
+function scrollToBottom() { setTimeout(() => { chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight; }, 100); }
+
+async function loadChatHistory() {
+    if (!supabaseClient) {
+        chatStatus.textContent = '⚠️ Supabase не настроен. Чат недоступен.';
+        chatStatus.className = 'chat-status offline';
+        chatMessagesEl.innerHTML = '<div style="text-align:center; padding:40px; color:var(--text-secondary);">Чат будет доступен после настройки базы данных</div>';
+        return;
+    }
+    chatLoading.style.display = 'flex';
+    chatMessagesEl.innerHTML = '';
+    chatMessagesEl.appendChild(chatLoading);
+    try {
+        const { data, error } = await supabaseClient.from('messages').select('*').order('created_at', { ascending: true }).limit(100);
+        chatLoading.style.display = 'none';
+        chatMessagesEl.innerHTML = '';
+        if (error) throw error;
+        const userId = getUserId();
+        data.forEach(msg => { addMessageToUI(msg.user_name, msg.text, msg.time, msg.user_id === userId); });
+        chatStatus.textContent = '🟢 Подключено';
+        chatStatus.className = 'chat-status connected';
+        scrollToBottom();
+    } catch (error) {
+        console.error('Ошибка загрузки:', error);
+        chatLoading.innerHTML = '<span style="color: #ff6b6b;">Ошибка подключения к базе</span>';
+        chatStatus.textContent = '🔴 Ошибка подключения';
+        chatStatus.className = 'chat-status error';
+    }
+}
+
+function subscribeToChat() {
+    if (!supabaseClient) return;
+    if (chatSubscription) supabaseClient.removeChannel(chatSubscription);
+    const userId = getUserId();
+    chatSubscription = supabaseClient.channel('chat-messages').on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages' }, (payload) => {
+        const msg = payload.new;
+        addMessageToUI(msg.user_name, msg.text, msg.time, msg.user_id === userId);
+        scrollToBottom();
+    }).subscribe((status) => {
+        if (status === 'SUBSCRIBED') { chatStatus.textContent = '🟢 Подключено'; chatStatus.className = 'chat-status connected'; }
+    });
+}
+
+async function sendMessage() {
+    if (!supabaseClient) { chatStatus.textContent = '⚠️ База данных не настроена'; chatStatus.className = 'chat-status offline'; return; }
+    const text = chatInput.value.trim();
+    if (!text) return;
+    const userName = getCurrentUser();
+    const userId = getUserId();
+    const now = new Date();
+    const time = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+    sendBtn.disabled = true;
+    try {
+        const { error } = await supabaseClient.from('messages').insert([{ user_name: userName, user_id: userId, text: text, time: time }]);
+        if (error) throw error;
+        chatInput.value = '';
+    } catch (error) {
+        console.error('Ошибка отправки:', error);
+        chatStatus.textContent = '🔴 Ошибка отправки';
+        chatStatus.className = 'chat-status error';
+        setTimeout(() => { chatStatus.textContent = '🟢 Подключено'; chatStatus.className = 'chat-status connected'; }, 3000);
+    } finally { sendBtn.disabled = false; chatInput.focus(); }
+}
+
+chatInput.addEventListener('keypress', function(e) { if (e.key === 'Enter') sendMessage(); });
+
+const chatObserver = new MutationObserver(function(mutations) {
+    mutations.forEach(function(m) {
+        if (m.target.id === 'chatPage' && m.target.classList.contains('active')) { loadChatHistory(); subscribeToChat(); }
+    });
+});
+chatObserver.observe(document.getElementById('chatPage'), { attributes: true, attributeFilter: ['class'] });
 
 // ============================================
 // КОНТАКТЫ
@@ -1361,6 +1559,7 @@ updateTime();
 const contactForm = document.getElementById('contactForm');
 const formSubmitBtn = document.getElementById('submitBtn');
 const formStatus = document.getElementById('formStatus');
+
 if (contactForm) {
     contactForm.addEventListener('submit', async function(e) {
         e.preventDefault();
@@ -1375,12 +1574,25 @@ if (contactForm) {
         const message = `📩 <b>НОВОЕ СООБЩЕНИЕ С САЙТА</b>\n\n👤 <b>Имя:</b> ${name}\n📧 <b>Контакт:</b> ${contact}\n\n💬 <b>Сообщение:</b>\n${messageText}\n\n⏰ <b>Время:</b> ${new Date().toLocaleString('ru-RU')}`;
         try {
             const telegramURL = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
-            const response = await fetch(telegramURL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: message, parse_mode: 'HTML' }) });
+            const response = await fetch(telegramURL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: message, parse_mode: 'HTML' })
+            });
             const data = await response.json();
-            if (data.ok) { formStatus.textContent = '✅ Сообщение отправлено! Я отвечу вам скоро.'; formStatus.className = 'form-status success'; this.reset(); }
-            else throw new Error(data.description || 'Ошибка Telegram API');
-        } catch (error) { console.error('Ошибка отправки:', error); formStatus.textContent = `❌ Ошибка: ${error.message}`; formStatus.className = 'form-status error'; }
-        finally { formSubmitBtn.disabled = false; formSubmitBtn.innerHTML = '<span>ОТПРАВИТЬ СООБЩЕНИЕ</span>'; }
+            if (data.ok) {
+                formStatus.textContent = '✅ Сообщение отправлено! Я отвечу вам скоро.';
+                formStatus.className = 'form-status success';
+                this.reset();
+            } else { throw new Error(data.description || 'Ошибка Telegram API'); }
+        } catch (error) {
+            console.error('Ошибка отправки:', error);
+            formStatus.textContent = `❌ Ошибка: ${error.message}`;
+            formStatus.className = 'form-status error';
+        } finally {
+            formSubmitBtn.disabled = false;
+            formSubmitBtn.innerHTML = '<span>ОТПРАВИТЬ СООБЩЕНИЕ</span>';
+        }
     });
 }
 
@@ -1390,6 +1602,7 @@ if (contactForm) {
 const voiceForm = document.getElementById('voiceForm');
 const voiceSubmitBtn = document.getElementById('voiceSubmitBtn');
 const voiceFormStatus = document.getElementById('voiceFormStatus');
+
 if (voiceForm) {
     voiceForm.addEventListener('submit', async function(e) {
         e.preventDefault();
@@ -1399,86 +1612,45 @@ if (voiceForm) {
         const style = formData.get('style');
         const lyrics = formData.get('lyrics');
         const comment = formData.get('comment') || '—';
+
         voiceSubmitBtn.disabled = true;
         voiceSubmitBtn.innerHTML = '<span>ОТПРАВКА...</span>';
         voiceFormStatus.textContent = '';
         voiceFormStatus.className = 'form-status';
+
         const lyricsPreview = lyrics.length > 2000 ? lyrics.substring(0, 2000) + '\n\n[...текст обрезан, полный пришлю в личку...]' : lyrics;
-        const message = `🎤 <b>НОВАЯ ЗАЯВКА «ДАЙ ГОЛОС»</b>\n\n👤 <b>Имя:</b> ${name}\n📧 <b>Контакт:</b> ${contact}\n🎸 <b>Стиль:</b> ${style}\n\n📝 <b>Текст:</b>\n${escapeHtml(lyricsPreview)}\n\n💬 <b>Комментарий:</b>\n${escapeHtml(comment)}\n\n⏰ <b>Время:</b> ${new Date().toLocaleString('ru-RU')}`;
+
+        const message = `🎤 <b>НОВАЯ ЗАЯВКА «ДАЙ ГОЛОС»</b>\n\n` +
+            `👤 <b>Имя:</b> ${name}\n` +
+            `📧 <b>Контакт:</b> ${contact}\n` +
+            `🎸 <b>Стиль:</b> ${style}\n\n` +
+            `📝 <b>Текст:</b>\n${escapeHtml(lyricsPreview)}\n\n` +
+            `💬 <b>Комментарий:</b>\n${escapeHtml(comment)}\n\n` +
+            `⏰ <b>Время:</b> ${new Date().toLocaleString('ru-RU')}`;
+
         try {
             const telegramURL = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
-            const response = await fetch(telegramURL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: message, parse_mode: 'HTML' }) });
+            const response = await fetch(telegramURL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: message, parse_mode: 'HTML' })
+            });
             const data = await response.json();
-            if (data.ok) { voiceFormStatus.textContent = '✅ Текст отправлен! Я свяжусь с тобой, когда трек будет готов.'; voiceFormStatus.className = 'form-status success'; this.reset(); }
-            else throw new Error(data.description || 'Ошибка Telegram API');
-        } catch (error) { console.error('Ошибка отправки:', error); voiceFormStatus.textContent = `❌ Ошибка: ${error.message}`; voiceFormStatus.className = 'form-status error'; }
-        finally { voiceSubmitBtn.disabled = false; voiceSubmitBtn.innerHTML = '<span>ОТПРАВИТЬ ТЕКСТ</span>'; }
+            if (data.ok) {
+                voiceFormStatus.textContent = '✅ Текст отправлен! Я свяжусь с тобой, когда трек будет готов.';
+                voiceFormStatus.className = 'form-status success';
+                this.reset();
+            } else { throw new Error(data.description || 'Ошибка Telegram API'); }
+        } catch (error) {
+            console.error('Ошибка отправки:', error);
+            voiceFormStatus.textContent = `❌ Ошибка: ${error.message}`;
+            voiceFormStatus.className = 'form-status error';
+        } finally {
+            voiceSubmitBtn.disabled = false;
+            voiceSubmitBtn.innerHTML = '<span>ОТПРАВИТЬ ТЕКСТ</span>';
+        }
     });
 }
-
-// ============================================
-// ПОДДЕРЖАТЬ
-// ============================================
-const SUPPORT_LINKS = {
-    coffee: 'https://yoomoney.ru/quickpay/confirm.xml?receiver=4100119560778927&quickpay-form=shop&targets=Автору+на+кофе&sum=100&paymentType=AC',
-    project50: 'https://yoomoney.ru/quickpay/confirm.xml?receiver=4100119560778927&quickpay-form=shop&targets=Поддержка+проекта+EVGENII&sum=50&paymentType=AC',
-    project100: 'https://yoomoney.ru/quickpay/confirm.xml?receiver=4100119560778927&quickpay-form=shop&targets=Поддержка+проекта+EVGENII&sum=100&paymentType=AC',
-    project300: 'https://yoomoney.ru/quickpay/confirm.xml?receiver=4100119560778927&quickpay-form=shop&targets=Поддержка+проекта+EVGENII&sum=300&paymentType=AC',
-    project500: 'https://yoomoney.ru/quickpay/confirm.xml?receiver=4100119560778927&quickpay-form=shop&targets=Поддержка+проекта+EVGENII&sum=500&paymentType=AC',
-    project800: 'https://yoomoney.ru/quickpay/confirm.xml?receiver=4100119560778927&quickpay-form=shop&targets=Поддержка+проекта+EVGENII&sum=800&paymentType=AC',
-    project1000: 'https://yoomoney.ru/quickpay/confirm.xml?receiver=4100119560778927&quickpay-form=shop&targets=Поддержка+проекта+EVGENII&sum=1000&paymentType=AC'
-};
-
-function openSupportLink(type) {
-    if (type === 'coffee') {
-        window.open(SUPPORT_LINKS.coffee, '_blank');
-    } else if (type === 'project') {
-        document.getElementById('amountModal').classList.add('active');
-        document.body.style.overflow = 'hidden';
-    } else if (type === 'vtb') {
-        document.getElementById('vtbModal').classList.add('active');
-        document.body.style.overflow = 'hidden';
-    }
-}
-
-function selectAmount(amount) {
-    let url = '';
-    switch(amount) {
-        case 50: url = SUPPORT_LINKS.project50; break;
-        case 100: url = SUPPORT_LINKS.project100; break;
-        case 300: url = SUPPORT_LINKS.project300; break;
-        case 500: url = SUPPORT_LINKS.project500; break;
-        case 800: url = SUPPORT_LINKS.project800; break;
-        case 1000: url = SUPPORT_LINKS.project1000; break;
-    }
-    if (url) {
-        window.open(url, '_blank');
-        closeAmountModal();
-    }
-}
-
-function closeAmountModal() {
-    document.getElementById('amountModal').classList.remove('active');
-    document.body.style.overflow = '';
-}
-
-function closeVTBModal() {
-    document.getElementById('vtbModal').classList.remove('active');
-    document.body.style.overflow = '';
-}
-
-document.getElementById('amountModal').addEventListener('click', function(e) {
-    if (e.target === this) {
-        closeAmountModal();
-    }
-});
-
-document.getElementById('vtbModal').addEventListener('click', function(e) {
-    if (e.target === this) {
-        closeVTBModal();
-    }
-});
 </script>
 </body>
 </html>
-
