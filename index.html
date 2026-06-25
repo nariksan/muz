@@ -513,6 +513,102 @@
             line-height: 1.5;
             text-align: center;
         }
+        .amount-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 5, 15, 0.9);
+            backdrop-filter: blur(8px);
+            z-index: 3000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .amount-modal-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .amount-modal {
+            background: linear-gradient(180deg, #0f1525 0%, #0a0e1a 100%);
+            border: 1px solid var(--card-border);
+            border-radius: 28px;
+            padding: 30px 24px;
+            max-width: 400px;
+            width: 100%;
+            transform: translateY(30px) scale(0.95);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .amount-modal-overlay.active .amount-modal {
+            transform: translateY(0) scale(1);
+        }
+        .amount-modal-header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        .amount-modal-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, var(--cyan), var(--purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .amount-modal-subtitle {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        .amount-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .amount-btn {
+            padding: 16px;
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            border-radius: 14px;
+            background: rgba(20, 20, 40, 0.6);
+            color: var(--text-primary);
+            font-family: 'Orbitron', monospace;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .amount-btn:hover {
+            border-color: var(--cyan);
+            background: rgba(0, 229, 255, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 229, 255, 0.2);
+        }
+        .amount-btn:active {
+            transform: translateY(0);
+        }
+        .amount-modal-cancel {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            background: rgba(20, 20, 40, 0.6);
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .amount-modal-cancel:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+            color: var(--text-primary);
+        }
         .fade-in-up { opacity: 0; transform: translateY(20px); animation: fadeInUp 0.6s ease forwards; }
         @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
         .page.active .fade-in-up:nth-child(1) { animation-delay: 0.1s; }
@@ -585,7 +681,7 @@
             <div class="quick-tile" onclick="navigateTo('contactPage')"><div class="tile-icon contact">✉️</div><div class="tile-title">Связь</div><div class="tile-desc">Написать автору</div></div>
             <div class="quick-tile disabled"><div class="tile-icon" style="background:rgba(0,229,255,0.15);color:var(--cyan)">💬</div><div class="tile-title">Чат</div><div class="tile-desc">Скоро будет доступен</div></div>
             <div class="quick-tile" onclick="navigateTo('supportPage')"><div class="tile-icon support">💜</div><div class="tile-title">Поддержать</div><div class="tile-desc">Сказать спасибо</div></div>
-            <div class="quick-tile" onclick="navigateTo('aboutPage')"><div class="tile-icon about">ℹ️</div><div class="tile-title">О проекте</div><div class="tile-desc">Узнать больше</div></div>
+            <div class="quick-tile" onclick="navigateTo('aboutPage')"><div class="tile-icon about">️</div><div class="tile-title">О проекте</div><div class="tile-desc">Узнать больше</div></div>
         </div>
     </div>
     <button class="logout-btn" id="logoutBtn">ВЫЙТИ</button>
@@ -616,7 +712,7 @@
 <div class="page" id="subscribersPage">
     <div class="page-header fade-in-up"><button class="back-btn" onclick="goBack()">←</button><div class="page-title">Дай голос</div></div>
     <div class="intro-block pink fade-in-up"><div class="intro-title pink">ТВОЙ ТЕКСТ — НАШ ГОЛОС</div><div class="intro-text">Присылай свой текст и стиль, в котором ты хотел бы его услышать. Мы дадим ему голос через ИИ — и твой текст зазвучит.</div></div>
-    <button class="voice-toggle-btn fade-in-up" id="voiceToggleBtn" onclick="toggleVoiceForm()"><span class="btn-icon">🎤</span><span id="voiceToggleText">ПРИСЛАТЬ СВОЙ ТЕКСТ</span><span class="btn-arrow">▼</span></button>
+    <button class="voice-toggle-btn fade-in-up" id="voiceToggleBtn" onclick="toggleVoiceForm()"><span class="btn-icon"></span><span id="voiceToggleText">ПРИСЛАТЬ СВОЙ ТЕКСТ</span><span class="btn-arrow">▼</span></button>
     <div class="voice-form-wrapper" id="voiceFormWrapper">
         <div class="voice-form-container">
             <h3 style="margin-bottom:20px;font-family:'Orbitron';letter-spacing:2px;text-align:center;font-size:1rem;color:var(--pink)">ОТПРАВИТЬ НА ОБРАБОТКУ</h3>
@@ -626,7 +722,7 @@
                 <div class="form-group"><label class="form-label">Стиль исполнения</label><select class="form-select" name="style" required><option value="" disabled selected>Выбери стиль</option><option value="Рок">Рок</option><option value="Поп">Поп</option><option value="Рэп">Рэп</option><option value="Акустика">Акустика</option><option value="Электроника">Электроника</option><option value="Инди">Инди</option><option value="Метал">Метал</option><option value="Другое">Другое (укажу в комментарии)</option></select></div>
                 <div class="form-group"><label class="form-label">Текст песни</label><textarea class="form-textarea" name="lyrics" placeholder="Вставь сюда свой текст..." required maxlength="3000" style="min-height:180px"></textarea></div>
                 <div class="form-group"><label class="form-label">Комментарий (необязательно)</label><textarea class="form-textarea" name="comment" placeholder="О чём трек? Какое настроение? Любые пожелания..." maxlength="500" style="min-height:80px"></textarea></div>
-                <div class="vpn-warning"><div class="vpn-warning-icon">🔐</div><div class="vpn-warning-text"><strong>Важно:</strong> Заявки отправляются в Telegram. Включите <strong>VPN</strong> для отправки.</div></div>
+                <div class="vpn-warning"><div class="vpn-warning-icon"></div><div class="vpn-warning-text"><strong>Важно:</strong> Заявки отправляются в Telegram. Включите <strong>VPN</strong> для отправки.</div></div>
                 <button type="submit" class="submit-btn pink" id="voiceSubmitBtn"><span>ОТПРАВИТЬ ТЕКСТ</span></button>
                 <div class="form-status" id="voiceFormStatus"></div>
             </form>
@@ -651,7 +747,7 @@
     <div class="page-header fade-in-up"><button class="back-btn" onclick="goBack()">←</button><div class="page-title">Сообщества</div></div>
     <div class="community-content fade-in-up">
         <div class="community-intro"><p>Присоединяйтесь к нашим сообществам, чтобы быть в курсе новых релизов и эксклюзивного контента</p></div>
-        <a href="#" class="community-card coming-soon" onclick="event.preventDefault()"><div class="community-icon bip">🎵</div><div class="community-info"><div class="community-name">Bip</div><div class="community-desc">Музыкальная платформа</div><span class="community-badge">Скоро</span></div><div class="community-arrow">→</div></a>
+        <a href="#" class="community-card coming-soon" onclick="event.preventDefault()"><div class="community-icon bip"></div><div class="community-info"><div class="community-name">Bip</div><div class="community-desc">Музыкальная платформа</div><span class="community-badge">Скоро</span></div><div class="community-arrow">→</div></a>
         <a href="#" class="community-card coming-soon" onclick="event.preventDefault()"><div class="community-icon telegram">✈️</div><div class="community-info"><div class="community-name">Telegram</div><div class="community-desc">Новости и обновления</div><span class="community-badge">Скоро</span></div><div class="community-arrow">→</div></a>
         <a href="#" class="community-card coming-soon" onclick="event.preventDefault()"><div class="community-icon instagram">📷</div><div class="community-info"><div class="community-name">Instagram</div><div class="community-desc">Визуальный контент</div><span class="community-badge">Скоро</span></div><div class="community-arrow">→</div></a>
     </div>
@@ -698,7 +794,7 @@
                 <div class="support-card-title">Поддержать проект</div>
                 <div class="support-card-desc">Помочь развитию и новым релизам</div>
             </div>
-            <div class="support-card-price">Любая сумма</div>
+            <div class="support-card-price">Выбрать сумму</div>
         </div>
     </div>
     <div class="support-note fade-in-up">
@@ -712,7 +808,7 @@
     <div class="player-progress-wrapper"><span class="player-time-mini" id="playerCurrentTime">0:00</span><div class="player-bar-container" onclick="seek(event)"><div class="player-bar-fill" id="playerBarFill"></div></div><span class="player-time-mini end" id="playerTotalTime">0:00</span></div>
 </div>
 <div class="floating-player gold" id="instrumentalPlayer">
-    <div class="floating-player-top"><div class="floating-player-cover gold" id="instPlayerCover">🎹</div><div class="floating-player-info"><div class="floating-player-label gold">Инструментал</div><div class="floating-player-title" id="instPlayerTitle">Название</div><div class="floating-player-tags" id="instPlayerTags"></div></div><div class="floating-player-controls"><button class="floating-skip-btn gold" onclick="instSkipBackward()"><svg viewBox="0 0 24 24"><path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z"/></svg></button><button class="floating-play-btn gold" onclick="instTogglePlay()"><svg viewBox="0 0 24 24" id="instPlayIcon"><polygon points="5,3 19,12 5,21"/></svg></button><button class="floating-skip-btn gold" onclick="instSkipForward()"><svg viewBox="0 0 24 24"><path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z"/></svg></button></div></div>
+    <div class="floating-player-top"><div class="floating-player-cover gold" id="instPlayerCover"></div><div class="floating-player-info"><div class="floating-player-label gold">Инструментал</div><div class="floating-player-title" id="instPlayerTitle">Название</div><div class="floating-player-tags" id="instPlayerTags"></div></div><div class="floating-player-controls"><button class="floating-skip-btn gold" onclick="instSkipBackward()"><svg viewBox="0 0 24 24"><path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z"/></svg></button><button class="floating-play-btn gold" onclick="instTogglePlay()"><svg viewBox="0 0 24 24" id="instPlayIcon"><polygon points="5,3 19,12 5,21"/></svg></button><button class="floating-skip-btn gold" onclick="instSkipForward()"><svg viewBox="0 0 24 24"><path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z"/></svg></button></div></div>
     <div class="floating-player-description gold" id="instPlayerDescription">Описание трека...</div>
     <div class="floating-progress-wrapper"><span class="floating-time" id="instCurrentTime">0:00</span><div class="floating-bar-container" onclick="instSeek(event)"><div class="floating-bar-fill gold" id="instBarFill"></div></div><span class="floating-time end" id="instTotalTime">0:00</span></div>
 </div>
@@ -731,6 +827,25 @@
         <div class="modal-warning"><div class="modal-warning-icon">⚠</div><div><div class="modal-warning-title">Внимание!</div><div class="modal-warning-text">Скачивание происходит не сразу.<br>Пожалуйста, подождите несколько секунд.</div></div></div>
         <button class="modal-download-btn" id="modalDownloadBtn" onclick="startDownload()">СКАЧАТЬ ТРЕК</button>
         <button class="modal-cancel-btn" onclick="closeDownloadModal()">Отмена</button>
+    </div>
+</div>
+
+<!-- МОДАЛКА ВЫБОРА СУММЫ -->
+<div class="amount-modal-overlay" id="amountModal">
+    <div class="amount-modal">
+        <div class="amount-modal-header">
+            <div class="amount-modal-title">Выбери сумму</div>
+            <div class="amount-modal-subtitle">Поддержи проект EVGENII</div>
+        </div>
+        <div class="amount-grid">
+            <button class="amount-btn" onclick="selectAmount(50)">50 ₽</button>
+            <button class="amount-btn" onclick="selectAmount(100)">100 ₽</button>
+            <button class="amount-btn" onclick="selectAmount(300)">300 ₽</button>
+            <button class="amount-btn" onclick="selectAmount(500)">500 ₽</button>
+            <button class="amount-btn" onclick="selectAmount(800)">800 ₽</button>
+            <button class="amount-btn" onclick="selectAmount(1000)">1000 ₽</button>
+        </div>
+        <button class="amount-modal-cancel" onclick="closeAmountModal()">Отмена</button>
     </div>
 </div>
 
@@ -825,7 +940,7 @@ function renderNewRelease() {
     const h = document.getElementById('homeReleaseCard');
     if (h) h.innerHTML = `<div class="release-cover"><span class="release-badge">NEW</span>${newRelease.cover ? `<img src="${newRelease.cover}" onerror="this.style.display='none';this.parentElement.innerHTML='🚗'">` : '🚗'}</div><div class="release-info"><div class="release-label">ПРЕМЬЕРА</div><div class="release-title">${newRelease.title}</div><div class="release-meta">${newRelease.subtitle.toUpperCase()} · ${newRelease.duration}</div></div>`;
     const f = document.getElementById('featuredRelease');
-    if (f) f.innerHTML = `<button class="featured-download-btn" onclick="event.stopPropagation();openDownloadModal(newRelease)"><svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></button><div class="featured-cover">${newRelease.cover ? `<img src="${newRelease.cover}" onerror="this.style.display='none';this.parentElement.innerHTML='🚗'">` : '🚗'}</div><div class="featured-badge"><span class="featured-badge-star">★</span><span class="featured-badge-text">Новый релиз</span></div><div class="featured-title">${newRelease.title}</div><div class="featured-artist">EVGENII</div><button class="play-btn-large"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></button>`;
+    if (f) f.innerHTML = `<button class="featured-download-btn" onclick="event.stopPropagation();openDownloadModal(newRelease)"><svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></button><div class="featured-cover">${newRelease.cover ? `<img src="${newRelease.cover}" onerror="this.style.display='none';this.parentElement.innerHTML='🚗'">` : ''}</div><div class="featured-badge"><span class="featured-badge-star">★</span><span class="featured-badge-text">Новый релиз</span></div><div class="featured-title">${newRelease.title}</div><div class="featured-artist">EVGENII</div><button class="play-btn-large"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></button>`;
 }
 
 function updateCategoryCounts() {
@@ -839,7 +954,7 @@ function createTrackEl(track, category, index) {
     const el = document.createElement('div');
     el.className = 'track-item' + (category === 'instrumentals' ? ' gold' : category === 'subscribers' ? ' pink' : '');
     el.dataset.id = track.id;
-    const coverHtml = track.cover ? `<img src="${track.cover}" onerror="this.style.display='none';this.parentElement.innerHTML='${category === 'instrumentals' ? '🎹' : category === 'subscribers' ? '🎤' : '🎵'}'">` : (category === 'instrumentals' ? '🎹' : category === 'subscribers' ? '🎤' : '🎵');
+    const coverHtml = track.cover ? `<img src="${track.cover}" onerror="this.style.display='none';this.parentElement.innerHTML='${category === 'instrumentals' ? '🎹' : category === 'subscribers' ? '' : '🎵'}'">` : (category === 'instrumentals' ? '🎹' : category === 'subscribers' ? '' : '🎵');
     const badgeClass = category === 'instrumentals' ? 'gold' : category === 'subscribers' ? 'pink' : 'cyan';
     const badgeIcon = category === 'instrumentals' ? '🎹' : category === 'subscribers' ? '🎤' : '🎵';
     let artistText = '', artistClass = '';
@@ -856,7 +971,7 @@ function createTrackEl(track, category, index) {
 function createDivider(category) {
     const div = document.createElement('div');
     div.className = 'category-divider';
-    const labels = { tracks: { icon: '🎵', text: 'ТРЕКИ EVGENII', color: 'cyan' }, instrumentals: { icon: '🎹', text: 'ИНСТРУМЕНТАЛЫ', color: 'gold' }, subscribers: { icon: '🎤', text: 'ДАЙ ГОЛОС', color: 'pink' } };
+    const labels = { tracks: { icon: '', text: 'ТРЕКИ EVGENII', color: 'cyan' }, instrumentals: { icon: '🎹', text: 'ИНСТРУМЕНТАЛЫ', color: 'gold' }, subscribers: { icon: '🎤', text: 'ДАЙ ГОЛОС', color: 'pink' } };
     const l = labels[category];
     div.innerHTML = `<div class="category-divider-line"></div><div class="category-divider-label ${l.color}"><span>${l.icon}</span><span>${l.text}</span></div><div class="category-divider-line"></div>`;
     return div;
@@ -1171,7 +1286,7 @@ if (contactForm) {
         formSubmitBtn.innerHTML = '<span>ОТПРАВКА...</span>';
         formStatus.textContent = '';
         formStatus.className = 'form-status';
-        const message = `📩 <b>НОВОЕ СООБЩЕНИЕ С САЙТА</b>\n\n👤 <b>Имя:</b> ${name}\n📧 <b>Контакт:</b> ${contact}\n\n💬 <b>Сообщение:</b>\n${messageText}\n\n⏰ <b>Время:</b> ${new Date().toLocaleString('ru-RU')}`;
+        const message = `📩 <b>НОВОЕ СООБЩЕНИЕ С САЙТА</b>\n\n👤 <b>Имя:</b> ${name}\n <b>Контакт:</b> ${contact}\n\n💬 <b>Сообщение:</b>\n${messageText}\n\n⏰ <b>Время:</b> ${new Date().toLocaleString('ru-RU')}`;
         try {
             const telegramURL = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
             const response = await fetch(telegramURL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: message, parse_mode: 'HTML' }) });
@@ -1203,7 +1318,7 @@ if (voiceForm) {
         voiceFormStatus.textContent = '';
         voiceFormStatus.className = 'form-status';
         const lyricsPreview = lyrics.length > 2000 ? lyrics.substring(0, 2000) + '\n\n[...текст обрезан, полный пришлю в личку...]' : lyrics;
-        const message = `🎤 <b>НОВАЯ ЗАЯВКА «ДАЙ ГОЛОС»</b>\n\n👤 <b>Имя:</b> ${name}\n📧 <b>Контакт:</b> ${contact}\n🎸 <b>Стиль:</b> ${style}\n\n📝 <b>Текст:</b>\n${escapeHtml(lyricsPreview)}\n\n💬 <b>Комментарий:</b>\n${escapeHtml(comment)}\n\n⏰ <b>Время:</b> ${new Date().toLocaleString('ru-RU')}`;
+        const message = ` <b>НОВАЯ ЗАЯВКА «ДАЙ ГОЛОС»</b>\n\n👤 <b>Имя:</b> ${name}\n📧 <b>Контакт:</b> ${contact}\n🎸 <b>Стиль:</b> ${style}\n\n📝 <b>Текст:</b>\n${escapeHtml(lyricsPreview)}\n\n💬 <b>Комментарий:</b>\n${escapeHtml(comment)}\n\n⏰ <b>Время:</b> ${new Date().toLocaleString('ru-RU')}`;
         try {
             const telegramURL = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
             const response = await fetch(telegramURL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: message, parse_mode: 'HTML' }) });
@@ -1220,15 +1335,49 @@ if (voiceForm) {
 // ============================================
 const SUPPORT_LINKS = {
     coffee: 'https://yoomoney.ru/quickpay/confirm.xml?receiver=4100119560778927&quickpay-form=shop&targets=Автору+на+кофе&sum=100&paymentType=AC',
-    project: 'https://yoomoney.ru/quickpay/confirm.xml?receiver=4100119560778927&quickpay-form=shop&targets=Поддержка+проекта+EVGENII&paymentType=AC'
+    project50: 'https://yoomoney.ru/quickpay/confirm.xml?receiver=4100119560778927&quickpay-form=shop&targets=Поддержка+проекта+EVGENII&sum=50&paymentType=AC',
+    project100: 'https://yoomoney.ru/quickpay/confirm.xml?receiver=4100119560778927&quickpay-form=shop&targets=Поддержка+проекта+EVGENII&sum=100&paymentType=AC',
+    project300: 'https://yoomoney.ru/quickpay/confirm.xml?receiver=4100119560778927&quickpay-form=shop&targets=Поддержка+проекта+EVGENII&sum=300&paymentType=AC',
+    project500: 'https://yoomoney.ru/quickpay/confirm.xml?receiver=4100119560778927&quickpay-form=shop&targets=Поддержка+проекта+EVGENII&sum=500&paymentType=AC',
+    project800: 'https://yoomoney.ru/quickpay/confirm.xml?receiver=4100119560778927&quickpay-form=shop&targets=Поддержка+проекта+EVGENII&sum=800&paymentType=AC',
+    project1000: 'https://yoomoney.ru/quickpay/confirm.xml?receiver=4100119560778927&quickpay-form=shop&targets=Поддержка+проекта+EVGENII&sum=1000&paymentType=AC'
 };
 
 function openSupportLink(type) {
-    const url = SUPPORT_LINKS[type];
-    if (url) {
-        window.open(url, '_blank');
+    if (type === 'coffee') {
+        window.open(SUPPORT_LINKS.coffee, '_blank');
+    } else if (type === 'project') {
+        document.getElementById('amountModal').classList.add('active');
+        document.body.style.overflow = 'hidden';
     }
 }
+
+function selectAmount(amount) {
+    let url = '';
+    switch(amount) {
+        case 50: url = SUPPORT_LINKS.project50; break;
+        case 100: url = SUPPORT_LINKS.project100; break;
+        case 300: url = SUPPORT_LINKS.project300; break;
+        case 500: url = SUPPORT_LINKS.project500; break;
+        case 800: url = SUPPORT_LINKS.project800; break;
+        case 1000: url = SUPPORT_LINKS.project1000; break;
+    }
+    if (url) {
+        window.open(url, '_blank');
+        closeAmountModal();
+    }
+}
+
+function closeAmountModal() {
+    document.getElementById('amountModal').classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+document.getElementById('amountModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeAmountModal();
+    }
+});
 </script>
 </body>
 </html>
