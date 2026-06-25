@@ -443,6 +443,21 @@
         .support-card.project:active {
             transform: translateY(0);
         }
+        .support-card.vtb {
+            background: linear-gradient(135deg, rgba(0, 102, 204, 0.08), rgba(0, 153, 204, 0.08));
+            border: 1px solid rgba(0, 102, 204, 0.25);
+        }
+        .support-card.vtb::before {
+            background: linear-gradient(90deg, transparent, rgba(0, 102, 204, 0.15), transparent);
+        }
+        .support-card.vtb:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 102, 204, 0.2);
+            border-color: rgba(0, 102, 204, 0.5);
+        }
+        .support-card.vtb:active {
+            transform: translateY(0);
+        }
         .support-card-icon {
             width: 60px;
             height: 60px;
@@ -461,6 +476,10 @@
             background: linear-gradient(135deg, rgba(0, 229, 255, 0.2), rgba(176, 0, 255, 0.1));
             box-shadow: 0 4px 15px rgba(0, 229, 255, 0.15);
         }
+        .support-card.vtb .support-card-icon {
+            background: linear-gradient(135deg, rgba(0, 102, 204, 0.2), rgba(0, 153, 204, 0.1));
+            box-shadow: 0 4px 15px rgba(0, 102, 204, 0.15);
+        }
         .support-card-content {
             flex: 1;
             min-width: 0;
@@ -478,6 +497,9 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+        }
+        .support-card.vtb .support-card-title {
+            color: #0099cc;
         }
         .support-card-desc {
             font-size: 0.85rem;
@@ -501,6 +523,11 @@
             color: var(--cyan);
             border: 1px solid rgba(0, 229, 255, 0.25);
         }
+        .support-card.vtb .support-card-price {
+            background: rgba(0, 102, 204, 0.15);
+            color: #0099cc;
+            border: 1px solid rgba(0, 102, 204, 0.3);
+        }
         .support-note {
             background: rgba(20, 25, 40, 0.4);
             border: 1px dashed var(--card-border);
@@ -512,6 +539,35 @@
             font-size: 0.85rem;
             line-height: 1.5;
             text-align: center;
+        }
+        .qr-section {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px dashed rgba(255, 255, 255, 0.1);
+        }
+        .qr-code {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 12px;
+            padding: 12px;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        }
+        .qr-code img {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+        .qr-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+        .qr-hint {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.4);
         }
         .amount-modal-overlay {
             position: fixed;
@@ -681,7 +737,7 @@
             <div class="quick-tile" onclick="navigateTo('contactPage')"><div class="tile-icon contact">✉️</div><div class="tile-title">Связь</div><div class="tile-desc">Написать автору</div></div>
             <div class="quick-tile disabled"><div class="tile-icon" style="background:rgba(0,229,255,0.15);color:var(--cyan)">💬</div><div class="tile-title">Чат</div><div class="tile-desc">Скоро будет доступен</div></div>
             <div class="quick-tile" onclick="navigateTo('supportPage')"><div class="tile-icon support">💜</div><div class="tile-title">Поддержать</div><div class="tile-desc">Сказать спасибо</div></div>
-            <div class="quick-tile" onclick="navigateTo('aboutPage')"><div class="tile-icon about">️</div><div class="tile-title">О проекте</div><div class="tile-desc">Узнать больше</div></div>
+            <div class="quick-tile" onclick="navigateTo('aboutPage')"><div class="tile-icon about">ℹ️</div><div class="tile-title">О проекте</div><div class="tile-desc">Узнать больше</div></div>
         </div>
     </div>
     <button class="logout-btn" id="logoutBtn">ВЫЙТИ</button>
@@ -712,7 +768,7 @@
 <div class="page" id="subscribersPage">
     <div class="page-header fade-in-up"><button class="back-btn" onclick="goBack()">←</button><div class="page-title">Дай голос</div></div>
     <div class="intro-block pink fade-in-up"><div class="intro-title pink">ТВОЙ ТЕКСТ — НАШ ГОЛОС</div><div class="intro-text">Присылай свой текст и стиль, в котором ты хотел бы его услышать. Мы дадим ему голос через ИИ — и твой текст зазвучит.</div></div>
-    <button class="voice-toggle-btn fade-in-up" id="voiceToggleBtn" onclick="toggleVoiceForm()"><span class="btn-icon"></span><span id="voiceToggleText">ПРИСЛАТЬ СВОЙ ТЕКСТ</span><span class="btn-arrow">▼</span></button>
+    <button class="voice-toggle-btn fade-in-up" id="voiceToggleBtn" onclick="toggleVoiceForm()"><span class="btn-icon">🎤</span><span id="voiceToggleText">ПРИСЛАТЬ СВОЙ ТЕКСТ</span><span class="btn-arrow">▼</span></button>
     <div class="voice-form-wrapper" id="voiceFormWrapper">
         <div class="voice-form-container">
             <h3 style="margin-bottom:20px;font-family:'Orbitron';letter-spacing:2px;text-align:center;font-size:1rem;color:var(--pink)">ОТПРАВИТЬ НА ОБРАБОТКУ</h3>
@@ -722,7 +778,7 @@
                 <div class="form-group"><label class="form-label">Стиль исполнения</label><select class="form-select" name="style" required><option value="" disabled selected>Выбери стиль</option><option value="Рок">Рок</option><option value="Поп">Поп</option><option value="Рэп">Рэп</option><option value="Акустика">Акустика</option><option value="Электроника">Электроника</option><option value="Инди">Инди</option><option value="Метал">Метал</option><option value="Другое">Другое (укажу в комментарии)</option></select></div>
                 <div class="form-group"><label class="form-label">Текст песни</label><textarea class="form-textarea" name="lyrics" placeholder="Вставь сюда свой текст..." required maxlength="3000" style="min-height:180px"></textarea></div>
                 <div class="form-group"><label class="form-label">Комментарий (необязательно)</label><textarea class="form-textarea" name="comment" placeholder="О чём трек? Какое настроение? Любые пожелания..." maxlength="500" style="min-height:80px"></textarea></div>
-                <div class="vpn-warning"><div class="vpn-warning-icon"></div><div class="vpn-warning-text"><strong>Важно:</strong> Заявки отправляются в Telegram. Включите <strong>VPN</strong> для отправки.</div></div>
+                <div class="vpn-warning"><div class="vpn-warning-icon">🔐</div><div class="vpn-warning-text"><strong>Важно:</strong> Заявки отправляются в Telegram. Включите <strong>VPN</strong> для отправки.</div></div>
                 <button type="submit" class="submit-btn pink" id="voiceSubmitBtn"><span>ОТПРАВИТЬ ТЕКСТ</span></button>
                 <div class="form-status" id="voiceFormStatus"></div>
             </form>
@@ -747,7 +803,7 @@
     <div class="page-header fade-in-up"><button class="back-btn" onclick="goBack()">←</button><div class="page-title">Сообщества</div></div>
     <div class="community-content fade-in-up">
         <div class="community-intro"><p>Присоединяйтесь к нашим сообществам, чтобы быть в курсе новых релизов и эксклюзивного контента</p></div>
-        <a href="#" class="community-card coming-soon" onclick="event.preventDefault()"><div class="community-icon bip"></div><div class="community-info"><div class="community-name">Bip</div><div class="community-desc">Музыкальная платформа</div><span class="community-badge">Скоро</span></div><div class="community-arrow">→</div></a>
+        <a href="#" class="community-card coming-soon" onclick="event.preventDefault()"><div class="community-icon bip">🎵</div><div class="community-info"><div class="community-name">Bip</div><div class="community-desc">Музыкальная платформа</div><span class="community-badge">Скоро</span></div><div class="community-arrow">→</div></a>
         <a href="#" class="community-card coming-soon" onclick="event.preventDefault()"><div class="community-icon telegram">✈️</div><div class="community-info"><div class="community-name">Telegram</div><div class="community-desc">Новости и обновления</div><span class="community-badge">Скоро</span></div><div class="community-arrow">→</div></a>
         <a href="#" class="community-card coming-soon" onclick="event.preventDefault()"><div class="community-icon instagram">📷</div><div class="community-info"><div class="community-name">Instagram</div><div class="community-desc">Визуальный контент</div><span class="community-badge">Скоро</span></div><div class="community-arrow">→</div></a>
     </div>
@@ -796,9 +852,24 @@
             </div>
             <div class="support-card-price">Выбрать сумму</div>
         </div>
+        <div class="support-card vtb" onclick="openSupportLink('vtb')">
+            <div class="support-card-icon">🏦</div>
+            <div class="support-card-content">
+                <div class="support-card-title">ВТБ Оплата</div>
+                <div class="support-card-desc">QR-код для оплаты любой суммы</div>
+            </div>
+            <div class="support-card-price">Любая</div>
+        </div>
     </div>
     <div class="support-note fade-in-up">
         <p>💳 Удобная оплата картой через ЮMoney. Спасибо за поддержку!</p>
+        <div class="qr-section">
+            <div class="qr-code">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://yoomoney.ru/quickpay/confirm.xml?receiver=4100119560778927&quickpay-form=shop&targets=Автору+на+кофе&sum=100&paymentType=AC" alt="QR код для оплаты">
+            </div>
+            <div class="qr-label">Отсканируй для оплаты 100 ₽</div>
+            <div class="qr-hint">Камера телефона → QR код</div>
+        </div>
     </div>
 </div>
 
@@ -808,7 +879,7 @@
     <div class="player-progress-wrapper"><span class="player-time-mini" id="playerCurrentTime">0:00</span><div class="player-bar-container" onclick="seek(event)"><div class="player-bar-fill" id="playerBarFill"></div></div><span class="player-time-mini end" id="playerTotalTime">0:00</span></div>
 </div>
 <div class="floating-player gold" id="instrumentalPlayer">
-    <div class="floating-player-top"><div class="floating-player-cover gold" id="instPlayerCover"></div><div class="floating-player-info"><div class="floating-player-label gold">Инструментал</div><div class="floating-player-title" id="instPlayerTitle">Название</div><div class="floating-player-tags" id="instPlayerTags"></div></div><div class="floating-player-controls"><button class="floating-skip-btn gold" onclick="instSkipBackward()"><svg viewBox="0 0 24 24"><path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z"/></svg></button><button class="floating-play-btn gold" onclick="instTogglePlay()"><svg viewBox="0 0 24 24" id="instPlayIcon"><polygon points="5,3 19,12 5,21"/></svg></button><button class="floating-skip-btn gold" onclick="instSkipForward()"><svg viewBox="0 0 24 24"><path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z"/></svg></button></div></div>
+    <div class="floating-player-top"><div class="floating-player-cover gold" id="instPlayerCover">🎹</div><div class="floating-player-info"><div class="floating-player-label gold">Инструментал</div><div class="floating-player-title" id="instPlayerTitle">Название</div><div class="floating-player-tags" id="instPlayerTags"></div></div><div class="floating-player-controls"><button class="floating-skip-btn gold" onclick="instSkipBackward()"><svg viewBox="0 0 24 24"><path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z"/></svg></button><button class="floating-play-btn gold" onclick="instTogglePlay()"><svg viewBox="0 0 24 24" id="instPlayIcon"><polygon points="5,3 19,12 5,21"/></svg></button><button class="floating-skip-btn gold" onclick="instSkipForward()"><svg viewBox="0 0 24 24"><path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z"/></svg></button></div></div>
     <div class="floating-player-description gold" id="instPlayerDescription">Описание трека...</div>
     <div class="floating-progress-wrapper"><span class="floating-time" id="instCurrentTime">0:00</span><div class="floating-bar-container" onclick="instSeek(event)"><div class="floating-bar-fill gold" id="instBarFill"></div></div><span class="floating-time end" id="instTotalTime">0:00</span></div>
 </div>
@@ -846,6 +917,21 @@
             <button class="amount-btn" onclick="selectAmount(1000)">1000 ₽</button>
         </div>
         <button class="amount-modal-cancel" onclick="closeAmountModal()">Отмена</button>
+    </div>
+</div>
+
+<!-- МОДАЛКА ВТБ QR -->
+<div class="modal-overlay" id="vtbModal">
+    <div class="modal-content">
+        <div class="modal-header">ОПЛАТА ЧЕРЕЗ ВТБ</div>
+        <div style="text-align: center; margin-bottom: 20px;">
+            <p style="color: var(--text-secondary); margin-bottom: 20px;">Отсканируй QR-код для оплаты любой суммы</p>
+            <div class="qr-code" style="width: 250px; height: 250px; margin: 0 auto 16px;">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=https://c2c.cbrpay.ru/BS1I004T83DR0LNI9IFPMAQC4JP5BGCC" alt="QR код ВТБ">
+            </div>
+            <p style="font-size: 0.85rem; color: var(--text-secondary);">Любая сумма · Мгновенно · Безопасно</p>
+        </div>
+        <button class="modal-cancel-btn" onclick="closeVTBModal()">Закрыть</button>
     </div>
 </div>
 
@@ -954,7 +1040,7 @@ function createTrackEl(track, category, index) {
     const el = document.createElement('div');
     el.className = 'track-item' + (category === 'instrumentals' ? ' gold' : category === 'subscribers' ? ' pink' : '');
     el.dataset.id = track.id;
-    const coverHtml = track.cover ? `<img src="${track.cover}" onerror="this.style.display='none';this.parentElement.innerHTML='${category === 'instrumentals' ? '🎹' : category === 'subscribers' ? '' : '🎵'}'">` : (category === 'instrumentals' ? '🎹' : category === 'subscribers' ? '' : '🎵');
+    const coverHtml = track.cover ? `<img src="${track.cover}" onerror="this.style.display='none';this.parentElement.innerHTML='${category === 'instrumentals' ? '🎹' : category === 'subscribers' ? '🎤' : '🎵'}'">` : (category === 'instrumentals' ? '🎹' : category === 'subscribers' ? '🎤' : '🎵');
     const badgeClass = category === 'instrumentals' ? 'gold' : category === 'subscribers' ? 'pink' : 'cyan';
     const badgeIcon = category === 'instrumentals' ? '🎹' : category === 'subscribers' ? '🎤' : '🎵';
     let artistText = '', artistClass = '';
@@ -1286,7 +1372,7 @@ if (contactForm) {
         formSubmitBtn.innerHTML = '<span>ОТПРАВКА...</span>';
         formStatus.textContent = '';
         formStatus.className = 'form-status';
-        const message = `📩 <b>НОВОЕ СООБЩЕНИЕ С САЙТА</b>\n\n👤 <b>Имя:</b> ${name}\n <b>Контакт:</b> ${contact}\n\n💬 <b>Сообщение:</b>\n${messageText}\n\n⏰ <b>Время:</b> ${new Date().toLocaleString('ru-RU')}`;
+        const message = `📩 <b>НОВОЕ СООБЩЕНИЕ С САЙТА</b>\n\n👤 <b>Имя:</b> ${name}\n📧 <b>Контакт:</b> ${contact}\n\n💬 <b>Сообщение:</b>\n${messageText}\n\n⏰ <b>Время:</b> ${new Date().toLocaleString('ru-RU')}`;
         try {
             const telegramURL = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
             const response = await fetch(telegramURL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: message, parse_mode: 'HTML' }) });
@@ -1318,7 +1404,7 @@ if (voiceForm) {
         voiceFormStatus.textContent = '';
         voiceFormStatus.className = 'form-status';
         const lyricsPreview = lyrics.length > 2000 ? lyrics.substring(0, 2000) + '\n\n[...текст обрезан, полный пришлю в личку...]' : lyrics;
-        const message = ` <b>НОВАЯ ЗАЯВКА «ДАЙ ГОЛОС»</b>\n\n👤 <b>Имя:</b> ${name}\n📧 <b>Контакт:</b> ${contact}\n🎸 <b>Стиль:</b> ${style}\n\n📝 <b>Текст:</b>\n${escapeHtml(lyricsPreview)}\n\n💬 <b>Комментарий:</b>\n${escapeHtml(comment)}\n\n⏰ <b>Время:</b> ${new Date().toLocaleString('ru-RU')}`;
+        const message = `🎤 <b>НОВАЯ ЗАЯВКА «ДАЙ ГОЛОС»</b>\n\n👤 <b>Имя:</b> ${name}\n📧 <b>Контакт:</b> ${contact}\n🎸 <b>Стиль:</b> ${style}\n\n📝 <b>Текст:</b>\n${escapeHtml(lyricsPreview)}\n\n💬 <b>Комментарий:</b>\n${escapeHtml(comment)}\n\n⏰ <b>Время:</b> ${new Date().toLocaleString('ru-RU')}`;
         try {
             const telegramURL = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
             const response = await fetch(telegramURL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: message, parse_mode: 'HTML' }) });
@@ -1349,6 +1435,9 @@ function openSupportLink(type) {
     } else if (type === 'project') {
         document.getElementById('amountModal').classList.add('active');
         document.body.style.overflow = 'hidden';
+    } else if (type === 'vtb') {
+        document.getElementById('vtbModal').classList.add('active');
+        document.body.style.overflow = 'hidden';
     }
 }
 
@@ -1373,9 +1462,20 @@ function closeAmountModal() {
     document.body.style.overflow = '';
 }
 
+function closeVTBModal() {
+    document.getElementById('vtbModal').classList.remove('active');
+    document.body.style.overflow = '';
+}
+
 document.getElementById('amountModal').addEventListener('click', function(e) {
     if (e.target === this) {
         closeAmountModal();
+    }
+});
+
+document.getElementById('vtbModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeVTBModal();
     }
 });
 </script>
