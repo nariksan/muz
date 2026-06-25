@@ -92,7 +92,7 @@
         .tile-icon.community { background: rgba(176, 0, 255, 0.15); color: var(--purple); }
         .tile-icon.contact { background: rgba(0, 229, 255, 0.15); color: var(--cyan); }
         .tile-icon.about { background: rgba(255, 0, 229, 0.15); color: var(--magenta); }
-        .tile-icon.support { background: linear-gradient(135deg, rgba(255, 107, 157, 0.2), rgba(176, 0, 255, 0.15)); color: var(--pink); }
+        .tile-icon.support { background: rgba(255, 255, 255, 0.05); color: var(--text-secondary); }
         .tile-title { font-size: 0.95rem; font-weight: 600; margin-bottom: 4px; }
         .tile-desc { font-size: 0.75rem; color: var(--text-secondary); }
         .logout-btn { display: block; margin: 20px auto 0; padding: 12px 30px; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; background: transparent; color: var(--text-secondary); font-size: 0.8rem; font-family: 'Inter', sans-serif; cursor: pointer; transition: all 0.3s ease; letter-spacing: 1px; }
@@ -360,16 +360,6 @@
         .page.active .fade-in-up:nth-child(3) { animation-delay: 0.3s; }
         .page.active .fade-in-up:nth-child(4) { animation-delay: 0.4s; }
         .page.active .fade-in-up:nth-child(5) { animation-delay: 0.5s; }
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-        @keyframes heartBeat { 0%, 100% { transform: scale(1); } 15% { transform: scale(1.15); } 30% { transform: scale(1); } 45% { transform: scale(1.15); } 60% { transform: scale(1); } }
-        @keyframes thankYouFadeIn { from { opacity: 0; transform: translate(-50%, -40%) scale(0.8); } to { opacity: 1; transform: translate(-50%, -50%) scale(1); } }
-        @keyframes thankYouFadeOut { from { opacity: 1; } to { opacity: 0; } }
-        @keyframes floatUp { 0% { transform: translateY(0) rotate(0deg); opacity: 1; } 100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; } }
-        .donate-amount-btn { padding: 14px; border: 1px solid var(--card-border); border-radius: 12px; background: var(--card-bg); color: var(--text-primary); font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; font-family: 'Inter', sans-serif; }
-        .donate-amount-btn:hover { border-color: var(--pink); background: rgba(255, 107, 157, 0.1); transform: translateY(-2px); box-shadow: 0 4px 15px rgba(255, 107, 157, 0.2); }
-        .donate-amount-btn.selected { border-color: var(--pink); background: linear-gradient(135deg, rgba(255, 107, 157, 0.2), rgba(176, 0, 255, 0.2)); color: var(--pink); box-shadow: 0 0 20px rgba(255, 107, 157, 0.3); }
-        #thankYouAnimation { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; display: none; animation: thankYouFadeIn 0.5s ease forwards; }
-        #thankYouAnimation.hide { animation: thankYouFadeOut 0.5s ease forwards; }
         @media (max-width: 380px) {
             .banner-title { font-size: 1.6rem; letter-spacing: 4px; }
             .featured-title { font-size: 1.4rem; }
@@ -434,7 +424,7 @@
             <div class="quick-tile" onclick="navigateTo('communityPage')"><div class="tile-icon community">🌐</div><div class="tile-title">Сообщества</div><div class="tile-desc">Bip & Telegram</div></div>
             <div class="quick-tile" onclick="navigateTo('contactPage')"><div class="tile-icon contact">✉️</div><div class="tile-title">Связь</div><div class="tile-desc">Написать автору</div></div>
             <div class="quick-tile disabled"><div class="tile-icon" style="background:rgba(0,229,255,0.15);color:var(--cyan)">💬</div><div class="tile-title">Чат</div><div class="tile-desc">Скоро будет доступен</div></div>
-            <div class="quick-tile" onclick="openDonateModal()"><div class="tile-icon support">💜</div><div class="tile-title">Поддержать</div><div class="tile-desc">Сделать донат</div></div>
+            <div class="quick-tile disabled"><div class="tile-icon support">💜</div><div class="tile-title">Поддержать</div><div class="tile-desc">В разработке</div></div>
             <div class="quick-tile" onclick="navigateTo('aboutPage')"><div class="tile-icon about">ℹ️</div><div class="tile-title">О проекте</div><div class="tile-desc">Узнать больше</div></div>
         </div>
     </div>
@@ -552,70 +542,6 @@
     </div>
 </div>
 
-<!-- МОДАЛКА ДОНАТА -->
-<div class="modal-overlay" id="donateModal">
-    <div class="modal-content" style="max-width: 460px;">
-        <div class="modal-header" style="color: var(--pink); font-size: 1.3rem; letter-spacing: 2px;">☕ ПОДДЕРЖАТЬ ПРОЕКТ</div>
-        <div style="text-align: center; margin-bottom: 24px;">
-            <div style="font-size: 3.5rem; margin-bottom: 16px; animation: float 3s ease-in-out infinite;">💜</div>
-            <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; max-width: 320px; margin: 0 auto;">
-                EVGENII — независимый проект.<br>
-                Твоя поддержка помогает создавать новую музыку и развивать ИИ-эксперименты.
-            </p>
-        </div>
-        <div style="margin-bottom: 20px;">
-            <div style="font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; font-weight: 600;">Выбери сумму</div>
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
-                <button class="donate-amount-btn" onclick="selectAmount(100)">100₽</button>
-                <button class="donate-amount-btn" onclick="selectAmount(300)">300₽</button>
-                <button class="donate-amount-btn" onclick="selectAmount(500)">500₽</button>
-                <button class="donate-amount-btn" onclick="selectAmount(1000)">1000₽</button>
-                <button class="donate-amount-btn" onclick="selectAmount(2000)">2000₽</button>
-                <button class="donate-amount-btn" onclick="selectAmount(5000)">5000₽</button>
-            </div>
-        </div>
-        <div class="form-group" style="margin-bottom: 16px;">
-            <input type="number" class="form-input" id="customAmount" placeholder="Или введи свою сумму (₽)" min="10" oninput="checkAmountInput()" style="text-align: center; border-color: rgba(255, 107, 157, 0.3);">
-        </div>
-        <div class="form-group" style="margin-bottom: 20px;">
-            <textarea class="form-textarea" id="donateMessage" placeholder="Сообщение автору (необязательно)..." maxlength="200" style="min-height: 70px; resize: none;"></textarea>
-        </div>
-        <button id="btnSberCard" class="modal-download-btn" onclick="processDonation('card')" disabled style="background: linear-gradient(135deg, #21a038, #4caf50); margin-bottom: 10px; opacity: 0.5; cursor: not-allowed;">💳 ПЕРЕВЕСТИ НА КАРТУ СБЕР</button>
-        <button id="btnSberQR" class="modal-cancel-btn" onclick="showQRCode()" disabled style="border-color: rgba(33, 150, 83, 0.3); color: #4caf50; margin-bottom: 12px; opacity: 0.5; cursor: not-allowed;">📱 СБЕР QR-КОД</button>
-        <button class="modal-cancel-btn" onclick="closeDonateModal()">Закрыть</button>
-    </div>
-</div>
-
-<!-- МОДАЛКА QR-КОДА -->
-<div class="modal-overlay" id="qrModal">
-    <div class="modal-content" style="text-align: center; max-width: 400px;">
-        <div class="modal-header" style="color: #4caf50;">📱 СБЕР QR-КОД</div>
-        <div style="margin: 20px 0;">
-            <div style="background: white; padding: 20px; border-radius: 16px; display: inline-block; margin-bottom: 16px;">
-                <img id="qrImage" src="" alt="QR Code" style="width: 220px; height: 220px; display: block;">
-            </div>
-            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 8px;">
-                Отсканируй камерой телефона<br>или через приложение СберБанк
-            </p>
-            <div style="background: rgba(255, 255, 255, 0.05); padding: 12px; border-radius: 10px; margin-top: 12px;">
-                <div style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 4px;">Сумма к переводу:</div>
-                <div id="qrAmountDisplay" style="font-size: 1.5rem; font-weight: 700; color: #4caf50; font-family: 'Orbitron', monospace;">—</div>
-            </div>
-        </div>
-        <button class="modal-cancel-btn" onclick="copySberLink()" style="margin-bottom: 10px;">📋 СКОПИРОВАТЬ ССЫЛКУ</button>
-        <button class="modal-cancel-btn" onclick="closeQRModal()">Закрыть</button>
-    </div>
-</div>
-
-<!-- АНИМАЦИЯ БЛАГОДАРНОСТИ -->
-<div id="thankYouAnimation">
-    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
-        <div style="font-size: 5rem; animation: heartBeat 1.5s ease-in-out infinite;">💜</div>
-        <div style="font-size: 2rem; font-weight: 900; color: var(--pink); margin-top: 20px; font-family: 'Orbitron', sans-serif; letter-spacing: 3px; text-shadow: 0 0 30px rgba(255, 107, 157, 0.5);">СПАСИБО!</div>
-        <div style="font-size: 1rem; color: var(--text-secondary); margin-top: 10px;">Твоя поддержка бесценна</div>
-    </div>
-</div>
-
 <audio id="audioPlayer" preload="metadata"></audio>
 <audio id="instrumentalAudio" preload="metadata"></audio>
 <audio id="subscriberAudio" preload="metadata"></audio>
@@ -640,12 +566,6 @@ try {
 // ============================================
 const TELEGRAM_BOT_TOKEN = '8620797853:AAGE9OaW5GIun46NFaGxxGMIUL8LRxPvTrY';
 const TELEGRAM_CHAT_ID = '5129595944';
-
-// ============================================
-// ДОНАТ РЕКВИЗИТЫ
-// ============================================
-const SBER_LINK = 'https://www.sberbank.com/sms/pbpn?requisiteNumber=79146443734';
-const SBER_CARD = '2202206275690290';
 
 // ============================================
 // DATA - НОВЫЙ РЕЛИЗ
@@ -967,138 +887,6 @@ function startDownload() {
     setTimeout(() => { l.click(); document.body.removeChild(l); b.textContent = '✓ ТРЕК ЗАГРУЖЕН'; setTimeout(() => closeDownloadModal(), 1500); }, 1500);
 }
 document.getElementById('downloadModal').addEventListener('click', function(e) { if (e.target === this) closeDownloadModal(); });
-
-// ============================================
-// ДОНАТ
-// ============================================
-let selectedAmount = 0;
-
-function openDonateModal() {
-    document.getElementById('donateModal').classList.add('active');
-    document.body.style.overflow = 'hidden';
-    resetDonationForm();
-}
-
-function closeDonateModal() { 
-    document.getElementById('donateModal').classList.remove('active'); 
-    document.body.style.overflow = ''; 
-}
-
-function resetDonationForm() {
-    selectedAmount = 0;
-    document.getElementById('customAmount').value = '';
-    document.getElementById('donateMessage').value = '';
-    document.querySelectorAll('.donate-amount-btn').forEach(b => b.classList.remove('selected'));
-    disableDonateButtons();
-}
-
-function disableDonateButtons() {
-    const btnCard = document.getElementById('btnSberCard');
-    const btnQR = document.getElementById('btnSberQR');
-    btnCard.disabled = true; btnCard.style.opacity = '0.5'; btnCard.style.cursor = 'not-allowed';
-    btnQR.disabled = true; btnQR.style.opacity = '0.5'; btnQR.style.cursor = 'not-allowed';
-}
-
-function enableDonateButtons() {
-    const btnCard = document.getElementById('btnSberCard');
-    const btnQR = document.getElementById('btnSberQR');
-    btnCard.disabled = false; btnCard.style.opacity = '1'; btnCard.style.cursor = 'pointer';
-    btnQR.disabled = false; btnQR.style.opacity = '1'; btnQR.style.cursor = 'pointer';
-}
-
-function selectAmount(amount) {
-    selectedAmount = amount;
-    document.getElementById('customAmount').value = amount;
-    document.querySelectorAll('.donate-amount-btn').forEach(b => {
-        b.classList.toggle('selected', parseInt(b.textContent.replace('₽', '')) === amount);
-    });
-    enableDonateButtons();
-}
-
-function checkAmountInput() {
-    const inputVal = parseInt(document.getElementById('customAmount').value);
-    if (inputVal && inputVal >= 10) {
-        selectedAmount = inputVal;
-        document.querySelectorAll('.donate-amount-btn').forEach(b => b.classList.remove('selected'));
-        enableDonateButtons();
-    } else {
-        selectedAmount = 0;
-        disableDonateButtons();
-    }
-}
-
-function processDonation(method) {
-    const amount = selectedAmount || parseInt(document.getElementById('customAmount').value);
-    const message = document.getElementById('donateMessage').value;
-
-    if (!amount || amount < 10) {
-        alert('Пожалуйста, выбери сумму доната (минимум 10₽)');
-        return;
-    }
-
-    if (method === 'card') {
-        navigator.clipboard.writeText(SBER_CARD).then(() => {
-            showThankYou();
-            closeDonateModal();
-            setTimeout(() => {
-                alert(`✅ Номер карты Сбера скопирован!\n\n${SBER_CARD}\n\nПереведи ${amount}₽ через приложение СберБанк (по номеру карты).\n\n${message ? 'Твоё сообщение: ' + message : ''}\n\n💜 Спасибо за поддержку!`);
-            }, 500);
-        }).catch(() => {
-            prompt('Скопируй номер карты для перевода:', SBER_CARD);
-        });
-    }
-}
-
-function showQRCode() {
-    const amount = selectedAmount || parseInt(document.getElementById('customAmount').value);
-    if (!amount || amount < 10) {
-        alert('Пожалуйста, выбери сумму перед показом QR-кода');
-        return;
-    }
-    const sberLinkWithSum = `${SBER_LINK}&sum=${amount}`;
-    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(sberLinkWithSum)}&bgcolor=ffffff&color=219653`;
-    document.getElementById('qrImage').src = qrUrl;
-    document.getElementById('qrAmountDisplay').textContent = amount + '₽';
-    closeDonateModal();
-    document.getElementById('qrModal').classList.add('active');
-}
-
-function closeQRModal() { 
-    document.getElementById('qrModal').classList.remove('active'); 
-    document.body.style.overflow = ''; 
-}
-
-function copySberLink() {
-    const amount = selectedAmount || parseInt(document.getElementById('customAmount').value);
-    const link = `${SBER_LINK}&sum=${amount}`;
-    navigator.clipboard.writeText(link).then(() => {
-        alert('✅ Ссылка на перевод скопирована!\n\nОткрой её в браузере или приложении СберБанк.');
-    }).catch(() => {
-        prompt('Скопируй ссылку:', link);
-    });
-}
-
-function showThankYou() {
-    const anim = document.getElementById('thankYouAnimation');
-    anim.style.display = 'block';
-    anim.classList.remove('hide');
-    for (let i = 0; i < 20; i++) createHeartParticle();
-    setTimeout(() => {
-        anim.classList.add('hide');
-        setTimeout(() => { anim.style.display = 'none'; anim.classList.remove('hide'); }, 500);
-    }, 3000);
-}
-
-function createHeartParticle() {
-    const heart = document.createElement('div');
-    heart.textContent = '💜';
-    heart.style.cssText = `position:fixed;font-size:${Math.random() * 20 + 15}px;left:${Math.random() * 100}%;top:100%;pointer-events:none;z-index:10000;animation:floatUp ${Math.random() * 2 + 2}s ease-out forwards;`;
-    document.body.appendChild(heart);
-    setTimeout(() => heart.remove(), 4000);
-}
-
-document.getElementById('donateModal').addEventListener('click', function(e) { if (e.target === this) closeDonateModal(); });
-document.getElementById('qrModal').addEventListener('click', function(e) { if (e.target === this) closeQRModal(); });
 
 // ============================================
 // UTILS
