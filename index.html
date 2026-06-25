@@ -92,7 +92,7 @@
         .tile-icon.community { background: rgba(176, 0, 255, 0.15); color: var(--purple); }
         .tile-icon.contact { background: rgba(0, 229, 255, 0.15); color: var(--cyan); }
         .tile-icon.about { background: rgba(255, 0, 229, 0.15); color: var(--magenta); }
-        .tile-icon.support { background: rgba(255, 255, 255, 0.05); color: var(--text-secondary); }
+        .tile-icon.support { background: linear-gradient(135deg, rgba(255, 179, 71, 0.2), rgba(255, 107, 157, 0.15)); color: var(--gold); }
         .tile-title { font-size: 0.95rem; font-weight: 600; margin-bottom: 4px; }
         .tile-desc { font-size: 0.75rem; color: var(--text-secondary); }
         .logout-btn { display: block; margin: 20px auto 0; padding: 12px 30px; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; background: transparent; color: var(--text-secondary); font-size: 0.8rem; font-family: 'Inter', sans-serif; cursor: pointer; transition: all 0.3s ease; letter-spacing: 1px; }
@@ -353,6 +353,166 @@
         .modal-download-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
         .modal-cancel-btn { width: 100%; padding: 16px; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; background: rgba(20, 20, 40, 0.6); color: var(--text-secondary); font-size: 1rem; font-family: 'Inter', sans-serif; cursor: pointer; transition: all 0.3s ease; }
         .modal-cancel-btn:hover { border-color: rgba(255, 255, 255, 0.2); color: var(--text-primary); }
+        .support-intro {
+            background: linear-gradient(135deg, rgba(255, 179, 71, 0.06), rgba(255, 107, 157, 0.06));
+            border: 1px solid rgba(255, 179, 71, 0.2);
+            border-radius: 20px;
+            padding: 24px 20px;
+            margin-bottom: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+        .support-intro::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(255, 179, 71, 0.1), transparent 70%);
+            pointer-events: none;
+        }
+        .support-intro p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            font-size: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+        .support-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .support-card {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .support-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            transition: left 0.6s ease;
+            z-index: 0;
+        }
+        .support-card:hover::before {
+            left: 100%;
+        }
+        .support-card > * {
+            position: relative;
+            z-index: 1;
+        }
+        .support-card.coffee {
+            background: linear-gradient(135deg, rgba(255, 179, 71, 0.08), rgba(255, 140, 50, 0.04));
+            border: 1px solid rgba(255, 179, 71, 0.25);
+        }
+        .support-card.coffee::before {
+            background: linear-gradient(90deg, transparent, rgba(255, 179, 71, 0.15), transparent);
+        }
+        .support-card.coffee:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 179, 71, 0.2);
+            border-color: rgba(255, 179, 71, 0.5);
+        }
+        .support-card.coffee:active {
+            transform: translateY(0);
+        }
+        .support-card.project {
+            background: linear-gradient(135deg, rgba(0, 229, 255, 0.08), rgba(176, 0, 255, 0.08));
+            border: 1px solid rgba(0, 229, 255, 0.25);
+        }
+        .support-card.project::before {
+            background: linear-gradient(90deg, transparent, rgba(0, 229, 255, 0.15), transparent);
+        }
+        .support-card.project:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 229, 255, 0.2);
+            border-color: rgba(0, 229, 255, 0.5);
+        }
+        .support-card.project:active {
+            transform: translateY(0);
+        }
+        .support-card-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            flex-shrink: 0;
+        }
+        .support-card.coffee .support-card-icon {
+            background: linear-gradient(135deg, rgba(255, 179, 71, 0.2), rgba(255, 140, 50, 0.1));
+            box-shadow: 0 4px 15px rgba(255, 179, 71, 0.15);
+        }
+        .support-card.project .support-card-icon {
+            background: linear-gradient(135deg, rgba(0, 229, 255, 0.2), rgba(176, 0, 255, 0.1));
+            box-shadow: 0 4px 15px rgba(0, 229, 255, 0.15);
+        }
+        .support-card-content {
+            flex: 1;
+            min-width: 0;
+        }
+        .support-card-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .support-card.coffee .support-card-title {
+            color: var(--gold);
+        }
+        .support-card.project .support-card-title {
+            background: linear-gradient(135deg, var(--cyan), var(--purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .support-card-desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+        .support-card-price {
+            font-family: 'Orbitron', monospace;
+            font-size: 0.9rem;
+            font-weight: 700;
+            padding: 8px 14px;
+            border-radius: 10px;
+            flex-shrink: 0;
+        }
+        .support-card.coffee .support-card-price {
+            background: rgba(255, 179, 71, 0.15);
+            color: var(--gold);
+            border: 1px solid rgba(255, 179, 71, 0.3);
+        }
+        .support-card.project .support-card-price {
+            background: rgba(0, 229, 255, 0.1);
+            color: var(--cyan);
+            border: 1px solid rgba(0, 229, 255, 0.25);
+        }
+        .support-note {
+            background: rgba(20, 25, 40, 0.4);
+            border: 1px dashed var(--card-border);
+            border-radius: 16px;
+            padding: 16px 18px;
+        }
+        .support-note p {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            line-height: 1.5;
+            text-align: center;
+        }
         .fade-in-up { opacity: 0; transform: translateY(20px); animation: fadeInUp 0.6s ease forwards; }
         @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
         .page.active .fade-in-up:nth-child(1) { animation-delay: 0.1s; }
@@ -424,7 +584,7 @@
             <div class="quick-tile" onclick="navigateTo('communityPage')"><div class="tile-icon community">🌐</div><div class="tile-title">Сообщества</div><div class="tile-desc">Bip & Telegram</div></div>
             <div class="quick-tile" onclick="navigateTo('contactPage')"><div class="tile-icon contact">✉️</div><div class="tile-title">Связь</div><div class="tile-desc">Написать автору</div></div>
             <div class="quick-tile disabled"><div class="tile-icon" style="background:rgba(0,229,255,0.15);color:var(--cyan)">💬</div><div class="tile-title">Чат</div><div class="tile-desc">Скоро будет доступен</div></div>
-            <div class="quick-tile disabled"><div class="tile-icon support">💜</div><div class="tile-title">Поддержать</div><div class="tile-desc">В разработке</div></div>
+            <div class="quick-tile" onclick="navigateTo('supportPage')"><div class="tile-icon support">💜</div><div class="tile-title">Поддержать</div><div class="tile-desc">Сказать спасибо</div></div>
             <div class="quick-tile" onclick="navigateTo('aboutPage')"><div class="tile-icon about">ℹ️</div><div class="tile-title">О проекте</div><div class="tile-desc">Узнать больше</div></div>
         </div>
     </div>
@@ -511,6 +671,38 @@
             <button type="submit" class="submit-btn" id="submitBtn"><span>ОТПРАВИТЬ СООБЩЕНИЕ</span></button>
             <div class="form-status" id="formStatus"></div>
         </form>
+    </div>
+</div>
+
+<!-- ПОДДЕРЖАТЬ -->
+<div class="page" id="supportPage">
+    <div class="page-header fade-in-up">
+        <button class="back-btn" onclick="goBack()">←</button>
+        <div class="page-title">Поддержать</div>
+    </div>
+    <div class="support-intro fade-in-up">
+        <p>Твоя поддержка помогает создавать новую музыку. Спасибо, что ты с нами!</p>
+    </div>
+    <div class="support-cards fade-in-up">
+        <div class="support-card coffee" onclick="openSupportLink('coffee')">
+            <div class="support-card-icon">☕</div>
+            <div class="support-card-content">
+                <div class="support-card-title">Автору на кофе</div>
+                <div class="support-card-desc">Быстрый способ сказать спасибо</div>
+            </div>
+            <div class="support-card-price">100 ₽</div>
+        </div>
+        <div class="support-card project" onclick="openSupportLink('project')">
+            <div class="support-card-icon">💜</div>
+            <div class="support-card-content">
+                <div class="support-card-title">Поддержать проект</div>
+                <div class="support-card-desc">Помочь развитию и новым релизам</div>
+            </div>
+            <div class="support-card-price">Любая сумма</div>
+        </div>
+    </div>
+    <div class="support-note fade-in-up">
+        <p>💳 Удобная оплата картой через ЮMoney. Спасибо за поддержку!</p>
     </div>
 </div>
 
@@ -953,7 +1145,7 @@ function showMainScreen(name) {
 }
 logoutBtn.addEventListener('click', function() {
     localStorage.removeItem('evgenii_user');
-    ['homePage','tracksPage','aboutPage','communityPage','contactPage','instrumentalsPage','subscribersPage'].forEach(p => document.getElementById(p).classList.remove('active'));
+    ['homePage','tracksPage','aboutPage','communityPage','contactPage','instrumentalsPage','subscribersPage','supportPage'].forEach(p => document.getElementById(p).classList.remove('active'));
     currentPage = 'homePage'; pageHistory = ['homePage'];
     loginScreen.classList.remove('hidden'); nameInput.value = '';
     loginGreeting.textContent = getLoginGreeting(new Date().getHours());
@@ -1021,6 +1213,21 @@ if (voiceForm) {
         } catch (error) { console.error('Ошибка отправки:', error); voiceFormStatus.textContent = `❌ Ошибка: ${error.message}`; voiceFormStatus.className = 'form-status error'; }
         finally { voiceSubmitBtn.disabled = false; voiceSubmitBtn.innerHTML = '<span>ОТПРАВИТЬ ТЕКСТ</span>'; }
     });
+}
+
+// ============================================
+// ПОДДЕРЖАТЬ
+// ============================================
+const SUPPORT_LINKS = {
+    coffee: 'https://yoomoney.ru/quickpay/confirm.xml?receiver=4100119560778927&quickpay-form=shop&targets=Автору+на+кофе&sum=100&paymentType=AC',
+    project: 'https://yoomoney.ru/quickpay/confirm.xml?receiver=4100119560778927&quickpay-form=shop&targets=Поддержка+проекта+EVGENII&paymentType=AC'
+};
+
+function openSupportLink(type) {
+    const url = SUPPORT_LINKS[type];
+    if (url) {
+        window.open(url, '_blank');
+    }
 }
 </script>
 </body>
