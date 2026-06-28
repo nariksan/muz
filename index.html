@@ -92,7 +92,7 @@
         .tile-icon.community { background: rgba(176, 0, 255, 0.15); color: var(--purple); }
         .tile-icon.contact { background: rgba(0, 229, 255, 0.15); color: var(--cyan); }
         .tile-icon.about { background: rgba(255, 0, 229, 0.15); color: var(--magenta); }
-        .tile-icon.support { background: rgba(255, 255, 255, 0.05); color: var(--text-secondary); }
+        .tile-icon.support { background: linear-gradient(135deg, rgba(255, 179, 71, 0.2), rgba(255, 107, 157, 0.15)); color: var(--gold); }
         .tile-title { font-size: 0.95rem; font-weight: 600; margin-bottom: 4px; }
         .tile-desc { font-size: 0.75rem; color: var(--text-secondary); }
         .logout-btn { display: block; margin: 20px auto 0; padding: 12px 30px; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; background: transparent; color: var(--text-secondary); font-size: 0.8rem; font-family: 'Inter', sans-serif; cursor: pointer; transition: all 0.3s ease; letter-spacing: 1px; }
@@ -150,10 +150,14 @@
         .track-artist.pink { color: var(--pink); }
         .track-artist.gold { color: var(--gold); }
         .track-duration { font-size: 0.85rem; color: var(--text-secondary); font-weight: 500; flex-shrink: 0; font-family: 'Orbitron', monospace; margin-right: 8px; }
-        .track-download-btn { width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--card-border); background: rgba(20, 20, 40, 0.6); color: var(--text-secondary); cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.3s ease; }
+        .track-download-btn, .track-comment-btn { width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--card-border); background: rgba(20, 20, 40, 0.6); color: var(--text-secondary); cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.3s ease; }
         .track-download-btn:hover { border-color: var(--cyan); color: var(--cyan); background: rgba(0, 229, 255, 0.1); transform: scale(1.05); }
         .track-download-btn:active { transform: scale(0.95); }
-        .track-download-btn svg { width: 18px; height: 18px; fill: currentColor; }
+        .track-download-btn svg, .track-comment-btn svg { width: 18px; height: 18px; fill: currentColor; }
+        .track-comment-btn { position: relative; }
+        .track-comment-btn:hover { border-color: var(--magenta); color: var(--magenta); background: rgba(255, 0, 229, 0.1); transform: scale(1.05); }
+        .track-comment-btn:active { transform: scale(0.95); }
+        .comment-count-badge { position: absolute; top: -6px; right: -6px; min-width: 18px; height: 18px; border-radius: 9px; background: var(--magenta); color: #fff; font-size: 0.6rem; font-weight: 700; display: flex; align-items: center; justify-content: center; padding: 0 4px; border: 2px solid var(--dark-bg); font-family: 'Orbitron', monospace; }
         .intro-block { border-radius: 20px; padding: 20px; margin-bottom: 24px; position: relative; overflow: hidden; }
         .intro-block::before { content: ''; position: absolute; top: -50%; right: -20%; width: 200px; height: 200px; pointer-events: none; }
         .intro-block.gold { background: linear-gradient(135deg, rgba(255, 179, 71, 0.08), rgba(176, 0, 255, 0.08)); border: 1px solid rgba(255, 179, 71, 0.2); }
@@ -189,7 +193,7 @@
         .special-tag.mood { background: rgba(176, 0, 255, 0.15); color: #d580ff; }
         .special-tag.style { background: rgba(255, 107, 157, 0.15); color: var(--pink); }
         .special-card-actions { display: flex; gap: 8px; flex-shrink: 0; }
-        .special-card-btn { width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--card-border); background: rgba(20, 20, 40, 0.6); color: var(--text-secondary); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; }
+        .special-card-btn { width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--card-border); background: rgba(20, 20, 40, 0.6); color: var(--text-secondary); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; position: relative; }
         .special-card-btn.gold:hover { border-color: var(--gold); color: var(--gold); background: rgba(255, 179, 71, 0.1); }
         .special-card-btn.pink:hover { border-color: var(--pink); color: var(--pink); background: rgba(255, 107, 157, 0.1); }
         .special-card-btn svg { width: 18px; height: 18px; fill: currentColor; }
@@ -353,6 +357,361 @@
         .modal-download-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
         .modal-cancel-btn { width: 100%; padding: 16px; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; background: rgba(20, 20, 40, 0.6); color: var(--text-secondary); font-size: 1rem; font-family: 'Inter', sans-serif; cursor: pointer; transition: all 0.3s ease; }
         .modal-cancel-btn:hover { border-color: rgba(255, 255, 255, 0.2); color: var(--text-primary); }
+        /* СТИЛИ КОММЕНТАРИЕВ */
+        .comment-item {
+            background: rgba(20, 25, 40, 0.6);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 14px 16px;
+            margin-bottom: 10px;
+            animation: fadeInUp 0.4s ease;
+        }
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .comment-author {
+            font-weight: 700;
+            color: var(--cyan);
+            font-size: 0.9rem;
+        }
+        .comment-time {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            font-family: 'Orbitron', monospace;
+        }
+        .comment-text {
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+        }
+        .comments-empty {
+            text-align: center;
+            padding: 30px 20px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        .comments-loading {
+            text-align: center;
+            padding: 30px 20px;
+            color: var(--text-secondary);
+        }
+        .support-intro {
+            background: linear-gradient(135deg, rgba(255, 179, 71, 0.06), rgba(255, 107, 157, 0.06));
+            border: 1px solid rgba(255, 179, 71, 0.2);
+            border-radius: 20px;
+            padding: 24px 20px;
+            margin-bottom: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+        .support-intro::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(255, 179, 71, 0.1), transparent 70%);
+            pointer-events: none;
+        }
+        .support-intro p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            font-size: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+        .support-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .support-card {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .support-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            transition: left 0.6s ease;
+            z-index: 0;
+        }
+        .support-card:hover::before {
+            left: 100%;
+        }
+        .support-card > * {
+            position: relative;
+            z-index: 1;
+        }
+        .support-card.coffee {
+            background: linear-gradient(135deg, rgba(255, 179, 71, 0.08), rgba(255, 140, 50, 0.04));
+            border: 1px solid rgba(255, 179, 71, 0.25);
+        }
+        .support-card.coffee::before {
+            background: linear-gradient(90deg, transparent, rgba(255, 179, 71, 0.15), transparent);
+        }
+        .support-card.coffee:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 179, 71, 0.2);
+            border-color: rgba(255, 179, 71, 0.5);
+        }
+        .support-card.coffee:active {
+            transform: translateY(0);
+        }
+        .support-card.project {
+            background: linear-gradient(135deg, rgba(0, 229, 255, 0.08), rgba(176, 0, 255, 0.08));
+            border: 1px solid rgba(0, 229, 255, 0.25);
+        }
+        .support-card.project::before {
+            background: linear-gradient(90deg, transparent, rgba(0, 229, 255, 0.15), transparent);
+        }
+        .support-card.project:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 229, 255, 0.2);
+            border-color: rgba(0, 229, 255, 0.5);
+        }
+        .support-card.project:active {
+            transform: translateY(0);
+        }
+        .support-card.vtb {
+            background: linear-gradient(135deg, rgba(0, 102, 204, 0.08), rgba(0, 153, 204, 0.08));
+            border: 1px solid rgba(0, 102, 204, 0.25);
+        }
+        .support-card.vtb::before {
+            background: linear-gradient(90deg, transparent, rgba(0, 102, 204, 0.15), transparent);
+        }
+        .support-card.vtb:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 102, 204, 0.2);
+            border-color: rgba(0, 102, 204, 0.5);
+        }
+        .support-card.vtb:active {
+            transform: translateY(0);
+        }
+        .support-card-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            flex-shrink: 0;
+        }
+        .support-card.coffee .support-card-icon {
+            background: linear-gradient(135deg, rgba(255, 179, 71, 0.2), rgba(255, 140, 50, 0.1));
+            box-shadow: 0 4px 15px rgba(255, 179, 71, 0.15);
+        }
+        .support-card.project .support-card-icon {
+            background: linear-gradient(135deg, rgba(0, 229, 255, 0.2), rgba(176, 0, 255, 0.1));
+            box-shadow: 0 4px 15px rgba(0, 229, 255, 0.15);
+        }
+        .support-card.vtb .support-card-icon {
+            background: linear-gradient(135deg, rgba(0, 102, 204, 0.2), rgba(0, 153, 204, 0.1));
+            box-shadow: 0 4px 15px rgba(0, 102, 204, 0.15);
+        }
+        .support-card-content {
+            flex: 1;
+            min-width: 0;
+        }
+        .support-card-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .support-card.coffee .support-card-title {
+            color: var(--gold);
+        }
+        .support-card.project .support-card-title {
+            background: linear-gradient(135deg, var(--cyan), var(--purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .support-card.vtb .support-card-title {
+            color: #0099cc;
+        }
+        .support-card-desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+        .support-card-price {
+            font-family: 'Orbitron', monospace;
+            font-size: 0.9rem;
+            font-weight: 700;
+            padding: 8px 14px;
+            border-radius: 10px;
+            flex-shrink: 0;
+        }
+        .support-card.coffee .support-card-price {
+            background: rgba(255, 179, 71, 0.15);
+            color: var(--gold);
+            border: 1px solid rgba(255, 179, 71, 0.3);
+        }
+        .support-card.project .support-card-price {
+            background: rgba(0, 229, 255, 0.1);
+            color: var(--cyan);
+            border: 1px solid rgba(0, 229, 255, 0.25);
+        }
+        .support-card.vtb .support-card-price {
+            background: rgba(0, 102, 204, 0.15);
+            color: #0099cc;
+            border: 1px solid rgba(0, 102, 204, 0.3);
+        }
+        .support-note {
+            background: rgba(20, 25, 40, 0.4);
+            border: 1px dashed var(--card-border);
+            border-radius: 16px;
+            padding: 16px 18px;
+        }
+        .support-note p {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            line-height: 1.5;
+            text-align: center;
+        }
+        .qr-section {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px dashed rgba(255, 255, 255, 0.1);
+        }
+        .qr-code {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 12px;
+            padding: 12px;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        }
+        .qr-code img {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+        .qr-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+        .qr-hint {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.4);
+        }
+        .amount-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 5, 15, 0.9);
+            backdrop-filter: blur(8px);
+            z-index: 3000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .amount-modal-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .amount-modal {
+            background: linear-gradient(180deg, #0f1525 0%, #0a0e1a 100%);
+            border: 1px solid var(--card-border);
+            border-radius: 28px;
+            padding: 30px 24px;
+            max-width: 400px;
+            width: 100%;
+            transform: translateY(30px) scale(0.95);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .amount-modal-overlay.active .amount-modal {
+            transform: translateY(0) scale(1);
+        }
+        .amount-modal-header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        .amount-modal-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, var(--cyan), var(--purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .amount-modal-subtitle {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        .amount-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .amount-btn {
+            padding: 16px;
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            border-radius: 14px;
+            background: rgba(20, 20, 40, 0.6);
+            color: var(--text-primary);
+            font-family: 'Orbitron', monospace;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .amount-btn:hover {
+            border-color: var(--cyan);
+            background: rgba(0, 229, 255, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 229, 255, 0.2);
+        }
+        .amount-btn:active {
+            transform: translateY(0);
+        }
+        .amount-modal-cancel {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            background: rgba(20, 20, 40, 0.6);
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .amount-modal-cancel:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+            color: var(--text-primary);
+        }
         .fade-in-up { opacity: 0; transform: translateY(20px); animation: fadeInUp 0.6s ease forwards; }
         @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
         .page.active .fade-in-up:nth-child(1) { animation-delay: 0.1s; }
@@ -424,7 +783,7 @@
             <div class="quick-tile" onclick="navigateTo('communityPage')"><div class="tile-icon community">🌐</div><div class="tile-title">Сообщества</div><div class="tile-desc">Bip & Telegram</div></div>
             <div class="quick-tile" onclick="navigateTo('contactPage')"><div class="tile-icon contact">✉️</div><div class="tile-title">Связь</div><div class="tile-desc">Написать автору</div></div>
             <div class="quick-tile disabled"><div class="tile-icon" style="background:rgba(0,229,255,0.15);color:var(--cyan)">💬</div><div class="tile-title">Чат</div><div class="tile-desc">Скоро будет доступен</div></div>
-            <div class="quick-tile disabled"><div class="tile-icon support">💜</div><div class="tile-title">Поддержать</div><div class="tile-desc">В разработке</div></div>
+            <div class="quick-tile" onclick="navigateTo('supportPage')"><div class="tile-icon support">💜</div><div class="tile-title">Поддержать</div><div class="tile-desc">Сказать спасибо</div></div>
             <div class="quick-tile" onclick="navigateTo('aboutPage')"><div class="tile-icon about">ℹ️</div><div class="tile-title">О проекте</div><div class="tile-desc">Узнать больше</div></div>
         </div>
     </div>
@@ -514,6 +873,53 @@
     </div>
 </div>
 
+<!-- ПОДДЕРЖАТЬ -->
+<div class="page" id="supportPage">
+    <div class="page-header fade-in-up">
+        <button class="back-btn" onclick="goBack()">←</button>
+        <div class="page-title">Поддержать</div>
+    </div>
+    <div class="support-intro fade-in-up">
+        <p>Твоя поддержка помогает создавать новую музыку. Спасибо, что ты с нами!</p>
+    </div>
+    <div class="support-cards fade-in-up">
+        <div class="support-card coffee" onclick="openSupportLink('coffee')">
+            <div class="support-card-icon">☕</div>
+            <div class="support-card-content">
+                <div class="support-card-title">Автору на кофе</div>
+                <div class="support-card-desc">Быстрый способ сказать спасибо</div>
+            </div>
+            <div class="support-card-price">100 ₽</div>
+        </div>
+        <div class="support-card project" onclick="openSupportLink('project')">
+            <div class="support-card-icon">💜</div>
+            <div class="support-card-content">
+                <div class="support-card-title">Поддержать проект</div>
+                <div class="support-card-desc">Помочь развитию и новым релизам</div>
+            </div>
+            <div class="support-card-price">Выбрать сумму</div>
+        </div>
+        <div class="support-card vtb" onclick="openSupportLink('vtb')">
+            <div class="support-card-icon">🏦</div>
+            <div class="support-card-content">
+                <div class="support-card-title">ВТБ Оплата</div>
+                <div class="support-card-desc">QR-код для оплаты любой суммы</div>
+            </div>
+            <div class="support-card-price">Любая</div>
+        </div>
+    </div>
+    <div class="support-note fade-in-up">
+        <p>💳 Удобная оплата картой через ЮMoney. Спасибо за поддержку!</p>
+        <div class="qr-section">
+            <div class="qr-code">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://yoomoney.ru/quickpay/confirm.xml?receiver=4100119560778927&quickpay-form=shop&targets=Автору+на+кофе&sum=100&paymentType=AC" alt="QR код для оплаты">
+            </div>
+            <div class="qr-label">Отсканируй для оплаты 100 ₽</div>
+            <div class="qr-hint">Камера телефона → QR код</div>
+        </div>
+    </div>
+</div>
+
 <!-- ПЛЕЕРЫ -->
 <div class="sticky-player" id="stickyPlayer">
     <div class="player-top-row"><div class="player-mini-cover" id="playerCover">🎵</div><div class="player-mini-info"><div class="player-mini-title" id="playerTitle">Название трека</div><div class="player-mini-artist" id="playerArtist">Исполнитель</div></div><div class="player-mini-controls"><button class="mini-skip-btn" onclick="skipBackward()"><svg viewBox="0 0 24 24"><path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z"/></svg></button><button class="mini-play-btn" onclick="togglePlay()"><svg viewBox="0 0 24 24" id="miniPlayIcon"><polygon points="5,3 19,12 5,21"/></svg></button><button class="mini-skip-btn" onclick="skipForward()"><svg viewBox="0 0 24 24"><path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z"/></svg></button></div></div>
@@ -542,6 +948,59 @@
     </div>
 </div>
 
+<!-- МОДАЛКА КОММЕНТАРИЕВ -->
+<div class="modal-overlay" id="commentsModal">
+    <div class="modal-content" style="max-width:500px">
+        <div class="modal-header">💬 КОММЕНТАРИИ</div>
+        <div style="text-align:center;margin-bottom:20px">
+            <div id="commentsModalTitle" style="font-size:1.3rem;font-weight:700"></div>
+            <div id="commentsModalSubtitle" style="font-size:0.8rem;color:var(--text-secondary);margin-top:4px"></div>
+        </div>
+        <div id="commentsList" style="max-height:300px;overflow-y:auto;margin-bottom:20px;padding:0 4px"></div>
+        <form id="commentForm">
+            <div class="form-group" style="margin-bottom:12px">
+                <textarea class="form-textarea" id="commentInput" placeholder="Напиши комментарий..." required maxlength="500" style="min-height:80px"></textarea>
+            </div>
+            <button type="submit" class="submit-btn" id="commentSubmitBtn">ОТПРАВИТЬ</button>
+        </form>
+        <button class="modal-cancel-btn" onclick="closeCommentsModal()" style="margin-top:12px">Закрыть</button>
+    </div>
+</div>
+
+<!-- МОДАЛКА ВЫБОРА СУММЫ -->
+<div class="amount-modal-overlay" id="amountModal">
+    <div class="amount-modal">
+        <div class="amount-modal-header">
+            <div class="amount-modal-title">Выбери сумму</div>
+            <div class="amount-modal-subtitle">Поддержи проект EVGENII</div>
+        </div>
+        <div class="amount-grid">
+            <button class="amount-btn" onclick="selectAmount(50)">50 ₽</button>
+            <button class="amount-btn" onclick="selectAmount(100)">100 ₽</button>
+            <button class="amount-btn" onclick="selectAmount(300)">300 ₽</button>
+            <button class="amount-btn" onclick="selectAmount(500)">500 ₽</button>
+            <button class="amount-btn" onclick="selectAmount(800)">800 ₽</button>
+            <button class="amount-btn" onclick="selectAmount(1000)">1000 ₽</button>
+        </div>
+        <button class="amount-modal-cancel" onclick="closeAmountModal()">Отмена</button>
+    </div>
+</div>
+
+<!-- МОДАЛКА ВТБ QR -->
+<div class="modal-overlay" id="vtbModal">
+    <div class="modal-content">
+        <div class="modal-header">ОПЛАТА ЧЕРЕЗ ВТБ</div>
+        <div style="text-align: center; margin-bottom: 20px;">
+            <p style="color: var(--text-secondary); margin-bottom: 20px;">Отсканируй QR-код для оплаты любой суммы</p>
+            <div class="qr-code" style="width: 250px; height: 250px; margin: 0 auto 16px;">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=https://c2c.cbrpay.ru/BS1I004T83DR0LNI9IFPMAQC4JP5BGCC" alt="QR код ВТБ">
+            </div>
+            <p style="font-size: 0.85rem; color: var(--text-secondary);">Любая сумма · Мгновенно · Безопасно</p>
+        </div>
+        <button class="modal-cancel-btn" onclick="closeVTBModal()">Закрыть</button>
+    </div>
+</div>
+
 <audio id="audioPlayer" preload="metadata"></audio>
 <audio id="instrumentalAudio" preload="metadata"></audio>
 <audio id="subscriberAudio" preload="metadata"></audio>
@@ -551,14 +1010,14 @@
 // SUPABASE
 // ============================================
 let supabaseClient = null;
-const SUPABASE_URL = 'ВСТАВЬ_PROJECT_URL';
-const SUPABASE_ANON_KEY = 'ВСТАВЬ_ANON_KEY';
+const SUPABASE_URL = 'https://wvzmcxcaupclvntvhsug.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_fvh6_wr0lVFrRGEgB_Fipw_Dwl_8ISd';
 try {
-    if (SUPABASE_URL !== 'ВСТАВЬ_PROJECT_URL' && SUPABASE_ANON_KEY !== 'ВСТАВЬ_ANON_KEY') {
+    if (SUPABASE_URL && SUPABASE_ANON_KEY) {
         const { createClient } = supabase;
         supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         console.log('✅ Supabase подключён');
-    } else { console.log('⚠️ Supabase не настроен'); }
+    }
 } catch (e) { console.error('Ошибка Supabase:', e); }
 
 // ============================================
@@ -571,15 +1030,15 @@ const TELEGRAM_CHAT_ID = '5129595944';
 // DATA - НОВЫЙ РЕЛИЗ
 // ============================================
 const newRelease = {
-    id: 'new-release', title: "Пустой код", subtitle: "New Release",
-    file: "tracks/song.mp3", duration: "3:20", cover: "cover/cover.jpg"
+    id: 'new-release', title: "Последний трек.", subtitle: "New Release",
+    file: "tracks/song15.mp3", duration: "4:18", cover: "cover/cover.png"
 };
 
 // ============================================
 // DATA - ВСЕ ТРЕКИ EVGENII
 // ============================================
 const allTracks = [
-    { id: 2,  title: "Братья",                    subtitle: "", file: "tracks/song1.mp3",  duration: "4:19", cover: "cover/cover.jpg" },
+    { id: 2,  title: "Пустой код",                subtitle: "", file: "tracks/song.mp3",  duration: "3:20", cover: "cover/cover.jpg" },
     { id: 3,  title: "А мне похуй",               subtitle: "", file: "tracks/song2.mp3",  duration: "3:11", cover: "cover/cover.jpg" },
     { id: 4,  title: "Нейронный Дождь",           subtitle: "", file: "tracks/song3.mp3",  duration: "4:03", cover: "cover/cover.jpg" },
     { id: 5,  title: "Бункер",                    subtitle: "", file: "tracks/song4.mp3",  duration: "3:01", cover: "cover/cover.jpg" },
@@ -593,38 +1052,233 @@ const allTracks = [
     { id: 13, title: "Белая ткань",               subtitle: "", file: "tracks/song12.mp3", duration: "3:28", cover: "cover/cover.jpg" },
     { id: 14, title: "Лишний",                    subtitle: "", file: "tracks/song13.mp3", duration: "4:04", cover: "cover/cover.jpg" },
     { id: 15, title: "Тишина",                    subtitle: "", file: "tracks/song14.mp3", duration: "4:48", cover: "cover/cover.jpg" },
-    { id: 16, title: "пусто",                     subtitle: "", file: "tracks/song15.mp3", duration: "0:00", cover: "cover/cover.jpg" },
-    { id: 17, title: "пусто",                     subtitle: "", file: "tracks/song16.mp3", duration: "0:00", cover: "cover/cover.jpg" },
-    { id: 18, title: "пусто",                     subtitle: "", file: "tracks/song17.mp3", duration: "0:00", cover: "cover/cover.jpg" }
+    { id: 16, title: "Братья",                    subtitle: "", file: "tracks/song1.mp3", duration: "4:19", cover: "cover/cover.jpg" },
+    { id: 17, title: "пусто",                     subtitle: "", file: "tracks/song0.mp3", duration: "0:00", cover: "cover/cover.jpg" },
+    { id: 18, title: "пусто",                     subtitle: "", file: "tracks/song0.mp3", duration: "0:00", cover: "cover/cover.jpg" },
+    { id: 19, title: "пусто",                     subtitle: "", file: "tracks/song0.mp3", duration: "0:00", cover: "cover/cover.jpg" }
 ];
 
 // ============================================
 // DATA - ИНСТРУМЕНТАЛЫ
 // ============================================
 const instrumentalTracks = [
-    { id: 'inst-1', title: "Неоновая ночь", genre: "Ambient", mood: "Меланхолия", file: "instrumentals/neon-night.mp3", duration: "4:12", cover: "cover/cover.jpg", description: "Медленное погружение в огни ночного города. Синтезаторы плывут как туман над асфальтом, оставляя ощущение одиночества среди миллионов." },
-    { id: 'inst-2', title: "Цифровой рассвет", genre: "Electronic", mood: "Надежда", file: "instrumentals/digital-dawn.mp3", duration: "3:45", cover: "cover/cover.jpg", description: "Первые лучи солнца сквозь экран. Тёплые пэды и мягкий бит создают атмосферу нового начала." },
-    { id: 'inst-3', title: "Память машин", genre: "Downtempo", mood: "Ностальгия", file: "instrumentals/machine-memory.mp3", duration: "5:08", cover: "cover/cover.jpg", description: "Что помнит искусственный интеллект, когда его выключают? Попытка услышать тишину между вычислениями." },
-    { id: 'inst-4', title: "Пустые улицы", genre: "Lo-Fi", mood: "Покой", file: "instrumentals/empty-streets.mp3", duration: "3:22", cover: "cover/cover.jpg", description: "Три часа ночи. Ни души. Только шуршение шин и далёкий гул города." },
-    { id: 'inst-5', title: "Эхо в серверной", genre: "Dark Ambient", mood: "Тревога", file: "instrumentals/server-echo.mp3", duration: "4:37", cover: "cover/cover.jpg", description: "Глубокий гул серверов, щелчки реле и низкочастотный дроун. Атмосфера заброшенного дата-центра." },
-    { id: 'inst-6', title: "Сон алгоритма", genre: "Ambient", mood: "Медитация", file: "instrumentals/algorithm-dream.mp3", duration: "6:15", cover: "cover/cover.jpg", description: "Плавные звуковые ландшафты, где нет начала и конца — только бесконечный поток данных." },
-    { id: 'inst-7', title: "Последний гигабайт", genre: "Cinematic", mood: "Эпичность", file: "instrumentals/last-gigabyte.mp3", duration: "4:50", cover: "cover/cover.jpg", description: "Кинематографичная композиция с нарастающим напряжением. Оркестровые струнные встречаются с электроникой." },
-    { id: 'inst-8', title: "Код тишины", genre: "Minimal", mood: "Сосредоточенность", file: "instrumentals/silence-code.mp3", duration: "3:58", cover: "cover/cover.jpg", description: "Минимализм в чистом виде. Несколько нот, повторяющихся как мантра." }
+    { id: 'inst-1', title: "Пробуждения", genre: "", mood: "", file: "instrumentals/The Awakening.mp3", duration: "5:34", cover: "instrgiv/cover.png", description: "Мрачная кинематографическая, готическая оркестровая, таинственная, завораживающая, гипнотическая, драматичные струнные, мощные синтезаторы, атмосферная" },
+    { id: 'inst-2', title: "Неоновая ночь", genre: "Ambient", mood: "Меланхолия", file: "instrumentals/instru.mp3", duration: "4:39", cover: "cover/cover.jpg", description: "Медленное погружение в огни ночного города. Синтезаторы плывут как туман над асфальтом, оставляя ощущение одиночества среди миллионов." },
+    { id: 'inst-3', title: "Цифровой рассвет", genre: "Electronic", mood: "Надежда", file: "instrumentals/instru1.mp3", duration: "5:10", cover: "cover/cover.jpg", description: "Первые лучи солнца сквозь экран. Тёплые пэды и мягкий бит создают атмосферу нового начала." },
+    { id: 'inst-4', title: "Память машин", genre: "Downtempo", mood: "Ностальгия", file: "instrumentals/instru2.mp3", duration: "5:13", cover: "cover/cover.jpg", description: "Что помнит искусственный интеллект, когда его выключают? Попытка услышать тишину между вычислениями." },
+    { id: 'inst-5', title: "Пустые улицы", genre: "Lo-Fi", mood: "Покой", file: "instrumentals/instru3.mp3", duration: "2:36", cover: "cover/cover.jpg", description: "Три часа ночи. Ни души. Только шуршение шин и далёкий гул города." },
+    { id: 'inst-6', title: "Эхо в серверной", genre: "Dark Ambient", mood: "Тревога", file: "instrumentals/server-echo.mp3", duration: "0:00", cover: "cover/cover.jpg", description: "Глубокий гул серверов, щелчки реле и низкочастотный дроун. Атмосфера заброшенного дата-центра." },
+    { id: 'inst-7', title: "Сон алгоритма", genre: "Ambient", mood: "Медитация", file: "instrumentals/algorithm-dream.mp3", duration: "0:00", cover: "cover/cover.jpg", description: "Плавные звуковые ландшафты, где нет начала и конца — только бесконечный поток данных." },
+    { id: 'inst-8', title: "Последний гигабайт", genre: "Cinematic", mood: "Эпичность", file: "instrumentals/last-gigabyte.mp3", duration: "0:00", cover: "cover/cover.jpg", description: "Кинематографичная композиция с нарастающим напряжением. Оркестровые струнные встречаются с электроникой." },
+    { id: 'inst-9', title: "Код тишины", genre: "Minimal", mood: "Сосредоточенность", file: "instrumentals/silence-code.mp3", duration: "0:00", cover: "cover/cover.jpg", description: "Минимализм в чистом виде. Несколько нот, повторяющихся как мантра." }
 ];
 
 // ============================================
 // DATA - ТРЕКИ ОТ ПОДПИСЧИКОВ
 // ============================================
 const subscriberTracks = [
-    { id: 'sub-1', title: "Серверная полночь", author: "Алексей М.", style: "Рок", file: "voices/server-midnight.mp3", duration: "4:35", cover: "cover/cover.jpg", description: "Текст Алексея о бессонных ночах у монитора. ИИ воплотил его в жёсткий рок с хриплым вокалом — именно так он и хотел." },
-    { id: 'sub-2', title: "Цифровые сны", author: "Мария К.", style: "Электроника", file: "voices/digital-dreams.mp3", duration: "3:48", cover: "cover/cover.jpg", description: "Мария написала о том, что снится нейросетям. Получился атмосферный электронный трек с шёпотом и пульсирующим битом." },
-    { id: 'sub-3', title: "Последний коммит", author: "Дмитрий В.", style: "Рэп", file: "voices/last-commit.mp3", duration: "3:22", cover: "cover/cover.jpg", description: "Рэп-история программиста, который прощается со своим проектом. Жёсткий флоу, честные строки, никакой лирики — только код." },
-    { id: 'sub-4', title: "Между строк кода", author: "Анна С.", style: "Инди", file: "voices/between-lines.mp3", duration: "4:05", cover: "cover/cover.jpg", description: "Нежный инди-трек о чувствах, спрятанных между рабочими чатами. Акустическая гитара и тихий, почти шёпотный вокал." },
-    { id: 'sub-5', title: "Алгоритм любви", author: "Сергей П.", style: "Поп", file: "voices/love-algorithm.mp3", duration: "3:15", cover: "cover/cover.jpg", description: "Поп-баллада о том, может ли ИИ полюбить. Мелодичный припев, запоминающийся хук — и немного философии в куплетах." },
-    { id: 'sub-6', title: "Баг в системе", author: "Игорь Л.", style: "Метал", file: "voices/system-bug.mp3", duration: "5:20", cover: "cover/cover.jpg", description: "Тяжёлый метал о сбое в матрице. Дроп на припеве, гроул в куплетах — именно так Игорь и представлял свой текст." }
+    { id: 'sub-1', title: "Серверная полночь", author: "Алексей М.", style: "Рок", file: "voices/server-midnight.mp3", duration: "4:34", cover: "voice/cover.png", description: "Текст Алексея о бессонных ночах у монитора." },
+    { id: 'sub-2', title: "пусто", author: "имя.", style: "Э", file: "voices/digital-dreams.mp3", duration: "0:00", cover: "cover/cover.jpg", description: "." },
+    { id: 'sub-3', title: "пусто", author: "имя.", style: "", file: "voices/last-commit.mp3", duration: "0:00", cover: "cover/cover.jpg", description: "." },
+    { id: 'sub-4', title: "пусто", author: "имя.", style: "", file: "voices/between-lines.mp3", duration: "0:00", cover: "cover/cover.jpg", description: "." },
+    { id: 'sub-5', title: "пусто", author: "имя.", style: "", file: "voices/love-algorithm.mp3", duration: "0:00", cover: "cover/cover.jpg", description: "." },
+    { id: 'sub-6', title: "Бпусто", author: "имя.", style: "", file: "voices/system-bug.mp3", duration: "0:00", cover: "cover/cover.jpg", description: "." }
 ];
 
 let currentCategory = 'all';
+
+// ============================================
+// КОММЕНТАРИИ
+// ============================================
+let commentsCache = {};
+let currentCommentsTrackId = null;
+let currentCommentsTrackType = null;
+let commentCountsCache = {};
+
+async function loadComments(trackId, trackType) {
+    const cacheKey = `${trackType}_${trackId}`;
+    if (!supabaseClient) return [];
+    try {
+        const { data, error } = await supabaseClient
+            .from('track_comments')
+            .select('*')
+            .eq('track_id', String(trackId))
+            .eq('track_type', trackType)
+            .order('created_at', { ascending: false });
+        if (error) throw error;
+        commentsCache[cacheKey] = data || [];
+        return data || [];
+    } catch (e) {
+        console.error('Ошибка загрузки комментариев:', e);
+        return [];
+    }
+}
+
+async function loadCommentCounts(trackIds, trackType) {
+    if (!supabaseClient) return {};
+    const counts = {};
+    try {
+        const { data, error } = await supabaseClient
+            .from('track_comments')
+            .select('track_id')
+            .eq('track_type', trackType)
+            .in('track_id', trackIds.map(String));
+        if (error) throw error;
+        (data || []).forEach(row => {
+            counts[row.track_id] = (counts[row.track_id] || 0) + 1;
+        });
+    } catch (e) {
+        console.error('Ошибка загрузки счётчиков:', e);
+    }
+    return counts;
+}
+
+async function addComment(trackId, trackType, userName, commentText) {
+    if (!supabaseClient) {
+        alert('Комментарии временно недоступны (Supabase не подключён)');
+        return false;
+    }
+    try {
+        const { data, error } = await supabaseClient
+            .from('track_comments')
+            .insert([{
+                track_id: String(trackId),
+                track_type: trackType,
+                user_name: userName,
+                comment_text: commentText
+            }])
+            .select();
+        if (error) throw error;
+        const cacheKey = `${trackType}_${trackId}`;
+        if (!commentsCache[cacheKey]) commentsCache[cacheKey] = [];
+        commentsCache[cacheKey].unshift(data[0]);
+        commentCountsCache[trackType + '_' + trackId] = (commentCountsCache[trackType + '_' + trackId] || 0) + 1;
+        return true;
+    } catch (e) {
+        console.error('Ошибка добавления комментария:', e);
+        return false;
+    }
+}
+
+function openCommentsModal(trackId, trackType, trackTitle) {
+    currentCommentsTrackId = trackId;
+    currentCommentsTrackType = trackType;
+    const modal = document.getElementById('commentsModal');
+    const title = document.getElementById('commentsModalTitle');
+    const subtitle = document.getElementById('commentsModalSubtitle');
+    const list = document.getElementById('commentsList');
+    const form = document.getElementById('commentForm');
+    
+    title.textContent = trackTitle;
+    const typeLabels = { tracks: 'Трек EVGENII', instrumentals: 'Инструментал', subscribers: 'Трек подписчика' };
+    subtitle.textContent = typeLabels[trackType] || '';
+    list.innerHTML = '<div class="comments-loading">Загрузка комментариев...</div>';
+    
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    
+    loadComments(trackId, trackType).then(comments => {
+        renderComments(comments);
+    });
+    
+    form.onsubmit = async (e) => {
+        e.preventDefault();
+        const input = document.getElementById('commentInput');
+        const commentText = input.value.trim();
+        if (!commentText) return;
+        
+        const userName = localStorage.getItem('evgenii_user') || 'Гость';
+        const submitBtn = document.getElementById('commentSubmitBtn');
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'ОТПРАВКА...';
+        
+        const success = await addComment(trackId, trackType, userName, commentText);
+        
+        if (success) {
+            input.value = '';
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'ОТПРАВИТЬ';
+            const comments = await loadComments(trackId, trackType);
+            renderComments(comments);
+            updateCommentBadge(trackId, trackType);
+        } else {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'ОТПРАВИТЬ';
+            alert('Ошибка при отправке комментария');
+        }
+    };
+}
+
+function renderComments(comments) {
+    const list = document.getElementById('commentsList');
+    if (!comments || comments.length === 0) {
+        list.innerHTML = '<div class="comments-empty">💬 Пока нет комментариев.<br>Будь первым!</div>';
+        return;
+    }
+    list.innerHTML = comments.map(c => `
+        <div class="comment-item">
+            <div class="comment-header">
+                <div class="comment-author">${escapeHtml(c.user_name)}</div>
+                <div class="comment-time">${new Date(c.created_at).toLocaleString('ru-RU', {day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}</div>
+            </div>
+            <div class="comment-text">${escapeHtml(c.comment_text)}</div>
+        </div>
+    `).join('');
+}
+
+function updateCommentBadge(trackId, trackType) {
+    const key = `${trackType}_${trackId}`;
+    const count = commentCountsCache[key] || 0;
+    document.querySelectorAll(`.track-comment-btn[data-track-id="${trackId}"][data-track-type="${trackType}"] .comment-count-badge`).forEach(badge => {
+        badge.textContent = count;
+        badge.style.display = count > 0 ? 'flex' : 'none';
+    });
+    document.querySelectorAll(`.special-card-btn[data-track-id="${trackId}"][data-track-type="${trackType}"] .comment-count-badge`).forEach(badge => {
+        badge.textContent = count;
+        badge.style.display = count > 0 ? 'flex' : 'none';
+    });
+}
+
+function closeCommentsModal() {
+    document.getElementById('commentsModal').classList.remove('active');
+    document.body.style.overflow = '';
+    currentCommentsTrackId = null;
+    currentCommentsTrackType = null;
+}
+
+document.getElementById('commentsModal').addEventListener('click', function(e) {
+    if (e.target === this) closeCommentsModal();
+});
+
+async function preloadCommentCounts() {
+    if (!supabaseClient) return;
+    const trackIds = allTracks.map(t => t.id);
+    const instIds = instrumentalTracks.map(t => t.id);
+    const subIds = subscriberTracks.map(t => t.id);
+    
+    const [trackCounts, instCounts, subCounts] = await Promise.all([
+        loadCommentCounts(trackIds, 'tracks'),
+        loadCommentCounts(instIds, 'instrumentals'),
+        loadCommentCounts(subIds, 'subscribers')
+    ]);
+    
+    Object.assign(commentCountsCache, 
+        Object.fromEntries(Object.entries(trackCounts).map(([k,v]) => [`tracks_${k}`, v])),
+        Object.fromEntries(Object.entries(instCounts).map(([k,v]) => [`instrumentals_${k}`, v])),
+        Object.fromEntries(Object.entries(subCounts).map(([k,v]) => [`subscribers_${k}`, v]))
+    );
+    
+    // Обновляем все бейджи
+    document.querySelectorAll('.comment-count-badge').forEach(badge => {
+        const btn = badge.closest('[data-track-id]');
+        if (btn) {
+            const key = `${btn.dataset.trackType}_${btn.dataset.trackId}`;
+            const count = commentCountsCache[key] || 0;
+            badge.textContent = count;
+            badge.style.display = count > 0 ? 'flex' : 'none';
+        }
+    });
+}
 
 // ============================================
 // RENDER
@@ -633,7 +1287,7 @@ function renderNewRelease() {
     const h = document.getElementById('homeReleaseCard');
     if (h) h.innerHTML = `<div class="release-cover"><span class="release-badge">NEW</span>${newRelease.cover ? `<img src="${newRelease.cover}" onerror="this.style.display='none';this.parentElement.innerHTML='🚗'">` : '🚗'}</div><div class="release-info"><div class="release-label">ПРЕМЬЕРА</div><div class="release-title">${newRelease.title}</div><div class="release-meta">${newRelease.subtitle.toUpperCase()} · ${newRelease.duration}</div></div>`;
     const f = document.getElementById('featuredRelease');
-    if (f) f.innerHTML = `<button class="featured-download-btn" onclick="event.stopPropagation();openDownloadModal(newRelease)"><svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></button><div class="featured-cover">${newRelease.cover ? `<img src="${newRelease.cover}" onerror="this.style.display='none';this.parentElement.innerHTML='🚗'">` : '🚗'}</div><div class="featured-badge"><span class="featured-badge-star">★</span><span class="featured-badge-text">Новый релиз</span></div><div class="featured-title">${newRelease.title}</div><div class="featured-artist">EVGENII</div><button class="play-btn-large"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></button>`;
+    if (f) f.innerHTML = `<button class="featured-download-btn" onclick="event.stopPropagation();openDownloadModal(newRelease)"><svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></button><div class="featured-cover">${newRelease.cover ? `<img src="${newRelease.cover}" onerror="this.style.display='none';this.parentElement.innerHTML='🚗'">` : ''}</div><div class="featured-badge"><span class="featured-badge-star">★</span><span class="featured-badge-text">Новый релиз</span></div><div class="featured-title">${newRelease.title}</div><div class="featured-artist">EVGENII</div><button class="play-btn-large"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></button>`;
 }
 
 function updateCategoryCounts() {
@@ -657,14 +1311,16 @@ function createTrackEl(track, category, index) {
     const playFn = category === 'tracks' ? `playTrack(allTracks[${index}],${index})` : category === 'instrumentals' ? `playInstrumental(instrumentalTracks[${index}],${index})` : `playSubscriber(subscriberTracks[${index}],${index})`;
     const dataArray = category === 'tracks' ? 'allTracks' : category === 'instrumentals' ? 'instrumentalTracks' : 'subscriberTracks';
     const downloadType = category === 'tracks' ? 'regular' : category;
-    el.innerHTML = `<div class="track-cover" onclick="${playFn}">${coverHtml}<div class="track-category-badge ${badgeClass}">${badgeIcon}</div></div><div class="track-info" onclick="${playFn}"><div class="track-title">${track.title}</div><div class="track-artist ${artistClass}">${artistText}</div></div><div class="track-duration">${track.duration}</div><button class="track-download-btn" onclick="event.stopPropagation();openDownloadModal(${dataArray}[${index}],'${downloadType}')"><svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></button>`;
+    const countKey = `${category}_${track.id}`;
+    const count = commentCountsCache[countKey] || 0;
+    el.innerHTML = `<div class="track-cover" onclick="${playFn}">${coverHtml}<div class="track-category-badge ${badgeClass}">${badgeIcon}</div></div><div class="track-info" onclick="${playFn}"><div class="track-title">${track.title}</div><div class="track-artist ${artistClass}">${artistText}</div></div><div class="track-duration">${track.duration}</div><button class="track-comment-btn" data-track-id="${track.id}" data-track-type="${category}" onclick="event.stopPropagation();openCommentsModal(${JSON.stringify(track.id)},'${category}',${JSON.stringify(track.title)})" title="Комментарии"><svg viewBox="0 0 24 24"><path d="M21 6h-2v9H6v2c0 .55.45 1 1 1h11l4 4V7c0-.55-.45-1-1-1zm-4 6V3c0-.55-.45-1-1-1H3c-.55 0-1 .45-1 1v14l4-4h10c.55 0 1-.45 1-1z"/></svg><span class="comment-count-badge" style="display:${count > 0 ? 'flex' : 'none'}">${count}</span></button><button class="track-download-btn" onclick="event.stopPropagation();openDownloadModal(${dataArray}[${index}],'${downloadType}')"><svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></button>`;
     return el;
 }
 
 function createDivider(category) {
     const div = document.createElement('div');
     div.className = 'category-divider';
-    const labels = { tracks: { icon: '🎵', text: 'ТРЕКИ EVGENII', color: 'cyan' }, instrumentals: { icon: '🎹', text: 'ИНСТРУМЕНТАЛЫ', color: 'gold' }, subscribers: { icon: '🎤', text: 'ДАЙ ГОЛОС', color: 'pink' } };
+    const labels = { tracks: { icon: '', text: 'ТРЕКИ EVGENII', color: 'cyan' }, instrumentals: { icon: '🎹', text: 'ИНСТРУМЕНТАЛЫ', color: 'gold' }, subscribers: { icon: '🎤', text: 'ДАЙ ГОЛОС', color: 'pink' } };
     const l = labels[category];
     div.innerHTML = `<div class="category-divider-line"></div><div class="category-divider-label ${l.color}"><span>${l.icon}</span><span>${l.text}</span></div><div class="category-divider-line"></div>`;
     return div;
@@ -705,7 +1361,9 @@ function renderInstrumentals() {
         card.className = 'special-card gold';
         card.dataset.id = t.id;
         const coverHtml = t.cover ? `<img src="${t.cover}" onerror="this.style.display='none';this.parentElement.innerHTML='🎹'">` : '🎹';
-        card.innerHTML = `<div class="special-card-top"><div class="special-cover gold" onclick="playInstrumental(instrumentalTracks[${i}],${i})">${coverHtml}<div class="special-play-overlay"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div><div class="special-main-info"><div class="special-title">${t.title}</div><div class="special-tags"><span class="special-tag genre">${t.genre}</span><span class="special-tag mood">${t.mood}</span></div><div style="font-size:.75rem;color:var(--text-secondary);font-family:'Orbitron',monospace;margin-top:4px">${t.duration}</div></div><div class="special-card-actions"><button class="special-card-btn gold" onclick="event.stopPropagation();openDownloadModal(instrumentalTracks[${i}],'instrumental')"><svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></button></div></div><div class="special-description gold">${t.description}</div>`;
+        const countKey = `instrumentals_${t.id}`;
+        const count = commentCountsCache[countKey] || 0;
+        card.innerHTML = `<div class="special-card-top"><div class="special-cover gold" onclick="playInstrumental(instrumentalTracks[${i}],${i})">${coverHtml}<div class="special-play-overlay"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div><div class="special-main-info"><div class="special-title">${t.title}</div><div class="special-tags"><span class="special-tag genre">${t.genre}</span><span class="special-tag mood">${t.mood}</span></div><div style="font-size:.75rem;color:var(--text-secondary);font-family:'Orbitron',monospace;margin-top:4px">${t.duration}</div></div><div class="special-card-actions"><button class="special-card-btn gold" data-track-id="${t.id}" data-track-type="instrumentals" onclick="event.stopPropagation();openCommentsModal(${JSON.stringify(t.id)},'instrumentals',${JSON.stringify(t.title)})" title="Комментарии"><svg viewBox="0 0 24 24"><path d="M21 6h-2v9H6v2c0 .55.45 1 1 1h11l4 4V7c0-.55-.45-1-1-1zm-4 6V3c0-.55-.45-1-1-1H3c-.55 0-1 .45-1 1v14l4-4h10c.55 0 1-.45 1-1z"/></svg><span class="comment-count-badge" style="display:${count > 0 ? 'flex' : 'none'}">${count}</span></button><button class="special-card-btn gold" onclick="event.stopPropagation();openDownloadModal(instrumentalTracks[${i}],'instrumental')"><svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></button></div></div><div class="special-description gold">${t.description}</div>`;
         list.appendChild(card);
     });
 }
@@ -719,7 +1377,9 @@ function renderSubscribers() {
         card.className = 'special-card pink';
         card.dataset.id = t.id;
         const coverHtml = t.cover ? `<img src="${t.cover}" onerror="this.style.display='none';this.parentElement.innerHTML='🎤'">` : '🎤';
-        card.innerHTML = `<div class="special-card-top"><div class="special-cover pink" onclick="playSubscriber(subscriberTracks[${i}],${i})">${coverHtml}<div class="special-play-overlay"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div><div class="special-main-info"><div class="special-title">${t.title}</div><div class="special-author">✍ ${t.author}</div><div class="special-tags"><span class="special-tag style">${t.style}</span></div><div style="font-size:.75rem;color:var(--text-secondary);font-family:'Orbitron',monospace;margin-top:4px">${t.duration}</div></div><div class="special-card-actions"><button class="special-card-btn pink" onclick="event.stopPropagation();openDownloadModal(subscriberTracks[${i}],'subscriber')"><svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></button></div></div><div class="special-description pink">${t.description}</div>`;
+        const countKey = `subscribers_${t.id}`;
+        const count = commentCountsCache[countKey] || 0;
+        card.innerHTML = `<div class="special-card-top"><div class="special-cover pink" onclick="playSubscriber(subscriberTracks[${i}],${i})">${coverHtml}<div class="special-play-overlay"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div><div class="special-main-info"><div class="special-title">${t.title}</div><div class="special-author">✍ ${t.author}</div><div class="special-tags"><span class="special-tag style">${t.style}</span></div><div style="font-size:.75rem;color:var(--text-secondary);font-family:'Orbitron',monospace;margin-top:4px">${t.duration}</div></div><div class="special-card-actions"><button class="special-card-btn pink" data-track-id="${t.id}" data-track-type="subscribers" onclick="event.stopPropagation();openCommentsModal(${JSON.stringify(t.id)},'subscribers',${JSON.stringify(t.title)})" title="Комментарии"><svg viewBox="0 0 24 24"><path d="M21 6h-2v9H6v2c0 .55.45 1 1 1h11l4 4V7c0-.55-.45-1-1-1zm-4 6V3c0-.55-.45-1-1-1H3c-.55 0-1 .45-1 1v14l4-4h10c.55 0 1-.45 1-1z"/></svg><span class="comment-count-badge" style="display:${count > 0 ? 'flex' : 'none'}">${count}</span></button><button class="special-card-btn pink" onclick="event.stopPropagation();openDownloadModal(subscriberTracks[${i}],'subscriber')"><svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></button></div></div><div class="special-description pink">${t.description}</div>`;
         list.appendChild(card);
     });
 }
@@ -950,10 +1610,16 @@ function showMainScreen(name) {
     renderAllTracksList();
     renderInstrumentals();
     renderSubscribers();
+    // Загружаем счётчики комментариев после рендера
+    preloadCommentCounts().then(() => {
+        renderAllTracksList();
+        renderInstrumentals();
+        renderSubscribers();
+    });
 }
 logoutBtn.addEventListener('click', function() {
     localStorage.removeItem('evgenii_user');
-    ['homePage','tracksPage','aboutPage','communityPage','contactPage','instrumentalsPage','subscribersPage'].forEach(p => document.getElementById(p).classList.remove('active'));
+    ['homePage','tracksPage','aboutPage','communityPage','contactPage','instrumentalsPage','subscribersPage','supportPage'].forEach(p => document.getElementById(p).classList.remove('active'));
     currentPage = 'homePage'; pageHistory = ['homePage'];
     loginScreen.classList.remove('hidden'); nameInput.value = '';
     loginGreeting.textContent = getLoginGreeting(new Date().getHours());
@@ -1022,7 +1688,69 @@ if (voiceForm) {
         finally { voiceSubmitBtn.disabled = false; voiceSubmitBtn.innerHTML = '<span>ОТПРАВИТЬ ТЕКСТ</span>'; }
     });
 }
+
+// ============================================
+// ПОДДЕРЖАТЬ
+// ============================================
+const SUPPORT_LINKS = {
+    coffee: 'https://yoomoney.ru/quickpay/confirm.xml?receiver=4100119560778927&quickpay-form=shop&targets=Автору+на+кофе&sum=100&paymentType=AC',
+    project50: 'https://yoomoney.ru/quickpay/confirm.xml?receiver=4100119560778927&quickpay-form=shop&targets=Поддержка+проекта+EVGENII&sum=50&paymentType=AC',
+    project100: 'https://yoomoney.ru/quickpay/confirm.xml?receiver=4100119560778927&quickpay-form=shop&targets=Поддержка+проекта+EVGENII&sum=100&paymentType=AC',
+    project300: 'https://yoomoney.ru/quickpay/confirm.xml?receiver=4100119560778927&quickpay-form=shop&targets=Поддержка+проекта+EVGENII&sum=300&paymentType=AC',
+    project500: 'https://yoomoney.ru/quickpay/confirm.xml?receiver=4100119560778927&quickpay-form=shop&targets=Поддержка+проекта+EVGENII&sum=500&paymentType=AC',
+    project800: 'https://yoomoney.ru/quickpay/confirm.xml?receiver=4100119560778927&quickpay-form=shop&targets=Поддержка+проекта+EVGENII&sum=800&paymentType=AC',
+    project1000: 'https://yoomoney.ru/quickpay/confirm.xml?receiver=4100119560778927&quickpay-form=shop&targets=Поддержка+проекта+EVGENII&sum=1000&paymentType=AC'
+};
+
+function openSupportLink(type) {
+    if (type === 'coffee') {
+        window.open(SUPPORT_LINKS.coffee, '_blank');
+    } else if (type === 'project') {
+        document.getElementById('amountModal').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    } else if (type === 'vtb') {
+        document.getElementById('vtbModal').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function selectAmount(amount) {
+    let url = '';
+    switch(amount) {
+        case 50: url = SUPPORT_LINKS.project50; break;
+        case 100: url = SUPPORT_LINKS.project100; break;
+        case 300: url = SUPPORT_LINKS.project300; break;
+        case 500: url = SUPPORT_LINKS.project500; break;
+        case 800: url = SUPPORT_LINKS.project800; break;
+        case 1000: url = SUPPORT_LINKS.project1000; break;
+    }
+    if (url) {
+        window.open(url, '_blank');
+        closeAmountModal();
+    }
+}
+
+function closeAmountModal() {
+    document.getElementById('amountModal').classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+function closeVTBModal() {
+    document.getElementById('vtbModal').classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+document.getElementById('amountModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeAmountModal();
+    }
+});
+
+document.getElementById('vtbModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeVTBModal();
+    }
+});
 </script>
 </body>
 </html>
-
