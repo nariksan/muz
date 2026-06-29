@@ -12,20 +12,29 @@
         :root {
             --pink: #ff9de2; --blue: #9ddcff; --purple: #c4b5fd;
             --mint: #a7f3d0; --peach: #fed7aa; --lavender: #e9d5ff;
-            --chrome: linear-gradient(135deg, #f0f0f0 0%, #d4d4d4 25%, #ffffff 50%, #d4d4d4 75%, #f0f0f0 100%);
             --neon-pink: #ff6ec7; --neon-blue: #00d9ff;
-            --bg-gradient: linear-gradient(135deg, #fce7f3 0%, #e0e7ff 50%, #dbeafe 100%);
+            --bg-gradient: linear-gradient(-45deg, #ff6ec7, #7b2ff7, #00d9ff, #ff9de2, #c4b5fd, #00d9ff);
             --card-bg: rgba(255, 255, 255, 0.4);
             --card-border: rgba(255, 255, 255, 0.6);
             --text-primary: #1e1b4b; --text-secondary: rgba(30, 27, 75, 0.6);
         }
         body { 
             font-family: 'Space Grotesk', 'Inter', sans-serif; 
-            background: var(--bg-gradient); 
+            background: var(--bg-gradient);
+            background-size: 400% 400%;
+            animation: lavaFlow 15s ease infinite;
             color: var(--text-primary); 
             min-height: 100vh; 
             overflow-x: hidden;
             position: relative;
+        }
+        
+        @keyframes lavaFlow {
+            0% { background-position: 0% 50%; }
+            25% { background-position: 50% 0%; }
+            50% { background-position: 100% 50%; }
+            75% { background-position: 50% 100%; }
+            100% { background-position: 0% 50%; }
         }
         
         /* Y2K Background Effects */
@@ -61,7 +70,7 @@
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         
         /* Login Screen */
-        .login-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 1000; background: linear-gradient(135deg, #fce7f3 0%, #e0e7ff 50%, #dbeafe 100%); transition: opacity 0.6s ease, transform 0.6s ease; padding: 40px 20px; }
+        .login-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 1000; background: var(--bg-gradient); background-size: 400% 400%; animation: lavaFlow 15s ease infinite; transition: opacity 0.6s ease, transform 0.6s ease; padding: 40px 20px; }
         .login-screen.hidden { opacity: 0; transform: scale(1.05); pointer-events: none; }
         .login-container { width: 100%; max-width: 400px; display: flex; flex-direction: column; align-items: center; }
         .login-banner { width: 100%; aspect-ratio: 16/10; border-radius: 32px; overflow: hidden; margin-bottom: 40px; border: 2px solid rgba(255, 255, 255, 0.8); background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1)); backdrop-filter: blur(20px); position: relative; display: flex; align-items: center; justify-content: center; box-shadow: 0 20px 60px rgba(255, 157, 226, 0.2); }
@@ -593,7 +602,6 @@
 
         @media (min-width: 1024px) {
             .quick-grid { grid-template-columns: repeat(4, 1fr); }
-            body { padding-bottom: 0; }
             .floating-player, .sticky-player { max-width: 500px; }
         }
 
@@ -1478,8 +1486,6 @@ function closeAmountModal() { document.getElementById('amountModal').classList.r
 function closeVTBModal() { document.getElementById('vtbModal').classList.remove('active'); document.body.style.overflow = ''; }
 document.getElementById('amountModal').addEventListener('click', function(e) { if (e.target === this) closeAmountModal(); });
 document.getElementById('vtbModal').addEventListener('click', function(e) { if (e.target === this) closeVTBModal(); });
-
-
 </script>
 </body>
 </html>
