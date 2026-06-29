@@ -828,8 +828,658 @@
 <audio id="subscriberAudio" preload="metadata"></audio>
 
 <script>
-// Весь JavaScript код остаётся точно таким же, как в предыдущей версии
-// (Firebase, плееры, комментарии, формы, навигация и т.д.)
+// ============================================
+// FIREBASE
+// ============================================
+const firebaseConfig = {
+    apiKey: "AIzaSyCw8S1fghfKUMUtNsDFDbz-oFeSkRD_NOk",
+    authDomain: "evgenii-music-b5adf.firebaseapp.com",
+    projectId: "evgenii-music-b5adf",
+    storageBucket: "evgenii-music-b5adf.firebasestorage.app",
+    messagingSenderId: "518513745915",
+    appId: "1:518513745915:web:2d0e8dc9e1e6f37bccb55e"
+};
+
+let db = null;
+try {
+    firebase.initializeApp(firebaseConfig);
+    db = firebase.firestore();
+    console.log('✅ Firebase подключён');
+} catch (e) {
+    console.error('❌ Ошибка Firebase:', e);
+}
+
+const TELEGRAM_BOT_TOKEN = '8620797853:AAGE9OaW5GIun46NFaGxxGMIUL8LRxPvTrY';
+const TELEGRAM_CHAT_ID = '5129595944';
+
+const newRelease = { id: 'new-release', title: "Последний трек.", subtitle: "New Release", file: "tracks/song15.mp3", duration: "4:18", cover: "cover/cover.png" };
+
+const allTracks = [
+    { id: 2,  title: "Пустой код",                subtitle: "", file: "tracks/song.mp3",  duration: "3:20", cover: "cover/cover.jpg" },
+    { id: 3,  title: "А мне похуй",               subtitle: "", file: "tracks/song2.mp3",  duration: "3:11", cover: "cover/cover.jpg" },
+    { id: 4,  title: "Нейронный Дождь",           subtitle: "", file: "tracks/song3.mp3",  duration: "4:03", cover: "cover/cover.jpg" },
+    { id: 5,  title: "Бункер",                    subtitle: "", file: "tracks/song4.mp3",  duration: "3:01", cover: "cover/cover.jpg" },
+    { id: 6,  title: "Поезд на юг",               subtitle: "", file: "tracks/song5.mp3",  duration: "3:23", cover: "cover/cover.jpg" },
+    { id: 7,  title: "Сгоревший экран",           subtitle: "", file: "tracks/song6.mp3",  duration: "3:39", cover: "cover/cover.jpg" },
+    { id: 8,  title: "«Ёлка горит, а мне похуй»", subtitle: "", file: "tracks/song7.mp3",  duration: "2:30", cover: "cover/cover.jpg" },
+    { id: 9,  title: "19_11",                     subtitle: "", file: "tracks/song8.mp3",  duration: "2:59", cover: "cover/cover.jpg" },
+    { id: 10, title: "Маленький демон",           subtitle: "", file: "tracks/song9.mp3",  duration: "4:32", cover: "cover/cover.jpg" },
+    { id: 11, title: "Бот как поэт",              subtitle: "", file: "tracks/song10.mp3", duration: "2:34", cover: "cover/cover.jpg" },
+    { id: 12, title: "«Телефон Не Звонит»",       subtitle: "", file: "tracks/song11.mp3", duration: "3:14", cover: "cover/cover.jpg" },
+    { id: 13, title: "Белая ткань",               subtitle: "", file: "tracks/song12.mp3", duration: "3:28", cover: "cover/cover.jpg" },
+    { id: 14, title: "Лишний",                    subtitle: "", file: "tracks/song13.mp3", duration: "4:04", cover: "cover/cover.jpg" },
+    { id: 15, title: "Тишина",                    subtitle: "", file: "tracks/song14.mp3", duration: "4:48", cover: "cover/cover.jpg" },
+    { id: 16, title: "Братья",                    subtitle: "", file: "tracks/song1.mp3",  duration: "4:19", cover: "cover/cover.jpg" },
+    { id: 17, title: "пусто",                     subtitle: "", file: "tracks/song0.mp3",  duration: "0:00", cover: "cover/cover.jpg" },
+    { id: 18, title: "пусто",                     subtitle: "", file: "tracks/song0.mp3",  duration: "0:00", cover: "cover/cover.jpg" },
+    { id: 19, title: "пусто",                     subtitle: "", file: "tracks/song0.mp3",  duration: "0:00", cover: "cover/cover.jpg" }
+];
+
+const instrumentalTracks = [
+    { id: 'inst-1', title: "Пробуждения", genre: "", mood: "", file: "instrumentals/The Awakening.mp3", duration: "5:34", cover: "instrgiv/cover.png", description: "Мрачная кинематографическая, готическая оркестровая, таинственная, завораживающая, гипнотическая, драматичные струнные, мощные синтезаторы, атмосферная" },
+    { id: 'inst-2', title: "Неоновая ночь", genre: "Ambient", mood: "Меланхолия", file: "instrumentals/instru.mp3", duration: "4:39", cover: "cover/cover.jpg", description: "Медленное погружение в огни ночного города. Синтезаторы плывут как туман над асфальтом, оставляя ощущение одиночества среди миллионов." },
+    { id: 'inst-3', title: "Цифровой рассвет", genre: "Electronic", mood: "Надежда", file: "instrumentals/instru1.mp3", duration: "5:10", cover: "cover/cover.jpg", description: "Первые лучи солнца сквозь экран. Тёплые пэды и мягкий бит создают атмосферу нового начала." },
+    { id: 'inst-4', title: "Память машин", genre: "Downtempo", mood: "Ностальгия", file: "instrumentals/instru2.mp3", duration: "5:13", cover: "cover/cover.jpg", description: "Что помнит искусственный интеллект, когда его выключают? Попытка услышать тишину между вычислениями." },
+    { id: 'inst-5', title: "Пустые улицы", genre: "Lo-Fi", mood: "Покой", file: "instrumentals/instru3.mp3", duration: "2:36", cover: "cover/cover.jpg", description: "Три часа ночи. Ни души. Только шуршение шин и далёкий гул города." },
+    { id: 'inst-6', title: "Эхо в серверной", genre: "Dark Ambient", mood: "Тревога", file: "instrumentals/server-echo.mp3", duration: "0:00", cover: "cover/cover.jpg", description: "Глубокий гул серверов, щелчки реле и низкочастотный дроун. Атмосфера заброшенного дата-центра." },
+    { id: 'inst-7', title: "Сон алгоритма", genre: "Ambient", mood: "Медитация", file: "instrumentals/algorithm-dream.mp3", duration: "0:00", cover: "cover/cover.jpg", description: "Плавные звуковые ландшафты, где нет начала и конца — только бесконечный поток данных." },
+    { id: 'inst-8', title: "Последний гигабайт", genre: "Cinematic", mood: "Эпичность", file: "instrumentals/last-gigabyte.mp3", duration: "0:00", cover: "cover/cover.jpg", description: "Кинематографичная композиция с нарастающим напряжением. Оркестровые струнные встречаются с электроникой." },
+    { id: 'inst-9', title: "Код тишины", genre: "Minimal", mood: "Сосредоточенность", file: "instrumentals/silence-code.mp3", duration: "0:00", cover: "cover/cover.jpg", description: "Минимализм в чистом виде. Несколько нот, повторяющихся как мантра." }
+];
+
+const subscriberTracks = [
+    { id: 'sub-1', title: "Серверная полночь", author: "Алексей М.", style: "Рок", file: "voices/server-midnight.mp3", duration: "4:34", cover: "voice/cover.png", description: "Текст Алексея о бессонных ночах у монитора." },
+    { id: 'sub-2', title: "пусто", author: "имя.", style: "Э", file: "voices/digital-dreams.mp3", duration: "0:00", cover: "cover/cover.jpg", description: "." },
+    { id: 'sub-3', title: "пусто", author: "имя.", style: "", file: "voices/last-commit.mp3", duration: "0:00", cover: "cover/cover.jpg", description: "." },
+    { id: 'sub-4', title: "пусто", author: "имя.", style: "", file: "voices/between-lines.mp3", duration: "0:00", cover: "cover/cover.jpg", description: "." },
+    { id: 'sub-5', title: "пусто", author: "имя.", style: "", file: "voices/love-algorithm.mp3", duration: "0:00", cover: "cover/cover.jpg", description: "." },
+    { id: 'sub-6', title: "Бпусто", author: "имя.", style: "", file: "voices/system-bug.mp3", duration: "0:00", cover: "cover/cover.jpg", description: "." }
+];
+
+let currentCategory = 'all';
+
+// ============================================
+// КОММЕНТАРИИ
+// ============================================
+let currentCommentTrack = null;
+let commentsUnsubscribe = null;
+const commentCountsCache = {};
+
+async function loadAllCommentCounts() {
+    if (!db) return;
+    try {
+        const snapshot = await db.collection('comments').get();
+        const counts = {};
+        snapshot.forEach(doc => {
+            const data = doc.data();
+            const key = String(data.trackId);
+            counts[key] = (counts[key] || 0) + 1;
+        });
+        Object.assign(commentCountsCache, counts);
+        updateAllCommentBadges();
+        renderNewRelease();
+    } catch (e) {
+        console.error('Ошибка загрузки счётчиков:', e);
+    }
+}
+
+function updateAllCommentBadges() {
+    document.querySelectorAll('.track-comment-btn, .special-card-btn[data-action="comment"]').forEach(btn => {
+        const trackId = String(btn.dataset.trackId);
+        const count = commentCountsCache[trackId] || 0;
+        const badge = btn.querySelector('.comment-count-badge');
+        if (badge) badge.textContent = count > 0 ? count : '';
+    });
+}
+
+function openCommentsModal(track, trackType) {
+    currentCommentTrack = { ...track, trackType };
+    const modal = document.getElementById('commentsModal');
+    const list = document.getElementById('commentsList');
+    const info = document.getElementById('commentsTrackInfo');
+    const countEl = document.getElementById('commentsCount');
+
+    const typeLabels = { tracks: 'Трек', instrumentals: 'Инструментал', subscribers: 'Дай голос' };
+    const icon = trackType === 'instrumentals' ? '🎹' : trackType === 'subscribers' ? '🎤' : '🎵';
+    const coverHtml = track.cover ? `<img src="${track.cover}" onerror="this.style.display='none';this.parentElement.innerHTML='${icon}'">` : icon;
+    const artistText = trackType === 'subscribers' ? track.author : 'EVGENII';
+
+    info.innerHTML = `<div class="comments-track-cover">${coverHtml}</div><div><div class="comments-track-name">${track.title}</div><div class="comments-track-type">${typeLabels[trackType]} · ${artistText}</div></div>`;
+
+    list.innerHTML = '<div class="comments-loading">Загрузка комментариев</div>';
+    countEl.textContent = '';
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+
+    if (commentsUnsubscribe) commentsUnsubscribe();
+    
+    commentsUnsubscribe = db.collection('comments')
+        .where('trackId', '==', String(track.id))
+        .onSnapshot(snapshot => {
+            const comments = [];
+            snapshot.forEach(doc => comments.push({ id: doc.id, ...doc.data() }));
+            
+            comments.sort((a, b) => {
+                const dateA = a.createdAt?.toDate ? a.createdAt.toDate() : new Date(a.createdAt || 0);
+                const dateB = b.createdAt?.toDate ? b.createdAt.toDate() : new Date(b.createdAt || 0);
+                return dateA - dateB;
+            });
+            
+            countEl.textContent = comments.length > 0 ? `(${comments.length})` : '';
+            renderComments(comments);
+        }, error => {
+            console.error('Ошибка подписки:', error);
+            list.innerHTML = '<div class="comments-empty"><div class="comments-empty-icon">⚠️</div>Ошибка: ' + error.message + '</div>';
+        });
+
+    setTimeout(() => document.getElementById('commentInput').focus(), 300);
+}
+
+function renderComments(comments) {
+    const list = document.getElementById('commentsList');
+    if (comments.length === 0) {
+        list.innerHTML = '<div class="comments-empty"><div class="comments-empty-icon">💬</div>Пока нет комментариев.<br>Будь первым!</div>';
+        return;
+    }
+    list.innerHTML = comments.map(c => {
+        const initial = (c.userName || '?')[0].toUpperCase();
+        const time = formatCommentTime(c.createdAt);
+        return `<div class="comment-item">
+            <div class="comment-avatar">${escapeHtml(initial)}</div>
+            <div class="comment-body">
+                <div class="comment-header">
+                    <span class="comment-author">${escapeHtml(c.userName)}</span>
+                    <span class="comment-time">${time}</span>
+                </div>
+                <div class="comment-text">${escapeHtml(c.text)}</div>
+            </div>
+        </div>`;
+    }).join('');
+    list.scrollTop = list.scrollHeight;
+}
+
+function formatCommentTime(timestamp) {
+    if (!timestamp) return '';
+    const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
+    const now = new Date();
+    const diff = Math.floor((now - date) / 1000);
+    if (diff < 60) return 'только что';
+    if (diff < 3600) return `${Math.floor(diff / 60)} мин назад`;
+    if (diff < 86400) return `${Math.floor(diff / 3600)} ч назад`;
+    if (diff < 604800) return `${Math.floor(diff / 86400)} дн назад`;
+    return date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short' });
+}
+
+async function sendComment() {
+    if (!db || !currentCommentTrack) return;
+    const input = document.getElementById('commentInput');
+    const text = input.value.trim();
+    if (!text) return;
+
+    const userName = localStorage.getItem('evgenii_user') || 'Гость';
+    const btn = document.getElementById('commentSendBtn');
+    btn.disabled = true;
+
+    try {
+        await db.collection('comments').add({
+            trackId: String(currentCommentTrack.id),
+            trackType: currentCommentTrack.trackType,
+            trackTitle: currentCommentTrack.title,
+            userName: userName,
+            text: text,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        input.value = '';
+        input.style.height = 'auto';
+        commentCountsCache[String(currentCommentTrack.id)] = (commentCountsCache[String(currentCommentTrack.id)] || 0) + 1;
+        updateAllCommentBadges();
+        renderNewRelease();
+    } catch (e) {
+        console.error('Ошибка отправки:', e);
+        alert('Ошибка отправки комментария: ' + e.message);
+    } finally {
+        btn.disabled = false;
+    }
+}
+
+function closeCommentsModal() {
+    document.getElementById('commentsModal').classList.remove('active');
+    document.body.style.overflow = '';
+    if (commentsUnsubscribe) { commentsUnsubscribe(); commentsUnsubscribe = null; }
+    currentCommentTrack = null;
+}
+
+document.getElementById('commentsModal').addEventListener('click', function(e) {
+    if (e.target === this) closeCommentsModal();
+});
+
+document.getElementById('commentInput').addEventListener('input', function() {
+    this.style.height = 'auto';
+    this.style.height = Math.min(this.scrollHeight, 80) + 'px';
+});
+
+document.getElementById('commentInput').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendComment(); }
+});
+
+// ============================================
+// RENDER
+// ============================================
+function renderNewRelease() {
+    const h = document.getElementById('homeReleaseCard');
+    const commentCount = commentCountsCache[String(newRelease.id)] || 0;
+    if (h) h.innerHTML = `<div class="release-cover"><span class="release-badge">NEW</span>${newRelease.cover ? `<img src="${newRelease.cover}" onerror="this.style.display='none';this.parentElement.innerHTML='🎵'">` : ''}</div><div class="release-info"><div class="release-label">ПРЕМЬЕРА</div><div class="release-title">${newRelease.title}</div><div class="release-meta">${newRelease.subtitle.toUpperCase()} · ${newRelease.duration}</div></div><button class="track-comment-btn" data-track-id="${newRelease.id}" onclick="event.stopPropagation();openCommentsModal(newRelease,'tracks')" style="margin-right:8px"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span class="comment-count-badge">${commentCount > 0 ? commentCount : ''}</span></button>`;
+    
+    const f = document.getElementById('featuredRelease');
+    if (f) f.innerHTML = `<button class="featured-download-btn" onclick="event.stopPropagation();openDownloadModal(newRelease)"><svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></button><div class="featured-cover">${newRelease.cover ? `<img src="${newRelease.cover}" onerror="this.style.display='none';this.parentElement.innerHTML='🎵'">` : ''}</div><div class="featured-badge"><span class="featured-badge-star">★</span><span class="featured-badge-text">Новый релиз</span></div><div class="featured-title">${newRelease.title}</div><div class="featured-artist">EVGENII</div><div style="display:flex;gap:12px;align-items:center;z-index:1"><button class="play-btn-large" onclick="event.stopPropagation();playNewRelease()"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></button><button class="track-comment-btn" data-track-id="${newRelease.id}" onclick="event.stopPropagation();openCommentsModal(newRelease,'tracks')" style="width:50px;height:50px;border-radius:50%;border:1px solid var(--card-border);background:rgba(255,255,255,0.5);backdrop-filter:blur(10px);color:var(--text-secondary);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.3s ease;position:relative"><svg viewBox="0 0 24 24" style="width:22px;height:22px;fill:currentColor"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span class="comment-count-badge" style="top:-2px;right:-2px">${commentCount > 0 ? commentCount : ''}</span></button></div>`;
+}
+
+function updateCategoryCounts() {
+    document.getElementById('countAll').textContent = allTracks.length + instrumentalTracks.length + subscriberTracks.length;
+    document.getElementById('countTracks').textContent = allTracks.length;
+    document.getElementById('countInstrumentals').textContent = instrumentalTracks.length;
+    document.getElementById('countSubscribers').textContent = subscriberTracks.length;
+}
+
+function createTrackEl(track, category, index) {
+    const el = document.createElement('div');
+    el.className = 'track-item' + (category === 'instrumentals' ? ' gold' : category === 'subscribers' ? ' pink' : '');
+    el.dataset.id = track.id;
+    const coverHtml = track.cover ? `<img src="${track.cover}" onerror="this.style.display='none';this.parentElement.innerHTML='${category === 'instrumentals' ? '🎹' : category === 'subscribers' ? '🎤' : '🎵'}'">` : (category === 'instrumentals' ? '🎹' : category === 'subscribers' ? '🎤' : '🎵');
+    const badgeClass = category === 'instrumentals' ? 'gold' : category === 'subscribers' ? 'pink' : 'cyan';
+    const badgeIcon = category === 'instrumentals' ? '🎹' : category === 'subscribers' ? '🎤' : '🎵';
+    let artistText = '', artistClass = '';
+    if (category === 'tracks') artistText = track.subtitle || 'EVGENII';
+    else if (category === 'instrumentals') { artistText = track.genre + ' · ' + track.mood; artistClass = 'gold'; }
+    else if (category === 'subscribers') { artistText = '✍ ' + track.author + ' · ' + track.style; artistClass = 'pink'; }
+    const playFn = category === 'tracks' ? `playTrack(allTracks[${index}],${index})` : category === 'instrumentals' ? `playInstrumental(instrumentalTracks[${index}],${index})` : `playSubscriber(subscriberTracks[${index}],${index})`;
+    const dataArray = category === 'tracks' ? 'allTracks' : category === 'instrumentals' ? 'instrumentalTracks' : 'subscriberTracks';
+    const downloadType = category === 'tracks' ? 'regular' : category;
+    const commentCount = commentCountsCache[String(track.id)] || 0;
+    el.innerHTML = `<div class="track-cover" onclick="${playFn}">${coverHtml}<div class="track-category-badge ${badgeClass}">${badgeIcon}</div></div><div class="track-info" onclick="${playFn}"><div class="track-title">${track.title}</div><div class="track-artist ${artistClass}">${artistText}</div></div><div class="track-duration">${track.duration}</div><button class="track-comment-btn" data-track-id="${track.id}" onclick="event.stopPropagation();openCommentsModal(${dataArray}[${index}],'${category}')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span class="comment-count-badge">${commentCount > 0 ? commentCount : ''}</span></button><button class="track-download-btn" onclick="event.stopPropagation();openDownloadModal(${dataArray}[${index}],'${downloadType}')"><svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></button>`;
+    return el;
+}
+
+function createDivider(category) {
+    const div = document.createElement('div');
+    div.className = 'category-divider';
+    const labels = { tracks: { icon: '', text: 'ТРЕКИ EVGENII', color: 'cyan' }, instrumentals: { icon: '🎹', text: 'ИНСТРУМЕНТАЛЫ', color: 'gold' }, subscribers: { icon: '🎤', text: 'ДАЙ ГОЛОС', color: 'pink' } };
+    const l = labels[category];
+    div.innerHTML = `<div class="category-divider-line"></div><div class="category-divider-label ${l.color}"><span>${l.icon}</span><span>${l.text}</span></div><div class="category-divider-line"></div>`;
+    return div;
+}
+
+function renderAllTracksList() {
+    const list = document.getElementById('allTracksList');
+    if (!list) return;
+    list.innerHTML = '';
+    if (currentCategory === 'all') {
+        if (allTracks.length) { list.appendChild(createDivider('tracks')); allTracks.forEach((t, i) => list.appendChild(createTrackEl(t, 'tracks', i))); }
+        if (instrumentalTracks.length) { list.appendChild(createDivider('instrumentals')); instrumentalTracks.forEach((t, i) => list.appendChild(createTrackEl(t, 'instrumentals', i))); }
+        if (subscriberTracks.length) { list.appendChild(createDivider('subscribers')); subscriberTracks.forEach((t, i) => list.appendChild(createTrackEl(t, 'subscribers', i))); }
+    } else if (currentCategory === 'tracks') {
+        if (!allTracks.length) { list.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-secondary)">Пока нет треков</div>'; return; }
+        allTracks.forEach((t, i) => list.appendChild(createTrackEl(t, 'tracks', i)));
+    } else if (currentCategory === 'instrumentals') {
+        if (!instrumentalTracks.length) { list.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-secondary)">Пока нет инструменталов</div>'; return; }
+        instrumentalTracks.forEach((t, i) => list.appendChild(createTrackEl(t, 'instrumentals', i)));
+    } else if (currentCategory === 'subscribers') {
+        if (!subscriberTracks.length) { list.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-secondary)">Пока нет треков от подписчиков</div>'; return; }
+        subscriberTracks.forEach((t, i) => list.appendChild(createTrackEl(t, 'subscribers', i)));
+    }
+}
+
+function switchCategory(category) {
+    currentCategory = category;
+    document.querySelectorAll('.category-tab').forEach(tab => tab.classList.toggle('active', tab.dataset.category === category));
+    renderAllTracksList();
+}
+
+function renderInstrumentals() {
+    const list = document.getElementById('instrumentalsList');
+    if (!list) return;
+    list.innerHTML = '';
+    instrumentalTracks.forEach((t, i) => {
+        const card = document.createElement('div');
+        card.className = 'special-card gold';
+        card.dataset.id = t.id;
+        const coverHtml = t.cover ? `<img src="${t.cover}" onerror="this.style.display='none';this.parentElement.innerHTML='🎹'">` : '🎹';
+        const commentCount = commentCountsCache[String(t.id)] || 0;
+        card.innerHTML = `<div class="special-card-top"><div class="special-cover gold" onclick="playInstrumental(instrumentalTracks[${i}],${i})">${coverHtml}<div class="special-play-overlay"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div><div class="special-main-info"><div class="special-title">${t.title}</div><div class="special-tags"><span class="special-tag genre">${t.genre}</span><span class="special-tag mood">${t.mood}</span></div><div style="font-size:.75rem;color:var(--text-secondary);font-family:'Orbitron',monospace;margin-top:4px">${t.duration}</div></div><div class="special-card-actions"><button class="special-card-btn gold" data-action="comment" data-track-id="${t.id}" onclick="event.stopPropagation();openCommentsModal(instrumentalTracks[${i}],'instrumentals')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span class="comment-count-badge">${commentCount > 0 ? commentCount : ''}</span></button><button class="special-card-btn gold" onclick="event.stopPropagation();openDownloadModal(instrumentalTracks[${i}],'instrumental')"><svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></button></div></div><div class="special-description gold">${t.description}</div>`;
+        list.appendChild(card);
+    });
+}
+
+function renderSubscribers() {
+    const list = document.getElementById('subscribersList');
+    if (!list) return;
+    list.innerHTML = '';
+    subscriberTracks.forEach((t, i) => {
+        const card = document.createElement('div');
+        card.className = 'special-card pink';
+        card.dataset.id = t.id;
+        const coverHtml = t.cover ? `<img src="${t.cover}" onerror="this.style.display='none';this.parentElement.innerHTML='🎤'">` : '🎤';
+        const commentCount = commentCountsCache[String(t.id)] || 0;
+        card.innerHTML = `<div class="special-card-top"><div class="special-cover pink" onclick="playSubscriber(subscriberTracks[${i}],${i})">${coverHtml}<div class="special-play-overlay"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div><div class="special-main-info"><div class="special-title">${t.title}</div><div class="special-author">✍ ${t.author}</div><div class="special-tags"><span class="special-tag style">${t.style}</span></div><div style="font-size:.75rem;color:var(--text-secondary);font-family:'Orbitron',monospace;margin-top:4px">${t.duration}</div></div><div class="special-card-actions"><button class="special-card-btn pink" data-action="comment" data-track-id="${t.id}" onclick="event.stopPropagation();openCommentsModal(subscriberTracks[${i}],'subscribers')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span class="comment-count-badge">${commentCount > 0 ? commentCount : ''}</span></button><button class="special-card-btn pink" onclick="event.stopPropagation();openDownloadModal(subscriberTracks[${i}],'subscriber')"><svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></button></div></div><div class="special-description pink">${t.description}</div>`;
+        list.appendChild(card);
+    });
+}
+
+function toggleVoiceForm() {
+    const wrapper = document.getElementById('voiceFormWrapper');
+    const btn = document.getElementById('voiceToggleBtn');
+    const text = document.getElementById('voiceToggleText');
+    const isOpen = wrapper.classList.toggle('open');
+    btn.classList.toggle('open', isOpen);
+    if (isOpen) {
+        text.textContent = 'СКРЫТЬ ФОРМУ';
+        setTimeout(() => { wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' }); const f = wrapper.querySelector('input'); if (f) f.focus({ preventScroll: true }); }, 350);
+    } else { text.textContent = 'ПРИСЛАТЬ СВОЙ ТЕКСТ'; }
+}
+
+// ============================================
+// ПЛЕЕРЫ
+// ============================================
+const audio = document.getElementById('audioPlayer');
+let currentTrack = null, isPlaying = false, simulationInterval = null, currentTrackIndex = -1;
+const playlist = [newRelease, ...allTracks];
+
+function stopAllPlayers() {
+    audio.pause(); clearInterval(simulationInterval); setPlayingState(false);
+    document.getElementById('playerBarFill').style.width = '0%';
+    document.getElementById('playerCurrentTime').textContent = '0:00';
+    document.getElementById('stickyPlayer').classList.remove('visible');
+    instAudio.pause(); clearInterval(instSimulationInterval); setInstPlayingState(false);
+    document.getElementById('instBarFill').style.width = '0%';
+    document.getElementById('instCurrentTime').textContent = '0:00';
+    document.getElementById('instrumentalPlayer').classList.remove('visible');
+    subAudio.pause(); clearInterval(subSimulationInterval); setSubPlayingState(false);
+    document.getElementById('subBarFill').style.width = '0%';
+    document.getElementById('subCurrentTime').textContent = '0:00';
+    document.getElementById('subscriberPlayer').classList.remove('visible');
+}
+
+function playTrack(track, index = -1) {
+    stopAllPlayers();
+    currentTrack = track;
+    currentTrackIndex = index >= 0 ? index : playlist.findIndex(t => t.id === track.id);
+    document.getElementById('playerTitle').textContent = track.title;
+    document.getElementById('playerArtist').textContent = track.subtitle || 'EVGENII';
+    const pc = document.getElementById('playerCover');
+    if (track.cover) pc.innerHTML = `<img src="${track.cover}" onerror="this.style.display='none';this.parentElement.innerHTML='🎵'">`; else pc.textContent = '🎵';
+    document.getElementById('playerTotalTime').textContent = track.duration;
+    document.getElementById('stickyPlayer').classList.add('visible');
+    document.querySelectorAll('.track-item, .special-card').forEach(el => el.classList.remove('active'));
+    const ae = document.querySelector(`.track-item[data-id="${track.id}"]`);
+    if (ae) ae.classList.add('active');
+    audio.src = track.file;
+    audio.play().then(() => setPlayingState(true)).catch(() => startSimulation());
+}
+
+function playNewRelease() { playTrack(newRelease, 0); }
+function togglePlay() { if (!currentTrack) return; if (isPlaying) { audio.pause(); clearInterval(simulationInterval); setPlayingState(false); } else { audio.play().catch(() => startSimulation()); setPlayingState(true); } }
+function setPlayingState(state) { isPlaying = state; document.getElementById('miniPlayIcon').innerHTML = state ? '<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>' : '<polygon points="5,3 19,12 5,21"/>'; }
+function skipForward() { if (currentTrack) audio.currentTime = Math.min(audio.duration || pd(currentTrack.duration), audio.currentTime + 10); }
+function skipBackward() { if (currentTrack) audio.currentTime = Math.max(0, audio.currentTime - 10); }
+function seek(event) { if (!currentTrack) return; audio.currentTime = (event.offsetX / event.currentTarget.offsetWidth) * (audio.duration || pd(currentTrack.duration)); }
+function playNextTrack() { const n = currentTrackIndex < playlist.length - 1 ? currentTrackIndex + 1 : 0; playTrack(playlist[n], n); }
+function startSimulation() { setPlayingState(true); let c = 0; const d = pd(currentTrack.duration); clearInterval(simulationInterval); simulationInterval = setInterval(() => { c++; if (c >= d) { clearInterval(simulationInterval); setPlayingState(false); document.getElementById('playerBarFill').style.width = '0%'; document.getElementById('playerCurrentTime').textContent = '0:00'; playNextTrack(); } else { document.getElementById('playerBarFill').style.width = `${c / d * 100}%`; document.getElementById('playerCurrentTime').textContent = ft(c); } }, 1000); }
+function pd(s) { const p = s.split(':'); return parseInt(p[0]) * 60 + parseInt(p[1]); }
+function ft(s) { if (isNaN(s)) return '0:00'; return `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`; }
+audio.addEventListener('timeupdate', () => { if (!currentTrack) return; const d = audio.duration || pd(currentTrack.duration); document.getElementById('playerBarFill').style.width = `${audio.currentTime / d * 100}%`; document.getElementById('playerCurrentTime').textContent = ft(audio.currentTime); });
+audio.addEventListener('loadedmetadata', () => { document.getElementById('playerTotalTime').textContent = ft(audio.duration); });
+audio.addEventListener('ended', () => { setPlayingState(false); document.getElementById('playerBarFill').style.width = '0%'; document.getElementById('playerCurrentTime').textContent = '0:00'; playNextTrack(); });
+
+const instAudio = document.getElementById('instrumentalAudio');
+let currentInstTrack = null, isInstPlaying = false, instSimulationInterval = null, currentInstIndex = -1;
+function playInstrumental(track, index = -1) {
+    stopAllPlayers();
+    currentInstTrack = track;
+    currentInstIndex = index >= 0 ? index : instrumentalTracks.findIndex(t => t.id === track.id);
+    document.getElementById('instPlayerTitle').textContent = track.title;
+    document.getElementById('instPlayerDescription').textContent = track.description;
+    document.getElementById('instTotalTime').textContent = track.duration;
+    document.getElementById('instPlayerTags').innerHTML = `<span class="floating-player-tag gold">${track.genre}</span><span class="floating-player-tag gold">${track.mood}</span>`;
+    const c = document.getElementById('instPlayerCover');
+    if (track.cover) c.innerHTML = `<img src="${track.cover}" onerror="this.style.display='none';this.parentElement.innerHTML='🎹'">`; else c.textContent = '🎹';
+    document.getElementById('instrumentalPlayer').classList.add('visible');
+    document.querySelectorAll('.track-item, .special-card').forEach(el => el.classList.remove('active'));
+    const a = document.querySelector(`[data-id="${track.id}"]`);
+    if (a) a.classList.add('active');
+    instAudio.src = track.file;
+    instAudio.play().then(() => setInstPlayingState(true)).catch(() => startInstSimulation());
+}
+function instTogglePlay() { if (!currentInstTrack) return; if (isInstPlaying) { instAudio.pause(); clearInterval(instSimulationInterval); setInstPlayingState(false); } else { instAudio.play().catch(() => startInstSimulation()); setInstPlayingState(true); } }
+function setInstPlayingState(state) { isInstPlaying = state; document.getElementById('instPlayIcon').innerHTML = state ? '<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>' : '<polygon points="5,3 19,12 5,21"/>'; const c = document.getElementById('instPlayerCover'); state ? c.classList.add('playing') : c.classList.remove('playing'); }
+function instSkipForward() { if (currentInstTrack) instAudio.currentTime = Math.min(instAudio.duration || pd(currentInstTrack.duration), instAudio.currentTime + 10); }
+function instSkipBackward() { if (currentInstTrack) instAudio.currentTime = Math.max(0, instAudio.currentTime - 10); }
+function instSeek(event) { if (!currentInstTrack) return; const r = event.currentTarget.getBoundingClientRect(); instAudio.currentTime = ((event.clientX - r.left) / r.width) * (instAudio.duration || pd(currentInstTrack.duration)); }
+function playNextInstrumental() { const n = currentInstIndex < instrumentalTracks.length - 1 ? currentInstIndex + 1 : 0; playInstrumental(instrumentalTracks[n], n); }
+function startInstSimulation() { setInstPlayingState(true); let c = 0; const d = pd(currentInstTrack.duration); clearInterval(instSimulationInterval); instSimulationInterval = setInterval(() => { c++; if (c >= d) { clearInterval(instSimulationInterval); setInstPlayingState(false); document.getElementById('instBarFill').style.width = '0%'; document.getElementById('instCurrentTime').textContent = '0:00'; playNextInstrumental(); } else { document.getElementById('instBarFill').style.width = `${c / d * 100}%`; document.getElementById('instCurrentTime').textContent = ft(c); } }, 1000); }
+instAudio.addEventListener('timeupdate', () => { if (!currentInstTrack) return; const d = instAudio.duration || pd(currentInstTrack.duration); document.getElementById('instBarFill').style.width = `${instAudio.currentTime / d * 100}%`; document.getElementById('instCurrentTime').textContent = ft(instAudio.currentTime); });
+instAudio.addEventListener('loadedmetadata', () => { document.getElementById('instTotalTime').textContent = ft(instAudio.duration); });
+instAudio.addEventListener('ended', () => { setInstPlayingState(false); document.getElementById('instBarFill').style.width = '0%'; document.getElementById('instCurrentTime').textContent = '0:00'; playNextInstrumental(); });
+
+const subAudio = document.getElementById('subscriberAudio');
+let currentSubTrack = null, isSubPlaying = false, subSimulationInterval = null, currentSubIndex = -1;
+function playSubscriber(track, index = -1) {
+    stopAllPlayers();
+    currentSubTrack = track;
+    currentSubIndex = index >= 0 ? index : subscriberTracks.findIndex(t => t.id === track.id);
+    document.getElementById('subPlayerTitle').textContent = track.title;
+    document.getElementById('subPlayerAuthor').textContent = '✍ ' + track.author;
+    document.getElementById('subPlayerDescription').textContent = track.description;
+    document.getElementById('subTotalTime').textContent = track.duration;
+    document.getElementById('subPlayerTags').innerHTML = `<span class="floating-player-tag pink">${track.style}</span>`;
+    const c = document.getElementById('subPlayerCover');
+    if (track.cover) c.innerHTML = `<img src="${track.cover}" onerror="this.style.display='none';this.parentElement.innerHTML='🎤'">`; else c.textContent = '🎤';
+    document.getElementById('subscriberPlayer').classList.add('visible');
+    document.querySelectorAll('.track-item, .special-card').forEach(el => el.classList.remove('active'));
+    const a = document.querySelector(`[data-id="${track.id}"]`);
+    if (a) a.classList.add('active');
+    subAudio.src = track.file;
+    subAudio.play().then(() => setSubPlayingState(true)).catch(() => startSubSimulation());
+}
+function subTogglePlay() { if (!currentSubTrack) return; if (isSubPlaying) { subAudio.pause(); clearInterval(subSimulationInterval); setSubPlayingState(false); } else { subAudio.play().catch(() => startSubSimulation()); setSubPlayingState(true); } }
+function setSubPlayingState(state) { isSubPlaying = state; document.getElementById('subPlayIcon').innerHTML = state ? '<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>' : '<polygon points="5,3 19,12 5,21"/>'; const c = document.getElementById('subPlayerCover'); state ? c.classList.add('playing') : c.classList.remove('playing'); }
+function subSkipForward() { if (currentSubTrack) subAudio.currentTime = Math.min(subAudio.duration || pd(currentSubTrack.duration), subAudio.currentTime + 10); }
+function subSkipBackward() { if (currentSubTrack) subAudio.currentTime = Math.max(0, subAudio.currentTime - 10); }
+function subSeek(event) { if (!currentSubTrack) return; const r = event.currentTarget.getBoundingClientRect(); subAudio.currentTime = ((event.clientX - r.left) / r.width) * (subAudio.duration || pd(currentSubTrack.duration)); }
+function playNextSubscriber() { const n = currentSubIndex < subscriberTracks.length - 1 ? currentSubIndex + 1 : 0; playSubscriber(subscriberTracks[n], n); }
+function startSubSimulation() { setSubPlayingState(true); let c = 0; const d = pd(currentSubTrack.duration); clearInterval(subSimulationInterval); subSimulationInterval = setInterval(() => { c++; if (c >= d) { clearInterval(subSimulationInterval); setSubPlayingState(false); document.getElementById('subBarFill').style.width = '0%'; document.getElementById('subCurrentTime').textContent = '0:00'; playNextSubscriber(); } else { document.getElementById('subBarFill').style.width = `${c / d * 100}%`; document.getElementById('subCurrentTime').textContent = ft(c); } }, 1000); }
+subAudio.addEventListener('timeupdate', () => { if (!currentSubTrack) return; const d = subAudio.duration || pd(currentSubTrack.duration); document.getElementById('subBarFill').style.width = `${subAudio.currentTime / d * 100}%`; document.getElementById('subCurrentTime').textContent = ft(subAudio.currentTime); });
+subAudio.addEventListener('loadedmetadata', () => { document.getElementById('subTotalTime').textContent = ft(subAudio.duration); });
+subAudio.addEventListener('ended', () => { setSubPlayingState(false); document.getElementById('subBarFill').style.width = '0%'; document.getElementById('subCurrentTime').textContent = '0:00'; playNextSubscriber(); });
+
+// ============================================
+// DOWNLOAD
+// ============================================
+let downloadTrack = null;
+function openDownloadModal(track, type = 'regular') {
+    downloadTrack = track;
+    const mc = document.getElementById('modalCover');
+    const icon = type === 'instrumental' ? '🎹' : type === 'subscriber' ? '🎤' : '🎵';
+    if (track.cover) mc.innerHTML = `<img src="${track.cover}" onerror="this.style.display='none';this.parentElement.innerHTML='${icon}'">`; else mc.textContent = icon;
+    document.getElementById('modalTitle').textContent = track.title;
+    document.getElementById('modalArtist').textContent = type === 'subscriber' ? track.author : 'EVGENII';
+    document.getElementById('modalDuration').textContent = track.duration;
+    const b = document.getElementById('modalDownloadBtn');
+    b.textContent = 'СКАЧАТЬ ТРЕК'; b.disabled = false;
+    document.getElementById('downloadModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+function closeDownloadModal() { document.getElementById('downloadModal').classList.remove('active'); document.body.style.overflow = ''; downloadTrack = null; }
+function startDownload() {
+    if (!downloadTrack) return;
+    const b = document.getElementById('modalDownloadBtn');
+    b.textContent = 'ЗАГРУЗКА...'; b.disabled = true;
+    const l = document.createElement('a');
+    l.href = downloadTrack.file; l.download = `${downloadTrack.title}.mp3`; l.style.display = 'none';
+    document.body.appendChild(l);
+    setTimeout(() => { l.click(); document.body.removeChild(l); b.textContent = '✓ ТРЕК ЗАГРУЖЕН'; setTimeout(() => closeDownloadModal(), 1500); }, 1500);
+}
+document.getElementById('downloadModal').addEventListener('click', function(e) { if (e.target === this) closeDownloadModal(); });
+
+// ============================================
+// UTILS
+// ============================================
+function getGreeting(h) { if (h >= 5 && h < 12) return 'ДОБРОЕ УТРО'; if (h >= 12 && h < 17) return 'ДОБРЫЙ ДЕНЬ'; if (h >= 17 && h < 22) return 'ДОБРЫЙ ВЕЧЕР'; return 'ДОБРОЙ НОЧИ'; }
+function getLoginGreeting(h) { if (h >= 5 && h < 12) return 'Доброе утро'; if (h >= 12 && h < 17) return 'Добрый день'; if (h >= 17 && h < 22) return 'Добрый вечер'; return 'Доброй ночи'; }
+function updateTime() { const n = new Date(); document.getElementById('headerTime').textContent = `${String(n.getHours()).padStart(2, '0')}:${String(n.getMinutes()).padStart(2, '0')}`; document.getElementById('headerGreeting').textContent = getGreeting(n.getHours()); }
+function escapeHtml(text) { const d = document.createElement('div'); d.textContent = text; return d.innerHTML; }
+
+// ============================================
+// NAVIGATION
+// ============================================
+let currentPage = 'homePage';
+function navigateTo(pageId) {
+    if (currentPage === pageId) return;
+    const ce = document.getElementById(currentPage), ne = document.getElementById(pageId);
+    ce.classList.remove('active');
+    ne.classList.add('active');
+    window.scrollTo(0, 0);
+    currentPage = pageId;
+}
+function goBack() {
+    navigateTo('homePage');
+}
+
+// ============================================
+// LOGIN
+// ============================================
+const loginScreen = document.getElementById('loginScreen');
+const loginForm = document.getElementById('loginForm');
+const nameInput = document.getElementById('nameInput');
+const loginGreeting = document.getElementById('loginGreeting');
+const headerName = document.getElementById('headerName');
+const logoutBtn = document.getElementById('logoutBtn');
+loginGreeting.textContent = getLoginGreeting(new Date().getHours());
+const savedName = localStorage.getItem('evgenii_user');
+if (savedName) showMainScreen(savedName);
+loginForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const name = nameInput.value.trim();
+    if (name) { localStorage.setItem('evgenii_user', name); showMainScreen(name); }
+    else { nameInput.style.borderColor = '#ff4444'; nameInput.style.boxShadow = '0 0 15px rgba(255, 68, 68, 0.2)'; setTimeout(() => { nameInput.style.borderColor = ''; nameInput.style.boxShadow = ''; }, 1500); }
+});
+function showMainScreen(name) {
+    loginScreen.classList.add('hidden');
+    document.getElementById('homePage').classList.add('active');
+    headerName.textContent = name.toUpperCase();
+    updateTime();
+    renderNewRelease();
+    updateCategoryCounts();
+    renderAllTracksList();
+    renderInstrumentals();
+    renderSubscribers();
+    loadAllCommentCounts().then(() => {
+        renderAllTracksList();
+        renderInstrumentals();
+        renderSubscribers();
+    });
+}
+logoutBtn.addEventListener('click', function() {
+    localStorage.removeItem('evgenii_user');
+    ['homePage','tracksPage','aboutPage','communityPage','contactPage','instrumentalsPage','subscribersPage','supportPage'].forEach(p => document.getElementById(p).classList.remove('active'));
+    currentPage = 'homePage';
+    loginScreen.classList.remove('hidden'); nameInput.value = '';
+    loginGreeting.textContent = getLoginGreeting(new Date().getHours());
+    stopAllPlayers();
+});
+setInterval(updateTime, 1000);
+updateTime();
+
+// ============================================
+// КОНТАКТЫ
+// ============================================
+const contactForm = document.getElementById('contactForm');
+const formSubmitBtn = document.getElementById('submitBtn');
+const formStatus = document.getElementById('formStatus');
+if (contactForm) {
+    contactForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        const name = formData.get('name');
+        const contact = formData.get('contact');
+        const messageText = formData.get('message');
+        formSubmitBtn.disabled = true;
+        formSubmitBtn.innerHTML = '<span>ОТПРАВКА...</span>';
+        formStatus.textContent = '';
+        formStatus.className = 'form-status';
+        const message = `📩 <b>НОВОЕ СООБЩЕНИЕ С САЙТА</b>\n\n👤 <b>Имя:</b> ${name}\n📧 <b>Контакт:</b> ${contact}\n\n💬 <b>Сообщение:</b>\n${messageText}\n\n⏰ <b>Время:</b> ${new Date().toLocaleString('ru-RU')}`;
+        try {
+            const telegramURL = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+            const response = await fetch(telegramURL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: message, parse_mode: 'HTML' }) });
+            const data = await response.json();
+            if (data.ok) { formStatus.textContent = '✅ Сообщение отправлено! Я отвечу вам скоро.'; formStatus.className = 'form-status success'; this.reset(); }
+            else throw new Error(data.description || 'Ошибка Telegram API');
+        } catch (error) { console.error('Ошибка отправки:', error); formStatus.textContent = `❌ Ошибка: ${error.message}`; formStatus.className = 'form-status error'; }
+        finally { formSubmitBtn.disabled = false; formSubmitBtn.innerHTML = '<span>ОТПРАВИТЬ СООБЩЕНИЕ</span>'; }
+    });
+}
+
+// ============================================
+// ФОРМА "ДАЙ ГОЛОС"
+// ============================================
+const voiceForm = document.getElementById('voiceForm');
+const voiceSubmitBtn = document.getElementById('voiceSubmitBtn');
+const voiceFormStatus = document.getElementById('voiceFormStatus');
+if (voiceForm) {
+    voiceForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        const name = formData.get('name');
+        const contact = formData.get('contact');
+        const style = formData.get('style');
+        const lyrics = formData.get('lyrics');
+        const comment = formData.get('comment') || '—';
+        voiceSubmitBtn.disabled = true;
+        voiceSubmitBtn.innerHTML = '<span>ОТПРАВКА...</span>';
+        voiceFormStatus.textContent = '';
+        voiceFormStatus.className = 'form-status';
+        const lyricsPreview = lyrics.length > 2000 ? lyrics.substring(0, 2000) + '\n\n[...текст обрезан, полный пришлю в личку...]' : lyrics;
+        const message = `🎤 <b>НОВАЯ ЗАЯВКА «ДАЙ ГОЛОС»</b>\n\n👤 <b>Имя:</b> ${name}\n📧 <b>Контакт:</b> ${contact}\n🎸 <b>Стиль:</b> ${style}\n\n📝 <b>Текст:</b>\n${escapeHtml(lyricsPreview)}\n\n💬 <b>Комментарий:</b>\n${escapeHtml(comment)}\n\n⏰ <b>Время:</b> ${new Date().toLocaleString('ru-RU')}`;
+        try {
+            const telegramURL = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+            const response = await fetch(telegramURL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: message, parse_mode: 'HTML' }) });
+            const data = await response.json();
+            if (data.ok) { voiceFormStatus.textContent = '✅ Текст отправлен! Я свяжусь с тобой, когда трек будет готов.'; voiceFormStatus.className = 'form-status success'; this.reset(); }
+            else throw new Error(data.description || 'Ошибка Telegram API');
+        } catch (error) { console.error('Ошибка отправки:', error); voiceFormStatus.textContent = `❌ Ошибка: ${error.message}`; voiceFormStatus.className = 'form-status error'; }
+        finally { voiceSubmitBtn.disabled = false; voiceSubmitBtn.innerHTML = '<span>ОТПРАВИТЬ ТЕКСТ</span>'; }
+    });
+}
+
+// ============================================
+// ПОДДЕРЖАТЬ
+// ============================================
+const SUPPORT_LINKS = {
+    coffee: 'https://yoomoney.ru/quickpay/confirm.xml?receiver=4100119560778927&quickpay-form=shop&targets=Автору+на+кофе&sum=100&paymentType=AC',
+    project50: 'https://yoomoney.ru/quickpay/confirm.xml?receiver=4100119560778927&quickpay-form=shop&targets=Поддержка+проекта+EVGENII&sum=50&paymentType=AC',
+    project100: 'https://yoomoney.ru/quickpay/confirm.xml?receiver=4100119560778927&quickpay-form=shop&targets=Поддержка+проекта+EVGENII&sum=100&paymentType=AC',
+    project300: 'https://yoomoney.ru/quickpay/confirm.xml?receiver=4100119560778927&quickpay-form=shop&targets=Поддержка+проекта+EVGENII&sum=300&paymentType=AC',
+    project500: 'https://yoomoney.ru/quickpay/confirm.xml?receiver=4100119560778927&quickpay-form=shop&targets=Поддержка+проекта+EVGENII&sum=500&paymentType=AC',
+    project800: 'https://yoomoney.ru/quickpay/confirm.xml?receiver=4100119560778927&quickpay-form=shop&targets=Поддержка+проекта+EVGENII&sum=800&paymentType=AC',
+    project1000: 'https://yoomoney.ru/quickpay/confirm.xml?receiver=4100119560778927&quickpay-form=shop&targets=Поддержка+проекта+EVGENII&sum=1000&paymentType=AC'
+};
+
+function openSupportLink(type) {
+    if (type === 'coffee') { window.open(SUPPORT_LINKS.coffee, '_blank'); }
+    else if (type === 'project') { document.getElementById('amountModal').classList.add('active'); document.body.style.overflow = 'hidden'; }
+    else if (type === 'vtb') { document.getElementById('vtbModal').classList.add('active'); document.body.style.overflow = 'hidden'; }
+}
+
+function selectAmount(amount) {
+    const url = SUPPORT_LINKS['project' + amount];
+    if (url) { window.open(url, '_blank'); closeAmountModal(); }
+}
+
+function closeAmountModal() { document.getElementById('amountModal').classList.remove('active'); document.body.style.overflow = ''; }
+function closeVTBModal() { document.getElementById('vtbModal').classList.remove('active'); document.body.style.overflow = ''; }
+document.getElementById('amountModal').addEventListener('click', function(e) { if (e.target === this) closeAmountModal(); });
+document.getElementById('vtbModal').addEventListener('click', function(e) { if (e.target === this) closeVTBModal(); });
+
+
 </script>
 </body>
 </html>
