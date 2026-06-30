@@ -686,6 +686,7 @@ body { padding-bottom: 0; }
 <audio id="instrumentalAudio" preload="metadata"></audio>
 <audio id="subscriberAudio" preload="metadata"></audio>
 <script>
+document.addEventListener('DOMContentLoaded', function() {
 // ============================================
 // FIREBASE
 // ============================================
@@ -748,9 +749,6 @@ const subscriberTracks = [
 { id: 'sub-6', title: "Бпусто", author: "имя.", style: "", file: "voices/system-bug.mp3", duration: "0:00", cover: "cover/cover.jpg", description: "." }
 ];
 let currentCategory = 'all';
-// ============================================
-// КОММЕНТАРИИ
-// ============================================
 let currentCommentTrack = null;
 let commentsUnsubscribe = null;
 const commentCountsCache = {};
@@ -891,9 +889,6 @@ this.style.height = Math.min(this.scrollHeight, 80) + 'px';
 document.getElementById('commentInput').addEventListener('keydown', function(e) {
 if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendComment(); }
 });
-// ============================================
-// RENDER
-// ============================================
 function renderNewRelease() {
 const h = document.getElementById('homeReleaseCard');
 const commentCount = commentCountsCache[String(newRelease.id)] || 0;
@@ -996,9 +991,6 @@ text.textContent = 'СКРЫТЬ ФОРМУ';
 setTimeout(() => { wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' }); const f = wrapper.querySelector('input'); if (f) f.focus({ preventScroll: true }); }, 350);
 } else { text.textContent = 'ПРИСЛАТЬ СВОЙ ТЕКСТ'; }
 }
-// ============================================
-// ПЛЕЕРЫ
-// ============================================
 const audio = document.getElementById('audioPlayer');
 let currentTrack = null, isPlaying = false, simulationInterval = null, currentTrackIndex = -1;
 const playlist = [newRelease, ...allTracks];
@@ -1104,9 +1096,6 @@ function startSubSimulation() { setSubPlayingState(true); let c = 0; const d = p
 subAudio.addEventListener('timeupdate', () => { if (!currentSubTrack) return; const d = subAudio.duration || pd(currentSubTrack.duration); document.getElementById('subBarFill').style.width = `${subAudio.currentTime / d * 100}%`; document.getElementById('subCurrentTime').textContent = ft(subAudio.currentTime); });
 subAudio.addEventListener('loadedmetadata', () => { document.getElementById('subTotalTime').textContent = ft(subAudio.duration); });
 subAudio.addEventListener('ended', () => { setSubPlayingState(false); document.getElementById('subBarFill').style.width = '0%'; document.getElementById('subCurrentTime').textContent = '0:00'; playNextSubscriber(); });
-// ============================================
-// DOWNLOAD
-// ============================================
 let downloadTrack = null;
 function openDownloadModal(track, type = 'regular') {
 downloadTrack = track;
@@ -1132,16 +1121,10 @@ document.body.appendChild(l);
 setTimeout(() => { l.click(); document.body.removeChild(l); b.textContent = '✓ ТРЕК ЗАГРУЖЕН'; setTimeout(() => closeDownloadModal(), 1500); }, 1500);
 }
 document.getElementById('downloadModal').addEventListener('click', function(e) { if (e.target === this) closeDownloadModal(); });
-// ============================================
-// UTILS
-// ============================================
 function getGreeting(h) { if (h >= 5 && h < 12) return 'ДОБРОЕ УТРО'; if (h >= 12 && h < 17) return 'ДОБРЫЙ ДЕНЬ'; if (h >= 17 && h < 22) return 'ДОБРЫЙ ВЕЧЕР'; return 'ДОБРОЙ НОЧИ'; }
 function getLoginGreeting(h) { if (h >= 5 && h < 12) return 'Доброе утро'; if (h >= 12 && h < 17) return 'Добрый день'; if (h >= 17 && h < 22) return 'Добрый вечер'; return 'Доброй ночи'; }
 function updateTime() { const n = new Date(); document.getElementById('headerTime').textContent = `${String(n.getHours()).padStart(2, '0')}:${String(n.getMinutes()).padStart(2, '0')}`; document.getElementById('headerGreeting').textContent = getGreeting(n.getHours()); }
 function escapeHtml(text) { const d = document.createElement('div'); d.textContent = text; return d.innerHTML; }
-// ============================================
-// NAVIGATION
-// ============================================
 let currentPage = 'homePage';
 function navigateTo(pageId) {
 if (currentPage === pageId) return;
@@ -1154,24 +1137,23 @@ currentPage = pageId;
 function goBack() {
 navigateTo('homePage');
 }
-// ============================================
-// LOGIN
-// ============================================
 const loginScreen = document.getElementById('loginScreen');
 const loginForm = document.getElementById('loginForm');
 const nameInput = document.getElementById('nameInput');
 const loginGreeting = document.getElementById('loginGreeting');
 const headerName = document.getElementById('headerName');
 const logoutBtn = document.getElementById('logoutBtn');
-loginGreeting.textContent = getLoginGreeting(new Date().getHours());
+if (loginGreeting) loginGreeting.textContent = getLoginGreeting(new Date().getHours());
 const savedName = localStorage.getItem('evgenii_user');
 if (savedName) showMainScreen(savedName);
+if (loginForm) {
 loginForm.addEventListener('submit', function(e) {
 e.preventDefault();
 const name = nameInput.value.trim();
 if (name) { localStorage.setItem('evgenii_user', name); showMainScreen(name); }
 else { nameInput.style.borderColor = '#ff4444'; nameInput.style.boxShadow = '0 0 15px rgba(255, 68, 68, 0.2)'; setTimeout(() => { nameInput.style.borderColor = ''; nameInput.style.boxShadow = ''; }, 1500); }
 });
+}
 function showMainScreen(name) {
 loginScreen.classList.add('hidden');
 document.getElementById('homePage').classList.add('active');
@@ -1188,19 +1170,21 @@ renderInstrumentals();
 renderSubscribers();
 });
 }
+if (logoutBtn) {
 logoutBtn.addEventListener('click', function() {
 localStorage.removeItem('evgenii_user');
-['homePage','tracksPage','aboutPage','communityPage','contactPage','instrumentalsPage','subscribersPage','supportPage'].forEach(p => document.getElementById(p).classList.remove('active'));
+['homePage','tracksPage','aboutPage','communityPage','contactPage','instrumentalsPage','subscribersPage','supportPage'].forEach(p => {
+const page = document.getElementById(p);
+if (page) page.classList.remove('active');
+});
 currentPage = 'homePage';
 loginScreen.classList.remove('hidden'); nameInput.value = '';
-loginGreeting.textContent = getLoginGreeting(new Date().getHours());
+if (loginGreeting) loginGreeting.textContent = getLoginGreeting(new Date().getHours());
 stopAllPlayers();
 });
+}
 setInterval(updateTime, 1000);
 updateTime();
-// ============================================
-// КОНТАКТЫ
-// ============================================
 const contactForm = document.getElementById('contactForm');
 const formSubmitBtn = document.getElementById('submitBtn');
 const formStatus = document.getElementById('formStatus');
@@ -1215,12 +1199,7 @@ formSubmitBtn.disabled = true;
 formSubmitBtn.innerHTML = '<span>ОТПРАВКА...</span>';
 formStatus.textContent = '';
 formStatus.className = 'form-status';
-const message = `📩 <b>НОВОЕ СООБЩЕНИЕ С САЙТА</b>
-👤 <b>Имя:</b> ${name}
-📧 <b>Контакт:</b> ${contact}
-💬 <b>Сообщение:</b>
-${messageText}
-⏰ <b>Время:</b> ${new Date().toLocaleString('ru-RU')}`;
+const message = `📩 <b>НОВОЕ СООБЩЕНИЕ С САЙТА</b>\n\n👤 <b>Имя:</b> ${name}\n📧 <b>Контакт:</b> ${contact}\n\n💬 <b>Сообщение:</b>\n${messageText}\n\n⏰ <b>Время:</b> ${new Date().toLocaleString('ru-RU')}`;
 try {
 const telegramURL = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
 const response = await fetch(telegramURL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: message, parse_mode: 'HTML' }) });
@@ -1231,9 +1210,6 @@ else throw new Error(data.description || 'Ошибка Telegram API');
 finally { formSubmitBtn.disabled = false; formSubmitBtn.innerHTML = '<span>ОТПРАВИТЬ СООБЩЕНИЕ</span>'; }
 });
 }
-// ============================================
-// ФОРМА "ДАЙ ГОЛОС"
-// ============================================
 const voiceForm = document.getElementById('voiceForm');
 const voiceSubmitBtn = document.getElementById('voiceSubmitBtn');
 const voiceFormStatus = document.getElementById('voiceFormStatus');
@@ -1250,17 +1226,8 @@ voiceSubmitBtn.disabled = true;
 voiceSubmitBtn.innerHTML = '<span>ОТПРАВКА...</span>';
 voiceFormStatus.textContent = '';
 voiceFormStatus.className = 'form-status';
-const lyricsPreview = lyrics.length > 2000 ? lyrics.substring(0, 2000) + '
-[...текст обрезан, полный пришлю в личку...]' : lyrics;
-const message = `🎤 <b>НОВАЯ ЗАЯВКА «ДАЙ ГОЛОС»</b>
-👤 <b>Имя:</b> ${name}
-📧 <b>Контакт:</b> ${contact}
-🎸 <b>Стиль:</b> ${style}
-📝 <b>Текст:</b>
-${escapeHtml(lyricsPreview)}
-💬 <b>Комментарий:</b>
-${escapeHtml(comment)}
-⏰ <b>Время:</b> ${new Date().toLocaleString('ru-RU')}`;
+const lyricsPreview = lyrics.length > 2000 ? lyrics.substring(0, 2000) + '\n\n[...текст обрезан, полный пришлю в личку...]' : lyrics;
+const message = `🎤 <b>НОВАЯ ЗАЯВКА «ДАЙ ГОЛОС»</b>\n\n👤 <b>Имя:</b> ${name}\n📧 <b>Контакт:</b> ${contact}\n🎸 <b>Стиль:</b> ${style}\n\n📝 <b>Текст:</b>\n${escapeHtml(lyricsPreview)}\n\n💬 <b>Комментарий:</b>\n${escapeHtml(comment)}\n\n⏰ <b>Время:</b> ${new Date().toLocaleString('ru-RU')}`;
 try {
 const telegramURL = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
 const response = await fetch(telegramURL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: message, parse_mode: 'HTML' }) });
@@ -1271,9 +1238,6 @@ else throw new Error(data.description || 'Ошибка Telegram API');
 finally { voiceSubmitBtn.disabled = false; voiceSubmitBtn.innerHTML = '<span>ОТПРАВИТЬ ТЕКСТ</span>'; }
 });
 }
-// ============================================
-// ПОДДЕРЖАТЬ
-// ============================================
 const SUPPORT_LINKS = {
 coffee: 'https://yoomoney.ru/quickpay/confirm.xml?receiver=4100119560778927&quickpay-form=shop&targets=Автору+на+кофе&sum=100&paymentType=AC',
 project50: 'https://yoomoney.ru/quickpay/confirm.xml?receiver=4100119560778927&quickpay-form=shop&targets=Поддержка+проекта+EVGENII&sum=50&paymentType=AC',
@@ -1296,6 +1260,7 @@ function closeAmountModal() { document.getElementById('amountModal').classList.r
 function closeVTBModal() { document.getElementById('vtbModal').classList.remove('active'); document.body.style.overflow = ''; }
 document.getElementById('amountModal').addEventListener('click', function(e) { if (e.target === this) closeAmountModal(); });
 document.getElementById('vtbModal').addEventListener('click', function(e) { if (e.target === this) closeVTBModal(); });
+});
 </script>
 </body>
 </html>
