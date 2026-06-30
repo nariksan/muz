@@ -29,199 +29,8 @@ body { font-family: 'Inter', sans-serif; background: var(--dark-bg); color: var(
 .login-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 1000; background: linear-gradient(135deg, #0a0a1a 0%, #1a0a2e 50%, #0a0a1a 100%); transition: opacity 0.6s ease, transform 0.6s ease; padding: 40px 20px; }
 .login-screen.hidden { opacity: 0; transform: scale(1.05); pointer-events: none; }
 .login-container { width: 100%; max-width: 400px; display: flex; flex-direction: column; align-items: center; }
-
-/* Анимированный баннер */
-.animated-banner {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 16/10;
-    border-radius: 24px;
-    overflow: hidden;
-    margin-bottom: 40px;
-    border: 1px solid rgba(0, 229, 255, 0.15);
-    background: linear-gradient(135deg, #0d1b2a, #1a0a2e, #0d1b2a);
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.banner-image {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    animation: bannerZoom 20s ease-in-out infinite;
-}
-
-@keyframes bannerZoom {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-}
-
-/* Плавающие элементы */
-.floating-elements {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    pointer-events: none;
-}
-
-.floating-symbol {
-    position: absolute;
-    font-size: 2rem;
-    opacity: 0.6;
-    animation: floatSymbol 8s ease-in-out infinite;
-    text-shadow: 0 0 20px rgba(0, 229, 255, 0.5);
-}
-
-.floating-symbol:nth-child(1) { top: 20%; left: 15%; animation-delay: 0s; color: var(--cyan); }
-.floating-symbol:nth-child(2) { top: 30%; right: 20%; animation-delay: -2s; color: var(--magenta); font-size: 1.5rem; }
-.floating-symbol:nth-child(3) { bottom: 25%; left: 25%; animation-delay: -4s; color: var(--purple); font-size: 2.5rem; }
-.floating-symbol:nth-child(4) { bottom: 20%; right: 15%; animation-delay: -6s; color: var(--cyan); font-size: 1.8rem; }
-.floating-symbol:nth-child(5) { top: 50%; left: 50%; animation-delay: -8s; color: var(--magenta); font-size: 2.2rem; }
-
-@keyframes floatSymbol {
-    0%, 100% { 
-        transform: translate(0, 0) rotate(0deg); 
-        opacity: 0.4;
-    }
-    25% { 
-        transform: translate(15px, -20px) rotate(10deg); 
-        opacity: 0.8;
-    }
-    50% { 
-        transform: translate(-10px, -30px) rotate(-5deg); 
-        opacity: 1;
-    }
-    75% { 
-        transform: translate(20px, -10px) rotate(15deg); 
-        opacity: 0.6;
-    }
-}
-
-/* Пульсирующее свечение между руками */
-.glow-center {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 150px;
-    height: 150px;
-    background: radial-gradient(circle, rgba(0, 229, 255, 0.3), transparent 70%);
-    border-radius: 50%;
-    animation: glowPulse 3s ease-in-out infinite;
-    pointer-events: none;
-}
-
-@keyframes glowPulse {
-    0%, 100% { 
-        opacity: 0.4; 
-        transform: translate(-50%, -50%) scale(1);
-    }
-    50% { 
-        opacity: 0.8; 
-        transform: translate(-50%, -50%) scale(1.3);
-    }
-}
-
-/* Мерцающие звёзды */
-.stars {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    background-image: 
-        radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,0.8), transparent),
-        radial-gradient(1px 1px at 60px 70px, rgba(255,255,255,0.6), transparent),
-        radial-gradient(1px 1px at 100px 40px, rgba(255,255,255,0.5), transparent),
-        radial-gradient(2px 2px at 150px 120px, rgba(255,255,255,0.7), transparent),
-        radial-gradient(1px 1px at 200px 80px, rgba(255,255,255,0.4), transparent);
-    background-size: 500px 300px;
-    background-repeat: repeat;
-    animation: starsTwinkle 8s ease-in-out infinite;
-    pointer-events: none;
-}
-
-@keyframes starsTwinkle {
-    0%, 100% { opacity: 0.6; }
-    50% { opacity: 1; }
-}
-
-/* Анимированный логотип */
-.banner-title-animated {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-family: 'Orbitron', sans-serif;
-    font-size: 3rem;
-    font-weight: 900;
-    letter-spacing: 8px;
-    background: linear-gradient(135deg, var(--cyan), var(--magenta), var(--purple));
-    background-size: 200% 200%;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    animation: textGlow 3s ease-in-out infinite, gradientShift 5s ease infinite;
-    z-index: 2;
-    text-align: center;
-    width: 100%;
-}
-
-@keyframes textGlow {
-    0%, 100% { 
-        filter: drop-shadow(0 0 10px rgba(0, 229, 255, 0.5));
-    }
-    50% { 
-        filter: drop-shadow(0 0 30px rgba(0, 229, 255, 0.8));
-    }
-}
-
-@keyframes gradientShift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
-.banner-slogan-animated {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 0.9rem;
-    color: var(--text-secondary);
-    letter-spacing: 2px;
-    animation: fadeInOut 4s ease-in-out infinite;
-    z-index: 2;
-}
-
-@keyframes fadeInOut {
-    0%, 100% { opacity: 0.6; }
-    50% { opacity: 1; }
-}
-
-/* Космические облака */
-.cosmic-clouds {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    background: 
-        radial-gradient(ellipse at 30% 50%, rgba(0, 229, 255, 0.1) 0%, transparent 60%),
-        radial-gradient(ellipse at 70% 50%, rgba(255, 0, 229, 0.1) 0%, transparent 60%);
-    animation: cloudsMove 30s ease-in-out infinite;
-    pointer-events: none;
-}
-
-@keyframes cloudsMove {
-    0%, 100% { transform: translate(0, 0); }
-    50% { transform: translate(-20px, -10px); }
-}
-
+.login-banner { width: 100%; aspect-ratio: 16/10; border-radius: 24px; overflow: hidden; margin-bottom: 40px; border: 1px solid rgba(0, 229, 255, 0.15); background: linear-gradient(135deg, #0d1b2a, #1a0a2e, #0d1b2a); position: relative; display: flex; align-items: center; justify-content: center; }
+.login-banner-bg { position: absolute; width: 100%; height: 100%; background: radial-gradient(ellipse at 30% 50%, rgba(0, 229, 255, 0.15) 0%, transparent 60%), radial-gradient(ellipse at 70% 50%, rgba(255, 0, 229, 0.15) 0%, transparent 60%); }
 .login-geometric { position: absolute; width: 100%; height: 100%; top: 0; left: 0; }
 .geo-shape { position: absolute; border: 1.5px solid; opacity: 0.5; animation: geoFloat 6s ease-in-out infinite; }
 .geo-shape:nth-child(1) { width: 70px; height: 70px; border-color: var(--cyan); top: 15%; left: 15%; transform: rotate(45deg); }
@@ -237,6 +46,7 @@ body { font-family: 'Inter', sans-serif; background: var(--dark-bg); color: var(
 .login-input::placeholder { color: var(--text-secondary); }
 .login-input:focus { border-color: var(--cyan); box-shadow: 0 0 25px rgba(0, 229, 255, 0.2); }
 .login-btn { width: 100%; padding: 18px; border: none; border-radius: 16px; background: linear-gradient(135deg, var(--cyan), var(--purple), var(--magenta)); background-size: 200% 200%; animation: gradientShift 3s ease infinite; color: #fff; font-size: 1.1rem; font-weight: 700; font-family: 'Inter', sans-serif; cursor: pointer; letter-spacing: 2px; text-transform: uppercase; transition: transform 0.2s ease, box-shadow 0.3s ease; box-shadow: 0 8px 30px rgba(0, 229, 255, 0.3); }
+@keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 .login-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(0, 229, 255, 0.4); }
 .login-btn:active { transform: translateY(0); }
 .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 30px; padding-top: 10px; }
@@ -702,32 +512,13 @@ body { padding-bottom: 0; }
 <div class="header-left"><div class="header-time" id="headerTime">00:00</div><div class="header-greeting" id="headerGreeting">ДОБРЫЙ ДЕНЬ</div></div>
 <div class="header-right"><div class="header-name-label">ГОСТЬ</div><div class="header-name" id="headerName">ИМЯ</div></div>
 </div>
-
-<!-- Анимированный баннер -->
-<div class="animated-banner fade-in-up">
-    <!-- Космические облака -->
-    <div class="cosmic-clouds"></div>
-    
-    <!-- Мерцающие звёзды -->
-    <div class="stars"></div>
-    
-    <!-- Пульсирующее свечение -->
-    <div class="glow-center"></div>
-    
-    <!-- Плавающие элементы -->
-    <div class="floating-elements">
-        <div class="floating-symbol">♪</div>
-        <div class="floating-symbol">♫</div>
-        <div class="floating-symbol">{}</div>
-        <div class="floating-symbol">&lt;&gt;</div>
-        <div class="floating-symbol">♬</div>
-    </div>
-    
-    <!-- Анимированный текст -->
-    <div class="banner-title-animated">EVGENII</div>
-    <div class="banner-slogan-animated">Где заканчиваюсь я — и начинается ИИ</div>
+<div class="banner fade-in-up">
+<div class="banner-content">
+<div class="banner-geometric"><div class="geo-shape-banner"></div><div class="geo-shape-banner"></div><div class="geo-shape-banner"></div><div class="geo-shape-banner"></div></div>
+<div class="banner-title">EVGENII</div>
+<div class="banner-slogan">Где заканчиваюсь я — и начинается ИИ</div>
 </div>
-
+</div>
 <div class="release-section fade-in-up">
 <div class="section-title">НОВЫЙ РЕЛИЗ</div>
 <div class="release-card" id="homeReleaseCard" onclick="playNewRelease()"></div>
@@ -747,8 +538,6 @@ body { padding-bottom: 0; }
 </div>
 <button class="logout-btn" id="logoutBtn">ВЫЙТИ</button>
 </div>
-
-<!-- Остальной код страниц остается без изменений -->
 <div class="page" id="tracksPage">
 <div class="page-header fade-in-up"><button class="back-btn" onclick="goBack()">←</button><div class="page-title">Все треки</div></div>
 <div class="featured-release fade-in-up" id="featuredRelease" onclick="playNewRelease()"></div>
@@ -760,14 +549,12 @@ body { padding-bottom: 0; }
 </div>
 <div class="tracks-list fade-in-up" id="allTracksList"></div>
 </div>
-
 <div class="page" id="instrumentalsPage">
 <div class="page-header fade-in-up"><button class="back-btn" onclick="goBack()">←</button><div class="page-title">Инструменталы</div></div>
 <div class="intro-block gold fade-in-up"><div class="intro-title gold">БЕЗ СЛОВ · ТОЛЬКО ЗВУК</div><div class="intro-text">Музыка, в которой говорят не тексты, а эмоции. Каждый трек — отдельное настроение, атмосфера и история без единого слова.</div></div>
 <div class="section-title fade-in-up">КОЛЛЕКЦИЯ</div>
 <div class="tracks-list fade-in-up" id="instrumentalsList"></div>
 </div>
-
 <div class="page" id="subscribersPage">
 <div class="page-header fade-in-up"><button class="back-btn" onclick="goBack()">←</button><div class="page-title">Дай голос</div></div>
 <div class="intro-block pink fade-in-up"><div class="intro-title pink">ТВОЙ ТЕКСТ — НАШ ГОЛОС</div><div class="intro-text">Присылай свой текст и стиль, в котором ты хотел бы его услышать. Мы дадим ему голос через ИИ — и твой текст зазвучит.</div></div>
@@ -790,7 +577,6 @@ body { padding-bottom: 0; }
 <div class="section-title fade-in-up">УЖЕ ЗАЗВУЧАЛИ</div>
 <div class="tracks-list fade-in-up" id="subscribersList"></div>
 </div>
-
 <div class="page" id="aboutPage">
 <div class="page-header fade-in-up"><button class="back-btn" onclick="goBack()">←</button><div class="page-title">О проекте</div></div>
 <div class="about-content fade-in-up">
@@ -799,7 +585,6 @@ body { padding-bottom: 0; }
 <div class="about-card"><p>Вместе мы создаём что-то третье. Не совсем человеческое, не совсем машинное. Что-то среднее, где технологии усиливают эмоции, а не заменяют их.</p></div>
 </div>
 </div>
-
 <div class="page" id="communityPage">
 <div class="page-header fade-in-up"><button class="back-btn" onclick="goBack()">←</button><div class="page-title">Сообщества</div></div>
 <div class="community-content fade-in-up">
@@ -809,7 +594,6 @@ body { padding-bottom: 0; }
 <a href="#" class="community-card coming-soon" onclick="event.preventDefault()"><div class="community-icon instagram">📷</div><div class="community-info"><div class="community-name">Instagram</div><div class="community-desc">Визуальный контент</div><span class="community-badge">Скоро</span></div><div class="community-arrow">→</div></a>
 </div>
 </div>
-
 <div class="page" id="contactPage">
 <div class="page-header fade-in-up"><button class="back-btn" onclick="goBack()">←</button><div class="page-title">Связь</div></div>
 <div class="contact-intro fade-in-up"><p>Есть вопрос, предложение или хотите сотрудничать? Напишите мне — я обязательно отвечу!</p></div>
@@ -825,7 +609,6 @@ body { padding-bottom: 0; }
 </form>
 </div>
 </div>
-
 <div class="page" id="supportPage">
 <div class="page-header fade-in-up"><button class="back-btn" onclick="goBack()">←</button><div class="page-title">Поддержать</div></div>
 <div class="support-intro fade-in-up"><p>Твоя поддержка помогает создавать новую музыку. Спасибо, что ты с нами!</p></div>
@@ -836,7 +619,6 @@ body { padding-bottom: 0; }
 </div>
 <div class="support-note fade-in-up"><p>💳 Удобная оплата картой через ЮMoney. Спасибо за поддержку!</p><div class="qr-section"><div class="qr-code"><img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://yoomoney.ru/quickpay/confirm.xml?receiver=4100119560778927&quickpay-form=shop&targets=Автору+на+кофе&sum=100&paymentType=AC" alt="QR"></div><div class="qr-label">Отсканируй для оплаты 100 ₽</div><div class="qr-hint">Камера телефона → QR код</div></div></div>
 </div>
-
 <div class="sticky-player" id="stickyPlayer">
 <div class="player-top-row"><div class="player-mini-cover" id="playerCover">🎵</div><div class="player-mini-info"><div class="player-mini-title" id="playerTitle">Название трека</div><div class="player-mini-artist" id="playerArtist">Исполнитель</div></div><div class="player-mini-controls"><button class="mini-skip-btn" onclick="skipBackward()"><svg viewBox="0 0 24 24"><path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z"/></svg></button><button class="mini-play-btn" onclick="togglePlay()"><svg viewBox="0 0 24 24" id="miniPlayIcon"><polygon points="5,3 19,12 5,21"/></svg></button><button class="mini-skip-btn" onclick="skipForward()"><svg viewBox="0 0 24 24"><path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z"/></svg></button></div></div>
 <div class="player-progress-wrapper"><span class="player-time-mini" id="playerCurrentTime">0:00</span><div class="player-bar-container" onclick="seek(event)"><div class="player-bar-fill" id="playerBarFill"></div></div><span class="player-time-mini end" id="playerTotalTime">0:00</span></div>
@@ -851,7 +633,6 @@ body { padding-bottom: 0; }
 <div class="floating-player-description pink" id="subPlayerDescription">Комментарий...</div>
 <div class="floating-progress-wrapper"><span class="floating-time" id="subCurrentTime">0:00</span><div class="floating-bar-container" onclick="subSeek(event)"><div class="floating-bar-fill pink" id="subBarFill"></div></div><span class="floating-time end" id="subTotalTime">0:00</span></div>
 </div>
-
 <div class="modal-overlay" id="downloadModal">
 <div class="modal-content">
 <div class="modal-header">СКАЧИВАНИЕ ТРЕКА</div>
@@ -862,7 +643,6 @@ body { padding-bottom: 0; }
 <button class="modal-cancel-btn" onclick="closeDownloadModal()">Отмена</button>
 </div>
 </div>
-
 <div class="comments-modal-overlay" id="commentsModal">
 <div class="comments-modal">
 <div class="comments-modal-header">
@@ -877,7 +657,6 @@ body { padding-bottom: 0; }
 </div>
 </div>
 </div>
-
 <div class="amount-modal-overlay" id="amountModal">
 <div class="amount-modal">
 <div class="amount-modal-header"><div class="amount-modal-title">Выбери сумму</div><div class="amount-modal-subtitle">Поддержи проект EVGENII</div></div>
@@ -892,7 +671,6 @@ body { padding-bottom: 0; }
 <button class="amount-modal-cancel" onclick="closeAmountModal()">Отмена</button>
 </div>
 </div>
-
 <div class="modal-overlay" id="vtbModal">
 <div class="modal-content">
 <div class="modal-header">ОПЛАТА ЧЕРЕЗ ВТБ</div>
@@ -904,11 +682,9 @@ body { padding-bottom: 0; }
 <button class="modal-cancel-btn" onclick="closeVTBModal()">Закрыть</button>
 </div>
 </div>
-
 <audio id="audioPlayer" preload="metadata"></audio>
 <audio id="instrumentalAudio" preload="metadata"></audio>
 <audio id="subscriberAudio" preload="metadata"></audio>
-
 <script>
 // ============================================
 // FIREBASE
